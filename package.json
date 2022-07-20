@@ -1,0 +1,77 @@
+{
+  "name": "@gobstones/gobstones-scripts",
+  "version": "0.1.0",
+  "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
+  "repository": "https://github.com/gobstones/gobstones-scripts",
+  "homepage": "https://gobstones.github.io/gobstones-scripts",
+  "author": "Alan Rodas Bonjour <alanrodas@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "Gobstones",
+    "Scripts",
+    "Build",
+    "Run",
+    "Projects"
+  ],
+  "bin": {
+    "gobstones-scripts": "./src/index.js"
+  },
+  "main": "./src/api/api.js",
+  "typings": "./src/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/api/api.js"
+    }
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "start": "echo \"This tool does not run on itself. Nothing to do.\"",
+    "test": "echo \"No tests provided, this tool is tested manually for now.\"",
+    "build": "echo \"This tool does not run on itself. Nothing to do.\""
+  },
+  "peerDependencies": {
+    "@jest/globals": "^28.1.3",
+    "@markforged/nps": "^5.11.2",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-node-resolve": "^13.3.0",
+    "@rollup/plugin-typescript": "^8.3.3",
+    "@types/eslint": "^8.4.5",
+    "@types/estree": "^1.0.0",
+    "@types/jest": "^28.1.6",
+    "@types/node": "^18.6.3",
+    "@typescript-eslint/eslint-plugin": "^5.30.7",
+    "@typescript-eslint/parser": "^5.30.7",
+    "ansi-colors": "^4.1.3",
+    "eslint": "^8.20.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-no-null": "^1.0.2",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^4.2.1",
+    "figlet": "^1.5.2",
+    "fs-extra": "^10.1.0",
+    "husky": "^8.0.1",
+    "jest": "^28.1.3",
+    "nps": "^5.10.0",
+    "nps-utils": "^1.7.0",
+    "pinst": "^3.0.0",
+    "prettier": "^2.7.1",
+    "rollup": "^2.77.0",
+    "rollup-plugin-sizes": "^1.0.4",
+    "rollup-plugin-terser": "^7.0.2",
+    "serve": "^14.0.1",
+    "ts-jest": "^28.0.7",
+    "ts-node-dev": "^2.0.0",
+    "tsconfig.js": "^3.0.0",
+    "tslib": "^2.4.0",
+    "typedoc": "^0.23.8",
+    "typedoc-plugin-merge-modules": "^4.0.1",
+    "typedoc-plugin-remove-references": "^0.0.6",
+    "typescript": "^4.7.4",
+    "webpack": "^5.73.0"
+  },
+  "devDependencies": {
+    "husky": "^8.0.1"
+  }
+}

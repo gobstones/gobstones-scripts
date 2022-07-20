@@ -1,0 +1,17 @@
+# Editor and style files
+.vscode/*
+.github/*
+
+# tests
+test/*
+coverage
+
+# docs
+docs
+
+# Additional documentarion
+TODO.md
+
+# Add files in init-files
+!init-files/*
+!config/*
