@@ -15,9 +15,10 @@ jobs:
           env:
             NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           with:
-            node-version: 16
+            node-version: "16"
         - run: npm set-script prepare ""
         - run: npm install
         - uses: JS-DevTools/npm-publish@v1
           with:
             token: ${{ secrets.NPM_TOKEN }}
+            access: 'public'

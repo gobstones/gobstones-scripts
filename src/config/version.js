@@ -9,4 +9,4 @@
  * @module Config
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
-module.exports = "0.1.0";
+module.exports = "0.1.1";
