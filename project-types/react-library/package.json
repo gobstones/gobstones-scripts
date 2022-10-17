@@ -1,0 +1,70 @@
+{
+  "name": "a-new-gobstones-react-library",
+  "version": "0.1.0",
+  "description": "A New Gobstones Project Library",
+  "repository": "https://github.com/gobstones/a-new-gobstones-react-library",
+  "homepage": "https://gobstones.github.io/a-new-gobstones-react-library",
+  "author": "John Doe <john.doe@gmail.com>",
+  "license": "MIT",
+  "keywords": [
+    "Gobstones",
+    "Library",
+    "Keywords"
+  ],
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist/index.d.ts",
+  "gobstones-scripts": {
+    "type": "react-library"
+  },
+  "scripts": {
+    "prepare": "husky install",
+    "prepack": "gobstones-scripts run build",
+    "start": "gobstones-scripts run",
+    "dev": "gobstones-scripts run dev",
+    "build": "gobstones-scripts run build",
+    "test": "gobstones-scripts run test",
+    "doc": "gobstones-scripts run doc",
+    "gbs": "gobstones-scripts"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.4",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@gobstones/gobstones-scripts": "^0.2.0",
+    "@mdx-js/react": "^2.1.5",
+    "@rollup/plugin-commonjs": "^22.0.1",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^9.0.1",
+    "@storybook/addon-actions": "^6.5.12",
+    "@storybook/addon-essentials": "^6.5.12",
+    "@storybook/addon-links": "^6.5.12",
+    "@storybook/builder-webpack5": "^6.5.12",
+    "@storybook/manager-webpack5": "^6.5.12",
+    "@storybook/preset-scss": "^1.0.3",
+    "@storybook/react": "^6.5.12",
+    "@testing-library/react": "^13.4.0",
+    "@types/jest": "^29.1.2",
+    "@types/react": "^18.0.21",
+    "babel-jest": "^29.2.0",
+    "babel-loader": "^8.2.5",
+    "css-loader": "^6.7.1",
+    "html-webpack-plugin": "^5.5.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^29.2.0",
+    "jest-environment-jsdom": "^29.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^2.79.1",
+    "rollup-plugin-dts": "^4.2.3",
+    "rollup-plugin-postcss": "^4.0.2",
+    "sass": "^1.55.0",
+    "sass-loader": "^13.1.0",
+    "style-loader": "^3.3.1",
+    "typescript": "^4.8.4"
+  }
+}

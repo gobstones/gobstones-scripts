@@ -3,96 +3,104 @@
  * that ought to be called by the API.
  *
  * @internal
- * @module API
+ * @namespace API.Internal
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
-const fs = require("fs-extra");
-const process = require("process");
-const child_process = require("child_process");
-const path = require("path");
-const files = require("../config/files");
+const fs = require('fs-extra');
+const process = require('process');
+const childProcess = require('child_process');
+const path = require('path');
+
+const { files } = require('../config');
 
 // Variables for caching intermediate results.
-let packagePath;
-
-// General configuration
-const configuration = config();
-
+let gobstonesScriptRootPath;
+let projectRootPath;
+let packageManager;
+let configuration;
 
 /**
  * Returns the @gobstones/gobstones-scripts folder path. That is, the path to
  * the module in the users node_modules folder.
  *
  * @returns {string}
+ *
+ * @static
+ * @memberof API.Internal
  */
-function getPackagePath() {
-    if (packagePath) {
-        return packagePath;
+function getGobstonesScriptsRootPath() {
+    if (gobstonesScriptRootPath) {
+        return gobstonesScriptRootPath;
     }
     try {
-        packagePath = path.join(
-            path.dirname(
-                require.resolve("@gobstones/gobstones-scripts/package.json")
-            )
+        gobstonesScriptRootPath = path.join(
+            path.dirname(require.resolve('@gobstones/gobstones-scripts/package.json'))
         );
     } catch (e) {
         let localPath;
         let userPath;
         let globalPath;
         try {
-            localPath = child_process.execSync('npm root --location=project').toString().trim();
-            userPath = child_process.execSync('npm root --location=user').toString().trim();
-            globalPath = child_process.execSync('npm root --location=global').toString().trim();
-        } catch {}
+            localPath = childProcess.execSync('npm root --location=project').toString().trim();
+            userPath = childProcess.execSync('npm root --location=user').toString().trim();
+            globalPath = childProcess.execSync('npm root --location=global').toString().trim();
+        } catch {
+            // nothing to do
+        }
 
-        let localPackagePath = path.join(
-            localPath || '',
-            "@gobstones",
-            "gobstones-scripts"
-        );
-        let userPackagePath = path.join(
-            userPath || '',
-            "@gobstones",
-            "gobstones-scripts"
-        );
-        let globalPackagePath = path.join(
-            globalPath || '',
-            "@gobstones",
-            "gobstones-scripts"
-        );
+        const localPackagePath = path.join(localPath || '', '@gobstones', 'gobstones-scripts');
+        const userPackagePath = path.join(userPath || '', '@gobstones', 'gobstones-scripts');
+        const globalPackagePath = path.join(globalPath || '', '@gobstones', 'gobstones-scripts');
 
         if (localPath && fs.existsSync(localPackagePath)) {
-            packagePath = localPackagePath;
+            gobstonesScriptRootPath = localPackagePath;
         } else if (userPath && fs.existsSync(userPackagePath)) {
-            packagePath = userPackagePath;
+            gobstonesScriptRootPath = userPackagePath;
         } else if (globalPath && fs.existsSync(globalPackagePath)) {
-            packagePath = globalPackagePath;
+            gobstonesScriptRootPath = globalPackagePath;
         } else {
-            packagePath = path.join(
+            gobstonesScriptRootPath = path.join(
                 process.cwd(),
                 'node_modules',
-                "@gobstones",
-                "gobstones-scripts"
+                '@gobstones',
+                'gobstones-scripts'
             );
         }
     }
-    return packagePath;
+    return gobstonesScriptRootPath;
 }
 
 /**
  * Returns the current process path.
  *
  * @returns {string}
+ *
+ * @static
+ * @memberof API.Internal
  */
-function getProcessPath() {
-    return process.cwd();
+function getProjectRootPath() {
+    if (projectRootPath) return projectRootPath;
+    projectRootPath = process.env['PWD'];
+    if (process.cwd() !== projectRootPath);
+    {
+        process.chdir(projectRootPath);
+    }
+    return projectRootPath;
 }
 
 /**
  * Change the current directory of the process to another one.
+ *
+ * @static
+ * @memberof API.Internal
  */
-function changeDir(dir) {
-    return process.chdir(dir);
+function changeDir(dir, projectType) {
+    if (!configuration) {
+        configuration.config(projectType);
+    }
+    process.chdir(dir);
+    configuration.root = dir;
+    return dir;
 }
 
 /**
@@ -101,24 +109,25 @@ function changeDir(dir) {
  * of gobstones-scripts.
  *
  * @returns {any}
+ *
+ * @static
+ * @memberof API.Internal
  */
-function getFilesLoaded(localProjectPath, packageRootPath) {
-    let configurationFiles = {};
+function getFilesLoaded(projecType, projectPath, gobstonesScriptsPath) {
+    const configurationFiles = {};
 
-    for (const fileConf of files) {
-        let localOverride = path.join(
-            localProjectPath,
-            fileConf.filename + fileConf.extension
+    for (const fileName in files.eject) {
+        const fileUri = files.eject[fileName].files[0];
+        const isCommon = files.eject[fileName].isCommon;
+        const rootUriForFile = path.join(projectPath, fileUri);
+        const gbScriptUriForFile = path.join(
+            gobstonesScriptsPath,
+            'project-types',
+            isCommon ? 'common' : projecType,
+            fileUri
         );
-        let projectDefaults = path.join(
-            packageRootPath,
-            "config",
-            fileConf.filename + fileConf.extension
-        );
-        let file = fs.existsSync(localOverride)
-            ? localOverride
-            : projectDefaults;
-        configurationFiles[fileConf.name] = file;
+        const file = fs.existsSync(rootUriForFile) ? rootUriForFile : gbScriptUriForFile;
+        configurationFiles[fileName] = file;
     }
     return configurationFiles;
 }
@@ -127,20 +136,23 @@ function getFilesLoaded(localProjectPath, packageRootPath) {
  * Run a CLI command as a child process.
  *
  * @returns {void}
+ *
+ * @static
+ * @memberof API.Internal
  */
 function runScript(command, args = [], options = undefined, callback = undefined) {
     /* Override default options if none given */
     if (!options) {
         options = {
             shell: true,
-            stdio: "inherit",
+            stdio: 'inherit',
             env: {
-                ...process.env,
-            },
+                ...process.env
+            }
         };
     }
     try {
-        const cmd = child_process.spawn(command, args, options);
+        const cmd = childProcess.spawn(command, args, options);
         if (callback) {
             cmd.on('close', callback);
         }
@@ -161,46 +173,50 @@ function runScript(command, args = [], options = undefined, callback = undefined
  * @param {string} toHide A list of files to hide after copying.
  *
  * @returns {string[]} The list of copied files names, full path.
+ *
+ * @static
+ * @memberof API.Internal
  */
-function copyFilesFrom(
-    fromFolder,
-    toFolder = internal_api.getProcessPath(),
-    overwrite = false,
-    toHide = []
-) {
+function copyFilesFrom(fileDescriptors, projectType, overwrite = false) {
     const copied = [];
 
-    const filesInFromFolder = fs.readdirSync(fromFolder);
-    for (const file of filesInFromFolder) {
-        const localFileName = path.join(toFolder, file);
-        const localFileNameIfHidden = path.join(toFolder, "." + file);
-        const fileShouldBeHidden = toHide.indexOf(file) >= 0;
+    if (!configuration) {
+        configuration = config(projectType);
+    }
 
-        if (
-            // Should copy the current file?
-            (!fileShouldBeHidden && !fs.existsSync(localFileName)) ||
-            (fileShouldBeHidden && !fs.existsSync(localFileNameIfHidden)) ||
-            overwrite
-        ) {
-            const fromFullyQualifiedName = path.join(fromFolder, file);
-            // If the file already exists, and overwrite is needed, detele it
-            if (overwrite && fs.existsSync(localFileName)) {
-                fs.removeSync(localFileName);
-            }
-            // Copy the file as is
-            fs.copySync(fromFullyQualifiedName, localFileName);
-            // Rename if it should be hidden
-            if (fileShouldBeHidden) {
-                // And override if needed
-                if (overwrite && fs.existsSync(localFileNameIfHidden)) {
-                    fs.removeSync(localFileNameIfHidden);
+    for (const fileName in fileDescriptors) {
+        const fileDescriptor = fileDescriptors[fileName];
+        const gbsScriptsFolder = path.join(
+            configuration.packageRoot,
+            'project-types',
+            fileDescriptor.isCommon ? 'common' : projectType
+        );
+        const sources = (fileDescriptor.folders || fileDescriptor.files).map((e) =>
+            path.join(gbsScriptsFolder, e)
+        );
+        // Note that if no renames are present, then the full name is
+        // present in the following variable.
+        const destinations = (
+            fileDescriptor.renames ||
+            fileDescriptor.folders ||
+            fileDescriptor.files
+        ).map((e) => path.join(configuration.root, e));
+
+        if (overwrite) {
+            // If files should be overwritten, then all root files
+            // should be deleted prior to copying.
+            for (const destRenamed of destinations) {
+                if (fs.existsSync(destRenamed)) {
+                    fs.removeSync(destRenamed);
                 }
-                fs.renameSync(localFileName, localFileNameIfHidden);
-                // Remember the file copied for return, as hidden name
-                copied.push(path.relative(toFolder, localFileNameIfHidden));
-            } else {
-                // Remember the file copied for return
-                copied.push(path.relative(toFolder, localFileName));
+            }
+        }
+        for (let i = 0; i < sources.length; i++) {
+            const nextSrc = sources[i];
+            const nextDest = destinations[i];
+            if (fs.existsSync(nextSrc)) {
+                fs.copySync(nextSrc, nextDest);
+                copied.push(nextDest);
             }
         }
     }
@@ -216,11 +232,57 @@ function copyFilesFrom(
  * @param {string} newReference The new text to replace with
  *
  * @returns {void}
+ *
+ * @static
+ * @memberof API.Internal
  */
 function replaceInnerReferencesInFiles(files, reference, newReference) {
     for (const file of files) {
-        fs.writeFileSync(file, fs.readFileSync(file, 'utf-8').replace(reference, newReference), 'utf-8');
+        fs.writeFileSync(
+            file,
+            fs.readFileSync(file, 'utf-8').replace(reference, newReference),
+            'utf-8'
+        );
     }
+}
+
+/**
+ * Return the package manager in use based different features. First, by
+ * identifying the current runner through the "npm_config_user_agent" environment
+ * variable. It such variable is not set, which is common for global runs,
+ * attempts to identify the runner by locating the global "gobstones-scripts"
+ * command. If no match is found, defaults to npm.
+ *
+ * @returns {string}
+ *
+ * @static
+ * @memberof API.Internal
+ */
+function getPackageManager() {
+    if (packageManager) return packageManager;
+    if (configuration) {
+        config();
+    }
+    const userAgent = process.env['npm_config_user_agent'];
+    let whichFile;
+    if (!userAgent) {
+        try {
+            whichFile = childProcess
+                .spawnSync('which gobstones-scripts', { shell: true })
+                .output.toString();
+        } catch (e) {
+            // Nothing to do
+        }
+    }
+    const value = userAgent || whichFile;
+    if (value && value.indexOf('pnpm') >= 0) {
+        packageManager = 'pnpm';
+    } else if (value && value.indexOf('yarn') >= 0) {
+        packageManager = 'yarn';
+    } else {
+        packageManager = 'npm';
+    }
+    return packageManager;
 }
 
 /**
@@ -229,12 +291,12 @@ function replaceInnerReferencesInFiles(files, reference, newReference) {
  * through one.
  *
  * @returns {string}
+ *
+ * @static
+ * @memberof API.Internal
  */
-function getRunnerCommand() {
-    const userAgent = process.env['npm_config_user_agent'];
-    if (userAgent && userAgent.indexOf('pnpm') >= 0) return 'pnpm';
-    if (userAgent && userAgent.indexOf('yarn') >= 0) return 'yarn';
-    else return 'npm'
+function getPackageManagerInstallCommand(packageManager) {
+    return packageManager + ' install';
 }
 
 /**
@@ -243,39 +305,55 @@ function getRunnerCommand() {
  * through one.
  *
  * @returns {string}
+ *
+ * @static
+ * @memberof API.Internal
  */
-function getRunnerExecutorScript() {
-    const userAgent = process.env['npm_config_user_agent'];
-    if (userAgent && userAgent.indexOf('pnpm') >= 0) return 'pnpm exec';
-    if (userAgent && userAgent.indexOf('yarn') >= 0) return 'npx';
-    else return 'npx'
+function getPackageManagerExecuteCommand(packageManager) {
+    if (packageManager === 'pnpm') return 'pnpm exec';
+    else return 'npx';
+}
+
+function optionsFormPackageJson(root) {
+    if (fs.existsSync(path.join(root, 'package.json'))) {
+        const contents = fs.readFileSync(path.join(root, 'package.json'));
+        const values = JSON.parse(contents.toString());
+        if (values && values['gobstones-scripts']) {
+            return values['gobstones-scripts'];
+        }
+    }
+    return {};
 }
 
 /**
  * Returns the internal configuration of the tool, which includes all paths.
  *
  * @returns {any}
+ *
+ * @static
+ * @memberof API.Internal
  */
-function config() {
-    const root = getProcessPath();
-    const package = getPackagePath();
-    const files = getFilesLoaded(
-        root,
-        package
-    );
+function config(projectType) {
+    if (configuration && configuration.projectType === projectType) return configuration;
+    const root = getProjectRootPath();
+    const packageRoot = getGobstonesScriptsRootPath();
+    const options = optionsFormPackageJson(root);
+    const files = getFilesLoaded(projectType || options.type || 'library', root, packageRoot);
     const tsConfigFile = path.join(path.dirname(files.ts), 'tsconfig.json');
-    return { root, package, tsConfigFile, files };
+    configuration = { projectType, root, packageRoot, tsConfigFile, options, files };
+    return configuration;
 }
 
 module.exports = {
-    getPackagePath,
-    getProcessPath,
+    getGobstonesScriptsRootPath,
+    getProjectRootPath,
     changeDir,
     getFilesLoaded,
     copyFilesFrom,
     runScript,
     replaceInnerReferencesInFiles,
-    getRunnerCommand,
-    getRunnerExecutorScript,
-    config: configuration
+    getPackageManager,
+    getPackageManagerInstallCommand,
+    getPackageManagerExecuteCommand,
+    config
 };

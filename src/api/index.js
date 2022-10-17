@@ -11,9 +11,8 @@
  *
  * Refer to README.md for more information.
  *
- * @module API
+ * @namespace API
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
-*/
+ */
 const api = require('./api');
-
 module.exports = api;

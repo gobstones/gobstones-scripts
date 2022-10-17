@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>Public - Documentation</title>
+    
+    
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc.css">
+    <script src="scripts/nav.js" defer></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav >
+    
+    <h2><a href="index.html">Home</a></h2><h3>Namespaces</h3><ul><li><a href="API.html">API</a></li><li><a href="API.Internal.html">Internal</a><ul class='methods'><li data-type='method'><a href="API.Internal.html#.changeDir">changeDir</a></li><li data-type='method'><a href="API.Internal.html#.config">config</a></li><li data-type='method'><a href="API.Internal.html#.copyFilesFrom">copyFilesFrom</a></li><li data-type='method'><a href="API.Internal.html#.getFilesLoaded">getFilesLoaded</a></li><li data-type='method'><a href="API.Internal.html#.getGobstonesScriptsRootPath">getGobstonesScriptsRootPath</a></li><li data-type='method'><a href="API.Internal.html#.getPackageManager">getPackageManager</a></li><li data-type='method'><a href="API.Internal.html#.getPackageManagerExecuteCommand">getPackageManagerExecuteCommand</a></li><li data-type='method'><a href="API.Internal.html#.getPackageManagerInstallCommand">getPackageManagerInstallCommand</a></li><li data-type='method'><a href="API.Internal.html#.getProjectRootPath">getProjectRootPath</a></li><li data-type='method'><a href="API.Internal.html#.replaceInnerReferencesInFiles">replaceInnerReferencesInFiles</a></li><li data-type='method'><a href="API.Internal.html#.runScript">runScript</a></li></ul></li><li><a href="API.Public.html">Public</a><ul class='methods'><li data-type='method'><a href="API.Public.html#.create">create</a></li><li data-type='method'><a href="API.Public.html#.eject">eject</a></li><li data-type='method'><a href="API.Public.html#.init">init</a></li><li data-type='method'><a href="API.Public.html#.run">run</a></li><li data-type='method'><a href="API.Public.html#.update">update</a></li></ul></li><li><a href="CLI.html">CLI</a></li><li><a href="CLI.Helpers.html">Helpers</a><ul class='methods'><li data-type='method'><a href="CLI.Helpers.html#.banner">banner</a></li><li data-type='method'><a href="CLI.Helpers.html#.display">display</a></li><li data-type='method'><a href="CLI.Helpers.html#.printConfigurationIfOptionGiven">printConfigurationIfOptionGiven</a></li><li data-type='method'><a href="CLI.Helpers.html#.runOrEnd">runOrEnd</a></li><li data-type='method'><a href="CLI.Helpers.html#.welcome">welcome</a></li></ul></li><li><a href="CLI.Program.html">Program</a></li><li><a href="CLI.Validator.html">Validator</a><ul class='methods'><li data-type='method'><a href="CLI.Validator.html#.failIfArgumentInvalid">failIfArgumentInvalid</a></li><li data-type='method'><a href="CLI.Validator.html#.failIfOptionInvalid">failIfOptionInvalid</a></li><li data-type='method'><a href="CLI.Validator.html#.invalidValueForOption">invalidValueForOption</a></li><li data-type='method'><a href="CLI.Validator.html#.isValidOption">isValidOption</a></li></ul></li><li><a href="Config.html">Config</a></li><li><a href="Config.Files.html">Files</a></li><li><a href="Config.Project.html">Project</a></li><li><a href="Tools.html">Tools</a><ul class='methods'><li data-type='method'><a href="Tools.html#.chmod">chmod</a></li><li data-type='method'><a href="Tools.html#.concurrent">concurrent</a></li><li data-type='method'><a href="Tools.html#.copy">copy</a></li><li data-type='method'><a href="Tools.html#.eslint">eslint</a></li><li data-type='method'><a href="Tools.html#.jest">jest</a></li><li data-type='method'><a href="Tools.html#.nps">nps</a></li><li data-type='method'><a href="Tools.html#.prettier">prettier</a></li><li data-type='method'><a href="Tools.html#.remove">remove</a></li><li data-type='method'><a href="Tools.html#.rename">rename</a></li><li data-type='method'><a href="Tools.html#.rollup">rollup</a></li><li data-type='method'><a href="Tools.html#.series">series</a></li><li data-type='method'><a href="Tools.html#.serve">serve</a></li><li data-type='method'><a href="Tools.html#.tsc">tsc</a></li><li data-type='method'><a href="Tools.html#.tsNode">tsNode</a></li><li data-type='method'><a href="Tools.html#.typedoc">typedoc</a></li></ul></li><li></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Public</h1>
+    
+
+    
+
+
+
+
+<section>
+
+<header>
+    
+        <h2>
+            <span class="ancestors"><a href="API.html">API</a>.</span>
+        
+        Public
+        </h2>
+        
+    
+</header>
+
+<article>
+    
+        <div class="container-overview">
+        
+            
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:alanrodas@gmail.com">Alan Rodas Bonjour</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+            
+                <div class="description usertext"><p>The API contains a set of</p></div>
+            
+
+            
+        
+        </div>
+    
+
+    
+
+    
+
+    
+    
+    
+
+     
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id=".create"><span class="type-signature">(static) </span>create<span class="signature">(projectName, projectType<span class="signature-attributes">opt</span>, packageManager<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Create a new library project in a subfolder with the given name.
+This includes creating all the required and recommended style files
+define a package.json, git configuration files, visual studio code
+files, NPM configuration files, contribution guidelines, a readme,
+a license (MIT by default), install all dependencies, and initialize
+a git repository.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>projectName</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The name of the project to be created.</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>projectType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>library</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The project type to create (Defaults to <code>&quot;library&quot;</code>).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>packageManager</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The package manager to use when downloading dependencies.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+<ul>
+        <li>
+
+    <div class="param-desc usertext">
+    
+        <p>If the argument for projectType or packageManager is invalid.</p>
+    
+    </div>
+
+</li>
+    
+        <li>
+
+    <div class="param-desc usertext">
+    
+        <p>If there's already a folder with the project name, or the folder is not empty.</p>
+    
+    </div>
+
+</li>
+    </ul>
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".eject"><span class="type-signature">(static) </span>eject<span class="signature">(force<span class="signature-attributes">opt</span>, file, projectType<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Eject all the general configuration files to the root project.
+This includes configuration files for Typescript, Typedoc, JEST,
+Rollup, and nps. This command is intended to be run locally. If
+<strong>force</strong> is added, all previously created local files are updated
+to their latest version. If not, only missing files are copied.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>force</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Wether to force the ejection of files, that is,
+override already present files in the project with their newest version
+(Defaults to <code>false</code>).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>all</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The file name to update, or &quot;all&quot; if all should be updated (Defaults to <code>&quot;all&quot;</code>).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>projectType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>library</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The project type to eject from (Defaults to <code>&quot;library&quot;</code>).</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The list of updated files.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".init"><span class="type-signature">(static) </span>init<span class="signature">(projectType<span class="signature-attributes">opt</span>, packageManager<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>The same as create, but runs on the local folder as a project.
+That is, initialize a project in the given folder, which default
+to the root. Note that the folder must be empty in order to
+initialize a project in the folder.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>projectType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>library</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The project type to initialize (Defaults to <code>&quot;library&quot;</code>).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>packageManager</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The package manager to use when downloading dependencies.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Throws:</h5>
+
+        
+
+    <div class="param-desc usertext">
+    
+        <p>If the current folder is not empty.</p>
+    
+    </div>
+
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".run"><span class="type-signature">(static) </span>run<span class="signature">(command<span class="signature-attributes">opt</span>, userArgs<span class="signature-attributes">opt</span>, projectType<span class="signature-attributes">opt</span>, packageManager<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Run a command using <strong>nps</strong>. nps allows to run different scripts
+configured, such as scripts for linting, prettyfing, testing,
+generating documentation, running in development mode, and others.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>command</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The nps command to execute</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>userArgs</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;string></span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The nps command additional arguments</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>projectType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>library</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The project type to use as configuration (Defaults to <code>&quot;library&quot;</code>).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>packageManager</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"><p>The package manager to use when running commands.</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The list of updated files.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id=".update"><span class="type-signature">(static) </span>update<span class="signature">(force<span class="signature-attributes">opt</span>, file, projectType<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Array.&lt;string>}</span></h4>
+
+    
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+<div class="description usertext">
+    <p>Override the missing configuration files that are created on
+an <strong>init</strong> or <strong>create</strong> command on the local project. This
+is intended to be run locally, on an already created project,
+to update the configuration. By appending <strong>force</strong> as a
+subcommand, all files are updated to their latest version.</p>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>force</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>false</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>Wether to force the update of files, that is,
+override already present files in the project with their newest version
+(Defaults to <code>false</code>).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>file</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>all</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The file name to update, or &quot;all&quot; if all should be updated (Defaults to <code>&quot;all&quot;</code>).</p></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>projectType</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    <code>library</code>
+                
+                </td>
+            
+
+            <td class="description last"><p>The project type to update from (Defaults to <code>&quot;library&quot;</code>).</p></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    <p>The list of updated files.</p>
+</div>
+
+
+
+<dl class="param-type">
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;string></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
+
+
+
+
+    
+    
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.11</a> on Sun Aug 28 2022 17:14:44 GMT-0300 (hora estándar de Argentina) using the <a href="https://github.com/clenemt/docdash">docdash</a> theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/polyfill.js"></script>
+<script src="scripts/linenumber.js"></script>
+
+
+
+</body>
+</html>
