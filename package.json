@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": "https://github.com/gobstones/gobstones-scripts",
   "homepage": "https://gobstones.github.io/gobstones-scripts",
@@ -49,6 +49,7 @@
     "commander": "^9.4.0",
     "concurrently": "^7.4.0",
     "cpy-cli": "^4.2.0",
-    "figlet": "^1.5.2"
+    "figlet": "^1.5.2",
+    "tsconfig.js": "^3.0.0"
   }
 }
