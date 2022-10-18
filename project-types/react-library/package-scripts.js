@@ -54,7 +54,11 @@ const defaultConfiguration = {
                 tools.nps('clean.docs'),
                 'build-storybook --output-dir docs'
             ),
-            description: 'Run Typedoc and generate docs',
+            description: 'Generate a static storybook as documentation for the exported components',
+            serve: {
+                script: tools.series(tools.nps('doc'), tools.serve('./docs')),
+                description: 'Generate a static storybook as documentation for the exported components, then serve the docs as HTML',
+            },
         },
 
         clean: {

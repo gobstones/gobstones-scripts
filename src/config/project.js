@@ -39,7 +39,7 @@ const managers = ['npm', 'yarn', 'pnpm'];
  * @static
  * @memberof Config.Project
  */
-const version = '0.2.3';
+const version = '0.2.4';
 
 module.exports = {
     project: {

@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": "https://github.com/gobstones/gobstones-scripts",
   "homepage": "https://gobstones.github.io/gobstones-scripts",
@@ -27,16 +27,23 @@
   "scripts": {
     "prepare": "husky install",
     "start": "nps",
+    "dev": "echo \"Cannot run this tool in this way.\"",
     "test": "echo \"No tests provided, this tool is tested manually for now.\"",
     "build": "echo \"This tool does not run on itself. Nothing to do.\"",
-    "dev": "nps dev",
     "doc": "nps doc",
+    "lint": "nps lint",
     "prettify": "nps prettier"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.1",
     "@types/rimraf": "^3.0.2",
     "docdash": "^1.2.0",
+    "eslint": "^8.25.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-no-null": "^1.0.2",
+    "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^4.2.1",
     "husky": "^8.0.1",
     "jsdoc": "^3.6.11",
     "node-dev": "^7.4.3",
@@ -52,6 +59,7 @@
     "cpy-cli": "^4.2.0",
     "figlet": "^1.5.2",
     "fs-extra": "^10.1.0",
+    "rimraf": "^3.0.2",
     "tsconfig.js": "^3.0.0"
   }
 }

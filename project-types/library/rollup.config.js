@@ -1,12 +1,10 @@
 /* eslint-disable */
 import commonjs from '@rollup/plugin-commonjs';
-import pluginSizes from 'rollup-plugin-sizes';
-import { terser } from 'rollup-plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 
+const config = require('../../src/api').config();
+
 // Expected arguments:
-// configMinify (boolean: default undefined)
-// configShowSizes (boolean: default undefined)
 export default (commandLineArgs) => [
     {
         input: 'src/index.ts',
@@ -19,10 +17,8 @@ export default (commandLineArgs) => [
         ],
         preserveSymlinks: true,
         plugins: [
-            typescript(),
-            commonjs(),
-            commandLineArgs.configMinify && terser(),
-            commandLineArgs.configShowSizes && pluginSizes()
+            typescript({ tsconfig: config.tsConfigFile }),
+            commonjs()
         ],
         external: [/@gobstones\/.*/]
     },
@@ -38,14 +34,13 @@ export default (commandLineArgs) => [
         preserveSymlinks: true,
         plugins: [
             typescript({
+                tsconfig: config.tsConfigFile,
                 declaration: false,
                 declarationMap: false,
                 declarationDir: undefined
             }),
-            commonjs(),
-            commandLineArgs.configMinify && terser(),
-            commandLineArgs.configShowSizes && pluginSizes()
+            commonjs()
         ],
-        external: [/@gobstones\/.*/]
+        external: [/@gobstones\/./]
     }
 ];

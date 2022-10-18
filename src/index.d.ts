@@ -1,3 +1,4 @@
+/* eslint-disable */
 export declare type gobstones_scripts = {
     create: (projectName: string) => void;
     init: () => void;

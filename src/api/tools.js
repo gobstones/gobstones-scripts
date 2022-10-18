@@ -104,7 +104,8 @@ function rollup(options) {
     options = options || {};
     return (
         `rollup --config ${config.files.rollup}` +
-        (options.watch ? ` --watch ${options.watch}` : '')
+        (options.watch ? ` --watch ${options.watch}` : '') +
+        ' --bundleConfigAsCjs'
     );
 }
 
@@ -132,7 +133,6 @@ function jest(options) {
         (options.noThreshold ? ' --coverageThreshold "{}" ' : '') +
         (options.watch ? ' --watch' : '');
     const jestStringBase = `jest --config ${config.files.jest} --rootDir ${config.root}`;
-    return jestStringBase;
     // Only for POSIX Based OSes, if a test file (withing test folder and ending in .test.ts)
     // contains the .only key, run exclusively that file, else, run all files as default behavior.
     // This fixes the ugly behavior of jest running all tests always, even on .only.
@@ -178,6 +178,7 @@ function typedoc(options) {
  * @param {object} options
  * @param {string} options.files The files to lint, may be a glob pattern.
  * @param {boolean} [options.fix] Wether to fix the encountered error when possible.
+ * @param {string} [options.extensions] The extensions to consider (comma separated list).
  *
  * @example eslint({files: './src/** /*' })
  * @example eslint({ files: './src/** /*', fix: true })
@@ -194,10 +195,12 @@ function eslint(options) {
                 {
                     files: string   // The files to lint, may be a glob pattern
                     fix?: boolean  //Wether to fix the encountered error when possible
+                    extensions?: string // The extensions to consider
                 }`);
     }
+    options.extensions = options.extensions || 'js,jsx,ts,tsx';
     return (
-        `eslint ${options.files} --format stylish --ext js,jsx,ts,tsx --color` +
+        `eslint ${options.files} --format stylish --ext ${options.extensions} --color` +
         (options.fix ? ' --fix' : '')
     );
 }

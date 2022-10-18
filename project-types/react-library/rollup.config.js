@@ -6,7 +6,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 const packageJson = require('./package.json');
-const config = require('@gobstones/gobstones-scripts').config();
+const config = require('../../src/api').config();
 
 export default [
     {
@@ -28,7 +28,7 @@ export default [
     {
         input: 'dist/esm/index.d.ts',
         output: [{ file: 'dist/typings/index.d.ts', format: 'esm' }],
-        plugins: [dts()],
+        plugins: [dts.default()],
         external: [/\.(css|less|scss)$/]
     }
 ];
