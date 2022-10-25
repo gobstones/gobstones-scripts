@@ -6,11 +6,11 @@ const config = require('../../src/api').config();
 
 module.exports = {
     preset: 'ts-jest',
-    globals: {
-        'ts-jest': {
+    transform: {
+        "^.+\\.tsx?$": ['ts-jest', {
             tsconfig: config.tsConfigFile,
             importHelpers: true
-        }
+        }],
     },
     coverageReporters: ['text', 'html'],
     coverageThreshold: {

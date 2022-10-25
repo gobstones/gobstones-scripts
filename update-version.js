@@ -13,7 +13,7 @@ function replaceVersionInPackageJson(newVersion) {
 }
 
 function replaceVersionInConfig(newVersion) {
-    replaceInTextFile('./src/config/project.js', /const version = '.*';/g, `const version = '${newVersion}'`);
+    replaceInTextFile('./src/config/project.js', /const version = '.*'/g, `const version = '${newVersion}'`);
 }
 
 function replaceVersionInProjectPackageJson(projectName, newVersion) {

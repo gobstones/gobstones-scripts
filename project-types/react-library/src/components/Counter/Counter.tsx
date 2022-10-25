@@ -28,7 +28,7 @@ const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => 
         <button
             onClick={() => {
                 setCount(count + 1);
-                props.onCountChange?.apply(count);
+                props.onCountChange?.apply(props.onCountChange, [count + 1]);
             }}
         >
             {props.label.replace('{count}', count.toString())}

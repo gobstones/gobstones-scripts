@@ -20,6 +20,7 @@ const files = {
     init: {
         src: { folders: ['src'], isCommon: false },
         test: { folders: ['test'], isCommon: false },
+        stories: { folders: ['stories'], isCommon: false },
         changelog: { files: ['CHANGELOG.md'], isCommon: true },
         'package.json': { files: ['package.json'], isCommon: false },
         readme: { files: ['README.md'], isCommon: true }
