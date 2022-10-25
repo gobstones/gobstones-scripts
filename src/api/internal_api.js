@@ -37,27 +37,37 @@ function getGobstonesScriptsRootPath() {
             path.dirname(require.resolve('@gobstones/gobstones-scripts/package.json'))
         );
     } catch (e) {
-        let localPath;
-        let userPath;
-        let globalPath;
+        let npmLocalPath;
+        let npmUserPath;
+        let npmGlobalPath;
+        let pnpmLocalPath;
+        let pnpmGlobalPath;
         try {
-            localPath = childProcess.execSync('npm root --location=project').toString().trim();
-            userPath = childProcess.execSync('npm root --location=user').toString().trim();
-            globalPath = childProcess.execSync('npm root --location=global').toString().trim();
+            npmLocalPath = childProcess.execSync('npm root --location=project').toString().trim();
+            npmUserPath = childProcess.execSync('npm root --location=user').toString().trim();
+            npmGlobalPath = childProcess.execSync('npm root --location=global').toString().trim();
+            pnpmLocalPath = childProcess.execSync('pnpm root').toString().trim();
+            pnpmGlobalPath = childProcess.execSync('pnpm root --global').toString().trim();
         } catch {
             // nothing to do
         }
 
-        const localPackagePath = path.join(localPath || '', '@gobstones', 'gobstones-scripts');
-        const userPackagePath = path.join(userPath || '', '@gobstones', 'gobstones-scripts');
-        const globalPackagePath = path.join(globalPath || '', '@gobstones', 'gobstones-scripts');
+        const npmLocalPackagePath = path.join(npmLocalPath || '', '@gobstones', 'gobstones-scripts');
+        const npmUserPackagePath = path.join(npmUserPath || '', '@gobstones', 'gobstones-scripts');
+        const npmGlobalPackagePath = path.join(npmGlobalPath || '', '@gobstones', 'gobstones-scripts');
+        const pnpmLocalPackagePath = path.join(pnpmLocalPath || '', '@gobstones', 'gobstones-scripts');
+        const pnpmGlobalPackagePath = path.join(pnpmGlobalPath || '', '@gobstones', 'gobstones-scripts');
 
-        if (localPath && fs.existsSync(localPackagePath)) {
-            gobstonesScriptRootPath = localPackagePath;
-        } else if (userPath && fs.existsSync(userPackagePath)) {
-            gobstonesScriptRootPath = userPackagePath;
-        } else if (globalPath && fs.existsSync(globalPackagePath)) {
-            gobstonesScriptRootPath = globalPackagePath;
+        if (npmLocalPath && fs.existsSync(npmLocalPackagePath)) {
+            gobstonesScriptRootPath = npmLocalPackagePath;
+        } else if (npmUserPath && fs.existsSync(npmUserPackagePath)) {
+            gobstonesScriptRootPath = npmUserPackagePath;
+        } else if (npmGlobalPath && fs.existsSync(npmGlobalPackagePath)) {
+            gobstonesScriptRootPath = npmGlobalPackagePath;
+        } else if (pnpmLocalPath && fs.existsSync(pnpmLocalPackagePath)) {
+            gobstonesScriptRootPath = pnpmLocalPackagePath;
+        } else if (pnpmGlobalPath && fs.existsSync(pnpmGlobalPackagePath)) {
+            gobstonesScriptRootPath = pnpmGlobalPackagePath;
         } else {
             gobstonesScriptRootPath = path.join(
                 process.cwd(),
@@ -66,6 +76,9 @@ function getGobstonesScriptsRootPath() {
                 'gobstones-scripts'
             );
         }
+    }
+    if (!fs.existsSync(gobstonesScriptRootPath)) {
+        throw Error('cannot find script root');
     }
     return gobstonesScriptRootPath;
 }
@@ -211,6 +224,7 @@ function copyFilesFrom(fileDescriptors, projectType, overwrite = false) {
                 }
             }
         }
+
         for (let i = 0; i < sources.length; i++) {
             const nextSrc = sources[i];
             const nextDest = destinations[i];

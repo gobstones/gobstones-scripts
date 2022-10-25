@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 /* eslint-disable */
 const config = require('../../src/api').config();
 
