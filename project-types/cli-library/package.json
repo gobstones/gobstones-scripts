@@ -48,7 +48,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.2.0",
-    "@gobstones/gobstones-scripts": "^0.2.6",
+    "@gobstones/gobstones-scripts": "^0.3.0",
     "@markforged/nps": "^5.11.2",
     "@rollup/plugin-commonjs": "^23.0.0",
     "@rollup/plugin-node-resolve": "^15.0.0",
