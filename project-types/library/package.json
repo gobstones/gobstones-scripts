@@ -33,7 +33,7 @@
     "gbs": "gobstones-scripts"
   },
   "dependencies": {
-    "@gobstones/gobstones-core": "^0.3.3"
+    "@gobstones/gobstones-core": "^0.3.7"
   },
   "devDependencies": {
     "@jest/globals": "^29.2.0",
