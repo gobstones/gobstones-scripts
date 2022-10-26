@@ -157,3 +157,7 @@ executing through a package manager.
 So if you run, i.e. `pnpm start` instead of `npm start` the tool detects **pnpm** as your package manager, and replaces all internal usages of **npm install** to **pnpm install** and **npx** to **pnpm exec**. The same goes for yarn.
 
 By default, **npm** is used, and there is no way to configure this as a forced option to do otherwise just yet.
+
+## Contributing
+
+See the [Gobstones Platform Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.

@@ -37,4 +37,4 @@ If your library supports CLI, explain how to use it. Else, you may delete this s
 
 ## Contributing
 
-See the [Gobstones Platform Contributions Guidelines]((https://dev.gobstones.org/contribution-guidelines)) to contribute.
+See the [Gobstones Platform Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.
