@@ -28,11 +28,11 @@
     "prepare": "husky install",
     "start": "nps",
     "dev": "echo \"Cannot run this tool in this way.\"",
-    "test": "echo \"No tests provided, this tool is tested manually for now.\"",
+    "test": "nps lint",
     "build": "echo \"This tool does not run on itself. Nothing to do.\"",
     "doc": "nps doc",
     "lint": "nps lint",
-    "prettify": "nps prettier"
+    "prettier": "nps prettier"
   },
   "devDependencies": {
     "@types/common-tags": "^1.8.1",

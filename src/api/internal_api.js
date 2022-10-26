@@ -52,11 +52,27 @@ function getGobstonesScriptsRootPath() {
             // nothing to do
         }
 
-        const npmLocalPackagePath = path.join(npmLocalPath || '', '@gobstones', 'gobstones-scripts');
+        const npmLocalPackagePath = path.join(
+            npmLocalPath || '',
+            '@gobstones',
+            'gobstones-scripts'
+        );
         const npmUserPackagePath = path.join(npmUserPath || '', '@gobstones', 'gobstones-scripts');
-        const npmGlobalPackagePath = path.join(npmGlobalPath || '', '@gobstones', 'gobstones-scripts');
-        const pnpmLocalPackagePath = path.join(pnpmLocalPath || '', '@gobstones', 'gobstones-scripts');
-        const pnpmGlobalPackagePath = path.join(pnpmGlobalPath || '', '@gobstones', 'gobstones-scripts');
+        const npmGlobalPackagePath = path.join(
+            npmGlobalPath || '',
+            '@gobstones',
+            'gobstones-scripts'
+        );
+        const pnpmLocalPackagePath = path.join(
+            pnpmLocalPath || '',
+            '@gobstones',
+            'gobstones-scripts'
+        );
+        const pnpmGlobalPackagePath = path.join(
+            pnpmGlobalPath || '',
+            '@gobstones',
+            'gobstones-scripts'
+        );
 
         if (npmLocalPath && fs.existsSync(npmLocalPackagePath)) {
             gobstonesScriptRootPath = npmLocalPackagePath;

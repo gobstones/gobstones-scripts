@@ -50,7 +50,7 @@ const defaultConfiguration = {
         },
 
         prettier: {
-            script: tools.prettier({ files: './src/{**,.}/*.ts' }),
+            script: tools.prettier({ files: './src/{**,.}/*.js' }),
             description: 'Run Prettier on all the files, writing the results'
         }
     }
