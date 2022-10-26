@@ -21,7 +21,7 @@ const defaultConfiguration = {
         },
 
         test: {
-            script: tools.series(/*tools.nps('clean.coverage'), tools.nps('lint'), */ tools.jest({ coverage: true })),
+            script: tools.series(tools.nps('clean.coverage'), tools.nps('lint'), tools.jest({ coverage: true })),
             description: 'Run the tests, including linting',
             watch: {
                 script: tools.series(tools.jest({ coverage: true, watch: true })),
