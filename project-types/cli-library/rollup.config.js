@@ -56,7 +56,7 @@ export default (commandLineArgs) => [
         preserveSymlinks: true,
         plugins: [
             nodeResolve({ preferBuiltins: true }),
-            typescript(),
+            typescript({ tsconfig: config.tsConfigFile }),
             commonjs(),
             commandLineArgs.configMinify && terser(),
             commandLineArgs.configShowSizes && pluginSizes()
