@@ -1,16 +1,16 @@
 /* eslint-disable */
-const config = require('../../src/api').config();
+const config = require('../../src/api').config;
 
 module.exports = {
     "compilerOptions": {
         "target": "es2015",
-        "rootDir": config.root + "/src",
+        "rootDir": config.projectRootPath + "/src",
         "esModuleInterop": true,
         "allowJs": true,
         "sourceMap": true,
         "declaration": true,
         "declarationMap": true,
-        "declarationDir": config.root + "/dist/typings",
+        "declarationDir": config.projectRootPath + "/dist/typings",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "stripInternal": true,
@@ -21,6 +21,6 @@ module.exports = {
         "module": "ESNext"
     },
     "include": [
-        config.root + "/src/**/*"
+        config.projectRootPath + "/src/**/*"
     ]
 }

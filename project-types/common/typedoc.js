@@ -1,21 +1,21 @@
 /* eslint-disable */
-const config = require('../../src/api').config();
+const config = require('../../src/api').config;
 
 module.exports = {
     "entryPoints": [
-        config.root + "/src"
+        config.projectRootPath + "/src"
     ],
-    "tsconfig": config.tsConfigFile,
+    "tsconfig": config.configurationFiles[config.loadedOptions.type].tsConfigFile,
     "compilerOptions": {
-        "rootDir": config.root + '/src',
+        "rootDir": config.projectRootPath + '/src',
     },
     "entryPointStrategy": "expand",
-    "out": config.root + "/docs",
-    "includes": config.root + "/src",
+    "out": config.projectRootPath + "/docs",
+    "includes": config.projectRootPath + "/src",
     "exclude": [
-        config.root + "/**/*.test.ts",
-        config.root +  "/src/index.ts",
-        config.root +  "/node_modules/**/*"
+        config.projectRootPath + "/**/*.test.ts",
+        config.projectRootPath +  "/src/index.ts",
+        config.projectRootPath +  "/node_modules/**/*"
     ],
     "includeVersion": true,
     "categorizeByGroup": true,

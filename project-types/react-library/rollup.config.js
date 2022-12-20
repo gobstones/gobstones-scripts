@@ -6,7 +6,7 @@ import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
 const packageJson = require('./package.json');
-const config = require('../../src/api').config();
+const config = require('../../src/api').config;
 
 const dts = typeof dtsImport === 'function' ? dtsImport : dtsImport.default;
 
@@ -25,7 +25,7 @@ export default [
                 sourcemap: true
             }
         ],
-        plugins: [resolve(), commonjs(), typescript({ tsconfig: config.tsConfigFile }), postcss()]
+        plugins: [resolve(), commonjs(), typescript({ tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile }), postcss()]
     },
     {
         input: 'dist/esm/index.d.ts',

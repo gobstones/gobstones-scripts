@@ -1,14 +1,10 @@
-const fs = require('fs');
-const path = require('path');
-
-/* eslint-disable */
-const config = require('../../src/api').config();
+const config = require('../../src/api').config;
 
 module.exports = {
     preset: 'ts-jest',
     transform: {
         "^.+\\.tsx?$": ['ts-jest', {
-            tsconfig: config.tsConfigFile,
+            tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
             importHelpers: true
         }],
     },

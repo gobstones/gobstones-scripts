@@ -6,7 +6,7 @@ const process = require('process');
 const figlet = require('figlet');
 const chalk = require('ansi-colors');
 const path = require('path');
-const { project } = require('../config');
+const config = require('../config');
 
 /**
  * Returns the gobstones-scripts banner that will be printed in CLI.
@@ -36,7 +36,7 @@ function banner() {
  * @memberof CLI.Helpers
  */
 function welcome() {
-    return `Welcome to gobstones-scripts version ${project.version}`;
+    return `Welcome to gobstones-scripts version ${config.version}`;
 }
 
 /**
@@ -57,6 +57,13 @@ function display(msg, style) {
     console.log(msg);
 }
 
+function displayWelcomeForAction(message) {
+    display(banner());
+    display(welcome());
+    display('');
+    display(message);
+    display('');
+}
 /**
  * Run a function and print an error message if it fails.
  * The action is expected to be executed and produce an error with a given
@@ -75,8 +82,8 @@ function runOrEnd(action, errorsAndMessages) {
         action();
     } catch (e) {
         for (const errorAndMessage of errorsAndMessages) {
-            if (e === errorAndMessage.error) {
-                display(errorAndMessage.msg, 'bgRed');
+            if (e.message === errorAndMessage.error) {
+                display(`ERROR: ${errorAndMessage.msg}`, 'bgRed');
                 process.exit(1);
             }
         }
@@ -96,32 +103,31 @@ function runOrEnd(action, errorsAndMessages) {
  * @static
  * @memberof CLI.Helpers
  */
-function printConfigurationIfOptionGiven(options, configuration, projectType) {
-    if (options.config) {
-        display(
-            `The detected root folder is:\n\t${chalk.blue(configuration.root)}\n\n` +
-                `The detected gobstones scripts root folder is:\n\t${chalk.blue(
-                    configuration.package
-                )}\n`
-        );
-        if (configuration.options && Object.keys(configuration.options).length > 0) {
-            display(`Detected a package json at the root folder. Loaded configuration includes:`);
-            for (const option of Object.keys(configuration.options)) {
-                display(`\t${option}: ${chalk.blue(configuration.options[option])}`);
-            }
-            display('');
-        }
-        const useAbsolute = configuration.options['absolutePaths'];
-        if (projectType || (configuration.options && configuration.options.type)) {
-            display(`The files to use as configuration are:`);
-            for (const file in configuration.files) {
-                const filePath = useAbsolute
-                    ? configuration.files[file]
-                    : path.relative(configuration.root, configuration.files[file]);
-                display(`\t${file}: ${chalk.blue(filePath)}`);
-            }
-        }
-        process.exit(0);
+function printConfiguration() {
+    display(
+        `The project configuration is:\n` +
+            `\tProject type:    ${chalk.blue(config.loadedOptions.type)}` +
+            `\t(${config.loadedOptions.status.type})\n` +
+            `\tProject manager: ${chalk.blue(config.loadedOptions.manager)}` +
+            `\t\t(${config.loadedOptions.status.manager})\n`
+    );
+    display(
+        `The detected root folder is:\n\t${chalk.blue(config.projectRootPath)}\n\n` +
+            `The detected gobstones scripts root folder is:\n\t${chalk.blue(
+                config.gobstonesScriptProjectPath
+            )}\n`
+    );
+
+    const useAbsolute = config.useAbsolutePaths;
+
+    const configFiles = (config.configurationFiles || [])[config.loadedOptions.type];
+
+    display(`The files to use as configuration are:\n`);
+    for (const file in configFiles) {
+        const filePath = useAbsolute
+            ? configFiles[file]
+            : path.relative(config.projectRootPath, configFiles[file]);
+        display(`\t${file}: ${chalk.blue(filePath)}`);
     }
 }
 
@@ -129,7 +135,7 @@ module.exports = {
     banner,
     welcome,
     display,
-    version: project.version,
+    displayWelcomeForAction,
     runOrEnd,
-    printConfigurationIfOptionGiven
+    printConfiguration
 };

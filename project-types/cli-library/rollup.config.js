@@ -3,7 +3,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 
-const config = require('../../src/api').config();
+const config = require('../../src/api').config;
 
 // Expected arguments:
 export default (commandLineArgs) => [
@@ -18,7 +18,7 @@ export default (commandLineArgs) => [
         ],
         preserveSymlinks: true,
         plugins: [
-            typescript({ tsconfig: config.tsConfigFile }),
+            typescript({ tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile }),
             commonjs()
         ],
         external: [/@gobstones\/.*/]
@@ -35,7 +35,7 @@ export default (commandLineArgs) => [
         preserveSymlinks: true,
         plugins: [
             typescript({
-                tsconfig: config.tsConfigFile,
+                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
                 declaration: false,
                 declarationMap: false,
                 declarationDir: undefined
@@ -56,7 +56,7 @@ export default (commandLineArgs) => [
         preserveSymlinks: true,
         plugins: [
             nodeResolve({ preferBuiltins: true }),
-            typescript({ tsconfig: config.tsConfigFile }),
+            typescript({ tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile }),
             commonjs(),
             commandLineArgs.configMinify && terser(),
             commandLineArgs.configShowSizes && pluginSizes()
