@@ -9,25 +9,12 @@ const defaultConfiguration = {
         doc: {
             script: tasks.serially(
                 tasks.nps('clean.docs'),
-                tasks.typedoc(),
-                tasks.copy({ src: './docs/index.html', dest: './docs/globals.html' })
+                'jsdoc -c ./jsdoc.js'
             ),
             description: 'Run JSDocs and generate docs',
-            watch: {
-                script: tasks.serially(tasks.nps('doc'), tasks.typedoc({ watch: true })),
-                description: 'Run Typedoc and generate docs and watch for changes.'
-            },
             serve: {
                 script: tasks.serially(tasks.nps('doc'), tasks.serve('./docs')),
                 description: 'Run Typedoc and generate docs, then serve the docs as HTML',
-                watch: {
-                    script: tasks.serially(
-                        tasks.nps('doc'),
-                        tasks.concurrently(tasks.typedoc({ watch: true }), tasks.serve('./docs'))
-                    ),
-                    description:
-                        'Run Typedoc and generate docs and watch for changes while serving the docs as HTML'
-                }
             }
         },
 

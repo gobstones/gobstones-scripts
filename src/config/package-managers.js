@@ -1,3 +1,11 @@
+/**
+ * This module contains the configuration pertaining
+ * the different package managers the tool supports.
+ *
+ * @internal
+ * @namespace Config.PackageManager
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ */
 const childProcess = require('child_process');
 
 /**
@@ -7,9 +15,9 @@ const childProcess = require('child_process');
  *
  * @internal
  * @static
- * @memberof Config.Project
+ * @memberof Config.PackageManager
  */
-const packageManagers = ['npm', 'yarn', 'pnpm'];
+const packageManagers = ['npm', 'yarn'];
 
 /**
  * The configuration of the `npm` package manager
@@ -18,7 +26,7 @@ const packageManagers = ['npm', 'yarn', 'pnpm'];
  *
  * @internal
  * @static
- * @memberof Config.Project
+ * @memberof Config.PackageManager
  */
 const npm = {
     install: 'npm install',
@@ -34,7 +42,7 @@ const npm = {
  *
  * @internal
  * @static
- * @memberof Config.Project
+ * @memberof Config.PackageManager
  */
 const pnpm = {
     install: 'pnpm install',
@@ -50,7 +58,7 @@ const pnpm = {
  *
  * @internal
  * @static
- * @memberof Config.Project
+ * @memberof Config.PackageManager
  */
 const yarn = {
     install: 'yarn install',
@@ -71,7 +79,8 @@ let currentPackageManager;
  * @returns {string}
  *
  * @static
- * @memberof API.Internal
+ * @internal
+ * @memberof Config.PackageManager
  */
 function getPackageManager() {
     if (currentPackageManager) return currentPackageManager;

@@ -1,3 +1,12 @@
+/**
+ * This module will autodetect the configurations pertaining
+ * the folders used by the tool, both the project's main folder
+ * and the tool's folder.
+ *
+ * @internal
+ * @namespace Config.Paths
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ */
 const fs = require('fs-extra');
 const process = require('process');
 const childProcess = require('child_process');
@@ -16,7 +25,8 @@ let gobstonesScriptRootPath;
  * @returns {string}
  *
  * @static
- * @memberof API.Internal
+ * @internal
+ * @memberof Config.Paths
  */
 function getProjectRootPath() {
     // Return if previously calculated
@@ -57,7 +67,8 @@ getProjectRootPath();
  * @returns {string}
  *
  * @static
- * @memberof API.Internal
+ * @internal
+ * @memberof Config.Paths
  */
 function getGobstonesScriptsRootPath() {
     // Return if previously calculated

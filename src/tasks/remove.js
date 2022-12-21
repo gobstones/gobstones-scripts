@@ -12,7 +12,7 @@ const runBin = require('./runBin');
  * @returns {string}
  *
  * @static
- * @memberof API.Tools
+ * @memberof API.Tasks
  */
 function remove(options) {
     options = options || {};
@@ -32,6 +32,10 @@ function remove(options) {
  *   learn more from http://npm.im/rimraf
  *
  * @return {string} - the command with the rimraf binary
+ *
+ * @internal
+ * @static
+ * @memberof API.Tasks
  */
 function rimraf(args) {
     return `${runBin('rimraf')} ${args}`;

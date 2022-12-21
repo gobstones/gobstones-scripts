@@ -1,3 +1,12 @@
+/**
+ * This module contains the configuration pertaining the data loaded
+ * from the "package.json" file on the main project, as well as defaulted
+ * or auto-detected data in case that is not given.
+ *
+ * @internal
+ * @namespace Config.PackageJSONOptions
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ */
 const path = require('path');
 const fs = require('fs-extra');
 const paths = require('./paths');
@@ -5,6 +14,16 @@ const packageManagers = require('./package-managers');
 
 let loadedOptions;
 
+/**
+ * Loads the options from package.json, or autodetect or
+ * defaults.
+ *
+ * @type {object}
+ *
+ * @static
+ * @internal
+ * @memberof Config.PackageJSONOptions
+ */
 function optionsFormPackageJson(root) {
     // Return if previously calculated
     if (loadedOptions) {

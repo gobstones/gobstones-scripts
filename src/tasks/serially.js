@@ -6,6 +6,9 @@
  * // returns 'eslint && jest && webpack --env.production'
  * series('eslint', 'jest', 'webpack --env.production')
  * @return {string} - the command that will execute the given scripts in series
+ *
+ * @static
+ * @memberof API.Tasks
  */
 function serially(...scripts) {
     const scriptsLen = scripts.length;

@@ -14,7 +14,7 @@ const { stripIndent } = require('common-tags');
  * @returns {string}
  *
  * @static
- * @memberof API.Tools
+ * @memberof API.Tasks
  */
 function tsNode(options) {
     options = options || {};
@@ -26,8 +26,9 @@ function tsNode(options) {
                 }`);
     }
     return (
-        `${runBin('ts-node-dev')} ${options.file} --project ${config.configurationFiles[config.loadedOptions.type].tsConfigFile}` +
-        (options.watch ? ` --watch ${options.watch}` : ' --ignore-watch')
+        `${runBin('ts-node')} ${options.file} --project ${
+            config.configurationFiles[config.loadedOptions.type].tsConfigFile
+        }` + (options.watch ? ` --watch ${options.watch}` : ' --ignore-watch')
     );
 }
 module.exports = tsNode;

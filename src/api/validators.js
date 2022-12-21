@@ -1,6 +1,9 @@
 /**
- * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ * Some validator's that are used by both the API and the CLI.
+ *
+ * @internal
  * @namespace API.Validator
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 
 const { exit } = require('process');
@@ -16,6 +19,8 @@ const { display } = require('../cli/cli_helpers');
  *
  * @returns {string}
  *
+ * @static
+ * @internal
  * @memberof API.Validator
  */
 function invalidValueForOption(option, value, available) {
@@ -37,6 +42,9 @@ function invalidValueForOption(option, value, available) {
  * @param {Array.<string>} values The available values to choose from.
  *
  * @returns {boolean}
+ *
+ * @static
+ * @internal
  * @memberof API.Validator
  */
 function isValidOption(value, values) {
@@ -53,6 +61,7 @@ function isValidOption(value, values) {
  * @throws {string} if the value if not one of the available ones.
  *
  * @static
+ * @internal
  * @memberof API.Validator
  */
 function failIfArgumentInvalid(value, option, values) {
@@ -71,6 +80,7 @@ function failIfArgumentInvalid(value, option, values) {
  * @throws {string} if the value if not one of the available ones.
  *
  * @static
+ * @internal
  * @memberof API.Validator
  */
 function failIfOptionInvalid(options, optionName, values) {

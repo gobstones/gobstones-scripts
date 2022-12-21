@@ -1,6 +1,9 @@
 /**
- * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ * Some helper functions for the CLI program application.
+ *
+ * @internal
  * @namespace CLI.Helpers
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 const process = require('process');
 const figlet = require('figlet');
@@ -14,6 +17,7 @@ const config = require('../config');
  * @returns {string}
  *
  * @static
+ * @internal
  * @memberof CLI.Helpers
  */
 function banner() {
@@ -33,6 +37,7 @@ function banner() {
  * @returns {string}
  *
  * @static
+ * @internal
  * @memberof CLI.Helpers
  */
 function welcome() {
@@ -47,6 +52,7 @@ function welcome() {
  * @param {string} style The style to use when printing the message.
  *
  * @static
+ * @internal
  * @memberof CLI.Helpers
  */
 function display(msg, style) {
@@ -75,6 +81,7 @@ function displayWelcomeForAction(message) {
  *      possible error messages as keys and messages to output to the user as values.
  *
  * @static
+ * @internal
  * @memberof CLI.Helpers
  */
 function runOrEnd(action, errorsAndMessages) {
@@ -101,6 +108,7 @@ function runOrEnd(action, errorsAndMessages) {
  *      print additional configuration if needed.
  *
  * @static
+ * @internal
  * @memberof CLI.Helpers
  */
 function printConfiguration() {

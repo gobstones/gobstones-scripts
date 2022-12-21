@@ -7,7 +7,7 @@ const defaultConfiguration = {
         default: tasks.nps('help'),
 
         dev: {
-            script: 'start-storybook -p 3001',
+            script: tasks.storybook.start({port: 3001}),
             description: 'Run a storybook webpage with the component'
         },
 
@@ -38,10 +38,10 @@ const defaultConfiguration = {
                 watch: {
                     script: tasks.serially(
                         tasks.nps('clean.coverage'),
-                        tasks.concurrently(
-                            tasks.jest({ coverage: true, noThreshold: true, watch: true }),
-                            tasks.serve('./coverage')
-                        )
+                        tasks.concurrently({
+                            jest: tasks.jest({ coverage: true, noThreshold: true, watch: true }),
+                            serve: tasks.serve('./coverage')
+                        })
                     ),
                     description:
                         'Run the tests with no linting, and wait for changes, and serve the coverage report'
@@ -52,7 +52,7 @@ const defaultConfiguration = {
         doc: {
             script: tasks.serially(
                 tasks.nps('clean.docs'),
-                'build-storybook --output-dir docs'
+                tasks.storybook.build({dir: 'docs'})
             ),
             description: 'Generate a static storybook as documentation for the exported components',
             serve: {

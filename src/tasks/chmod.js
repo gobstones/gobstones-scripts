@@ -12,7 +12,7 @@ const { stripIndent } = require('common-tags');
  * @returns {string}
  *
  * @static
- * @memberof API.Tools
+ * @memberof API.Tasks
  */
 function chmod(options) {
     options = options || {};

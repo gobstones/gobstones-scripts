@@ -1,4 +1,4 @@
-const config = require('../config');
+const config = require('../../config');
 const path = require('path');
 const fs = require('fs');
 
@@ -8,6 +8,10 @@ const fs = require('fs');
  * @param {string} binName=packageName - name of the script
  *
  * @returns {string} path, relative to process.cwd()
+ *
+ * @internal
+ * @static
+ * @memberof API.Tasks
  */
 function getBin(packageName, binName) {
     try {
@@ -15,7 +19,11 @@ function getBin(packageName, binName) {
         const packagePath = require.resolve(`${packageName}/package.json`);
         const concurrentlyDir = path.dirname(packagePath);
 
-        return getBinFile(packagePath, concurrentlyDir, packageName, binName);
+        const binFile = getBinFile(packagePath, concurrentlyDir, packageName, binName);
+        return {
+            binFile,
+            mode: 'node'
+        };
     } catch (e) {
         // if not found, attempt to find by searching the bin
         // folders of the currently running tool.
@@ -30,9 +38,27 @@ function getBin(packageName, binName) {
             );
             if (fs.existsSync(packageNamePath)) {
                 const concurrentlyDir = path.dirname(packageNamePath);
-                return getBinFile(packageNamePath, concurrentlyDir, packageName, binName);
+                const binFile = getBinFile(packageNamePath, concurrentlyDir, packageName, binName);
+                return {
+                    binFile,
+                    mode: 'node'
+                };
+            } else {
+                const binFile = path.join(
+                    config.projectRootPath,
+                    modulesFolder,
+                    '.bin',
+                    binName || packageName
+                );
+                if (fs.existsSync(binFile)) {
+                    return {
+                        binFile,
+                        mode: 'sh'
+                    };
+                }
             }
         }
+        return undefined;
     }
 }
 

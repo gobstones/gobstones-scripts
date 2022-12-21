@@ -42,10 +42,10 @@ const defaultConfiguration = {
                 watch: {
                     script: tasks.serially(
                         tasks.nps('clean.coverage'),
-                        tasks.concurrently(
-                            tasks.jest({ coverage: true, noThreshold: true, watch: true }),
-                            tasks.serve('./coverage')
-                        )
+                        tasks.concurrently({
+                            jest: tasks.jest({ coverage: true, noThreshold: true, watch: true }),
+                            serve: tasks.serve('./coverage')
+                        })
                     ),
                     description:
                         'Run the tests with no linting, and wait for changes, and serve the coverage report'
@@ -70,7 +70,10 @@ const defaultConfiguration = {
                 watch: {
                     script: tasks.serially(
                         tasks.nps('doc'),
-                        tasks.concurrently(tasks.typedoc({ watch: true }), tasks.serve('./docs'))
+                        tasks.concurrently({
+                            typedoc: tasks.typedoc({ watch: true }),
+                            serve: tasks.serve('./docs')
+                        })
                     ),
                     description:
                         'Run Typedoc and generate docs and watch for changes while serving the docs as HTML'

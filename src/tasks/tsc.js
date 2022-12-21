@@ -13,7 +13,7 @@ const runBin = require('./runBin');
  * @returns {string}
  *
  * @static
- * @memberof API.Tools
+ * @memberof API.Tasks
  */
 function tsc(options) {
     options = options || {};
@@ -23,7 +23,9 @@ function tsc(options) {
                     file: string   // The main file to run
                 }`);
     }
-    return `${runBin('tsc')}  --project ${config.configurationFiles[config.loadedOptions.type].tsConfigFile} ${options.file}`;
+    return `${runBin('tsc')}  --project ${
+        config.configurationFiles[config.loadedOptions.type].tsConfigFile
+    } ${options.file}`;
 }
 
 module.exports = tsc;

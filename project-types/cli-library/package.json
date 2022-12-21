@@ -28,8 +28,10 @@
       ]
     }
   },
+  "packageManager": "yarn@1.22.19",
   "gobstones-scripts": {
-    "type": "cli-library"
+    "type": "cli-library",
+    "manager": "yarn"
   },
   "scripts": {
     "prepare": "husky install",
@@ -40,14 +42,14 @@
     "test": "gobstones-scripts run test",
     "doc": "gobstones-scripts run doc",
     "lint": "gobstones-scripts run lint",
-    "prettify": "gobstones-scripts run prettier",
+    "prettify": "gobstones-scripts run prettify",
     "gbs": "gobstones-scripts"
   },
   "dependencies": {
     "@gobstones/gobstones-core": "^0.3.8"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.4.0-alpha1",
+    "@gobstones/gobstones-scripts": "^0.4.0-alpha2",
     "husky": "^8.0.2"
   }
 }

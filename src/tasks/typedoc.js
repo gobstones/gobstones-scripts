@@ -12,14 +12,15 @@ const runBin = require('./runBin');
  * @returns {string}
  *
  * @static
- * @memberof API.Tools
+ * @memberof API.Tasks
  */
 function typedoc(options) {
     options = options || {};
     return (
         `${runBin('typedoc')} --options ${
             config.configurationFiles[config.loadedOptions.type].typedoc
-        } --tsconfig ${config.configurationFiles[config.loadedOptions.type].tsConfigFile}` + (options.watch ? ` --watch ${options.watch}` : '')
+        } --tsconfig ${config.configurationFiles[config.loadedOptions.type].tsConfigFile}` +
+        (options.watch ? ` --watch ${options.watch}` : '')
     );
 }
 

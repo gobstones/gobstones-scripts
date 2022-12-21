@@ -33,9 +33,13 @@
     "gbs": "gobstones-scripts"
   },
   "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.4.0-alpha1",
+    "@gobstones/gobstones-scripts": "^0.4.0-alpha2",
+    "@types/react": "^18.0.26",
+    "@types/testing-library__jest-dom": "^5.14.5",
     "husky": "^8.0.2"
   }
 }

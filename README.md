@@ -143,8 +143,9 @@ as the package manager, which is included by default on your node
 installation.
 
 Nonetheless, _gobstones-scripts_ has been tested to work with
-**pnpm** too. Although not testedm it is expected to work with
-**yarn** too.
+**yarn** too. _gobstones-scripts_ relies on a flat *node_modules*,
+in order to hide away packages, so **pnpm** will not work with this
+tool.
 
 Some internal commands relay on calling **npm install** or **npx**,
 which are replace to their counterparts in other package managers if
@@ -154,9 +155,12 @@ To detect which package manager has been used, we relay on
 `npm_config_user_agent` environment variable, which is populated when
 executing through a package manager.
 
-So if you run, i.e. `pnpm start` instead of `npm start` the tool detects **pnpm** as your package manager, and replaces all internal usages of **npm install** to **pnpm install** and **npx** to **pnpm exec**. The same goes for yarn.
+So if you run, i.e. `yarn start` instead of `npm start` the tool detects **yarn** as your package manager, and replaces all internal usages of **npm install** to **yarn install**.
 
-By default, **npm** is used, and there is no way to configure this as a forced option to do otherwise just yet.
+By default, **npm** is used, although you can configure this by the
+**gobstones-scripts** key in your **package.json**.
+
+Support may change in the future once [https://nodejs.org/dist/latest/docs/api/corepack.html](corepack) gets out of the experimental state.
 
 ## Contributing
 

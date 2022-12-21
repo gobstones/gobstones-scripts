@@ -2,6 +2,11 @@
 const config = require('../../src/api').config;
 
 module.exports = {
+    "ts-node": {
+        "compilerOptions": {
+            "module": "commonjs"
+        }
+    },
     "compilerOptions": {
         "target": "es2015",
         "rootDir": config.projectRootPath + "/src",

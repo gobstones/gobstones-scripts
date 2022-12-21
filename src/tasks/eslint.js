@@ -16,7 +16,7 @@ const runBin = require('./runBin');
  * @returns {string}
  *
  * @static
- * @memberof API.Tools
+ * @memberof API.Tasks
  */
 function eslint(options) {
     options = options || {};

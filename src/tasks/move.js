@@ -15,7 +15,7 @@ const serially = require('./serially');
  * @returns {string}
  *
  * @static
- * @memberof API.Tools
+ * @memberof API.Tasks
  */
 function rename(options) {
     options = options || {};

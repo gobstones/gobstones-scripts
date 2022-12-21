@@ -1,17 +1,29 @@
 /**
+ * This module contains the configuration pertaining the data
+ * for all possible types of project the user may create with this tool.
+ *
+ * @internal
+ * @namespace Config.Projects
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ */
+
+/**
  * The name of all available project manager supported by the application.
  *
  * @type {object}
  *
- * @internal
  * @static
+ * @internal
  * @memberof Config.Project
  */
 const projectTypes = ['library', 'cli-library', 'react-library'];
 
 /**
- * Each library includes the files/folder it supports,
- * including where to find the file in the project folder.
+ * The library definition.
+ *
+ * @static
+ * @internal
+ * @memberof Config.Projects
  */
 const library = {
     // only on init
@@ -152,6 +164,13 @@ const library = {
     }
 };
 
+/**
+ * The cli-library definition.
+ *
+ * @static
+ * @internal
+ * @memberof Config.Projects
+ */
 const cliLibrary = {
     // only on init
     src: {
@@ -291,6 +310,13 @@ const cliLibrary = {
     }
 };
 
+/**
+ * The react-library definition.
+ *
+ * @static
+ * @internal
+ * @memberof Config.Projects
+ */
 const reactLibrary = {
     // only on init
     src: {
@@ -338,7 +364,7 @@ const reactLibrary = {
     // on init and also on update
     storybook: {
         localPath: ['react-library/storybook'],
-        projectPath: ['storybook'],
+        projectPath: ['.storybook'],
         onInit: true,
         onUpdate: true,
         onEject: false
@@ -444,9 +470,31 @@ const reactLibrary = {
     }
 };
 
+/**
+ * Return only the keys of the object that, as value, have a
+ * given key.
+ *
+ * @param {*} obj One of the objects that define a project.
+ * @param {string} onKey The key to filter for.
+ *
+ * @static
+ * @internal
+ * @memberof Config.Projects
+ */
 function retainKeysMatching(obj, onKey) {
     return Object.keys(obj).filter((e) => obj[e][onKey]);
 }
+
+/**
+ * Add the onInit, onEject and onUpdate attributes to
+ * the given object.
+ *
+ * @param {*} obj One of the objects that define a project.
+ *
+ * @static
+ * @internal
+ * @memberof Config.Projects
+ */
 function addOnInitEjectUpdate(obj) {
     obj.onInit = retainKeysMatching(obj, 'onInit');
     obj.onEject = retainKeysMatching(obj, 'onEject');

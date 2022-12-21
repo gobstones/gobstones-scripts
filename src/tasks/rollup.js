@@ -12,7 +12,7 @@ const runBin = require('./runBin');
  * @returns {string}
  *
  * @static
- * @memberof API.Tools
+ * @memberof API.Tasks
  */
 function rollup(options) {
     options = options || {};

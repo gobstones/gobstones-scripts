@@ -16,7 +16,7 @@ const runBin = require('./runBin');
  * @returns {string}
  *
  * @static
- * @memberof API.Tools
+ * @memberof API.Tasks
  */
 function copy(options) {
     options = options || {};
@@ -45,6 +45,10 @@ function copy(options) {
  * @param {string} args - args to pass to cpy-cli
  *   learn more from http://npm.im/cpy-cli
  * @return {string} - the command with the cpy-cli binary
+ *
+ * @internal
+ * @static
+ * @memberof API.Tasks
  */
 function ncp(args) {
     return `${runBin('cpy-cli', 'cpy')} ${args}`;

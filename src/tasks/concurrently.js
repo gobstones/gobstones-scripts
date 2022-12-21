@@ -7,10 +7,16 @@ const runBin = require('./runBin');
  * @property {string} script - the command to run
  * @property {string} color - the color to use
  *   (see concurrently's docs for valid values)
+ * @internal
+ * @static
+ * @memberof API.Tasks
  */
 /**
  * An object of concurrent script objects
  * @typedef {Object.<ConcurrentScript>} ConcurrentScripts
+ * @internal
+ * @static
+ * @memberof API.Tasks
  */
 /**
  * Generates a command that uses `concurrently` to run
@@ -35,8 +41,14 @@ const runBin = require('./runBin');
  *   }
  * })
  * @return {string} - the command to run
+ *
+ * @static
+ * @memberof API.Tasks
  */
-function concurrently(scripts) {
+function concurrently(...scripts) {
+    if (scripts.length === 1 && typeof scripts[0] === 'object' && !Array.isArray(scripts[0])) {
+        scripts = scripts[0];
+    }
     const Object$keys$reduce = Object.keys(scripts).reduce(reduceScripts, {
         colors: [],
         scripts: [],

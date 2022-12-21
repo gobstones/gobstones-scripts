@@ -9,6 +9,9 @@ const isWindows = require('./helpers/isWindows');
  * @param {string} altScript - the script to use for non-windows
  *
  * @return {string} - the command to run
+ *
+ * @static
+ * @memberof API.Tasks
  */
 function ifWindows(script, altScript) {
     return isWindows() ? script : altScript;

@@ -1,6 +1,11 @@
 /**
- * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ * In this module the CLI program application is defined.
+ * Besides from handling the basic I/O from CLI, and some
+ * additional messages to print, this program just calls
+ * the basic functions in the API.
+ *
  * @namespace CLI.Program
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  **/
 
 const commander = require('commander');
@@ -15,6 +20,7 @@ const config = require('../config');
  * The program
  *
  * @type {Command}
+ *
  * @static
  * @memberof CLI.Program
  */
@@ -205,7 +211,9 @@ program
         validators.failIfOptionInvalid(options, 'package-manager', config.packageManagers);
 
         cli.displayWelcomeForAction(
-            `Running command "${command}" on project of type ` +
+            (!command
+                ? `Displaying all available commands on project of type `
+                : `Running command "${command}" on project of type `) +
                 `"${options.type || config.loadedOptions.type}" using package manager ` +
                 `"${options.packageManager || config.loadedOptions.manager}".`
         );
