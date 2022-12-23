@@ -105,16 +105,13 @@ const defaultConfiguration = {
             commit: {
                 script: tasks.serially(
                     tasks.nps('prettify'),
-                    tasks.nps('test'),
                     tasks.nps('doc')
                 ),
                 silent: true
             },
             push: {
                 script: tasks.serially(
-                    tasks.nps('prettify'),
-                    tasks.nps('test'),
-                    tasks.nps('doc')
+                    tasks.nps('test')
                 ),
                 silent: true
             }
