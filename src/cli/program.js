@@ -52,7 +52,7 @@ program
         '-p, --package-manager <package-manager> The project manager to use, one of "' +
             config.packageManagers.join('", "') +
             '"',
-        'pnpm'
+        'npm'
     )
     .action((projectName, options) => {
         validators.failIfOptionInvalid(options, 'type', config.projectTypes);
@@ -81,7 +81,7 @@ program
         '-p, --package-manager <package-manager> The project manager to use, one of "' +
             config.packageManagers.join('", "') +
             '"',
-        'pnpm'
+        'npm'
     )
     .action((options) => {
         validators.failIfOptionInvalid(options, 'type', config.projectTypes);
@@ -122,7 +122,7 @@ program
         '-p, --package-manager <package-manager> The project manager to use, one of "' +
             config.packageManagers.join('", "') +
             '"',
-        'pnpm'
+        'npm'
     )
     .action((options) => {
         cli.displayWelcomeForAction(
@@ -168,7 +168,7 @@ program
         '-p, --package-manager <package-manager> The project manager to use, one of "' +
             config.packageManagers.join('", "') +
             '"',
-        'pnpm'
+        'npm'
     )
     .action((options) => {
         cli.displayWelcomeForAction(
@@ -205,7 +205,7 @@ program
         '-p, --package-manager <package-manager> The project manager to use, one of "' +
             config.packageManagers.join('", "') +
             '"',
-        'pnpm'
+        'npm'
     )
     .action((command, args, options) => {
         validators.failIfOptionInvalid(options, 'package-manager', config.packageManagers);
