@@ -12,7 +12,10 @@ const defaultConfiguration = {
         },
 
         build: {
-            script: tasks.serially(tasks.nps('clean.dist'), tasks.rollup()),
+            script: tasks.serially(
+                tasks.nps('clean.dist'),
+                tasks.rollup()
+            ),
             description: 'Build the application into "dist" folder',
             watch: {
                 script: tasks.serially(tasks.nps('clean.dist'), tasks.rollup({ watch: './src/**/*' })),

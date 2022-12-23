@@ -18,7 +18,9 @@ export default (commandLineArgs) => [
         ],
         preserveSymlinks: true,
         plugins: [
-            typescript({ tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile }),
+            typescript({
+                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile
+            }),
             commonjs()
         ],
         external: [/@gobstones\/.*/]

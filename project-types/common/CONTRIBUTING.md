@@ -1,4 +1,4 @@
-# Contibution Guidelines
+# Contribution Guidelines
 
 ## On Submitting Bug Reports
 
@@ -25,4 +25,4 @@ Make sure to open an issue and discuss about it before throwing yourself into co
 
 Provide clear concise description of the changes in the commit message and pull requests.
 
-Make sure to only contribute to `dev` branch, as we follow git-flow.
+Make sure to only contribute to `develop` branch, as we follow git-flow.

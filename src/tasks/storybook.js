@@ -54,7 +54,7 @@ const storybook = {
                 dir: str  // The port on which to run the storybook
             }`);
         }
-        return `${runBin('@storybook/react', 'build-storybook')} -output-dir ${options.dir}`;
+        return `${runBin('@storybook/react', 'build-storybook')} --output-dir ${options.dir}`;
     }
 };
 

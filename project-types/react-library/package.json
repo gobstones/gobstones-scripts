@@ -16,7 +16,7 @@
   "files": [
     "dist"
   ],
-  "types": "dist/index.d.ts",
+  "types": "dist/cjs/typings/index.d.ts",
   "gobstones-scripts": {
     "type": "react-library"
   },
@@ -29,7 +29,7 @@
     "test": "gobstones-scripts run test",
     "doc": "gobstones-scripts run doc",
     "lint": "gobstones-scripts run lint",
-    "prettify": "gobstones-scripts run prettier",
+    "prettify": "gobstones-scripts run prettify",
     "gbs": "gobstones-scripts"
   },
   "dependencies": {
@@ -37,7 +37,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.4.0-alpha2",
+    "@gobstones/gobstones-scripts": "^0.4.0-alpha3",
     "@types/react": "^18.0.26",
     "@types/testing-library__jest-dom": "^5.14.5",
     "husky": "^8.0.2"

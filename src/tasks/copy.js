@@ -1,6 +1,7 @@
 const { stripIndent } = require('common-tags');
 const path = require('path');
 const runBin = require('./runBin');
+const config = require('../config');
 
 /**
  * Copy a file or directory to a new location.
@@ -51,7 +52,7 @@ function copy(options) {
  * @memberof API.Tasks
  */
 function ncp(args) {
-    return `${runBin('cpy-cli', 'cpy')} ${args}`;
+    return `${runBin('cpy-cli', 'cpy')} --cwd="${config.projectRootPath}" ${args}`;
 }
 
 module.exports = copy;
