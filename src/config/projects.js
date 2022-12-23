@@ -63,6 +63,13 @@ const library = {
         onEject: false
     },
     // on init but also on any update
+    husky: {
+        localPath: ['common/husky'],
+        projectPath: ['.husky'],
+        onInit: true,
+        onUpdate: true,
+        onEject: false
+    },
     github: {
         localPath: ['common/github'],
         projectPath: ['.github'],
@@ -209,6 +216,13 @@ const cliLibrary = {
         onEject: false
     },
     // on init and also on update
+    husky: {
+        localPath: ['common/husky'],
+        projectPath: ['.husky'],
+        onInit: true,
+        onUpdate: true,
+        onEject: false
+    },
     github: {
         localPath: ['common/github'],
         projectPath: ['.github'],
@@ -365,6 +379,13 @@ const reactLibrary = {
     storybook: {
         localPath: ['react-library/storybook'],
         projectPath: ['.storybook'],
+        onInit: true,
+        onUpdate: true,
+        onEject: false
+    },
+    husky: {
+        localPath: ['common/husky'],
+        projectPath: ['.husky'],
         onInit: true,
         onUpdate: true,
         onEject: false

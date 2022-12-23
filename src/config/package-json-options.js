@@ -54,7 +54,7 @@ function optionsFormPackageJson(root) {
             loadedOptions.manager = currentPackageManager;
             loadedOptions.status.manager = 'detected';
         } else {
-            loadedOptions.manager = 'pnpm';
+            loadedOptions.manager = 'yarn';
             loadedOptions.status.manager = 'default';
         }
     }

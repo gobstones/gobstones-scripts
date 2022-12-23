@@ -1,0 +1,12 @@
+{
+    "npm.autoDetect": "on",
+    "cSpell.enabled": true,
+    "files.exclude": {
+        "tsconfig.build.json": true,
+    },
+    "files.trimTrailingWhitespace": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "cSpell.words": [
+    ]
+}

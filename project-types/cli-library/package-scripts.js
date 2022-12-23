@@ -116,6 +116,24 @@ const defaultConfiguration = {
         prettify: {
             script: tasks.prettify({ files: './src/{**,.}/*.ts' }),
             description: 'Run Prettier on all the files, writing the results'
+        },
+
+        husky: {
+            commit: {
+                script: tasks.serially(
+                    tasks.nps('prettify'),
+                    tasks.nps('test')
+                ),
+                silent: true
+            },
+            push: {
+                script: tasks.serially(
+                    tasks.nps('prettify'),
+                    tasks.nps('test'),
+                    tasks.nps('doc')
+                ),
+                silent: true
+            }
         }
     }
 };

@@ -25,7 +25,7 @@ function tsc(options) {
     }
     return `${runBin('tsc')}  --project ${
         config.configurationFiles[config.loadedOptions.type].tsConfigFile
-    } ${options.file}`;
+    } --outDir ${options.file}`;
 }
 
 module.exports = tsc;
