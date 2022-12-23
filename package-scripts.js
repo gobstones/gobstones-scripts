@@ -46,7 +46,8 @@ const defaultConfiguration = {
             commit: {
                 script: tasks.serially(
                     tasks.nps('prettify'),
-                    tasks.nps('lint')
+                    tasks.nps('lint'),
+                    tasks.nps('doc')
                 ),
                 silent: true
             },
