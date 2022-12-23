@@ -5,30 +5,30 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Run in Development Mode",
-            "type": "node",
+            "name": "Run Dev (npm run dev)",
             "request": "launch",
-            "args": ["${relativeFile}"],
             "runtimeArgs": [
-                "--nolazy",
-                "-r",
-                "ts-node/register"
+                "run-script",
+                "dev"
             ],
-            "cwd": "${workspaceRoot}",
-            "protocol": "inspector"
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
         },
         {
-            "name": "vscode-jest-tests",
-            "type": "node",
+            "name": "Test (npm run test)",
             "request": "launch",
-            "program": "${workspaceFolder}/node_modules/jest/bin/jest",
-            "args": [
-                "--runInBand"
+            "runtimeArgs": [
+                "run-script",
+                "test"
             ],
-            "cwd": "${workspaceFolder}",
-            "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
-            "disableOptimisticBPs": true
-        }
+            "runtimeExecutable": "npm",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
     ]
 }
