@@ -28,10 +28,10 @@
       ]
     }
   },
-  "packageManager": "yarn@1.22.19",
+  "packageManager": "npm@9.2.0",
   "gobstones-scripts": {
     "type": "cli-library",
-    "manager": "yarn"
+    "manager": "npm"
   },
   "scripts": {
     "prepare": "husky install",

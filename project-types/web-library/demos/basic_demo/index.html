@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Demo</title>
+
+    <link rel="stylesheet" href="../vendor/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/css/bootstrap-select.min.css">
+    <link rel="stylesheet" href="../vendor/css/bootstrap4-toggle.min.css">
+    <link rel="stylesheet" href="../vendor/css/flag-icon.min.css">
+    <link rel="stylesheet" href="../vendor/css/font-awesome.min.css">
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        .logo {
+            height: 30px;
+            width: auto;
+        }
+        main {
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-light bg-light shadow">
+        <img src="../vendor/img/logo_full.png" class="d-inline-block align-top logo" alt="Logo" loading="lazy">
+    </nav>
+
+
+    <main>
+        <h3>Simple Demo</h3>
+
+        <p id="hello_text"></p>
+    </main>
+
+    <!-- Libraries not required by gobstones-blockly, but useful in demo -->
+    <script src="../vendor/js/jquery.min.js"></script>
+    <script src="../vendor/js/popper.min.js"></script>
+    <script src="../vendor/js/bootstrap.bundle.min.js"></script>
+    <script src="../vendor/js/bootstrap-select.min.js"></script>
+    <script src="../vendor/js/bootstrap4-toggle.min.js"></script>
+    <script src="../dist/index.js"></script>
+    <script>
+        displayAwesome('hello_text');
+    </script>
+</body>
+</html>

@@ -74,6 +74,7 @@
     "commander": "^9.4.1",
     "common-tags": "^1.8.2",
     "concurrently": "^7.6.0",
+    "copyfiles": "^2.4.1",
     "cpy-cli": "^4.2.0",
     "css-loader": "^6.7.3",
     "eslint": "^8.30.0",

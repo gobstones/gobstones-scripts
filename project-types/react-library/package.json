@@ -17,8 +17,10 @@
     "dist"
   ],
   "types": "dist/cjs/typings/index.d.ts",
+  "packageManager": "npm@9.2.0",
   "gobstones-scripts": {
-    "type": "react-library"
+    "type": "react-library",
+    "manager": "npm"
   },
   "scripts": {
     "prepare": "husky install",

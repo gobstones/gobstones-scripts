@@ -31,7 +31,8 @@ function copy(options) {
                 }`);
     }
     if (options.isDir) {
-        return `${runBin('copyfiles')} --up 1 ${options.src} ${options.dest}`;
+        const destFolder = path.dirname(options.dest);
+        return ncp(`${options.src} ${destFolder}`);
     } else {
         const destFolder = path.dirname(options.dest);
         const destFile = path.basename(options.dest);
