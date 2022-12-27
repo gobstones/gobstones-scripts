@@ -73,7 +73,25 @@
         },
         {
             "files": [
+                "*.html",
+                "**/*.html"
+            ],
+            "options": {
+                "parser": "html"
+            }
+        },
+        {
+            "files": [
                 "package.json"
+            ],
+            "options": {
+                "tabWidth": 2,
+                "parser": "json"
+            }
+        },
+        {
+            "files": [
+                ".prettierrc"
             ],
             "options": {
                 "tabWidth": 2,

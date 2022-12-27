@@ -683,6 +683,7 @@ function addOnInitEjectUpdate(obj) {
 }
 addOnInitEjectUpdate(library);
 addOnInitEjectUpdate(cliLibrary);
+addOnInitEjectUpdate(webLibrary);
 addOnInitEjectUpdate(reactLibrary);
 
 module.exports = {

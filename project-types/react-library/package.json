@@ -6,16 +6,10 @@
   "homepage": "https://gobstones.github.io/a-new-gobstones-react-library",
   "author": "John Doe <john.doe@gmail.com>",
   "license": "MIT",
-  "keywords": [
-    "Gobstones",
-    "Library",
-    "Keywords"
-  ],
+  "keywords": ["Gobstones", "Library", "Keywords"],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "types": "dist/cjs/typings/index.d.ts",
   "packageManager": "npm@9.2.0",
   "gobstones-scripts": {

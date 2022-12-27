@@ -130,7 +130,15 @@ const defaultConfiguration = {
         },
 
         prettify: {
-            script: tasks.prettify({ files: './src/{**,.}/*.ts' }),
+            script: tasks.serially(
+                tasks.prettify({ files: './src/{**,.}/*.ts' }),
+                tasks.prettify({ files: './test/{**,.}/*.ts' }),
+                tasks.prettify({ files: './demos/{**,.}/*.{js,html}' }),
+                tasks.prettify({ files: './.github/{**,.}/*.{yml,md}' }),
+                tasks.prettify({ files: './.vscode/*.json' }),
+                tasks.prettify({ files: './*.{json,md,js}' }),
+                tasks.prettify({ files: '.prettierrc' })
+            ),
             description: 'Run Prettier on all the files, writing the results'
         },
 
