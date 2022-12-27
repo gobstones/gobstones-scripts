@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.3.1",
-    "@gobstones/gobstones-scripts": "^0.4.0-alpha6",
+    "@gobstones/gobstones-scripts": "^0.4.0-alpha7",
     "husky": "^8.0.2"
   }
 }
