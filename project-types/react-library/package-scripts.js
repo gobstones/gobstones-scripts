@@ -7,24 +7,28 @@ const defaultConfiguration = {
         default: tasks.nps('help'),
 
         dev: {
-            script: tasks.storybook.start({port: 3001}),
+            script: tasks.storybook.start({ port: 3001 }),
             description: 'Run a storybook webpage with the component'
         },
 
         build: {
-            script: tasks.serially(
-                tasks.nps('clean.dist'),
-                tasks.rollup()
-            ),
+            script: tasks.serially(tasks.nps('clean.dist'), tasks.rollup()),
             description: 'Build the application into "dist" folder',
             watch: {
-                script: tasks.serially(tasks.nps('clean.dist'), tasks.rollup({ watch: './src/**/*' })),
+                script: tasks.serially(
+                    tasks.nps('clean.dist'),
+                    tasks.rollup({ watch: './src/**/*' })
+                ),
                 description: 'Build the application into "dist" folder and watch for changes'
             }
         },
 
         test: {
-            script: tasks.serially(tasks.nps('clean.coverage'), tasks.nps('lint'), tasks.jest({ coverage: true })),
+            script: tasks.serially(
+                tasks.nps('clean.coverage'),
+                tasks.nps('lint'),
+                tasks.jest({ coverage: true })
+            ),
             description: 'Run the tests, including linting',
             watch: {
                 script: tasks.serially(tasks.jest({ coverage: true, watch: true })),
@@ -53,19 +57,21 @@ const defaultConfiguration = {
         },
 
         doc: {
-            script: tasks.serially(
-                tasks.nps('clean.docs'),
-                tasks.storybook.build({dir: 'docs'})
-            ),
+            script: tasks.serially(tasks.nps('clean.docs'), tasks.storybook.build({ dir: 'docs' })),
             description: 'Generate a static storybook as documentation for the exported components',
             serve: {
                 script: tasks.serially(tasks.nps('doc'), tasks.serve('./docs')),
-                description: 'Generate a static storybook as documentation for the exported components, then serve the docs as HTML',
-            },
+                description:
+                    'Generate a static storybook as documentation for the exported components, then serve the docs as HTML'
+            }
         },
 
         clean: {
-            script: tasks.serially(tasks.nps('clean.dist'), tasks.nps('clean.docs'), tasks.nps('clean.coverage')),
+            script: tasks.serially(
+                tasks.nps('clean.dist'),
+                tasks.nps('clean.docs'),
+                tasks.nps('clean.coverage')
+            ),
             description: 'Remove all automatically generated files and folders',
             dist: {
                 script: tasks.remove({ files: './dist' }),
@@ -85,7 +91,10 @@ const defaultConfiguration = {
         },
 
         lint: {
-            script: tasks.serially(tasks.eslint({ files: './src' }), tasks.eslint({ files: './test' })),
+            script: tasks.serially(
+                tasks.eslint({ files: './src' }),
+                tasks.eslint({ files: './test' })
+            ),
             description: 'Run ESLint on all the files (src and tests)',
             fix: {
                 script: tasks.serially(
@@ -103,16 +112,11 @@ const defaultConfiguration = {
 
         husky: {
             commit: {
-                script: tasks.serially(
-                    tasks.nps('prettify'),
-                    tasks.nps('doc')
-                ),
+                script: tasks.serially(tasks.nps('prettify'), tasks.nps('doc')),
                 silent: true
             },
             push: {
-                script: tasks.serially(
-                    tasks.nps('test')
-                ),
+                script: tasks.serially(tasks.nps('test')),
                 silent: true
             }
         }

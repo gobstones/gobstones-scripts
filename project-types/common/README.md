@@ -11,16 +11,19 @@ Add your library description here. Once you have a repository established,replac
 Install with your favorite package manager by running one of the following commands:
 
 **npm:**
+
 ```
 npm install --save @gobstones/a-new-gobstones-library
 ```
 
 **pnpm:**
+
 ```
 pnpm install --save @gobstones/a-new-gobstones-library
 ```
 
 **yarn:**
+
 ```
 yarn add @gobstones/a-new-gobstones-library
 ```
@@ -33,7 +36,6 @@ Explain how to import the library and use it as a module.
 # CLI
 
 If your library supports CLI, explain how to use it. Else, you may delete this section.
-
 
 ## Contributing
 

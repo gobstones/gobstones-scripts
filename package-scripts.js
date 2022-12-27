@@ -7,14 +7,11 @@ const defaultConfiguration = {
         default: tasks.nps('help'),
 
         doc: {
-            script: tasks.serially(
-                tasks.nps('clean.docs'),
-                'jsdoc -c ./jsdoc.js'
-            ),
+            script: tasks.serially(tasks.nps('clean.docs'), 'jsdoc -c ./jsdoc.js'),
             description: 'Run JSDocs and generate docs',
             serve: {
                 script: tasks.serially(tasks.nps('doc'), tasks.serve('./docs')),
-                description: 'Run Typedoc and generate docs, then serve the docs as HTML',
+                description: 'Run Typedoc and generate docs, then serve the docs as HTML'
             }
         },
 
@@ -38,22 +35,22 @@ const defaultConfiguration = {
         },
 
         prettify: {
-            script: tasks.prettify({ files: './src/{**,.}/*.js' }),
+            script: tasks.serially(
+                tasks.prettify({ files: './src/{**,.}/*.js' }),
+                tasks.prettify({ files: './project-types/**/*.{ts,tsx,md}' }),
+                tasks.prettify({ files: './.github/{**,.}/*.{yml,md}' }),
+                tasks.prettify({ files: './*.{json,md,js}' })
+            ),
             description: 'Run Prettier on all the files, writing the results'
         },
 
         husky: {
             commit: {
-                script: tasks.serially(
-                    tasks.nps('prettify'),
-                    tasks.nps('doc')
-                ),
+                script: tasks.serially(tasks.nps('prettify'), tasks.nps('doc')),
                 silent: true
             },
             push: {
-                script: tasks.serially(
-                    tasks.nps('lint')
-                ),
+                script: tasks.serially(tasks.nps('lint')),
                 silent: true
             }
         }

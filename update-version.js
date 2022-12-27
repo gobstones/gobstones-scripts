@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const {readFileSync, writeFileSync, promises: fsPromises} = require('fs');
+const { readFileSync, writeFileSync } = require('fs');
 const process = require('process');
 
 function replaceInTextFile(filename, textPresent, newText) {
@@ -13,11 +13,19 @@ function replaceVersionInPackageJson(newVersion) {
 }
 
 function replaceVersionInConfig(newVersion) {
-    replaceInTextFile('./src/config/tool.js', /const version = '.*'/g, `const version = '${newVersion}'`);
+    replaceInTextFile(
+        './src/config/tool.js',
+        /const version = '.*'/g,
+        `const version = '${newVersion}'`
+    );
 }
 
 function replaceVersionInProjectPackageJson(projectName, newVersion) {
-    replaceInTextFile(`./project-types/${projectName}/package.json`, /"@gobstones\/gobstones-scripts": ".*"/g, `"@gobstones/gobstones-scripts": "^${newVersion}"`);
+    replaceInTextFile(
+        `./project-types/${projectName}/package.json`,
+        /"@gobstones\/gobstones-scripts": ".*"/g,
+        `"@gobstones/gobstones-scripts": "^${newVersion}"`
+    );
 }
 
 function updateToVersion(newVersion) {

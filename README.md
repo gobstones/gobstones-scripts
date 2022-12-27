@@ -62,20 +62,21 @@ Run the command always from the root of your project in order to execute local c
 
 The CLI provides you with the following commands:
 
-* **help**: Prints the tool help description. Also, the help is printed if no command is given
-* **version**: Prints the tool version information.
-* **config**: Prints the tool's configuration, such as, what is the identified root folder, the package folder and the files in use.
-* **create <projectName>**: Create a new library project in a subfolder with the given name. This includes creating all the required and recommended style files, define a package.json, git configuration files, visual studio code files, NPM configuration files, contribution guidelines, a readme, a license (MIT by default), install all dependencies, and initialize a git repository. This command is expected to be used when _gobstones-scripts_ is installed globally.
-* **init**: The same as create, but runs on the local folder as a project. That is, initialize a project in the current folder. Note that the folder must be empty in order to initialize a project in the folder. This command is expected to be used when _gobstones-scripts_ is installed globally.
-* **update [force]**: Override the missing configuration files that are created on an **init** or **create** command on the local project. This is intended to be run locally, on an already created project, to update the configuration. By appending **force** as a subcommand, all files are updated to their latest version.
-* **eject [force]**: Eject all the general configuration files to the root project. This includes configuration files for Typescript, Typedoc, JEST, Rollup, and nps. This command is intended to be run locally. If **force** is added, all previously created local files are updated to their latest version. If not, only missing files are copied.
-* **run [command]**: Run a command using **nps**. nps allows to run different scripts configured, such as scripts for linting, prettyfing, testing, generating documentation, running in development mode, and others.
+-   **help**: Prints the tool help description. Also, the help is printed if no command is given
+-   **version**: Prints the tool version information.
+-   **config**: Prints the tool's configuration, such as, what is the identified root folder, the package folder and the files in use.
+-   **create <projectName>**: Create a new library project in a subfolder with the given name. This includes creating all the required and recommended style files, define a package.json, git configuration files, visual studio code files, NPM configuration files, contribution guidelines, a readme, a license (MIT by default), install all dependencies, and initialize a git repository. This command is expected to be used when _gobstones-scripts_ is installed globally.
+-   **init**: The same as create, but runs on the local folder as a project. That is, initialize a project in the current folder. Note that the folder must be empty in order to initialize a project in the folder. This command is expected to be used when _gobstones-scripts_ is installed globally.
+-   **update [force]**: Override the missing configuration files that are created on an **init** or **create** command on the local project. This is intended to be run locally, on an already created project, to update the configuration. By appending **force** as a subcommand, all files are updated to their latest version.
+-   **eject [force]**: Eject all the general configuration files to the root project. This includes configuration files for Typescript, Typedoc, JEST, Rollup, and nps. This command is intended to be run locally. If **force** is added, all previously created local files are updated to their latest version. If not, only missing files are copied.
+-   **run [command]**: Run a command using **nps**. nps allows to run different scripts configured, such as scripts for linting, prettyfing, testing, generating documentation, running in development mode, and others.
 
 ## How to configure the tool
 
 When running a command using _gobstones-scripts_ the tool loads all configuration from one of two locations.
-* If a configuration file for a tool is present at the root of your project, that configuration is used. As an example, if you have a `rollup.config.js` file in the root of your project, then that file is used to load the Rollup configuration.
-* If a configuration file for a tool is not present at the root of your project, then the default configuration file from gobstones-scripts is used. This configuration files are at `./node_modules/@gobstones/gobstones-scripts/config`, and they should not be modified by the end user. If you need changes over a default configuration, you should eject that configuration file to the root of your project.
+
+-   If a configuration file for a tool is present at the root of your project, that configuration is used. As an example, if you have a `rollup.config.js` file in the root of your project, then that file is used to load the Rollup configuration.
+-   If a configuration file for a tool is not present at the root of your project, then the default configuration file from gobstones-scripts is used. This configuration files are at `./node_modules/@gobstones/gobstones-scripts/config`, and they should not be modified by the end user. If you need changes over a default configuration, you should eject that configuration file to the root of your project.
 
 > A special mention is required for the typescript configuration file, **tsconfig.json**. You will see that this file is actually not present. We use **tsconfig.js** instead, and the corresponding JSON file is generated at runtime when running a command through gobstones-scripts. Using a js file for configuration provides the required flexibility for this project, that is not found in the JSON file, but a JSON file needs to be generated before running the Typescript compiler, as Typescript does not support javascript based configuration. Note that this is all handled automatically by gobstones-scripts, and you just need to remember to edit a tsconfig.js instead of json one if you need to override the default configuration.
 
@@ -125,7 +126,7 @@ The default `package-scripts.js` handles this by importing `tools` from the _gob
 You can access the API by importing the module
 
 ```ts
-import gobstones_scripts from '@gobstones/gobstones-scripts'
+import gobstones_scripts from '@gobstones/gobstones-scripts';
 ```
 
 Typings are exported so it can be used in TypeScript without additional packages.
@@ -143,7 +144,7 @@ as the package manager, which is included by default on your node
 installation.
 
 Nonetheless, _gobstones-scripts_ has been tested to work with
-**yarn** too. _gobstones-scripts_ relies on a flat *node_modules*,
+**yarn** too. _gobstones-scripts_ relies on a flat _node_modules_,
 in order to hide away packages, so **pnpm** will not work with this
 tool.
 

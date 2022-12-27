@@ -3,10 +3,13 @@ const config = require('../../src/api').config;
 module.exports = {
     preset: 'ts-jest',
     transform: {
-        "^.+\\.tsx?$": ['ts-jest', {
-            tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
-            importHelpers: true
-        }],
+        '^.+\\.tsx?$': [
+            'ts-jest',
+            {
+                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
+                importHelpers: true
+            }
+        ]
     },
     coverageReporters: ['text', 'html'],
     coverageThreshold: {
@@ -20,7 +23,8 @@ module.exports = {
     testPathIgnorePatterns: ['<rootDir>/src/test.ts'],
     transformIgnorePatterns: [],
     moduleNameMapper: {
-        "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "identity-obj-proxy",
-        "\\.(css|less|scss|less|sass)$": "identity-obj-proxy"
+        '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
+            'identity-obj-proxy',
+        '\\.(css|less|scss|less|sass)$': 'identity-obj-proxy'
     }
 };

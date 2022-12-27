@@ -27,10 +27,10 @@ export default [
             commonjs(),
             typescript({
                 tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
-                declarationDir: "./typings",
+                declarationDir: './typings'
             }),
             postcss()
         ],
-        external: ["react", "react-dom"]
+        external: ['react', 'react-dom']
     }
 ];

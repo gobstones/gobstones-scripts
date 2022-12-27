@@ -6,13 +6,7 @@
   "homepage": "https://gobstones.github.io/gobstones-scripts",
   "author": "Alan Rodas Bonjour <alanrodas@gmail.com>",
   "license": "MIT",
-  "keywords": [
-    "Gobstones",
-    "Scripts",
-    "Build",
-    "Run",
-    "Projects"
-  ],
+  "keywords": ["Gobstones", "Scripts", "Build", "Run", "Projects"],
   "bin": {
     "gobstones-scripts": "./src/cli/index.js"
   },

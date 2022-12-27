@@ -1,10 +1,84 @@
 {
-  "printWidth": 100,
-  "tabWidth": 4,
-  "useTabs": false,
-  "semi": true,
-  "singleQuote": true,
-  "trailingComma": "none",
-  "parser": "typescript",
-  "endOfLine": "lf"
+    "printWidth": 100,
+    "tabWidth": 4,
+    "useTabs": false,
+    "semi": true,
+    "singleQuote": true,
+    "endOfLine": "lf",
+    "trailingComma": "none",
+    "overrides": [
+        {
+            "files": [
+                "*.js",
+                "**/*.js",
+                "*.jsx",
+                "**/*.jsx"
+            ],
+            "options": {
+                "parser": "babel"
+            }
+        },
+        {
+            "files": [
+                "*.ts",
+                "**/*.ts",
+                "*.tsx",
+                "**/*.tsx"
+            ],
+            "options": {
+                "parser": "typescript"
+            }
+        },
+        {
+            "files": [
+                "*.yml",
+                "**/*.yml",
+                "*.yaml",
+                "**/*.yaml"
+            ],
+            "options": {
+                "parser": "yaml"
+            }
+        },
+        {
+            "files": [
+                "*.json",
+                "**/*.json"
+            ],
+            "options": {
+                "parser": "json"
+            }
+        },
+        {
+            "files": [
+                "*.md",
+                "**/*.md"
+            ],
+            "options": {
+                "parser": "markdown"
+            }
+        },
+        {
+            "files": [
+                "*.css",
+                "**/*.css",
+                "*.scss",
+                "**/*.scss",
+                "*.less",
+                "**/*.less"
+            ],
+            "options": {
+                "parser": "css"
+            }
+        },
+        {
+            "files": [
+                "package.json"
+            ],
+            "options": {
+                "tabWidth": 2,
+                "parser": "json"
+            }
+        }
+    ]
 }
