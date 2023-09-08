@@ -5,7 +5,7 @@
   "repository": "https://github.com/gobstones/gobstones-core",
   "homepage": "https://gobstones.github.io/gobstones-core",
   "author": "John Doe <john.doe@gmail.com>",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "keywords": ["Gobstones", "Library", "Keywords"],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.3.1",
-    "@gobstones/gobstones-scripts": "^0.4.0-alpha5",
+    "@gobstones/gobstones-scripts": "^0.4.0-alpha8",
     "husky": "^8.0.2"
   }
 }

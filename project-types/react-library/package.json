@@ -5,7 +5,7 @@
   "repository": "https://github.com/gobstones/a-new-gobstones-react-library",
   "homepage": "https://gobstones.github.io/a-new-gobstones-react-library",
   "author": "John Doe <john.doe@gmail.com>",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "keywords": ["Gobstones", "Library", "Keywords"],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -33,7 +33,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.4.0-alpha7",
+    "@gobstones/gobstones-scripts": "^0.4.0-alpha8",
     "@types/react": "^18.0.26",
     "@types/testing-library__jest-dom": "^5.14.5",
     "husky": "^8.0.2"

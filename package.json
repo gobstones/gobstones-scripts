@@ -1,11 +1,11 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.4.0-alpha7",
+  "version": "0.4.0-alpha8",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": "https://github.com/gobstones/gobstones-scripts",
   "homepage": "https://gobstones.github.io/gobstones-scripts",
   "author": "Alan Rodas Bonjour <alanrodas@gmail.com>",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "keywords": ["Gobstones", "Scripts", "Build", "Run", "Projects"],
   "bin": {
     "gobstones-scripts": "./src/cli/index.js"

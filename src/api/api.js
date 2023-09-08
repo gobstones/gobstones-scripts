@@ -83,6 +83,13 @@ function init(projectType, packageManager) {
     const filesInFolder = fs.readdirSync(config.currentDir);
     if (filesInFolder.length !== 0) {
         throw Error('non empty folder');
+        // TODO A better option will be to update
+        // the package.json and overwrite the required
+        // files, so it works even with existing projects.
+        // That implies reading and writing to the package.json
+        // and later call install to update packages. Once
+        // that is done, just call the update function with
+        // all to overwrite existing files with current configuration.
     }
 
     copyFilesFrom(config[projectType], config[projectType].onInit, false, false);

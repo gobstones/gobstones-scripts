@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 /**
  * This file is the one that runs when you perform a
  * npm start dev. It just imports some classes and prints
@@ -7,21 +9,15 @@
  *
  * @author Your Name <yourname@company.com>
  */
-import { MyClass } from './models';
-
 export * from './models/MyClass';
+/*
+import globals from './globals';
 
-const globalObject: any = (window || {}) as any;
+const globalObject: any = (typeof window !== 'undefined' ? window : {}) as any;
 
-export const configGlobals = (object) => {
+export const configGlobals = (object: any): any => {
     Object.assign(globalObject, object);
 };
 
-configGlobals({
-    displayAwesome: (id: string) => {
-        const element = document?.getElementById(id);
-        if (element) {
-            element.innerText = new MyClass().awesome('hola');
-        }
-    }
-});
+configGlobals(globals);
+*/

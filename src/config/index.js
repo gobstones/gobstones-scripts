@@ -28,6 +28,7 @@ module.exports = {
     projectTypes: projects.projectTypes,
     library: projects.library,
     'cli-library': projects['cli-library'],
+    'web-library': projects['web-library'],
     'react-library': projects['react-library'],
     configurationFiles: files.configurationFiles
 };

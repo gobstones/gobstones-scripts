@@ -448,14 +448,14 @@ const webLibrary = {
     },
     // only on eject
     nps: {
-        localPath: ['library/package-scripts.js'],
+        localPath: ['web-library/package-scripts.js'],
         projectPath: ['package-scripts.js'],
         onInit: false,
         onUpdate: false,
         onEject: true
     },
     rollup: {
-        localPath: ['library/rollup.config.js'],
+        localPath: ['web-library/rollup.config.js'],
         projectPath: ['rollup.config.js'],
         onInit: false,
         onUpdate: false,

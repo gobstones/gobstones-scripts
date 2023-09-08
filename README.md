@@ -163,6 +163,17 @@ By default, **npm** is used, although you can configure this by the
 
 Support may change in the future once [https://nodejs.org/dist/latest/docs/api/corepack.html](corepack) gets out of the experimental state.
 
+## Updating the version while coding the tool
+
+The tool has a more complex system for updating the version than other libraries, as not only the package.json needs to be changed.
+As the version needs to be updated in multiple places of the tool for this to work, an `update-version.js` script exists that does the job. This tool need to be called in the following way:
+
+```sh
+node update-version.js <version>
+```
+
+Where `<version>` is a specific version using major, minor and patch system. After calling the tool, the version will be updated everywhere for the tool.
+
 ## Contributing
 
 See the [Gobstones Platform Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.

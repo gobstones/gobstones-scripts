@@ -6,7 +6,7 @@ import typescript from '@rollup/plugin-typescript';
 const config = require('../../src/api').config;
 
 // Expected arguments:
-export default (commandLineArgs) => [
+export default [
     {
         input: 'src/index.ts',
         output: [

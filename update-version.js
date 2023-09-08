@@ -34,6 +34,7 @@ function updateToVersion(newVersion) {
     replaceVersionInProjectPackageJson('library', newVersion);
     replaceVersionInProjectPackageJson('cli-library', newVersion);
     replaceVersionInProjectPackageJson('react-library', newVersion);
+    replaceVersionInProjectPackageJson('web-library', newVersion);
 }
 
 updateToVersion(process.argv[2]);
