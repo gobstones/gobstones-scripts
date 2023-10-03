@@ -61,9 +61,7 @@ export default [
             typescript({
                 tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile
             }),
-            commonjs(),
-            commandLineArgs.configMinify && terser(),
-            commandLineArgs.configShowSizes && pluginSizes()
+            commonjs()
         ],
         external: [/@gobstones\/.*/]
     }

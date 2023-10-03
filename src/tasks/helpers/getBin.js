@@ -19,12 +19,23 @@ function getBin(packageName, binName) {
         const packagePath = require.resolve(`${packageName}/package.json`);
         const concurrentlyDir = path.dirname(packagePath);
 
+        if (packageName.startsWith('replace-in-files')) {
+            // eslint-disable-next-line no-console
+            console.log(packagePath);
+            // eslint-disable-next-line no-console
+            console.log(concurrentlyDir);
+        }
+
         const binFile = getBinFile(packagePath, concurrentlyDir, packageName, binName);
         return {
             binFile,
             mode: 'node'
         };
     } catch (e) {
+        if (packageName.startsWith('replace-in-files')) {
+            // eslint-disable-next-line no-console
+            console.log('catching');
+        }
         // if not found, attempt to find by searching the bin
         // folders of the currently running tool.
         // console.log(e);

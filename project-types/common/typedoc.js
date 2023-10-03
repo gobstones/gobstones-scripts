@@ -23,5 +23,8 @@ module.exports = {
     hideGenerator: true,
     disableSources: true,
     githubPages: true,
+    plugin: ['typedoc-plugin-merge-modules'],
+    // options added by typedoc-plugin-merge-modules
     mergeModulesMergeMode: 'module'
+    // end of typedoc-plugin-merge-modules options
 };

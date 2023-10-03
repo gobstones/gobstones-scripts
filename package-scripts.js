@@ -46,6 +46,22 @@ const defaultConfiguration = {
             description: 'Run Prettier on all the files, writing the results'
         },
 
+        verdaccio: {
+            script: tasks.concurrently(
+                tasks.nps('verdaccio.serve'),
+                tasks.serially(
+                    tasks.remove({ files: './test/verdaccio/storage/*' }),
+                    'npm publish --registry http://localhost:4567'
+                )
+            ),
+            description: 'Run Verdaccio server and publish current version of library to it',
+            serve: {
+                script: 'verdaccio --config ./test/verdaccio/config.yml',
+                silent: true,
+                description: 'Start the verdaccio server'
+            }
+        },
+
         husky: {
             commit: {
                 script: tasks.serially(tasks.nps('prettify'), tasks.nps('doc')),

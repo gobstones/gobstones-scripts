@@ -42,7 +42,7 @@ const tasks = require('../tasks');
  * @static
  * @memberof API.Public
  */
-function create(projectName, projectType, packageManager) {
+function create(projectName, projectType, packageManager, isTest = false) {
     // Set defaults if not given, or register loaded options
     [projectType, packageManager] = loadOptions(projectType, packageManager);
 
@@ -55,7 +55,7 @@ function create(projectName, projectType, packageManager) {
         fs.mkdirSync(projectFolder);
     }
     changeDir(projectFolder);
-    init(projectType, packageManager);
+    init(projectType, packageManager, isTest);
 }
 
 /**
@@ -72,7 +72,7 @@ function create(projectName, projectType, packageManager) {
  * @static
  * @memberof API.Public
  */
-function init(projectType, packageManager) {
+function init(projectType, packageManager, isTest = false) {
     // Set defaults if not given, or register loaded options
     [projectType, packageManager] = loadOptions(projectType, packageManager);
 
@@ -92,7 +92,7 @@ function init(projectType, packageManager) {
         // all to overwrite existing files with current configuration.
     }
 
-    copyFilesFrom(config[projectType], config[projectType].onInit, false, false);
+    copyFilesFrom(config[projectType], config[projectType].onInit, false, false, isTest);
     runScript(config[packageManager].install);
     runScript('git', ['init', '-q']);
 }
@@ -116,7 +116,7 @@ function init(projectType, packageManager) {
  * @static
  * @memberof API.Public
  */
-function update(force = false, file = 'all', projectType) {
+function update(force = false, file = 'all', projectType, isTest) {
     // Set defaults if not given, or register loaded options
     [projectType] = loadOptions(projectType, undefined);
 
@@ -127,7 +127,7 @@ function update(force = false, file = 'all', projectType) {
     }
 
     const filesToCopy = file === 'all' ? config[projectType].onUpdate : [file];
-    return copyFilesFrom(config[projectType], filesToCopy, force, false);
+    return copyFilesFrom(config[projectType], filesToCopy, force, false, isTest);
 }
 /**
  * Eject all the general configuration files to the root project.
@@ -247,7 +247,13 @@ function changeDir(dir) {
  * @static
  * @memberof API.Internal
  */
-function copyFilesFrom(fileDescriptors, filesToCopy, overwrite = false, dryRun = false) {
+function copyFilesFrom(
+    fileDescriptors,
+    filesToCopy,
+    overwrite = false,
+    dryRun = false,
+    addTestLine = false
+) {
     const copied = [];
 
     // Retain only file descriptors to copy
@@ -280,6 +286,12 @@ function copyFilesFrom(fileDescriptors, filesToCopy, overwrite = false, dryRun =
             if (fs.existsSync(fullLocalPath)) {
                 if (!dryRun) {
                     fs.copySync(fullLocalPath, fullProjectPath);
+                    if (fullProjectPath.endsWith('.npmrc') && addTestLine) {
+                        fs.appendFileSync(
+                            fullProjectPath,
+                            '@gobstones:registry=http://localhost:4567'
+                        );
+                    }
                 } else {
                     // eslint-disable-next-line no-console
                     console.log('Copy file: ' + fullLocalPath + ' to ' + fullProjectPath);

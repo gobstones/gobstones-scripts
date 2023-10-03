@@ -1,5 +1,6 @@
 // eslint-disable @typescript-eslint/no-var-requires
 import commonjs from '@rollup/plugin-commonjs';
+import image from '@rollup/plugin-image';
 import postcss from 'rollup-plugin-postcss';
 import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
@@ -25,6 +26,7 @@ export default [
         plugins: [
             resolve(),
             commonjs(),
+            image(),
             typescript({
                 tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
                 declarationDir: './typings'

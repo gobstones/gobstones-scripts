@@ -11,7 +11,7 @@ module.exports = {
             }
         ]
     },
-    coverageReporters: ['text', 'html'],
+    coverageReporters: ['text', ['html', { sasa: false }]],
     coverageThreshold: {
         global: {
             branches: 80,

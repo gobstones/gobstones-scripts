@@ -1,0 +1,18 @@
+button {
+    font-size: 60px;
+    color: rgba(208 0 0 / 0.3);
+}
+button img {
+    height: 50px;
+    pointer-events: none;
+    animation: icon-spin infinite 20s linear;
+}
+
+@keyframes icon-spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

@@ -54,11 +54,12 @@ program
             '"',
         'npm'
     )
+    .option('-T, --test Run using verdaccio as a registry', 'npm')
     .action((projectName, options) => {
         validators.failIfOptionInvalid(options, 'type', config.projectTypes);
         validators.failIfOptionInvalid(options, 'package-manager', config.packageManagers);
         cli.runOrEnd(() => {
-            api.create(projectName, options.type, options.packageManager);
+            api.create(projectName, options.type, options.packageManager, options.test);
         }, [
             {
                 error: 'non empty folder',
@@ -83,6 +84,7 @@ program
             '"',
         'npm'
     )
+    .option('-T, --test Run using verdaccio as a registry', 'npm')
     .action((options) => {
         validators.failIfOptionInvalid(options, 'type', config.projectTypes);
         validators.failIfOptionInvalid(options, 'package-manager', config.packageManagers);
@@ -94,7 +96,7 @@ program
         );
 
         cli.runOrEnd(() => {
-            api.init(options.type, options.packageManager);
+            api.init(options.type, options.packageManager, options.test);
         }, [
             {
                 error: 'non empty folder',
@@ -124,6 +126,7 @@ program
             '"',
         'npm'
     )
+    .option('-T, --test Run using verdaccio as a registry', 'npm')
     .action((options) => {
         cli.displayWelcomeForAction(
             `Updating files in current project of type ` +
@@ -142,7 +145,12 @@ program
         }
 
         cli.runOrEnd(() => {
-            const files = api.update(options.force, options.items, options.packageManager);
+            const files = api.update(
+                options.force,
+                options.items,
+                options.packageManager,
+                options.test
+            );
             const useAbsolute = config.useAbsolutePaths;
             cli.display('Files updated:');
             files.forEach((file) => {

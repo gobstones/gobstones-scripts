@@ -17,6 +17,7 @@ const nps = require('./nps');
 const prettify = require('./prettify');
 const remove = require('./remove');
 const rename = require('./rename');
+const replace = require('./replace');
 const rollup = require('./rollup');
 const runBin = require('./runBin');
 const serially = require('./serially');
@@ -40,6 +41,7 @@ module.exports = {
     prettify,
     remove,
     rename,
+    replace,
     rollup,
     runBin,
     serially,

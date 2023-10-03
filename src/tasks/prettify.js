@@ -22,7 +22,7 @@ function prettify(options) {
                     files: string   // The files to run prettier on, may be a glob pattern
                 }`);
     }
-    return `${runBin('prettier')} --write ${options.files}`;
+    return `${runBin('prettier')} --no-error-on-unmatched-pattern --write ${options.files}`;
 }
 
 module.exports = prettify;

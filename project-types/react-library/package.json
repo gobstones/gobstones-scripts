@@ -9,7 +9,6 @@
   "keywords": ["Gobstones", "Library", "Keywords"],
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "files": ["dist"],
   "types": "dist/cjs/typings/index.d.ts",
   "packageManager": "npm@9.2.0",
   "gobstones-scripts": {
@@ -34,8 +33,6 @@
   },
   "devDependencies": {
     "@gobstones/gobstones-scripts": "^0.4.0-alpha8",
-    "@types/react": "^18.0.26",
-    "@types/testing-library__jest-dom": "^5.14.5",
     "husky": "^8.0.2"
   }
 }

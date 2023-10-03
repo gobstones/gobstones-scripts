@@ -7,7 +7,7 @@ const serially = require('./serially');
  * Rename or move a file to a new location.
  *
  * @param {options} options
- * @param {string} options.src The file or folder to run rename on
+ * @param {string} options.src The file or folder to run rename on.
  * @param {string} options.dest The file or folder used as new name.
  *
  * @example rename({ src: './src', dest: './dist' })
@@ -22,7 +22,7 @@ function rename(options) {
     if (!options.src || !options.dest) {
         throw Error(stripIndent`"rename" requires options with the following signature:
                 {
-                    src: string   // The file or folder to run rename on
+                    src: string   // The file or folder to run rename on.
                     dest: string  // The file or folder used as new name.
                 }`);
     }

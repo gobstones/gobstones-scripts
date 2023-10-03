@@ -1,19 +1,21 @@
 /** @jest-environment jsdom */
-import '@testing-library/jest-dom';
-import '@testing-library/jest-dom/extend-expect';
+import * as matchers from '@testing-library/jest-dom/matchers';
 
 import { act, render, screen } from '@testing-library/react';
+import { describe, expect, it } from '@jest/globals';
 
 import Counter from '../../../src/components/Counter';
 import React from 'react';
 
+expect.extend(matchers.default);
+
 describe('Counter', () => {
-    test('renders the Counter component', () => {
+    it('renders the Counter component', () => {
         render(<Counter data-testid="counter" label="Counted {count}" />);
         const counter = screen.getByText('Counted 0');
         expect(counter).toBeInTheDocument();
     });
-    test('Do not fails if clicked but no callback provided', () => {
+    it('Do not fails if clicked but no callback provided', () => {
         render(<Counter data-testid="counter" label="Counted {count}" />);
         const counter = screen.getByText('Counted 0');
         act(() => {
@@ -21,7 +23,7 @@ describe('Counter', () => {
         });
         expect(counter).toBeInTheDocument();
     });
-    test('Call the callback function on counter changed', () => {
+    it('Call the callback function on counter changed', () => {
         let timesCalled = 0;
         const callback: (x: number) => void = jest.fn((x) => {
             timesCalled += 1;
@@ -43,7 +45,7 @@ describe('Counter', () => {
         expect(timesCalled).toBe(3);
         expect(callback).toHaveBeenCalledTimes(3);
     });
-    test('Change text after clicked', () => {
+    it('Change text after clicked', () => {
         render(<Counter data-testid="counter" label="Counted {count}" />);
         const counter = screen.getByText('Counted 0');
         act(() => {

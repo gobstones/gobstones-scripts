@@ -18,6 +18,154 @@
  */
 const projectTypes = ['library', 'cli-library', 'web-library', 'react-library'];
 
+function getClassicConfigForPath(path) {
+    return {
+        // only on init
+        src: {
+            localPath: [path + '/src'],
+            projectPath: ['src'],
+            onInit: true,
+            onUpdate: false,
+            onEject: false
+        },
+        test: {
+            localPath: [path + '/test'],
+            projectPath: ['test'],
+            onInit: true,
+            onUpdate: false,
+            onEject: false
+        },
+        changelog: {
+            localPath: ['common/CHANGELOG.md'],
+            projectPath: ['CHANGELOG.md'],
+            onInit: true,
+            onUpdate: false,
+            onEject: false
+        },
+        packageJson: {
+            localPath: [path + '/package.json'],
+            projectPath: ['package.json'],
+            onInit: true,
+            onUpdate: false,
+            onEject: false
+        },
+        readme: {
+            localPath: ['common/README.md'],
+            projectPath: ['README.md'],
+            onInit: true,
+            onUpdate: false,
+            onEject: false
+        },
+        // on init but also on any update
+        husky: {
+            localPath: ['common/husky'],
+            projectPath: ['.husky'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        github: {
+            localPath: ['common/github'],
+            projectPath: ['.github'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        vscode: {
+            localPath: ['common/vscode'],
+            projectPath: ['.vscode'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        license: {
+            localPath: ['common/LICENSE'],
+            projectPath: ['LICENSE'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        contributing: {
+            localPath: ['common/CONTRIBUTING.md'],
+            projectPath: ['CONTRIBUTING.md'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        editorconfig: {
+            localPath: ['common/editorconfig'],
+            projectPath: ['.editorconfig'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        prettier: {
+            localPath: ['common/prettierignore', 'common/prettierrc'],
+            projectPath: ['.prettierignore', '.prettierrc'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        npm: {
+            localPath: ['common/npmignore', 'common/npmrc'],
+            projectPath: ['.npmignore', '.npmrc'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        eslint: {
+            localPath: ['common/eslintrc.js'],
+            projectPath: ['.eslintrc.js'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        git: {
+            localPath: ['common/gitignore'],
+            projectPath: ['.gitignore'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
+        // only on eject
+        nps: {
+            localPath: [path + '/package-scripts.js'],
+            projectPath: ['package-scripts.js'],
+            onInit: false,
+            onUpdate: false,
+            onEject: true
+        },
+        rollup: {
+            localPath: [path + '/rollup.config.js'],
+            projectPath: ['rollup.config.js'],
+            onInit: false,
+            onUpdate: false,
+            onEject: true
+        },
+        ts: {
+            localPath: ['common/tsconfig.js'],
+            projectPath: ['tsconfig.js'],
+            onInit: false,
+            onUpdate: false,
+            onEject: true
+        },
+        typedoc: {
+            localPath: ['common/typedoc.js'],
+            projectPath: ['typedoc.js'],
+            onInit: false,
+            onUpdate: false,
+            onEject: true
+        },
+        jest: {
+            localPath: ['common/jest.config.js'],
+            projectPath: ['jest.config.js'],
+            onInit: false,
+            onUpdate: false,
+            onEject: true
+        }
+    };
+}
+
 /**
  * The library definition.
  *
@@ -25,151 +173,7 @@ const projectTypes = ['library', 'cli-library', 'web-library', 'react-library'];
  * @internal
  * @memberof Config.Projects
  */
-const library = {
-    // only on init
-    src: {
-        localPath: ['library/src'],
-        projectPath: ['src'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    test: {
-        localPath: ['library/test'],
-        projectPath: ['test'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    changelog: {
-        localPath: ['common/CHANGELOG.md'],
-        projectPath: ['CHANGELOG.md'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    packageJson: {
-        localPath: ['library/package.json'],
-        projectPath: ['package.json'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    readme: {
-        localPath: ['common/README.md'],
-        projectPath: ['README.md'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    // on init but also on any update
-    husky: {
-        localPath: ['common/husky'],
-        projectPath: ['.husky'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    github: {
-        localPath: ['common/github'],
-        projectPath: ['.github'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    vscode: {
-        localPath: ['common/vscode'],
-        projectPath: ['.vscode'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    license: {
-        localPath: ['common/LICENSE'],
-        projectPath: ['LICENSE'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    contributing: {
-        localPath: ['common/CONTRIBUTING.md'],
-        projectPath: ['CONTRIBUTING.md'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    editorconfig: {
-        localPath: ['common/editorconfig'],
-        projectPath: ['.editorconfig'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    prettier: {
-        localPath: ['common/prettierignore', 'common/prettierrc'],
-        projectPath: ['.prettierignore', '.prettierrc'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    npm: {
-        localPath: ['common/npmignore', 'common/npmrc'],
-        projectPath: ['.npmignore', '.npmrc'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    eslint: {
-        localPath: ['common/eslintrc.js'],
-        projectPath: ['.eslintrc.js'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    git: {
-        localPath: ['common/gitignore'],
-        projectPath: ['.gitignore'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    // only on eject
-    nps: {
-        localPath: ['library/package-scripts.js'],
-        projectPath: ['package-scripts.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    rollup: {
-        localPath: ['library/rollup.config.js'],
-        projectPath: ['rollup.config.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    ts: {
-        localPath: ['common/tsconfig.js'],
-        projectPath: ['tsconfig.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    typedoc: {
-        localPath: ['common/typedoc.js'],
-        projectPath: ['typedoc.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    jest: {
-        localPath: ['common/jest.config.js'],
-        projectPath: ['jest.config.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    }
-};
+const library = getClassicConfigForPath('library');
 
 /**
  * The cli-library definition.
@@ -178,151 +182,7 @@ const library = {
  * @internal
  * @memberof Config.Projects
  */
-const cliLibrary = {
-    // only on init
-    src: {
-        localPath: ['cli-library/src'],
-        projectPath: ['src'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    test: {
-        localPath: ['cli-library/test'],
-        projectPath: ['test'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    changelog: {
-        localPath: ['common/CHANGELOG.md'],
-        projectPath: ['CHANGELOG.md'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    packageJson: {
-        localPath: ['cli-library/package.json'],
-        projectPath: ['package.json'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    readme: {
-        localPath: ['common/README.md'],
-        projectPath: ['README.md'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    // on init and also on update
-    husky: {
-        localPath: ['common/husky'],
-        projectPath: ['.husky'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    github: {
-        localPath: ['common/github'],
-        projectPath: ['.github'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    vscode: {
-        localPath: ['common/vscode'],
-        projectPath: ['.vscode'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    license: {
-        localPath: ['common/LICENSE'],
-        projectPath: ['LICENSE'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    contributing: {
-        localPath: ['common/CONTRIBUTING.md'],
-        projectPath: ['CONTRIBUTING.md'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    editorconfig: {
-        localPath: ['common/editorconfig'],
-        projectPath: ['.editorconfig'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    prettier: {
-        localPath: ['common/prettierignore', 'common/prettierrc'],
-        projectPath: ['.prettierignore', '.prettierrc'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    npm: {
-        localPath: ['common/npmignore', 'common/npmrc'],
-        projectPath: ['.npmignore', '.npmrc'],
-        onInit: false,
-        onUpdate: true,
-        onEject: false
-    },
-    eslint: {
-        localPath: ['common/eslintrc.js'],
-        projectPath: ['.eslintrc.js'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    git: {
-        localPath: ['common/gitignore'],
-        projectPath: ['.gitignore'],
-        onInit: false,
-        onUpdate: true,
-        onEject: false
-    },
-    nps: {
-        localPath: ['cli-library/package-scripts.js'],
-        projectPath: ['package-scripts.js'],
-        onInit: false,
-        onUpdate: true,
-        onEject: false
-    },
-    // only on eject
-    rollup: {
-        localPath: ['cli-library/rollup.config.js'],
-        projectPath: ['rollup.config.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    ts: {
-        localPath: ['common/tsconfig.js'],
-        projectPath: ['tsconfig.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    typedoc: {
-        localPath: ['common/typedoc.js'],
-        projectPath: ['typedoc.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    jest: {
-        localPath: ['common/jest.config.js'],
-        projectPath: ['jest.config.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    }
-};
+const cliLibrary = getClassicConfigForPath('cli-library');
 
 /**
  * The web-library definition.
@@ -331,158 +191,15 @@ const cliLibrary = {
  * @internal
  * @memberof Config.Projects
  */
-const webLibrary = {
-    // only on init
-    src: {
-        localPath: ['web-library/src'],
-        projectPath: ['src'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    test: {
-        localPath: ['web-library/test'],
-        projectPath: ['test'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    changelog: {
-        localPath: ['common/CHANGELOG.md'],
-        projectPath: ['CHANGELOG.md'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
+const webLibrary = Object.assign(getClassicConfigForPath('web-library'), {
     demos: {
         localPath: ['web-library/demos'],
         projectPath: ['demos'],
         onInit: true,
         onUpdate: false,
         onEject: false
-    },
-    packageJson: {
-        localPath: ['web-library/package.json'],
-        projectPath: ['package.json'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    readme: {
-        localPath: ['common/README.md'],
-        projectPath: ['README.md'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    // on init but also on any update
-    husky: {
-        localPath: ['common/husky'],
-        projectPath: ['.husky'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    github: {
-        localPath: ['common/github'],
-        projectPath: ['.github'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    vscode: {
-        localPath: ['common/vscode'],
-        projectPath: ['.vscode'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    license: {
-        localPath: ['common/LICENSE'],
-        projectPath: ['LICENSE'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    contributing: {
-        localPath: ['common/CONTRIBUTING.md'],
-        projectPath: ['CONTRIBUTING.md'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    editorconfig: {
-        localPath: ['common/editorconfig'],
-        projectPath: ['.editorconfig'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    prettier: {
-        localPath: ['common/prettierignore', 'common/prettierrc'],
-        projectPath: ['.prettierignore', '.prettierrc'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    npm: {
-        localPath: ['common/npmignore', 'common/npmrc'],
-        projectPath: ['.npmignore', '.npmrc'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    eslint: {
-        localPath: ['common/eslintrc.js'],
-        projectPath: ['.eslintrc.js'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    git: {
-        localPath: ['common/gitignore'],
-        projectPath: ['.gitignore'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    // only on eject
-    nps: {
-        localPath: ['web-library/package-scripts.js'],
-        projectPath: ['package-scripts.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    rollup: {
-        localPath: ['web-library/rollup.config.js'],
-        projectPath: ['rollup.config.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    ts: {
-        localPath: ['common/tsconfig.js'],
-        projectPath: ['tsconfig.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    typedoc: {
-        localPath: ['common/typedoc.js'],
-        projectPath: ['typedoc.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    jest: {
-        localPath: ['common/jest.config.js'],
-        projectPath: ['jest.config.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
     }
-};
+});
 
 /**
  * The react-library definition.
@@ -491,41 +208,12 @@ const webLibrary = {
  * @internal
  * @memberof Config.Projects
  */
-const reactLibrary = {
-    // only on init
-    src: {
-        localPath: ['react-library/src'],
-        projectPath: ['src'],
+const reactLibrary = Object.assign(getClassicConfigForPath('react-library'), {
+    babel: {
+        localPath: ['react-library/babelrc.json'],
+        projectPath: ['.babelrc.json'],
         onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    test: {
-        localPath: ['react-library/test'],
-        projectPath: ['test'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    changelog: {
-        localPath: ['common/CHANGELOG.md'],
-        projectPath: ['CHANGELOG.md'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    packageJson: {
-        localPath: ['react-library/package.json'],
-        projectPath: ['package.json'],
-        onInit: true,
-        onUpdate: false,
-        onEject: false
-    },
-    readme: {
-        localPath: ['common/README.md'],
-        projectPath: ['README.md'],
-        onInit: true,
-        onUpdate: false,
+        onUpdate: true,
         onEject: false
     },
     stories: {
@@ -535,121 +223,14 @@ const reactLibrary = {
         onUpdate: false,
         onEject: false
     },
-    // on init and also on update
     storybook: {
         localPath: ['react-library/storybook'],
         projectPath: ['.storybook'],
         onInit: true,
         onUpdate: true,
         onEject: false
-    },
-    husky: {
-        localPath: ['common/husky'],
-        projectPath: ['.husky'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    github: {
-        localPath: ['common/github'],
-        projectPath: ['.github'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    vscode: {
-        localPath: ['common/vscode'],
-        projectPath: ['.vscode'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    license: {
-        localPath: ['common/LICENSE'],
-        projectPath: ['LICENSE'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    contributing: {
-        localPath: ['common/CONTRIBUTING.md'],
-        projectPath: ['CONTRIBUTING.md'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    editorconfig: {
-        localPath: ['common/editorconfig'],
-        projectPath: ['.editorconfig'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    prettier: {
-        localPath: ['common/prettierignore', 'common/prettierrc'],
-        projectPath: ['.prettierignore', '.prettierrc'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    npm: {
-        localPath: ['common/npmignore', 'common/npmrc'],
-        projectPath: ['.npmignore', '.npmrc'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    eslint: {
-        localPath: ['common/eslintrc.js'],
-        projectPath: ['.eslintrc.js'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    git: {
-        localPath: ['common/gitignore'],
-        projectPath: ['.gitignore'],
-        onInit: true,
-        onUpdate: true,
-        onEject: false
-    },
-    nps: {
-        localPath: ['react-library/package-scripts.js'],
-        projectPath: ['package-scripts.js'],
-        onInit: false,
-        onUpdate: true,
-        onEject: false
-    },
-    // only on eject
-    rollup: {
-        localPath: ['react-library/rollup.config.js'],
-        projectPath: ['rollup.config.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    ts: {
-        localPath: ['common/tsconfig.js'],
-        projectPath: ['tsconfig.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    typedoc: {
-        localPath: ['common/typedoc.js'],
-        projectPath: ['typedoc.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
-    },
-    jest: {
-        localPath: ['common/jest.config.js'],
-        projectPath: ['jest.config.js'],
-        onInit: false,
-        onUpdate: false,
-        onEject: true
     }
-};
+});
 
 /**
  * Return only the keys of the object that, as value, have a

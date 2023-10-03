@@ -1,6 +1,8 @@
-import './Counter.scss';
+import './Counter.css';
 
 import React, { useState } from 'react';
+
+import reactIcon from './reactIcon.svg';
 
 export interface CounterProps {
     label: string;
@@ -31,6 +33,7 @@ const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => 
                 props.onCountChange?.apply(props.onCountChange, [count + 1]);
             }}
         >
+            <img src={reactIcon} alt="button-icon" />
             {props.label.replace('{count}', count.toString())}
         </button>
     );
