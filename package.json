@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": "https://github.com/gobstones/gobstones-scripts",
   "homepage": "https://gobstones.github.io/gobstones-scripts",
@@ -19,9 +19,7 @@
     }
   },
   "scripts": {
-    "postinstall": "husky install",
-    "prepack": "pinst --disable",
-    "postpack": "pinst --enable",
+    "prepare": "husky install",
     "start": "nps",
     "dev": "node ./src/api/index.js",
     "test": "nps lint && nps verdaccio",

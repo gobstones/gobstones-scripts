@@ -12,10 +12,17 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v3
-            - run: npm set-script prepare ""
-            - run: npm install
+            - name: Setup node version
+              uses: actions/setup-node@v3
+              with:
+                  node-version: '20'
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            - name: Remove Husky on prepare
+              run: npm pkg delete scripts.prepare
+            - name: Installing project dependencies
+              run: npm install
             - name: Create Release on GitHub
-              id: create_release
               uses: actions/create-release@v1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

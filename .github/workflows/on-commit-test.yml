@@ -10,17 +10,16 @@ jobs:
     test:
         name: Run tests
         runs-on: ubuntu-latest
-        env:
-            NODE_OPTIONS: --experimental-modules
         steps:
-            - uses: actions/checkout@v3
-              name: Run tests using Node.js 14.x
-            - uses: actions/setup-node@v3
+            - name: Checkout code
+              uses: actions/checkout@v3
+            - name: Setup node version
+              uses: actions/setup-node@v3
               with:
-                  node-version: '16'
-            - run: npm set-script prepare ""
-            - run: npm install
-            - run: echo "This project only lints on server"
-            - run: npm run lint
-              env:
-                  CI: true
+                  node-version: '20'
+            - name: Remove Husky on prepare
+              run: npm pkg delete scripts.prepare
+            - name: Installing project dependencies
+              run: npm install
+            - name: Linting the code
+              run: npm run lint
