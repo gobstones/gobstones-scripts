@@ -1,6 +1,8 @@
 # a-new-gobstones-library
 
-Add a simple library description here.
+your library description here.
+Describe briefly the purpose of your library -- i.e. what functionalities does it provide.
+For longer description, refer to [Usage](#usage).
 
 Once you have a repository established,replace the following references to gobstones/a-new-gobstones-library to your own library ones, so you have the appropriate badges.
 Remove demo badge if this is a library without GUI. Also, delete this lines.
@@ -11,7 +13,8 @@ Remove demo badge if this is a library without GUI. Also, delete this lines.
 
 ## Install
 
-Explain how to install this library using a package manager or more than one if that is intended.
+Explain how to install this library using a package manager or more than one if
+that is intended.
 
 **npm:**
 
@@ -30,7 +33,8 @@ basic API, and possibly some example use cases.
 
 If your library supports a CLI, explain how to use it, that is, which commands
 and flags are available, what do they do, and so on.
-If your library does not support CLI, you may remove the whole section.
+
+If your library does not support CLI, you may remove this section entirely.
 
 # Architecture
 

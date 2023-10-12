@@ -1,6 +1,8 @@
 # gobstones-scripts
 
-Gobstones Scripts is a CLI tool that helps in the creation of libraries for the Gobstones Project by hiding away the configuration files for several building tools, such as Typescript, Rollup, Webpack, Jest, nps and Typedoc. It also provides some pre-defined files for styling and linting, such as .editorconfig, prettier and ESLint support files, that are automatically copied to the root of your project during initialization.
+Gobstones Scripts is a CLI tool that helps in the creation of libraries for GobstonesWeb2 by hiding away the configuration files for several building tools, such as Typescript, Rollup, Webpack, Jest, nps and Typedoc.
+
+It also provides some pre-defined files for styling and linting, such as .editorconfig, prettier and ESLint support files, that are automatically copied to the root of your project during initialization.
 
 You may thing of gobstones-script as some sort of create-react-app + react-scripts for the Gobstones Project libraries.
 
@@ -12,12 +14,15 @@ Configurations may be overwritten at any time to provide more functionality, but
 
 ## Install
 
-This library adds a binary file that can be executed as a CLI. There are two ways in which you can install gobstones-scripts, globally or locally.
+This library adds a binary file that can be executed as a CLI.
+
+There are two ways in which you can install gobstones-scripts, globally or locally.
 
 ### Global install
 
-The global install allows to execute the _gobstones-scripts_ command globally, by installing the CLI to your path. The best thing about it
-is the ability to create new projects or to initialize a project in a specific folder. To install globally with **npm** run
+e global install allows to execute the _gobstones-scripts_ command globally, by installing the CLI to your path.
+
+The best thing about it is the ability to create new projects or to initialize a project in a specific folder. To install globally with **npm** run The best thing about it is the ability to create new projects or to initialize a project in a specific folder. To install globally with **npm** run
 
 ```bash
 npm install --global @gobstones/gobstones-scripts
