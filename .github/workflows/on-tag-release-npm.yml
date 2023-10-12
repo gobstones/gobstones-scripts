@@ -1,4 +1,4 @@
-name: release-npm-on-tag
+name: on-tag-release-npm
 
 on:
     push:

@@ -11,7 +11,7 @@ module.exports = {
             }
         ]
     },
-    coverageReporters: ['text', ['html', { sasa: false }]],
+    coverageReporters: ['text', 'html'],
     coverageThreshold: {
         global: {
             branches: 80,
@@ -23,8 +23,16 @@ module.exports = {
     testPathIgnorePatterns: ['<rootDir>/src/test.ts'],
     transformIgnorePatterns: [],
     moduleNameMapper: {
-        '\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
-            'identity-obj-proxy',
-        '\\.(css|less|scss|less|sass)$': 'identity-obj-proxy'
+        // styles
+        '\\.(css|less|scss|less|sass)$': '<rootDir>/.jest/proxies/identity-obj-proxy-esm',
+        // images
+        '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/.jest/proxies/identity-obj-proxy-esm',
+        // fonts
+        '\\.(eot|otf|ttf|woff|woff2)$': '<rootDir>/.jest/proxies/identity-obj-proxy-esm',
+        // audio
+        '\\.(wav|mp3|m4a|aac|oga)$': '<rootDir>/.jest/proxies/identity-obj-proxy-esm',
+        // video
+        '\\.(mp4|webm)$': '<rootDir>/.jest/proxies/identity-obj-proxy-esm'
+        // others (add below if needed)
     }
 };

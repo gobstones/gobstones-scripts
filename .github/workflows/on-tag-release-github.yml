@@ -1,4 +1,4 @@
-name: release-github-on-tag
+name: on-tag-release-github
 
 on:
     push:

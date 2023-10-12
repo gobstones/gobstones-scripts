@@ -4,8 +4,21 @@ import React, { useState } from 'react';
 
 import reactIcon from './reactIcon.svg';
 
+/**
+ * Properties for the [[Counter]] component.
+ * This properties allows for the configuration of a counter component,
+ * both with the label and the `onCountChange` event trigger.
+ */
 export interface CounterProps {
+    /** The label for the counter. It may include any text. If you use
+     * "{count}" anywhere in your string, that text will be replaced
+     * with the number of times the counter was pressed at the moment.  */
     label: string;
+
+    /**
+     * A function that will be called every time the counter is clicked.
+     * @param currentCount The current number of times the counter was clicked.
+     */
     onCountChange?: (currentCount: number) => void;
 }
 
@@ -22,8 +35,10 @@ export interface CounterProps {
  *
  * You may take this component as a template to create your own
  * component.
+ *
+ * @param props The configuration for the component.
  */
-const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => {
+export const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => {
     const [count, setCount] = useState(0);
 
     return (
@@ -38,5 +53,3 @@ const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => 
         </button>
     );
 };
-
-export default Counter;

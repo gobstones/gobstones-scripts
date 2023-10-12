@@ -8,7 +8,7 @@ Configurations may be overwritten at any time to provide more functionality, but
 
 [![Licence](https://img.shields.io/github/license/gobstones/gobstones-scripts?style=plastic&label=License&logo=open-source-initiative&logoColor=white&color=olivegreen)](https://github.com/gobstones/gobstones-scripts/blob/main/LICENSE) [![Version](https://img.shields.io/github/package-json/v/gobstones/gobstones-scripts?style=plastic&label=Version&logo=git-lfs&logoColor=white&color=crimson)](https://www.npmjs.com/package/@gobstones/gobstones-scripts) [![API Docs](https://img.shields.io/github/package-json/homepage/gobstones/gobstones-scripts?color=blue&label=API%20Docs&logo=gitbook&logoColor=white&style=plastic)](https://gobstones.github.io/gobstones-scripts)
 
-![GitHub Workflow Tests](https://img.shields.io/github/workflow/status/gobstones/gobstones-scripts/test-on-commit?style=plastic&label=Tests&logo=github-actions&logoColor=white) ![GitHub Workflow Build](https://img.shields.io/github/workflow/status/gobstones/gobstones-scripts/build-on-commit?style=plastic&label=Build&logo=github-actions&logoColor=white)
+![GitHub Workflow Tests](https://img.shields.io/github/actions/workflow/status/gobstones/gobstones-scripts/on-commit-test.yml?style=plastic&label=Tests&logo=github-actions&logoColor=white) ![GitHub Workflow Build](https://img.shields.io/github/actions/workflow/status/gobstones/gobstones-scripts/on-commit-build.yml?style=plastic&label=Build&logo=github-actions&logoColor=white)
 
 ## Install
 
@@ -163,6 +163,30 @@ By default, **npm** is used, although you can configure this by the
 
 Support may change in the future once [https://nodejs.org/dist/latest/docs/api/corepack.html](corepack) gets out of the experimental state.
 
+## Underlying technologies
+
+The underlying technologies in use include
+
+-   **typescript** (tsc for building)
+-   **rollup** (for bundling libraries and cli-libraries)
+-   **vite** (for bundling web-libraries and react-libraries)
+-   **eslint** (for linting)
+-   **prettier** (for styling)
+-   **typedoc** (for documentation generation)
+-   **storybook** (for testing and documenting react-libraries)
+-   **nps** (for orchestrating the tooling)
+-   **husky** (for hooking into git actions)
+
+Other files copied to your project will include
+
+-   **.editorconfig** (for editor styling, matching prettier)
+-   **.gitignore** (for git management)
+-   **.npmignore** (for publishing configuration)
+
+Also a **.github** folder will configure GitHub actions, and a **.vscode** folder will configure your Visual Studio Code environment on first run.
+
+Finally, other files included do not require special technologies, but are important, such as **CHANGELOG.md**, **CONTRIBUTING.md**, **README.md** and LICENSE, together with **package.json**.
+
 ## Updating the version while coding the tool
 
 The tool has a more complex system for updating the version than other libraries, as not only the package.json needs to be changed.
@@ -173,6 +197,54 @@ node update-version.js <version>
 ```
 
 Where `<version>` is a specific version using major, minor and patch system. After calling the tool, the version will be updated everywhere for the tool.
+
+## Testing newer versions of the library
+
+This tool relies heavily on the packaging system. In that sense, the library need to be published in order to be tested, which constitutes a problem, as it cannot be tested without publishing. For that, we make use of [verdaccio](http://verdaccio.org). Verdaccio provides a private server, which can run locally. By running verdaccio locally, then the newer versions of the library can be tested using such server instead of having to publish to npm.
+
+Firs, publish the script globally using `npm link`, so you have an easy way of calling the tool.
+
+You can then run the verdaccio server and publish the library to it by running
+
+```sh
+npm start verdaccio
+```
+
+Also, the following command performs the same:
+
+```sh
+npm run build
+```
+
+While, on the other hand, `npm test` performs the same after running the linter.
+
+While the server is still running, you can run the globally installed script, adding the testing flag to any command (`--test` or `-T`). This flag instructs the tool to search the library in the verdaccio server instead of npmjs registry.
+
+Additionally, it may happen that you are required to configure verdaccio locally. In such case, run the following command:
+
+```sh
+npm start verdaccio.serve
+```
+
+This will run the verdaccio server, but it will not attempt to publish the library. You should then configure the user and publish the library manually. First create a user in the server by running:
+
+```sh
+npm adduser --registry http://localhost:4567
+```
+
+Then login to the registry:
+
+```sh
+npm login --registry http://localhost:4567
+```
+
+After that, you should be able to publish your library by doing:
+
+```sh
+npm publish --registry http://localhost:4567
+```
+
+Once the verdaccio server is configured for the first time, you should be able to stop it and the re-run and publish using the `npm start verdaccio` command.
 
 ## Contributing
 

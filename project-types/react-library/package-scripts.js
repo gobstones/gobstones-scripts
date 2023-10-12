@@ -7,11 +7,13 @@ const defaultConfiguration = {
         default: tasks.nps('help'),
 
         dev: {
+            // script: tasks.vite.dev(),
             script: tasks.storybook.start({ port: 3001 }),
             description: 'Run a storybook webpage with the component'
         },
 
         build: {
+            // script: tasks.serially(tasks.nps('clean.dist'), tasks.vite.build()),
             script: tasks.serially(tasks.nps('clean.dist'), tasks.rollup()),
             description: 'Build the application into "dist" folder'
         },
@@ -52,12 +54,17 @@ const defaultConfiguration = {
         },
 
         doc: {
-            script: tasks.serially(tasks.nps('clean.docs'), tasks.storybook.build({ dir: 'docs' })),
-            description: 'Generate a static storybook as documentation for the exported components',
+            script: tasks.serially(
+                tasks.nps('clean.docs'),
+                tasks.typedoc(),
+                tasks.copy({ src: './docs/index.html', dest: './docs/globals.html' }),
+                tasks.storybook.build({ dir: 'docs/demo' })
+            ),
+            description: 'Generate the module documentation and demo pages',
             serve: {
                 script: tasks.serially(tasks.nps('doc'), tasks.serve('./docs')),
                 description:
-                    'Generate a static storybook as documentation for the exported components, then serve the docs as HTML'
+                    'Generate the module documentation and demo pages, then serve the docs as HTML'
             }
         },
 

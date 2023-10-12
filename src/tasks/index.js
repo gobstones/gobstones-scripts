@@ -27,6 +27,7 @@ const storybook = require('./storybook');
 const tsc = require('./tsc');
 const tsNode = require('./tsnode');
 const typedoc = require('./typedoc');
+const vite = require('./vite');
 
 module.exports = {
     chmod,
@@ -50,5 +51,6 @@ module.exports = {
     storybook,
     tsc,
     tsNode,
-    typedoc
+    typedoc,
+    vite
 };

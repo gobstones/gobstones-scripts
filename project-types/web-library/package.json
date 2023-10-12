@@ -2,8 +2,9 @@
   "name": "a-new-gobstones-library",
   "version": "0.1.0",
   "description": "A New Gobstones Project Library",
-  "repository": "https://github.com/gobstones/gobstones-core",
-  "homepage": "https://gobstones.github.io/gobstones-core",
+  "repository": "https://github.com/gobstones/a-new-gobstones-react-library",
+  "homepage": "https://gobstones.github.io/a-new-gobstones-react-library",
+  "demopage": "https://gobstones.github.io/a-new-gobstones-react-library/demo",
   "author": "John Doe <john.doe@gmail.com>",
   "license": "AGPL-3.0",
   "keywords": ["Gobstones", "Library", "Keywords"],
@@ -35,7 +36,7 @@
   },
   "devDependencies": {
     "@jest/globals": "^29.3.1",
-    "@gobstones/gobstones-scripts": "^0.4.0-alpha8",
+    "@gobstones/gobstones-scripts": "^0.4.0",
     "husky": "^8.0.2"
   }
 }

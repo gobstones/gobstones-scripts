@@ -1,4 +1,4 @@
-name: test-on-commit
+name: on-commit-build
 on:
     push:
         branches:
@@ -14,12 +14,12 @@ jobs:
             NODE_OPTIONS: --experimental-modules
         steps:
             - uses: actions/checkout@v3
-              name: Run tests using Node.js 16.x
+              name: Run build using Node.js 16.x
             - uses: actions/setup-node@v3
               with:
                   node-version: '16'
             - run: npm set-script prepare ""
             - run: npm install
-            - run: npm test
+            - run: npm run build
               env:
                   CI: true

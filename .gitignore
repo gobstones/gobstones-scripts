@@ -21,3 +21,6 @@ tsconfig.build.json
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+
+# Verdaccio storage
+test/verdaccio/storage

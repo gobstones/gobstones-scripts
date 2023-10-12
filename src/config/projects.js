@@ -16,7 +16,7 @@
  * @internal
  * @memberof Config.Project
  */
-const projectTypes = ['library', 'cli-library', 'web-library', 'react-library'];
+const projectTypes = ['library', 'cli-library', 'react-library' /* , 'web-library' */];
 
 function getClassicConfigForPath(path) {
     return {
@@ -209,9 +209,30 @@ const webLibrary = Object.assign(getClassicConfigForPath('web-library'), {
  * @memberof Config.Projects
  */
 const reactLibrary = Object.assign(getClassicConfigForPath('react-library'), {
-    babel: {
-        localPath: ['react-library/babelrc.json'],
-        projectPath: ['.babelrc.json'],
+    typedoc: {
+        localPath: ['react-library/typedoc.js'],
+        projectPath: ['typedoc.js'],
+        onInit: false,
+        onUpdate: false,
+        onEject: true
+    },
+    jest: {
+        localPath: ['common/jest.config.js'],
+        projectPath: ['jest.config.js'],
+        onInit: false,
+        onUpdate: true,
+        onEject: false
+    },
+    jestproxies: {
+        localPath: ['react-library/jest'],
+        projectPath: ['.jest'],
+        onInit: true,
+        onUpdate: true,
+        onEject: false
+    },
+    vite: {
+        localPath: ['react-library/vite.config.ts'],
+        projectPath: ['vite.config.ts'],
         onInit: true,
         onUpdate: true,
         onEject: false

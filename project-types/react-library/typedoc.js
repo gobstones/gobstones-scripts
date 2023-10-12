@@ -13,7 +13,9 @@ module.exports = {
     exclude: [
         config.projectRootPath + '/node_modules/**/*',
         config.projectRootPath + '/**/*.test.ts',
-        config.projectRootPath + '/src/index.ts'
+        config.projectRootPath + '/src/index.ts',
+        config.projectRootPath + '/src/custom.d.ts',
+        config.projectRootPath + '/src/**/index.ts'
     ],
     includeVersion: true,
     categorizeByGroup: true,
