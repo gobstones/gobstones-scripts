@@ -2256,6 +2256,173 @@
 				"build": "nps verdaccio",
 				"doc": "nps doc",
 				"lint": "nps lint",
+				"prettify": "nps prettify",
+				"prepare": ""
+			},
+			"devDependencies": {
+				"docdash": "^2.0.2",
+				"jsdoc": "^4.0.2",
+				"node-dev": "^8.0.0",
+				"nodemon": "^3.0.1"
+			},
+			"dependencies": {
+				"@babel/core": "^7.23.0",
+				"@babel/preset-env": "^7.22.20",
+				"@babel/preset-react": "^7.22.15",
+				"@babel/preset-typescript": "^7.23.0",
+				"@jest/globals": "^29.7.0",
+				"@mdx-js/react": "^2.3.0",
+				"@rollup/plugin-commonjs": "^25.0.4",
+				"@rollup/plugin-image": "^3.0.2",
+				"@rollup/plugin-node-resolve": "^15.2.1",
+				"@rollup/plugin-typescript": "^11.1.4",
+				"@storybook/addon-actions": "^7.4.5",
+				"@storybook/addon-docs": "^7.4.6",
+				"@storybook/addon-essentials": "^7.4.5",
+				"@storybook/addon-links": "^7.4.5",
+				"@storybook/cli": "^7.4.5",
+				"@storybook/manager-api": "^7.4.6",
+				"@storybook/react": "^7.4.5",
+				"@storybook/react-vite": "^7.4.5",
+				"@storybook/theming": "^7.4.6",
+				"@testing-library/jest-dom": "^6.1.3",
+				"@testing-library/react": "^14.0.0",
+				"@types/common-tags": "^1.8.2",
+				"@types/node": "^20.6.5",
+				"@types/react": "^18.2.22",
+				"@types/rimraf": "^3.0.2",
+				"@types/testing-library__jest-dom": "^5.14.9",
+				"@typescript-eslint/eslint-plugin": "^6.7.3",
+				"@typescript-eslint/parser": "^6.7.3",
+				"@vitejs/plugin-react": "^4.1.0",
+				"ajv": "^8.12.0",
+				"ansi-colors": "^4.1.3",
+				"babel-jest": "^29.7.0",
+				"commander": "^11.0.0",
+				"common-tags": "^1.8.2",
+				"concurrently": "^8.2.1",
+				"copyfiles": "^2.4.1",
+				"cpy-cli": "^5.0.0",
+				"eslint": "^8.50.0",
+				"eslint-config-prettier": "^9.0.0",
+				"eslint-plugin-import": "^2.28.1",
+				"eslint-plugin-no-null": "^1.0.2",
+				"eslint-plugin-prefer-arrow": "^1.2.3",
+				"eslint-plugin-prettier": "^5.0.0",
+				"eslint-plugin-react-hooks": "^4.6.0",
+				"eslint-plugin-react-refresh": "^0.4.3",
+				"figlet": "^1.6.0",
+				"fs-extra": "^11.1.1",
+				"husky": "^8.0.3",
+				"identity-obj-proxy": "^3.0.0",
+				"jest": "^29.7.0",
+				"jest-environment-jsdom": "^29.7.0",
+				"nps": "^5.10.0",
+				"pinst": "^3.0.0",
+				"postcss": "^8.4.30",
+				"prettier": "^3.0.3",
+				"replace": "^1.2.2",
+				"rimraf": "^5.0.1",
+				"rollup": "^3.29.3",
+				"rollup-plugin-dts": "^6.0.2",
+				"rollup-plugin-postcss": "^4.0.2",
+				"serve": "^14.2.1",
+				"ts-jest": "^29.1.1",
+				"ts-node": "^10.9.1",
+				"ts-node-dev": "^2.0.0",
+				"tsconfig.js": "^3.0.0",
+				"typedoc": "^0.25.1",
+				"typedoc-plugin-extras": "^3.0.0",
+				"typedoc-plugin-merge-modules": "^5.1.0",
+				"typedoc-plugin-remove-references": "^0.0.6",
+				"typescript": "^5.2.2",
+				"vite": "^4.4.10"
+			},
+			"gitHead": "9118f5303f884c9f5fd6a69ca7d1fc71f6970a4d",
+			"bugs": {
+				"url": "https://github.com/gobstones/gobstones-scripts/issues"
+			},
+			"_id": "@gobstones/gobstones-scripts@0.4.0",
+			"_nodeVersion": "16.20.2",
+			"_npmVersion": "8.19.4",
+			"dist": {
+				"integrity": "sha512-8ehPI8PwtI9lsfhttS0N/9NYdiuh6/wc6I/ViGfABZKYHbo2OJ8ANjE+JJbLs19INUN4NlfzWV1r7GwjjVr78w==",
+				"shasum": "79bf4d65189aa71b5fe41e582da204b8fd68e2f2",
+				"tarball": "https://registry.npmjs.org/@gobstones/gobstones-scripts/-/gobstones-scripts-0.4.0.tgz",
+				"fileCount": 705,
+				"unpackedSize": 9193740,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEQCIEMk4gSJa2PCLhcDAaFShXcoBz1UdUnouhe4lx5aAAovAiAX7BhBW7EU6uEWBXa0F++iSY0lO8DqOYFclKuETw4AGA=="
+					}
+				]
+			},
+			"_npmUser": {
+				"name": "alanrodas",
+				"email": "alanrodas@gmail.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "nicolas-alv3",
+					"email": "nicolas.alvarez@alu.unq.edu.ar"
+				},
+				{
+					"name": "alanrodas",
+					"email": "alanrodas@gmail.com"
+				},
+				{
+					"name": "sawady",
+					"email": "sawady.faso@gmail.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/gobstones-scripts_0.4.0_1697140842890_0.21804280286487354"
+			},
+			"_hasShrinkwrap": false,
+			"contributors": []
+		},
+		"0.4.1": {
+			"name": "@gobstones/gobstones-scripts",
+			"version": "0.4.1",
+			"description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
+			"repository": {
+				"type": "git",
+				"url": "git+https://github.com/gobstones/gobstones-scripts.git"
+			},
+			"homepage": "https://gobstones.github.io/gobstones-scripts",
+			"author": {
+				"name": "Alan Rodas Bonjour",
+				"email": "alanrodas@gmail.com"
+			},
+			"license": "AGPL-3.0",
+			"keywords": [
+				"Gobstones",
+				"Scripts",
+				"Build",
+				"Run",
+				"Projects"
+			],
+			"bin": {
+				"gobstones-scripts": "src/cli/index.js"
+			},
+			"main": "./dist/index.js",
+			"typings": "./src/index.d.ts",
+			"exports": {
+				".": {
+					"types": "./src/index.d.ts",
+					"default": "./src/index.js"
+				}
+			},
+			"scripts": {
+				"start": "nps",
+				"dev": "node ./src/api/index.js",
+				"test": "nps lint && nps verdaccio",
+				"build": "nps verdaccio",
+				"doc": "nps doc",
+				"lint": "nps lint",
 				"prettify": "nps prettify"
 			},
 			"devDependencies": {
@@ -2337,26 +2504,57 @@
 				"typescript": "^5.2.2",
 				"vite": "^4.4.10"
 			},
-			"readmeFilename": "README.md",
-			"gitHead": "17b96940db531dda50b051743924a163406cbad2",
+			"_id": "@gobstones/gobstones-scripts@0.4.1",
+			"gitHead": "1a4c6a11221d3f6765b27ee467a2bebddb418469",
 			"bugs": {
 				"url": "https://github.com/gobstones/gobstones-scripts/issues"
 			},
-			"_id": "@gobstones/gobstones-scripts@0.4.0",
-			"_nodeVersion": "19.3.0",
-			"_npmVersion": "9.7.1",
+			"_nodeVersion": "20.8.0",
+			"_npmVersion": "10.1.0",
 			"dist": {
-				"integrity": "sha512-04R3I7bR9LkyYGnVLp+sq18WYypZtvL21p8NIF56CUpw5SW5eNQ8JFCx5k5LoGYLEzKrMJsoVyGVlKOJaduu+g==",
-				"shasum": "c6171b44e555d60e8b83c6d43d057669ba161add",
-				"tarball": "http://localhost:4567/@gobstones/gobstones-scripts/-/@gobstones/gobstones-scripts-0.4.0.tgz"
+				"integrity": "sha512-EE5qnPuANCO9LD2F5ItremMNOdrO1arWe8UUxFmPy2ox/LxYOaOpfccjcMNepttGgUVqxu5u4TDi7eEMdqAaew==",
+				"shasum": "11d55be3369bc21e34f1f3e9381dd1861f49c24f",
+				"tarball": "https://registry.npmjs.org/@gobstones/gobstones-scripts/-/gobstones-scripts-0.4.1.tgz",
+				"fileCount": 705,
+				"unpackedSize": 9194415,
+				"signatures": [
+					{
+						"keyid": "SHA256:jl3bwswu80PjjokCgh0o2w5c2U4LhQAE57gj9cz1kzA",
+						"sig": "MEUCIF3EwJqanNBDldYiRJvO5EIOMq700pO1SwsavmPvTYZQAiEAnLeicLxuhkPvP7AVmHrStt1jHdEtHBdALXbPWRxicoM="
+					}
+				]
 			},
+			"_npmUser": {
+				"name": "alanrodas",
+				"email": "alanrodas@gmail.com"
+			},
+			"directories": {},
+			"maintainers": [
+				{
+					"name": "nicolas-alv3",
+					"email": "nicolas.alvarez@alu.unq.edu.ar"
+				},
+				{
+					"name": "alanrodas",
+					"email": "alanrodas@gmail.com"
+				},
+				{
+					"name": "sawady",
+					"email": "sawady.faso@gmail.com"
+				}
+			],
+			"_npmOperationalInternal": {
+				"host": "s3://npm-registry-packages",
+				"tmp": "tmp/gobstones-scripts_0.4.1_1697145950913_0.285668267740288"
+			},
+			"_hasShrinkwrap": false,
 			"contributors": []
 		}
 	},
 	"time": {
 		"created": "2022-08-02T16:53:48.936Z",
 		"0.1.1": "2022-08-02T16:53:49.117Z",
-		"modified": "2023-10-12T19:56:49.507Z",
+		"modified": "2023-10-12T21:25:51.564Z",
 		"0.2.0": "2022-10-17T14:09:48.721Z",
 		"0.2.1": "2022-10-17T14:33:05.326Z",
 		"0.2.2": "2022-10-17T14:46:57.465Z",
@@ -2373,16 +2571,17 @@
 		"0.4.0-alpha4": "2022-12-23T09:08:57.391Z",
 		"0.4.0-alpha6": "2022-12-27T03:09:07.788Z",
 		"0.4.0-alpha7": "2022-12-27T12:31:38.434Z",
-		"0.4.0": "2023-10-12T19:56:49.507Z"
+		"0.4.0": "2023-10-12T20:00:43.269Z",
+		"0.4.1": "2023-10-12T21:25:51.319Z"
 	},
 	"users": {},
 	"dist-tags": {
-		"latest": "0.4.0"
+		"latest": "0.4.1"
 	},
 	"_uplinks": {
 		"npmjs": {
-			"etag": "W/\"0342f8fabf9c1029ba243b31be199ca2\"",
-			"fetched": 1697140609392
+			"etag": "W/\"921bce1e04ddb03c6195439522e66fcd\"",
+			"fetched": 1697228439737
 		}
 	},
 	"_distfiles": {
@@ -2470,15 +2669,24 @@
 			"url": "https://registry.npmjs.org/@gobstones/gobstones-scripts/-/gobstones-scripts-0.4.0-alpha7.tgz",
 			"sha": "078d14315d5336d244d0efd9542cd7f28f3dcc19",
 			"registry": "npmjs"
+		},
+		"gobstones-scripts-0.4.0.tgz": {
+			"url": "https://registry.npmjs.org/@gobstones/gobstones-scripts/-/gobstones-scripts-0.4.0.tgz",
+			"sha": "79bf4d65189aa71b5fe41e582da204b8fd68e2f2",
+			"registry": "npmjs"
+		},
+		"gobstones-scripts-0.4.1.tgz": {
+			"url": "https://registry.npmjs.org/@gobstones/gobstones-scripts/-/gobstones-scripts-0.4.1.tgz",
+			"sha": "11d55be3369bc21e34f1f3e9381dd1861f49c24f",
+			"registry": "npmjs"
 		}
 	},
 	"_attachments": {
-		"gobstones-scripts-0.4.0.tgz": {
-			"shasum": "c6171b44e555d60e8b83c6d43d057669ba161add",
-			"version": "0.4.0"
+		"gobstones-scripts-0.4.1.tgz": {
+			"shasum": "61061278c1d7969a69818ad97ce05ef04d27d0dc"
 		}
 	},
-	"_rev": "4-5884d036777be20c",
+	"_rev": "2-d2d198e6249585d1",
 	"_id": "@gobstones/gobstones-scripts",
-	"readme": "# gobstones-scripts\n\nGobstones Scripts is a CLI tool that helps in the creation of libraries for the Gobstones Project by hiding away the configuration files for several building tools, such as Typescript, Rollup, Webpack, Jest, nps and Typedoc. It also provides some pre-defined files for styling and linting, such as .editorconfig, prettier and ESLint support files, that are automatically copied to the root of your project during initialization.\n\nYou may thing of gobstones-script as some sort of create-react-app + react-scripts for the Gobstones Project libraries.\n\nConfigurations may be overwritten at any time to provide more functionality, but defaults tend to work on most cases.\n\n[![Licence](https://img.shields.io/github/license/gobstones/gobstones-scripts?style=plastic&label=License&logo=open-source-initiative&logoColor=white&color=olivegreen)](https://github.com/gobstones/gobstones-scripts/blob/main/LICENSE) [![Version](https://img.shields.io/github/package-json/v/gobstones/gobstones-scripts?style=plastic&label=Version&logo=git-lfs&logoColor=white&color=crimson)](https://www.npmjs.com/package/@gobstones/gobstones-scripts) [![API Docs](https://img.shields.io/github/package-json/homepage/gobstones/gobstones-scripts?color=blue&label=API%20Docs&logo=gitbook&logoColor=white&style=plastic)](https://gobstones.github.io/gobstones-scripts)\n\n![GitHub Workflow Tests](https://img.shields.io/github/workflow/status/gobstones/gobstones-scripts/test-on-commit?style=plastic&label=Tests&logo=github-actions&logoColor=white) ![GitHub Workflow Build](https://img.shields.io/github/workflow/status/gobstones/gobstones-scripts/build-on-commit?style=plastic&label=Build&logo=github-actions&logoColor=white)\n\n## Install\n\nThis library adds a binary file that can be executed as a CLI. There are two ways in which you can install gobstones-scripts, globally or locally.\n\n### Global install\n\nThe global install allows to execute the _gobstones-scripts_ command globally, by installing the CLI to your path. The best thing about it\nis the ability to create new projects or to initialize a project in a specific folder. To install globally with **npm** run\n\n```bash\nnpm install --global @gobstones/gobstones-scripts\n```\n\nYou do not need the global installation in order to use _gobstones-scripts_ in a project, but it's useful if you are starting a project from scratch.\n\n### Local install\n\nTo install locally to your already created project run the following with **npm**.\n\n```bash\nnpm install --save-dev @gobstones/gobstones-scripts\n```\n\nThis will add _gobstones-scripts_ as a dependency to your project.\nRemember to install all peer dependencies too, as this are needed to run all tooling that _gobstones-scripts_ require.\n\n## Running through CLI\n\nThe common usage is to run _gobstones-scripts_ as a CLI tool, by running directly in the following way if you installed globally\n\n```bash\ngobstones-scripts\n```\n\nor through **npx** if installed locally.\n\n```bash\nnpx gobstones-scripts\n```\n\nIf you have created a project through this tool, you already have a script in your `package.json` file to run the tool, `gbs`. Just run the script via your package manager:\n\n```bash\nnpm run gbs\n```\n\nRun the command always from the root of your project in order to execute local commands.\n\n### CLI usage\n\nThe CLI provides you with the following commands:\n\n-   **help**: Prints the tool help description. Also, the help is printed if no command is given\n-   **version**: Prints the tool version information.\n-   **config**: Prints the tool's configuration, such as, what is the identified root folder, the package folder and the files in use.\n-   **create <projectName>**: Create a new library project in a subfolder with the given name. This includes creating all the required and recommended style files, define a package.json, git configuration files, visual studio code files, NPM configuration files, contribution guidelines, a readme, a license (MIT by default), install all dependencies, and initialize a git repository. This command is expected to be used when _gobstones-scripts_ is installed globally.\n-   **init**: The same as create, but runs on the local folder as a project. That is, initialize a project in the current folder. Note that the folder must be empty in order to initialize a project in the folder. This command is expected to be used when _gobstones-scripts_ is installed globally.\n-   **update [force]**: Override the missing configuration files that are created on an **init** or **create** command on the local project. This is intended to be run locally, on an already created project, to update the configuration. By appending **force** as a subcommand, all files are updated to their latest version.\n-   **eject [force]**: Eject all the general configuration files to the root project. This includes configuration files for Typescript, Typedoc, JEST, Rollup, and nps. This command is intended to be run locally. If **force** is added, all previously created local files are updated to their latest version. If not, only missing files are copied.\n-   **run [command]**: Run a command using **nps**. nps allows to run different scripts configured, such as scripts for linting, prettyfing, testing, generating documentation, running in development mode, and others.\n\n## How to configure the tool\n\nWhen running a command using _gobstones-scripts_ the tool loads all configuration from one of two locations.\n\n-   If a configuration file for a tool is present at the root of your project, that configuration is used. As an example, if you have a `rollup.config.js` file in the root of your project, then that file is used to load the Rollup configuration.\n-   If a configuration file for a tool is not present at the root of your project, then the default configuration file from gobstones-scripts is used. This configuration files are at `./node_modules/@gobstones/gobstones-scripts/config`, and they should not be modified by the end user. If you need changes over a default configuration, you should eject that configuration file to the root of your project.\n\n> A special mention is required for the typescript configuration file, **tsconfig.json**. You will see that this file is actually not present. We use **tsconfig.js** instead, and the corresponding JSON file is generated at runtime when running a command through gobstones-scripts. Using a js file for configuration provides the required flexibility for this project, that is not found in the JSON file, but a JSON file needs to be generated before running the Typescript compiler, as Typescript does not support javascript based configuration. Note that this is all handled automatically by gobstones-scripts, and you just need to remember to edit a tsconfig.js instead of json one if you need to override the default configuration.\n\n## Running commands using gobstones-scripts\n\nCommand are run using **nps**. By default, the available command that you can run are located in the default `package-scripts.js` file at the package configuration folder, although you may override it with your own.\nIf you have created a project from scratch with _gobstones-scripts_ then you can run command by just calling:\n\n```bash\nnpm start <command>\n```\n\nThe default command (no command provided) prints all the available commands and help. So in example, if you want to run the tests, you may run:\n\n```bash\nnpm start test\n```\n\nOr if you want to run the linter:\n\n```bash\nnpm start lint\n```\n\nOn a newly created project, there are also some additional scripts in your package json that are useful when building and automating, but that can be quite handy when running, such as `test` or `build`, so you can run directly by:\n\n```bash\nnpm test\n```\n\nor\n\n```bash\nnpm run build\n```\n\nYou may add additional nps commands by overriding the tools `package-scripts.js` file. But there are a few gotchas.\n\n### Gotchas of overriding nps configuration\n\nWhen running using _gobstones-scripts_ the configuration files for the building and running tools, such as Typescript compiler configuration, may live in your projects root or be default's, that live in the _gobstones-script_ configuration folder in `node_modules`. The tool first checks what configuration files are to be used, and then calls the appropriate commands with that configuration file as an option. So it's not just as easy as calling `jest` or `rollup`, as an argument to indicate which configuration file is going to be used needs to be included.\n\nThe default `package-scripts.js` handles this by importing `tools` from the _gobstones-scripts_ source (see usage as a module for more information), and calling some functions that the tooling provide. Some functions include i.e. the `jest` or the `rollup` function, that call the underlying tool with the appropriate configuration file as an argument. This is achieved by using the configuration that the API exposes.\n\n## API\n\nYou can access the API by importing the module\n\n```ts\nimport gobstones_scripts from '@gobstones/gobstones-scripts';\n```\n\nTypings are exported so it can be used in TypeScript without additional packages.\n\nThe API exposes the `create`, `init`, `update`, `eject` and `run` functions that are explained in the CLI. It also provides access to the version and the configuration through the `version` and `config` attributes.\n\nAdditionally, it provides a ser of functions that are useful for extending the `package-scripts.js` with custom actions, without having to worry about calling the tooling system with the corresponding configuration files. This are exposed at the `tools` object. The `tools` object provides functions such as `jest`, `rollup`, `tsc` and other handy actions such as `rename`, `concurrently` and `series`, that act as expected.\n\nYou may read their documentation in the source code.\n\n## Usage with other package managers\n\nBy default _gobstones-scripts_ it's intended to be used by **npm**\nas the package manager, which is included by default on your node\ninstallation.\n\nNonetheless, _gobstones-scripts_ has been tested to work with\n**yarn** too. _gobstones-scripts_ relies on a flat _node_modules_,\nin order to hide away packages, so **pnpm** will not work with this\ntool.\n\nSome internal commands relay on calling **npm install** or **npx**,\nwhich are replace to their counterparts in other package managers if\n_gobstones-scripts_ is called through them.\n\nTo detect which package manager has been used, we relay on\n`npm_config_user_agent` environment variable, which is populated when\nexecuting through a package manager.\n\nSo if you run, i.e. `yarn start` instead of `npm start` the tool detects **yarn** as your package manager, and replaces all internal usages of **npm install** to **yarn install**.\n\nBy default, **npm** is used, although you can configure this by the\n**gobstones-scripts** key in your **package.json**.\n\nSupport may change in the future once [https://nodejs.org/dist/latest/docs/api/corepack.html](corepack) gets out of the experimental state.\n\n## Underlying technologies\n\nThe underlying technologies in use include\n\n-   **typescript** (tsc for building)\n-   **rollup** (for bundling libraries and cli-libraries)\n-   **vite** (for bundling web-libraries and react-libraries)\n-   **eslint** (for linting)\n-   **prettier** (for styling)\n-   **typedoc** (for documentation generation)\n-   **storybook** (for testing and documenting react-libraries)\n-   **nps** (for orchestrating the tooling)\n-   **husky** (for hooking into git actions)\n\nOther files copied to your project will include\n\n-   **.editorconfig** (for editor styling, matching prettier)\n-   **.gitignore** (for git management)\n-   **.npmignore** (for publishing configuration)\n\nAlso a **.github** folder will configure GitHub actions, and a **.vscode** folder will configure your Visual Studio Code environment on first run.\n\nFinally, other files included do not require special technologies, but are important, such as **CHANGELOG.md**, **CONTRIBUTING.md**, **README.md** and LICENSE, together with **package.json**.\n\n## Updating the version while coding the tool\n\nThe tool has a more complex system for updating the version than other libraries, as not only the package.json needs to be changed.\nAs the version needs to be updated in multiple places of the tool for this to work, an `update-version.js` script exists that does the job. This tool need to be called in the following way:\n\n```sh\nnode update-version.js <version>\n```\n\nWhere `<version>` is a specific version using major, minor and patch system. After calling the tool, the version will be updated everywhere for the tool.\n\n## Testing newer versions of the library\n\nThis tool relies heavily on the packaging system. In that sense, the library need to be published in order to be tested, which constitutes a problem, as it cannot be tested without publishing. For that, we make use of [verdaccio](http://verdaccio.org). Verdaccio provides a private server, which can run locally. By running verdaccio locally, then the newer versions of the library can be tested using such server instead of having to publish to npm.\n\nFirs, publish the script globally using `npm link`, so you have an easy way of calling the tool.\n\nYou can then run the verdaccio server and publish the library to it by running\n\n```sh\nnpm start verdaccio\n```\n\nAlso, the following command performs the same:\n\n```sh\nnpm run build\n```\n\nWhile, on the other hand, `npm test` performs the same after running the linter.\n\nWhile the server is still running, you can run the globally installed script, adding the testing flag to any command (`--test` or `-T`). This flag instructs the tool to search the library in the verdaccio server instead of npmjs registry.\n\nAdditionally, it may happen that you are required to configure verdaccio locally. In such case, run the following command:\n\n```sh\nnpm start verdaccio.serve\n```\n\nThis will run the verdaccio server, but it will not attempt to publish the library. You should then configure the user and publish the library manually. First create a user in the server by running:\n\n```sh\nnpm adduser --registry http://localhost:4567\n```\n\nThen login to the registry:\n\n```sh\nnpm login --registry http://localhost:4567\n```\n\nAfter that, you should be able to publish your library by doing:\n\n```sh\nnpm publish --registry http://localhost:4567\n```\n\nOnce the verdaccio server is configured for the first time, you should be able to stop it and the re-run and publish using the `npm start verdaccio` command.\n\n## Contributing\n\nSee the [Gobstones Platform Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.\n"
+	"readme": "# gobstones-scripts\n\nGobstones Scripts is a CLI tool that helps in the creation of libraries for the Gobstones Project by hiding away the configuration files for several building tools, such as Typescript, Rollup, Webpack, Jest, nps and Typedoc. It also provides some pre-defined files for styling and linting, such as .editorconfig, prettier and ESLint support files, that are automatically copied to the root of your project during initialization.\n\nYou may thing of gobstones-script as some sort of create-react-app + react-scripts for the Gobstones Project libraries.\n\nConfigurations may be overwritten at any time to provide more functionality, but defaults tend to work on most cases.\n\n[![Licence](https://img.shields.io/github/license/gobstones/gobstones-scripts?style=plastic&label=License&logo=open-source-initiative&logoColor=white&color=olivegreen)](https://github.com/gobstones/gobstones-scripts/blob/main/LICENSE) [![Version](https://img.shields.io/github/package-json/v/gobstones/gobstones-scripts?style=plastic&label=Version&logo=git-lfs&logoColor=white&color=crimson)](https://www.npmjs.com/package/@gobstones/gobstones-scripts) [![API Docs](https://img.shields.io/github/package-json/homepage/gobstones/gobstones-scripts?color=blue&label=API%20Docs&logo=gitbook&logoColor=white&style=plastic)](https://gobstones.github.io/gobstones-scripts)\n\n![GitHub Workflow Tests](https://img.shields.io/github/actions/workflow/status/gobstones/gobstones-scripts/on-commit-test.yml?style=plastic&label=Tests&logo=github-actions&logoColor=white) ![GitHub Workflow Build](https://img.shields.io/github/actions/workflow/status/gobstones/gobstones-scripts/on-commit-build.yml?style=plastic&label=Build&logo=github-actions&logoColor=white)\n\n## Install\n\nThis library adds a binary file that can be executed as a CLI. There are two ways in which you can install gobstones-scripts, globally or locally.\n\n### Global install\n\nThe global install allows to execute the _gobstones-scripts_ command globally, by installing the CLI to your path. The best thing about it\nis the ability to create new projects or to initialize a project in a specific folder. To install globally with **npm** run\n\n```bash\nnpm install --global @gobstones/gobstones-scripts\n```\n\nYou do not need the global installation in order to use _gobstones-scripts_ in a project, but it's useful if you are starting a project from scratch.\n\n### Local install\n\nTo install locally to your already created project run the following with **npm**.\n\n```bash\nnpm install --save-dev @gobstones/gobstones-scripts\n```\n\nThis will add _gobstones-scripts_ as a dependency to your project.\nRemember to install all peer dependencies too, as this are needed to run all tooling that _gobstones-scripts_ require.\n\n## Running through CLI\n\nThe common usage is to run _gobstones-scripts_ as a CLI tool, by running directly in the following way if you installed globally\n\n```bash\ngobstones-scripts\n```\n\nor through **npx** if installed locally.\n\n```bash\nnpx gobstones-scripts\n```\n\nIf you have created a project through this tool, you already have a script in your `package.json` file to run the tool, `gbs`. Just run the script via your package manager:\n\n```bash\nnpm run gbs\n```\n\nRun the command always from the root of your project in order to execute local commands.\n\n### CLI usage\n\nThe CLI provides you with the following commands:\n\n-   **help**: Prints the tool help description. Also, the help is printed if no command is given\n-   **version**: Prints the tool version information.\n-   **config**: Prints the tool's configuration, such as, what is the identified root folder, the package folder and the files in use.\n-   **create <projectName>**: Create a new library project in a subfolder with the given name. This includes creating all the required and recommended style files, define a package.json, git configuration files, visual studio code files, NPM configuration files, contribution guidelines, a readme, a license (MIT by default), install all dependencies, and initialize a git repository. This command is expected to be used when _gobstones-scripts_ is installed globally.\n-   **init**: The same as create, but runs on the local folder as a project. That is, initialize a project in the current folder. Note that the folder must be empty in order to initialize a project in the folder. This command is expected to be used when _gobstones-scripts_ is installed globally.\n-   **update [force]**: Override the missing configuration files that are created on an **init** or **create** command on the local project. This is intended to be run locally, on an already created project, to update the configuration. By appending **force** as a subcommand, all files are updated to their latest version.\n-   **eject [force]**: Eject all the general configuration files to the root project. This includes configuration files for Typescript, Typedoc, JEST, Rollup, and nps. This command is intended to be run locally. If **force** is added, all previously created local files are updated to their latest version. If not, only missing files are copied.\n-   **run [command]**: Run a command using **nps**. nps allows to run different scripts configured, such as scripts for linting, prettyfing, testing, generating documentation, running in development mode, and others.\n\n## How to configure the tool\n\nWhen running a command using _gobstones-scripts_ the tool loads all configuration from one of two locations.\n\n-   If a configuration file for a tool is present at the root of your project, that configuration is used. As an example, if you have a `rollup.config.js` file in the root of your project, then that file is used to load the Rollup configuration.\n-   If a configuration file for a tool is not present at the root of your project, then the default configuration file from gobstones-scripts is used. This configuration files are at `./node_modules/@gobstones/gobstones-scripts/config`, and they should not be modified by the end user. If you need changes over a default configuration, you should eject that configuration file to the root of your project.\n\n> A special mention is required for the typescript configuration file, **tsconfig.json**. You will see that this file is actually not present. We use **tsconfig.js** instead, and the corresponding JSON file is generated at runtime when running a command through gobstones-scripts. Using a js file for configuration provides the required flexibility for this project, that is not found in the JSON file, but a JSON file needs to be generated before running the Typescript compiler, as Typescript does not support javascript based configuration. Note that this is all handled automatically by gobstones-scripts, and you just need to remember to edit a tsconfig.js instead of json one if you need to override the default configuration.\n\n## Running commands using gobstones-scripts\n\nCommand are run using **nps**. By default, the available command that you can run are located in the default `package-scripts.js` file at the package configuration folder, although you may override it with your own.\nIf you have created a project from scratch with _gobstones-scripts_ then you can run command by just calling:\n\n```bash\nnpm start <command>\n```\n\nThe default command (no command provided) prints all the available commands and help. So in example, if you want to run the tests, you may run:\n\n```bash\nnpm start test\n```\n\nOr if you want to run the linter:\n\n```bash\nnpm start lint\n```\n\nOn a newly created project, there are also some additional scripts in your package json that are useful when building and automating, but that can be quite handy when running, such as `test` or `build`, so you can run directly by:\n\n```bash\nnpm test\n```\n\nor\n\n```bash\nnpm run build\n```\n\nYou may add additional nps commands by overriding the tools `package-scripts.js` file. But there are a few gotchas.\n\n### Gotchas of overriding nps configuration\n\nWhen running using _gobstones-scripts_ the configuration files for the building and running tools, such as Typescript compiler configuration, may live in your projects root or be default's, that live in the _gobstones-script_ configuration folder in `node_modules`. The tool first checks what configuration files are to be used, and then calls the appropriate commands with that configuration file as an option. So it's not just as easy as calling `jest` or `rollup`, as an argument to indicate which configuration file is going to be used needs to be included.\n\nThe default `package-scripts.js` handles this by importing `tools` from the _gobstones-scripts_ source (see usage as a module for more information), and calling some functions that the tooling provide. Some functions include i.e. the `jest` or the `rollup` function, that call the underlying tool with the appropriate configuration file as an argument. This is achieved by using the configuration that the API exposes.\n\n## API\n\nYou can access the API by importing the module\n\n```ts\nimport gobstones_scripts from '@gobstones/gobstones-scripts';\n```\n\nTypings are exported so it can be used in TypeScript without additional packages.\n\nThe API exposes the `create`, `init`, `update`, `eject` and `run` functions that are explained in the CLI. It also provides access to the version and the configuration through the `version` and `config` attributes.\n\nAdditionally, it provides a ser of functions that are useful for extending the `package-scripts.js` with custom actions, without having to worry about calling the tooling system with the corresponding configuration files. This are exposed at the `tools` object. The `tools` object provides functions such as `jest`, `rollup`, `tsc` and other handy actions such as `rename`, `concurrently` and `series`, that act as expected.\n\nYou may read their documentation in the source code.\n\n## Usage with other package managers\n\nBy default _gobstones-scripts_ it's intended to be used by **npm**\nas the package manager, which is included by default on your node\ninstallation.\n\nNonetheless, _gobstones-scripts_ has been tested to work with\n**yarn** too. _gobstones-scripts_ relies on a flat _node_modules_,\nin order to hide away packages, so **pnpm** will not work with this\ntool.\n\nSome internal commands relay on calling **npm install** or **npx**,\nwhich are replace to their counterparts in other package managers if\n_gobstones-scripts_ is called through them.\n\nTo detect which package manager has been used, we relay on\n`npm_config_user_agent` environment variable, which is populated when\nexecuting through a package manager.\n\nSo if you run, i.e. `yarn start` instead of `npm start` the tool detects **yarn** as your package manager, and replaces all internal usages of **npm install** to **yarn install**.\n\nBy default, **npm** is used, although you can configure this by the\n**gobstones-scripts** key in your **package.json**.\n\nSupport may change in the future once [https://nodejs.org/dist/latest/docs/api/corepack.html](corepack) gets out of the experimental state.\n\n## Underlying technologies\n\nThe underlying technologies in use include\n\n-   **typescript** (tsc for building)\n-   **rollup** (for bundling libraries and cli-libraries)\n-   **vite** (for bundling web-libraries and react-libraries)\n-   **eslint** (for linting)\n-   **prettier** (for styling)\n-   **typedoc** (for documentation generation)\n-   **storybook** (for testing and documenting react-libraries)\n-   **nps** (for orchestrating the tooling)\n-   **husky** (for hooking into git actions)\n\nOther files copied to your project will include\n\n-   **.editorconfig** (for editor styling, matching prettier)\n-   **.gitignore** (for git management)\n-   **.npmignore** (for publishing configuration)\n\nAlso a **.github** folder will configure GitHub actions, and a **.vscode** folder will configure your Visual Studio Code environment on first run.\n\nFinally, other files included do not require special technologies, but are important, such as **CHANGELOG.md**, **CONTRIBUTING.md**, **README.md** and LICENSE, together with **package.json**.\n\n## Updating the version while coding the tool\n\nThe tool has a more complex system for updating the version than other libraries, as not only the package.json needs to be changed.\nAs the version needs to be updated in multiple places of the tool for this to work, an `update-version.js` script exists that does the job. This tool need to be called in the following way:\n\n```sh\nnode update-version.js <version>\n```\n\nWhere `<version>` is a specific version using major, minor and patch system. After calling the tool, the version will be updated everywhere for the tool.\n\n## Testing newer versions of the library\n\nThis tool relies heavily on the packaging system. In that sense, the library need to be published in order to be tested, which constitutes a problem, as it cannot be tested without publishing. For that, we make use of [verdaccio](http://verdaccio.org). Verdaccio provides a private server, which can run locally. By running verdaccio locally, then the newer versions of the library can be tested using such server instead of having to publish to npm.\n\nFirs, publish the script globally using `npm link`, so you have an easy way of calling the tool.\n\nYou can then run the verdaccio server and publish the library to it by running\n\n```sh\nnpm start verdaccio\n```\n\nAlso, the following command performs the same:\n\n```sh\nnpm run build\n```\n\nWhile, on the other hand, `npm test` performs the same after running the linter.\n\nWhile the server is still running, you can run the globally installed script, adding the testing flag to any command (`--test` or `-T`). This flag instructs the tool to search the library in the verdaccio server instead of npmjs registry.\n\nAdditionally, it may happen that you are required to configure verdaccio locally. In such case, run the following command:\n\n```sh\nnpm start verdaccio.serve\n```\n\nThis will run the verdaccio server, but it will not attempt to publish the library. You should then configure the user and publish the library manually. First create a user in the server by running:\n\n```sh\nnpm adduser --registry http://localhost:4567\n```\n\nThen login to the registry:\n\n```sh\nnpm login --registry http://localhost:4567\n```\n\nAfter that, you should be able to publish your library by doing:\n\n```sh\nnpm publish --registry http://localhost:4567\n```\n\nOnce the verdaccio server is configured for the first time, you should be able to stop it and the re-run and publish using the `npm start verdaccio` command.\n\n## Contributing\n\nSee the [Gobstones Platform Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute."
 }

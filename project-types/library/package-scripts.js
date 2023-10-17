@@ -24,8 +24,7 @@ const defaultConfiguration = {
             script: tasks.serially(
                 tasks.nps('clean.coverage'),
                 tasks.nps('lint'),
-                tasks.jest({ coverage: true }),
-                tasks.nps('test.coveragefix')
+                tasks.jest({ coverage: true })
             ),
             description: 'Run the tests, including linting',
             watch: {
