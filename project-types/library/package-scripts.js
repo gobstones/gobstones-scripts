@@ -43,7 +43,7 @@ const defaultConfiguration = {
             },
             coveragefix: {
                 script: tasks.replace({
-                    file: './coverage/src',
+                    file: './coverage',
                     match: 'prettyPrint\\(\\)',
                     replace:
                         'prettyPrint();var elems = document.querySelectorAll("td.file a");for (var i=0; i< elems.length; i++) {if (document.location.pathname && !document.location.pathname.endsWith("html")) {var pathParts = document.location.pathname.split("/");var lastFolder = pathParts[pathParts.length-1];elems[i].setAttribute("href", "./" + lastFolder + "/" + elems[i].getAttribute("href"));}}'

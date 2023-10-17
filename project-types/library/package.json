@@ -2,10 +2,10 @@
   "name": "a-new-gobstones-library",
   "version": "0.1.0",
   "description": "A New Gobstones Project Library",
-  "repository": "https://github.com/gobstones/gobstones-core",
-  "homepage": "https://gobstones.github.io/gobstones-core",
+  "repository": "https://github.com/gobstones/a-new-gobstones-library",
+  "homepage": "https://gobstones.github.io/a-new-gobstones-library",
   "author": "John Doe <john.doe@gmail.com>",
-  "license": "MIT",
+  "license": "AGPL-3.0",
   "keywords": ["Gobstones", "Library", "Keywords"],
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -34,7 +34,7 @@
     "@gobstones/gobstones-core": "^0.3.8"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.4.2",
+    "@gobstones/gobstones-scripts": "^0.4.3",
     "husky": "^8.0.2"
   }
 }
