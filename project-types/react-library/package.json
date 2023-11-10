@@ -38,7 +38,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.4.6",
+    "@gobstones/gobstones-scripts": "^0.4.7",
     "husky": "^8.0.2"
   }
 }

@@ -21,7 +21,7 @@
  * @internal
  * @memberof Config.Tool
  */
-const version = '0.4.6';
+const version = '0.4.7';
 
 module.exports = {
     version,
