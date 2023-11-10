@@ -27,19 +27,16 @@
     "gbs": "gobstones-scripts"
   },
   "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    },
     "gobstones-scripts": {
       "type": "library",
       "manager": "npm"
     }
   },
   "dependencies": {
-    "@gobstones/gobstones-core": "^0.3.8"
+    "@gobstones/gobstones-core": "^0.4.4"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.4.7",
+    "@gobstones/gobstones-scripts": "^0.5.0",
     "husky": "^8.0.2"
   }
 }

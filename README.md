@@ -78,7 +78,9 @@ The CLI provides you with the following commands:
 
 ## How to configure the tool
 
-When running a command using _gobstones-scripts_ the tool loads all configuration from one of two locations.
+The tool provides several project types. When running locally in a project, the project type configuration and the package manager to be used is loaded from `package.json`, in the `config.gobstones-scripts` section. When creating a new project, this configuration is added by default. Be sure not to delete it on modifications to the `package.json` file.
+
+When running a command using _gobstones-scripts_ the tool loads all configuration for the different tooling from one of two locations.
 
 -   If a configuration file for a tool is present at the root of your project, that configuration is used. As an example, if you have a `rollup.config.js` file in the root of your project, then that file is used to load the Rollup configuration.
 -   If a configuration file for a tool is not present at the root of your project, then the default configuration file from gobstones-scripts is used. This configuration files are at `./node_modules/@gobstones/gobstones-scripts/config`, and they should not be modified by the end user. If you need changes over a default configuration, you should eject that configuration file to the root of your project.

@@ -34,8 +34,8 @@ function optionsFormPackageJson(root) {
     if (fs.existsSync(path.join(root, 'package.json'))) {
         const contents = fs.readFileSync(path.join(root, 'package.json'));
         const parsedValues = JSON.parse(contents.toString());
-        if (parsedValues && parsedValues['gobstones-scripts']) {
-            values = parsedValues['gobstones-scripts'];
+        if (parsedValues && parsedValues['config'] && parsedValues['config']['gobstones-scripts']) {
+            values = parsedValues['config']['gobstones-scripts'];
         }
     }
     if (values.type) {

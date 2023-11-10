@@ -1,7 +1,17 @@
+## 0.5.0 (2023-11-10)
+
+* feat: change configuration location for the tooling ([2df1212](https://github.com/gobstones/gobstones-scripts/commit/2df1212))
+
+
+### BREAKING CHANGE
+
+* All projects now are required to change their package.json to adapt to the new
+configuration location
+
+
+## 0.5.0 (2023-11-10)
+
 ## <small>0.4.7 (2023-11-10)</small>
-
-
-
 
 ## <small>0.4.6 (2023-11-10)</small>
 
