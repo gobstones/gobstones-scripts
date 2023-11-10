@@ -22,11 +22,7 @@
       "cli": ["dist/typings/cli"]
     }
   },
-  "packageManager": "npm@9.2.0",
-  "gobstones-scripts": {
-    "type": "cli-library",
-    "manager": "npm"
-  },
+  "packageManager": "npm@10.1.0",
   "scripts": {
     "prepare": "husky install",
     "prepack": "gobstones-scripts run build",
@@ -38,6 +34,15 @@
     "lint": "gobstones-scripts run lint",
     "prettify": "gobstones-scripts run prettify",
     "gbs": "gobstones-scripts"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    },
+    "gobstones-scripts": {
+      "type": "cli-library",
+      "manager": "npm"
+    }
   },
   "dependencies": {
     "@gobstones/gobstones-core": "^0.3.8"

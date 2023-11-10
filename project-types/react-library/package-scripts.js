@@ -119,9 +119,19 @@ const defaultConfiguration = {
             description: 'Run Prettier on all the files, writing the results'
         },
 
+        changelog: {
+            script: 'conventional-changelog -p angular -i CHANGELOG.md -s',
+            silent: true,
+            description: 'Generate changelog based on commits'
+        },
+
         husky: {
             commit: {
-                script: tasks.serially(tasks.nps('prettify'), tasks.nps('doc')),
+                script: tasks.serially(
+                    tasks.nps('prettify'),
+                    tasks.nps('doc'),
+                    tasks.nps('changelog')
+                ),
                 silent: true
             },
             push: {

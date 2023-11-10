@@ -127,6 +127,13 @@ function getClassicConfigForPath(path) {
             onUpdate: true,
             onEject: false
         },
+        commitlint: {
+            localPath: ['common/czrc', 'common/commitlint.config.js'],
+            projectPath: ['.czrc', 'commitlint.config.js'],
+            onInit: true,
+            onUpdate: true,
+            onEject: false
+        },
         // only on eject
         nps: {
             localPath: [path + '/package-scripts.js'],
