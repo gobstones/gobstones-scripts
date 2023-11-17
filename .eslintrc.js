@@ -1,19 +1,85 @@
 module.exports = {
+    parser: '@typescript-eslint/parser',
     parserOptions: {
-        ecmaVersion: 'latest'
+        ecmaVersion: 2018,
+        sourceType: 'module',
+        impliedStrict: true,
+        warnOnUnsupportedTypeScriptVersion: false
     },
     env: {
-        node: true,
-        es2018: true
+        node: true
     },
-    plugins: ['no-null', 'prettier'],
-    extends: ['eslint:recommended', 'plugin:prettier/recommended', 'prettier/prettier'],
+    plugins: ['@typescript-eslint', 'import', 'no-null', 'prefer-arrow', 'prettier'],
+    extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:prettier/recommended',
+        'prettier/prettier'
+    ],
     noInlineConfig: false,
     reportUnusedDisableDirectives: true,
     rules: {
+        '@typescript-eslint/array-type': ['error'],
+        '@typescript-eslint/ban-types': ['error'],
+        '@typescript-eslint/consistent-type-definitions': ['error'],
+        '@typescript-eslint/explicit-function-return-type': [
+            'error',
+            {
+                allowExpressions: true,
+                allowTypedFunctionExpressions: true,
+                allowHigherOrderFunctions: true
+            }
+        ],
+        '@typescript-eslint/explicit-member-accessibility': [
+            'error',
+            {
+                accessibility: 'explicit'
+            }
+        ],
+        '@typescript-eslint/member-ordering': [
+            'error',
+            {
+                default: ['signature', 'field', 'constructor', ['get', 'set'], 'method']
+            }
+        ],
+        '@typescript-eslint/no-empty-function': ['error'],
+        '@typescript-eslint/no-explicit-any': ['off'],
+        '@typescript-eslint/no-inferrable-types': ['off'],
+        '@typescript-eslint/no-namespace': ['off'],
+        '@typescript-eslint/no-parameter-properties': ['off'],
+        '@typescript-eslint/no-shadow': [
+            'error',
+            {
+                hoist: 'all'
+            }
+        ],
+        '@typescript-eslint/no-unused-vars': [
+            'error',
+            {
+                vars: 'all',
+                args: 'none',
+                ignoreRestSiblings: false
+            }
+        ],
+        '@typescript-eslint/prefer-for-of': ['error'],
+        '@typescript-eslint/prefer-function-type': ['error'],
+        '@typescript-eslint/prefer-namespace-keyword': ['error'],
+        '@typescript-eslint/triple-slash-reference': ['error'],
+        '@typescript-eslint/unified-signatures': ['error'],
+
         'no-null/no-null': ['error'],
 
         'prettier/prettier': ['error'],
+
+        'prefer-arrow/prefer-arrow-functions': [
+            'error',
+            {
+                disallowPrototype: true,
+                singleReturnOnly: true,
+                classPropertiesAllowed: false
+            }
+        ],
 
         'arrow-body-style': ['error'],
         camelcase: ['error'],

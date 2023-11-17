@@ -1,0 +1,42 @@
+{
+    "name": "a-new-gobstones-react-library",
+    "version": "0.1.0",
+    "description": "A New Gobstones Project Library",
+    "repository": "https://github.com/gobstones/a-new-gobstones-react-library",
+    "homepage": "https://gobstones.github.io/a-new-gobstones-react-library",
+    "demopage": "https://gobstones.github.io/a-new-gobstones-react-library/demo",
+    "author": "John Doe <john.doe@gmail.com>",
+    "license": "AGPL-3.0",
+    "keywords": ["Gobstones", "Library", "React"],
+    "main": "./dist/cjs/index.cjs",
+    "module": "./dist/esm/index.mjs",
+    "types": "./dist/cjs/typings/index.d.ts",
+    "packageManager": "npm@10.1.0",
+    "scripts": {
+        "prepare": "is-ci || husky install",
+        "prepack": "gobstones-scripts run build",
+        "start": "gobstones-scripts run",
+        "dev": "gobstones-scripts run dev",
+        "build": "gobstones-scripts run build",
+        "test": "gobstones-scripts run test",
+        "doc": "gobstones-scripts run doc",
+        "lint": "gobstones-scripts run lint",
+        "prettify": "gobstones-scripts run prettify",
+        "gbs": "gobstones-scripts"
+    },
+    "config": {
+        "gobstones-scripts": {
+            "type": "react-library",
+            "manager": "npm"
+        }
+    },
+    "dependencies": {
+        "@gobstones/gobstones-core": "^0.4.4",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0"
+    },
+    "devDependencies": {
+        "@gobstones/gobstones-scripts": "^0.5.1",
+        "husky": "^8.0.2"
+    }
+}

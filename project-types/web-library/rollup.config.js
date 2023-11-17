@@ -1,8 +1,8 @@
 /* eslint-disable */
-import commonjs from '@rollup/plugin-commonjs';
-import typescript from '@rollup/plugin-typescript';
+const commonjs = require('@rollup/plugin-commonjs');
+const typescript = require('@rollup/plugin-typescript');
 
-const config = require('../../src/api').config;
+const { config } = require('@gobstones/gobstones-scripts');
 
 // Expected arguments:
 export default [

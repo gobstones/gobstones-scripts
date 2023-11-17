@@ -1,19 +1,27 @@
-/* eslint-disable */
-import commonjs from '@rollup/plugin-commonjs';
-import nodeResolve from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const fs = require('fs');
 
-const config = require('../../src/api').config;
+const commonjs = require('@rollup/plugin-commonjs');
+const nodeResolve = require('@rollup/plugin-node-resolve');
+const typescript = require('@rollup/plugin-typescript');
 
-// Expected arguments:
-export default [
+const { config } = require('@gobstones/gobstones-scripts');
+
+const packageJson = JSON.parse(fs.readFileSync('./package.json').toString());
+
+module.exports = [
     {
         input: 'src/index.ts',
         output: [
             {
                 sourcemap: true,
-                dir: 'dist',
-                format: 'es'
+                file: packageJson.exports.require,
+                format: 'cjs'
+            },
+            {
+                sourcemap: true,
+                dir: packageJson.exports.import,
+                format: 'esm'
             }
         ],
         preserveSymlinks: true,
@@ -26,32 +34,11 @@ export default [
         external: [/@gobstones\/.*/]
     },
     {
-        input: 'src/index.ts',
-        output: [
-            {
-                sourcemap: true,
-                file: 'dist/index.cjs',
-                format: 'cjs'
-            }
-        ],
-        preserveSymlinks: true,
-        plugins: [
-            typescript({
-                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
-                declaration: false,
-                declarationMap: false,
-                declarationDir: undefined
-            }),
-            commonjs()
-        ],
-        external: [/@gobstones\/.*/]
-    },
-    {
         input: 'src/cli.ts',
         output: [
             {
                 sourcemap: true,
-                dir: 'dist',
+                file: packageJson.exports['require/cli'],
                 format: 'cjs'
             }
         ],

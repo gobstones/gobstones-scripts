@@ -1,5 +1,5 @@
 /* eslint-disable */
-const config = require('../../src/api').config;
+const { config } = require('@gobstones/gobstones-scripts');
 
 module.exports = {
     entryPoints: [config.projectRootPath + '/src'],

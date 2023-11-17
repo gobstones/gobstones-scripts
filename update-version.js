@@ -14,7 +14,7 @@ function replaceVersionInPackageJson(newVersion) {
 
 function replaceVersionInConfig(newVersion) {
     replaceInTextFile(
-        './src/config/tool.js',
+        './src/config/tool.ts',
         /const version = '.*'/g,
         `const version = '${newVersion}'`
     );
@@ -22,7 +22,7 @@ function replaceVersionInConfig(newVersion) {
 
 function replaceVersionInProjectPackageJson(projectName, newVersion) {
     replaceInTextFile(
-        `./project-types/${projectName}/package.json`,
+        `./project-types/${projectName}/package-definition.json`,
         /"@gobstones\/gobstones-scripts": ".*"/g,
         `"@gobstones/gobstones-scripts": "^${newVersion}"`
     );

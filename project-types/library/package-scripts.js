@@ -1,5 +1,5 @@
-/* eslint-disable */
-const { tasks } = require('../../src/api');
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { tasks } = require('@gobstones/gobstones-scripts');
 
 const defaultConfiguration = {
     options: { 'help-style': 'basic' },
@@ -7,10 +7,13 @@ const defaultConfiguration = {
         default: tasks.nps('help'),
 
         dev: {
-            script: tasks.tsNode({ file: './src/index.ts' }),
+            script: tasks.serially(
+                tasks.tsc({ emit: false }),
+                tasks.tsx({ file: './src/index.ts' })
+            ),
             description: 'Run "index.ts" in development mode',
             watch: {
-                script: tasks.tsNode({ file: './src/index.ts', watch: './src/**/*.ts' }),
+                script: tasks.tsx({ file: './src/index.ts', watch: './src/**/*.ts' }),
                 description: 'Run "index.ts" in development mode and watch for changes'
             }
         },
@@ -36,7 +39,7 @@ const defaultConfiguration = {
                     tasks.nps('clean.coverage'),
                     tasks.jest({ coverage: true, noThreshold: true }),
                     tasks.nps('test.coveragefix'),
-                    tasks.serve('./coverage')
+                    tasks.serve({ dir: './coverage' })
                 ),
                 description:
                     'Run the tests, including linting, and serve the coverage reports in HTML'
@@ -46,7 +49,13 @@ const defaultConfiguration = {
                     file: './coverage',
                     match: 'prettyPrint\\(\\)',
                     replace:
-                        'prettyPrint();var elems = document.querySelectorAll("td.file a");for (var i=0; i< elems.length; i++) {if (document.location.pathname && !document.location.pathname.endsWith("html")) {var pathParts = document.location.pathname.split("/");var lastFolder = pathParts[pathParts.length-1];elems[i].setAttribute("href", "./" + lastFolder + "/" + elems[i].getAttribute("href"));}}'
+                        'prettyPrint();var elems = document.querySelectorAll' +
+                        '("td.file a");for (var i=0; i< elems.length; i++) ' +
+                        '{if (document.location.pathname && !document.location.' +
+                        'pathname.endsWith("html")) {var pathParts = document.' +
+                        'location.pathname.split("/");var lastFolder = ' +
+                        'pathParts[pathParts.length-1];elems[i].setAttribute("' +
+                        'href", "./" + lastFolder + "/" + elems[i].getAttribute("href"));}}'
                 }),
                 description:
                     'Fix coverage generated reports in HTML that are outputed with broken links',
@@ -66,18 +75,19 @@ const defaultConfiguration = {
                 description: 'Run Typedoc and generate docs and watch for changes.'
             },
             serve: {
-                script: tasks.serially(tasks.nps('doc'), tasks.serve('./docs')),
+                script: tasks.serially(tasks.nps('doc'), tasks.serve({ dir: './docs' })),
                 description: 'Run Typedoc and generate docs, then serve the docs as HTML',
                 watch: {
                     script: tasks.serially(
                         tasks.nps('doc'),
                         tasks.concurrently({
                             typedoc: tasks.typedoc({ watch: true }),
-                            serve: tasks.serve('./docs')
+                            serve: tasks.serve({ dir: './docs' })
                         })
                     ),
                     description:
-                        'Run Typedoc and generate docs and watch for changes while serving the docs as HTML'
+                        'Run Typedoc and generate docs and watch for changes ' +
+                        'while serving the docs as HTML'
                 }
             }
         },

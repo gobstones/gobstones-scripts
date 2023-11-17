@@ -1,24 +1,27 @@
-// eslint-disable @typescript-eslint/no-var-requires
-import commonjs from '@rollup/plugin-commonjs';
-import image from '@rollup/plugin-image';
-import postcss from 'rollup-plugin-postcss';
-import resolve from '@rollup/plugin-node-resolve';
-import typescript from '@rollup/plugin-typescript';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const fs = require('fs');
 
-const packageJson = require('./package.json');
-const config = require('../../src/api').config;
+const commonjs = require('@rollup/plugin-commonjs');
+const image = require('@rollup/plugin-image');
+const postcss = require('rollup-plugin-postcss');
+const resolve = require('@rollup/plugin-node-resolve');
+const typescript = require('@rollup/plugin-typescript');
+
+const { config } = require('@gobstones/gobstones-scripts');
+
+const packageJson = JSON.parse(fs.readFileSync('./package.json').toString());
 
 export default [
     {
         input: 'src/index.ts',
         output: [
             {
-                file: packageJson.main,
+                file: packageJson.exports.require,
                 format: 'cjs',
                 sourcemap: true
             },
             {
-                file: packageJson.module,
+                file: packageJson.exports.import,
                 format: 'esm',
                 sourcemap: true
             }
@@ -33,6 +36,6 @@ export default [
             }),
             postcss()
         ],
-        external: ['react', 'react-dom']
+        external: ['react', 'react-dom', /@gobstones\/.*/]
     }
 ];

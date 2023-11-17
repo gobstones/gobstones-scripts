@@ -1,59 +1,73 @@
-/* eslint-disable */
-const { tasks } = require('./src/api');
-
 const defaultConfiguration = {
     options: { 'help-style': 'basic' },
     scripts: {
-        default: tasks.nps('help'),
+        default: 'nps help',
+
+        dev: {
+            script: 'tsc --noEmit && tsx ./src/index.ts --ignore-watch',
+            description: 'Run "index.ts" in development mode'
+        },
+
+        build: {
+            script:
+                'nps clean.dist ' +
+                '&& rollup --config ./rollup.config.js --bundleConfigAsCjs ' +
+                '&& chmod +x ./dist/cjs/cli.cjs',
+            description: 'Build the application into "dist" folder'
+        },
 
         doc: {
-            script: tasks.serially(tasks.nps('clean.docs'), 'jsdoc -c ./jsdoc.js'),
-            description: 'Run JSDocs and generate docs',
+            script: 'nps clean.docs && typedoc',
+            description: 'Run Typedoc and generate docs',
             serve: {
-                script: tasks.serially(tasks.nps('doc'), tasks.serve('./docs')),
+                script: 'nps doc && serve ./docs',
                 description: 'Run Typedoc and generate docs, then serve the docs as HTML'
             }
         },
 
         clean: {
-            script: tasks.serially(tasks.nps('clean.docs')),
+            script: 'nps clean.dist && nps clean.docs',
             description: 'Remove all automatically generated files and folders',
+            dist: {
+                script: 'rimraf ./dist',
+                description: 'Delete the dist folder',
+                silent: true
+            },
             docs: {
-                script: tasks.remove({ files: './docs' }),
+                script: 'rimraf ./docs',
                 description: 'Delete the docs folder',
                 silent: true
             }
         },
 
         lint: {
-            script: tasks.eslint({ files: './src', extensions: 'js' }),
+            script: 'eslint ./src --format stylish --ext js,jsx,ts,tsx --color',
             description: 'Run ESLint on all the files (src and tests)',
             fix: {
-                script: tasks.eslint({ files: './src', fix: true }),
+                script: 'eslint ./src --format stylish --ext js,jsx,ts,tsx --color --fix',
                 description: 'Run ESLint on all the files (src and tests) with --fix option'
             }
         },
 
         prettify: {
-            script: tasks.serially(
-                tasks.prettify({ files: './src/{**,.}/*.js' }),
-                tasks.prettify({ files: './project-types/**/*.{ts,tsx,md,json}' }),
-                tasks.prettify({ files: './.github/{**,.}/*.{yml,md}' }),
-                tasks.prettify({ files: './.vscode/*.json' }),
-                tasks.prettify({ files: './*.{json,md,js}' }),
-                tasks.prettify({ files: '.prettierrc' })
-            ),
+            script:
+                'prettier --no-error-on-unmatched-pattern --write ./src/{**,.}/*.js ' +
+                '&& prettier --no-error-on-unmatched-pattern --write ' +
+                './project-types/**/*.{ts,tsx,md,json} ' +
+                '&& prettier --no-error-on-unmatched-pattern --write ./.github/{**,.}/*.{yml,md} ' +
+                '&& prettier --no-error-on-unmatched-pattern --write ./.vscode/*.json ' +
+                '&& prettier --no-error-on-unmatched-pattern --write ./*.{json,md,js} ' +
+                '&& prettier --no-error-on-unmatched-pattern --write .prettierrc',
             description: 'Run Prettier on all the files, writing the results'
         },
 
         verdaccio: {
-            script: tasks.concurrently(
-                tasks.nps('verdaccio.serve'),
-                tasks.serially(
-                    tasks.remove({ files: './test/verdaccio/storage/*' }),
-                    'npm publish --registry http://localhost:4567'
-                )
-            ),
+            script:
+                'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold ' +
+                '--prefix "[{name}]" --names verdaccio.serve,publish ' +
+                '"nps verdaccio.serve" ' +
+                ('"rimraf ./test/verdaccio/storage/* ' +
+                    '&& npm publish --registry http://localhost:4567"'),
             description: 'Run Verdaccio server and publish current version of library to it',
             serve: {
                 script: 'verdaccio --config ./test/verdaccio/config.yml',
@@ -70,15 +84,11 @@ const defaultConfiguration = {
 
         husky: {
             commit: {
-                script: tasks.serially(
-                    tasks.nps('prettify'),
-                    tasks.nps('doc'),
-                    tasks.nps('changelog')
-                ),
+                script: 'nps prettify && nps doc && nps changelog',
                 silent: true
             },
             push: {
-                script: tasks.serially(tasks.nps('lint')),
+                script: 'nps lint',
                 silent: true
             }
         }

@@ -1,6 +1,7 @@
 # Editor and style files
 .vscode/*
 .github/*
+.husky/*
 
 # tests
 test/*

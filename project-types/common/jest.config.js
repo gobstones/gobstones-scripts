@@ -1,4 +1,5 @@
-const config = require('../../src/api').config;
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { config } = require('@gobstones/gobstones-scripts');
 
 module.exports = {
     preset: 'ts-jest',

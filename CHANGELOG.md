@@ -1,13 +1,41 @@
+## <small>0.5.1 (2023-11-20)</small>
+
+* feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
+
+
+
+## <small>0.5.1 (2023-11-20)</small>
+
+-   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
+
+## <small>0.5.1 (2023-11-20)</small>
+
+-   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
+
+## <small>0.5.1 (2023-11-20)</small>
+
+-   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
+
+## <small>0.5.1 (2023-11-20)</small>
+
+-   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
+
+## <small>0.5.1 (2023-11-20)</small>
+
+-   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
+
+## <small>0.5.1 (2023-11-17)</small>
+
+## <small>0.5.1 (2023-11-17)</small>
+
 ## 0.5.0 (2023-11-10)
 
-* feat: change configuration location for the tooling ([2df1212](https://github.com/gobstones/gobstones-scripts/commit/2df1212))
-
+-   feat: change configuration location for the tooling ([2df1212](https://github.com/gobstones/gobstones-scripts/commit/2df1212))
 
 ### BREAKING CHANGE
 
-* All projects now are required to change their package.json to adapt to the new
-configuration location
-
+-   All projects now are required to change their package.json to adapt to the new
+    configuration location
 
 ## 0.5.0 (2023-11-10)
 
