@@ -44,10 +44,10 @@
         }
     },
     "dependencies": {
-        "@gobstones/gobstones-core": "^0.4.4"
+        "@gobstones/gobstones-core": "^0.4.6"
     },
     "devDependencies": {
-        "@gobstones/gobstones-scripts": "^0.5.1",
+        "@gobstones/gobstones-scripts": "^0.5.2",
         "husky": "^8.0.2"
     }
 }

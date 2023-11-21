@@ -1,8 +1,11 @@
+## <small>0.5.2 (2023-11-21)</small>
+
+
+
+
 ## <small>0.5.1 (2023-11-20)</small>
 
-* feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
-
-
+-   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
 
 ## <small>0.5.1 (2023-11-20)</small>
 
