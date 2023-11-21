@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": {
     "type": "git",
@@ -11,7 +11,7 @@
   "license": "AGPL-3.0",
   "keywords": ["Gobstones", "Scripts", "Build", "Run", "Projects"],
   "bin": {
-    "gobstones-scripts": "./dist/cjs/cli.js"
+    "gobstones-scripts": "./dist/cjs/cli.cjs"
   },
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.mjs",
