@@ -1,7 +1,24 @@
+## <small>0.5.4 (2023-11-23)</small>
+
+* feat: new generated package.json files for all projects ([a7e6460](https://github.com/gobstones/gobstones-scripts/commit/a7e6460)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
+
+
+
+## <small>0.5.4 (2023-11-23)</small>
+
+-   feat: new generated package.json files for all projects ([92133b1](https://github.com/gobstones/gobstones-scripts/commit/92133b1)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
+
+## <small>0.5.4 (2023-11-23)</small>
+
+-   feat: new generated package.json files for all projects ([22d4b90](https://github.com/gobstones/gobstones-scripts/commit/22d4b90)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
+
+## <small>0.5.4 (2023-11-22)</small>
+
+-   fix: new generated package.json files for all projects ([d8e3e9d](https://github.com/gobstones/gobstones-scripts/commit/d8e3e9d)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
+
+## <small>0.5.4 (2023-11-22)</small>
+
 ## <small>0.5.3 (2023-11-21)</small>
-
-
-
 
 ## <small>0.5.2 (2023-11-21)</small>
 

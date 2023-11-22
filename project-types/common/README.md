@@ -1,15 +1,14 @@
-# a-new-gobstones-library
+# <library-name>
 
 your library description here.
 Describe briefly the purpose of your library -- i.e. what functionalities does it provide.
 For longer description, refer to [Usage](#usage).
 
-Once you have a repository established,replace the following references to gobstones/a-new-gobstones-library to your own library ones, so you have the appropriate badges.
 Remove demo badge if this is a library without GUI. Also, delete this lines.
 
-[![Licence](https://img.shields.io/github/license/gobstones/a-new-gobstones-library?style=plastic&label=License&logo=open-source-initiative&logoColor=white&color=olivegreen)](https://github.com/gobstones/a-new-gobstones-library/blob/main/LICENSE) [![Version](https://img.shields.io/github/package-json/v/gobstones/a-new-gobstones-library?style=plastic&label=Version&logo=git-lfs&logoColor=white&color=crimson)](https://www.npmjs.com/package/@gobstones/a-new-gobstones-library) [![Repository](https://img.shields.io/github/package-json/repository/gobstones/a-new-gobstones-library?color=orange&label=Repository&logo=github&logoColor=white&style=plastic)](https://gobstones.github.io/a-new-gobstones-library) [![API Docs](https://img.shields.io/github/package-json/homepage/gobstones/a-new-gobstones-library?color=blue&label=API%20Docs&logo=gitbook&logoColor=white&style=plastic)](https://gobstones.github.io/a-new-gobstones-library) [![Demo Page](https://img.shields.io/github/package-json/demopage/gobstones/a-new-gobstones-library?color=magenta&label=Demo%20Page&logo=storybook&logoColor=white&style=plastic)](https://gobstones.github.io/a-new-gobstones-library)
+[![Licence](https://img.shields.io/github/license/gobstones/<library-name>?style=plastic&label=License&logo=open-source-initiative&logoColor=white&color=olivegreen)](https://github.com/gobstones/<library-name>/blob/main/LICENSE) [![Version](https://img.shields.io/github/package-json/v/gobstones/<library-name>?style=plastic&label=Version&logo=git-lfs&logoColor=white&color=crimson)](https://www.npmjs.com/package/@gobstones/<library-name>) [![Repository](https://img.shields.io/github/package-json/repository/gobstones/<library-name>?color=orange&label=Repository&logo=github&logoColor=white&style=plastic)](https://gobstones.github.io/<library-name>) [![API Docs](https://img.shields.io/github/package-json/homepage/gobstones/<library-name>?color=blue&label=API%20Docs&logo=gitbook&logoColor=white&style=plastic)](https://gobstones.github.io/<library-name>) [![Demo Page](https://img.shields.io/github/package-json/demopage/gobstones/<library-name>?color=magenta&label=Demo%20Page&logo=storybook&logoColor=white&style=plastic)](https://gobstones.github.io/<library-name>)
 
-![GitHub Workflow Tests](https://img.shields.io/github/actions/workflow/status/gobstones/a-new-gobstones-library/on-commit-test.yml?style=plastic&label=Tests&logo=github-actions&logoColor=white) ![GitHub Workflow Build](https://img.shields.io/github/actions/workflow/status/gobstones/a-new-gobstones-library/on-commit-build.yml?style=plastic&label=Build&logo=github-actions&logoColor=white)
+![GitHub Workflow Tests](https://img.shields.io/github/actions/workflow/status/gobstones/<library-name>/on-commit-test.yml?style=plastic&label=Tests&logo=github-actions&logoColor=white) ![GitHub Workflow Build](https://img.shields.io/github/actions/workflow/status/gobstones/<library-name>/on-commit-build.yml?style=plastic&label=Build&logo=github-actions&logoColor=white)
 
 ## Install
 
@@ -19,7 +18,7 @@ that is intended.
 **npm:**
 
 ```
-npm install --save @gobstones/a-new-gobstones-library
+npm install --save @gobstones/<library-name>
 ```
 
 You may add additional steps for installation and configuration of the library.

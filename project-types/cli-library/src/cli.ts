@@ -6,12 +6,12 @@
  * @author Your Name <yourname@company.com>
  *
  */
+import { cli, readJSON } from '@gobstones/gobstones-core/cli';
+
 import { MyClass } from './models/MyClass';
-import { cli } from '@gobstones/gobstones-core/cli';
 import { intl } from './translations';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const packageJSON = require('../package.json');
+const packageJSON = readJSON('../package.json');
 
 interface CLIArguments {
     language: string;
@@ -20,8 +20,8 @@ interface CLIArguments {
 }
 
 // Read from the package.json in order to retrieve the name and version
-const name = (packageJSON.name as string).split('/').slice(-1).pop();
-const versionNumber = packageJSON.version;
+const name = (packageJSON.name as string).split('/').slice(-1).pop() ?? 'gobstones-app';
+const versionNumber = packageJSON.version as string;
 
 cli({
     translator: intl,

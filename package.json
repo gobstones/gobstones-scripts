@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.5.3",
+  "version": "0.5.4",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": {
     "type": "git",
@@ -17,15 +17,32 @@
   "module": "./dist/esm/index.mjs",
   "typings": "./src/index.d.ts",
   "exports": {
-    "import": {
-      "types": "./dist/esm/typings/index.d.ts",
-      "default": "./dist/esm/index.mjs"
+    ".": {
+      "import": {
+        "types": "./dist/esm/typings/index.d.ts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/typings/index.d.ts",
+        "default": "./dist/cjs/index.cjs"
+      }
     },
-    "require": {
-      "types": "./dist/cjs/typings/index.d.ts",
-      "default": "./dist/cjs/index.cjs"
-    },
-    "require/cli": "./dist/cjs/cli.cjs"
+    "./cli": {
+      "import": {
+        "types": "./dist/esm/typings/cli.d.ts",
+        "default": "./dist/esm/cli.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/typings/cli.d.ts",
+        "default": "./dist/cjs/cli.cjs"
+      }
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "cli": ["./dist/esm/typings/cli.d.ts"],
+      "*": ["./dist/esm/typings/index.d.ts"]
+    }
   },
   "scripts": {
     "prepare": "husky install",

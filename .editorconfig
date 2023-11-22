@@ -14,3 +14,8 @@ insert_final_newline = true
 [package.json]
 indent_style = space
 indent_size = 2
+
+# Use 2 spaces since npm does not respect custom indentation settings
+[**/package-definition.json]
+indent_style = space
+indent_size = 2

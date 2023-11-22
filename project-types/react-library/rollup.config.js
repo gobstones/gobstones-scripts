@@ -16,13 +16,13 @@ export default [
         input: 'src/index.ts',
         output: [
             {
-                file: packageJson.exports.require,
-                format: 'cjs',
+                file: packageJson.exports['.'].import.default,
+                format: 'esm',
                 sourcemap: true
             },
             {
-                file: packageJson.exports.import,
-                format: 'esm',
+                file: packageJson.exports['.'].require.default,
+                format: 'cjs',
                 sourcemap: true
             }
         ],
@@ -36,6 +36,6 @@ export default [
             }),
             postcss()
         ],
-        external: ['react', 'react-dom', /@gobstones\/.*/]
+        external: [/@gobstones\/.*/, 'react', 'react-dom']
     }
 ];

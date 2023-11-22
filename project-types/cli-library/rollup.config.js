@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+const path = require('path');
 const fs = require('fs');
 
 const commonjs = require('@rollup/plugin-commonjs');
@@ -15,19 +16,23 @@ module.exports = [
         output: [
             {
                 sourcemap: true,
-                file: packageJson.exports.require,
-                format: 'cjs'
+                file: packageJson.exports['.'].import.default,
+                format: 'esm'
             },
             {
                 sourcemap: true,
-                dir: packageJson.exports.import,
-                format: 'esm'
+                file: packageJson.exports['.'].require.default,
+                format: 'cjs'
             }
         ],
         preserveSymlinks: true,
         plugins: [
             typescript({
-                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile
+                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
+                declarationDir: path.join(
+                    path.dirname(packageJson.exports['.'].import.default),
+                    './typings'
+                )
             }),
             commonjs()
         ],
@@ -38,7 +43,12 @@ module.exports = [
         output: [
             {
                 sourcemap: true,
-                file: packageJson.exports['require/cli'],
+                file: packageJson.exports['./cli'].import.default,
+                format: 'esm'
+            },
+            {
+                sourcemap: true,
+                file: packageJson.exports['./cli'].require.default,
                 format: 'cjs'
             }
         ],
@@ -46,7 +56,8 @@ module.exports = [
         plugins: [
             nodeResolve({ preferBuiltins: true }),
             typescript({
-                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile
+                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
+                declarationDir: './typings'
             }),
             commonjs()
         ],

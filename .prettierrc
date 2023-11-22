@@ -57,6 +57,13 @@
             }
         },
         {
+            "files": ["**/package-definition.json"],
+            "options": {
+                "tabWidth": 2,
+                "parser": "json"
+            }
+        },
+        {
             "files": [".prettierrc"],
             "options": {
                 "parser": "json"

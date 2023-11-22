@@ -1,43 +1,56 @@
 {
-    "name": "a-new-gobstones-library",
-    "version": "0.1.0",
-    "description": "A New Gobstones Project Library",
-    "repository": "https://github.com/gobstones/a-new-gobstones-library",
-    "homepage": "https://gobstones.github.io/a-new-gobstones-library",
-    "author": "John Doe <john.doe@gmail.com>",
-    "license": "AGPL-3.0",
-    "keywords": ["Gobstones", "Library", "Keywords"],
-    "main": "./dist/cjs/index.cjs",
-    "module": "./dist/esm/index.mjs",
-    "typings": "./dist/esm/typings/index.d.ts",
-    "exports": {
-        "require": "./dist/cjs/index.cjs",
-        "import": "./dist/esm/index.mjs"
-    },
-    "packageManager": "npm@10.1.0",
-    "scripts": {
-        "prepare": "is-ci || husky install",
-        "prepack": "gobstones-scripts run build",
-        "start": "gobstones-scripts run",
-        "dev": "gobstones-scripts run dev",
-        "build": "gobstones-scripts run build",
-        "test": "gobstones-scripts run test",
-        "doc": "gobstones-scripts run doc",
-        "lint": "gobstones-scripts run lint",
-        "prettify": "gobstones-scripts run prettify",
-        "gbs": "gobstones-scripts"
-    },
-    "config": {
-        "gobstones-scripts": {
-            "type": "library",
-            "manager": "npm"
-        }
-    },
-    "dependencies": {
-        "@gobstones/gobstones-core": "^0.4.6"
-    },
-    "devDependencies": {
-        "@gobstones/gobstones-scripts": "^0.5.3",
-        "husky": "^8.0.2"
+  "name": "@gobstones/<library-name>",
+  "version": "0.1.0",
+  "description": "A New Gobstones Project Library",
+  "repository": "https://github.com/gobstones/<library-name>",
+  "homepage": "https://gobstones.github.io/<library-name>",
+  "author": "John Doe <john.doe@gmail.com>",
+  "license": "AGPL-3.0",
+  "keywords": ["Gobstones", "Library", "Keywords"],
+  "main": "./dist/cjs/index.cjs",
+  "module": "./dist/esm/index.mjs",
+  "typings": "./dist/esm/typings/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/typings/index.d.ts",
+        "default": "./dist/esm/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/typings/index.d.ts",
+        "default": "./dist/cjs/index.cjs"
+      }
     }
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["./dist/esm/typings/index.d.ts"]
+    }
+  },
+  "packageManager": "npm@10.1.0",
+  "scripts": {
+    "prepare": "is-ci || husky install",
+    "prepack": "gobstones-scripts run build",
+    "start": "gobstones-scripts run",
+    "dev": "gobstones-scripts run dev",
+    "build": "gobstones-scripts run build",
+    "test": "gobstones-scripts run test",
+    "doc": "gobstones-scripts run doc",
+    "lint": "gobstones-scripts run lint",
+    "prettify": "gobstones-scripts run prettify",
+    "gbs": "gobstones-scripts"
+  },
+  "config": {
+    "gobstones-scripts": {
+      "type": "library",
+      "manager": "npm"
+    }
+  },
+  "dependencies": {
+    "@gobstones/gobstones-core": "^0.4.7"
+  },
+  "devDependencies": {
+    "@gobstones/gobstones-scripts": "^0.5.4",
+    "husky": "^8.0.2"
+  }
 }

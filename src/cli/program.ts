@@ -54,7 +54,6 @@ program
             failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
             failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
 
-            /*
             cli.runOrEnd(() => {
                 api.create(projectName, options.type, options.packageManager, options.test);
             }, [
@@ -65,7 +64,6 @@ program
                         'does not exists or if it does, it should be empty.'
                 }
             ]);
-            */
         }
     );
 
@@ -94,7 +92,6 @@ program
                 `"${options.packageManager ?? config.loadedOptions.manager}".`
         );
 
-        /*
         cli.runOrEnd(() => {
             api.init(
                 options.type ?? config.loadedOptions.type,
@@ -110,7 +107,6 @@ program
                     'init from an empty folder an try again.'
             }
         ]);
-        */
     });
 
 program

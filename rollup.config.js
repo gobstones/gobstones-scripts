@@ -12,13 +12,13 @@ module.exports = [
         output: [
             {
                 sourcemap: true,
-                file: packageJson.exports.require.default,
-                format: 'cjs'
+                file: packageJson.exports['.'].import.default,
+                format: 'esm'
             },
             {
                 sourcemap: true,
-                file: packageJson.exports.import.default,
-                format: 'esm'
+                file: packageJson.exports['.'].require.default,
+                format: 'cjs'
             }
         ],
         preserveSymlinks: true,
@@ -47,7 +47,12 @@ module.exports = [
         output: [
             {
                 sourcemap: true,
-                file: packageJson.exports['require/cli'],
+                file: packageJson.exports['./cli'].import.default,
+                format: 'esm'
+            },
+            {
+                sourcemap: true,
+                file: packageJson.exports['./cli'].require.default,
                 format: 'cjs'
             }
         ],
@@ -55,7 +60,8 @@ module.exports = [
         plugins: [
             nodeResolve({ preferBuiltins: true }),
             typescript({
-                tsconfig: './tsconfig.json'
+                tsconfig: './tsconfig.json',
+                declarationDir: './typings'
             }),
             commonjs()
         ],

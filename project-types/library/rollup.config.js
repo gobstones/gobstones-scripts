@@ -14,13 +14,13 @@ export default [
         output: [
             {
                 sourcemap: true,
-                file: packageJson.exports.require,
-                format: 'cjs'
+                file: packageJson.exports['.'].import.default,
+                format: 'esm'
             },
             {
                 sourcemap: true,
-                file: packageJson.exports.import,
-                format: 'esm'
+                file: packageJson.exports['.'].require.default,
+                format: 'cjs'
             }
         ],
         preserveSymlinks: true,

@@ -36,8 +36,8 @@ export const config = {
     loadedOptions,
     projectTypes,
     library,
-    cliLibrary,
-    webLibrary,
-    reactLibrary,
+    'cli-library': cliLibrary,
+    'react-library': reactLibrary,
+    'web-library': webLibrary,
     configurationFiles
 };

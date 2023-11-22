@@ -11,9 +11,8 @@ export default [
         output: [
             {
                 sourcemap: true,
-                dir: 'dist',
-                format: 'umd',
-                name: 'index.js'
+                file: packageJson.exports['.'].import.default,
+                format: 'umd'
             }
         ],
         preserveSymlinks: true,

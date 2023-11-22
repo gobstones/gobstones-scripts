@@ -81,7 +81,14 @@ export function init(projectType: string, packageManager: string, isTest: boolea
         // all to overwrite existing files with current configuration.
     }
 
-    copyFilesFrom(config[projectType], config[projectType].onInit, false, false, isTest);
+    const projectName: string = path.basename(config.currentDir);
+
+    replaceInnerReferencesInFiles(
+        [path.join(config.currentDir, 'README.md'), path.join(config.currentDir, 'package.json')],
+        /<library-name>/g,
+        projectName
+    );
+
     runScript(config[packageManager].install);
     runScript('git', ['init', '-q']);
 }
@@ -288,6 +295,30 @@ function copyFilesFrom(
 
     // Return a list of all copied files
     return copied;
+}
+
+/**
+ * Replace all appearances of **reference** in the contents of all files in
+ * **files** by the new string **newReference**.
+ *
+ * @param files The files in which to replace
+ * @param reference The text to be replaced
+ * @param newReference The new text to replace with
+ */
+function replaceInnerReferencesInFiles(
+    files: string[],
+    reference: string | RegExp,
+    newReference: string
+): void {
+    for (const file of files) {
+        if (fs.existsSync(file)) {
+            fs.writeFileSync(
+                file,
+                fs.readFileSync(file, 'utf-8').replace(reference, newReference),
+                'utf-8'
+            );
+        }
+    }
 }
 
 /**
