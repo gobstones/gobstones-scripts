@@ -12,7 +12,7 @@
  *
  * @group Internal API Objects
  */
-export const version = '0.5.6';
+export const version = '0.6.0';
 
 /**
  * The current directory, as detected by node.
