@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": {
     "type": "git",

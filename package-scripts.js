@@ -8,6 +8,11 @@ const defaultConfiguration = {
             description: 'Run "index.ts" in development mode'
         },
 
+        test: {
+            script: 'nps lint',
+            description: 'Run ESLint on all the files (src and tests)'
+        },
+
         build: {
             script:
                 'nps clean.dist ' +
@@ -80,17 +85,6 @@ const defaultConfiguration = {
             script: 'conventional-changelog -p angular -i CHANGELOG.md -s',
             silent: true,
             description: 'Generate changelog based on commits'
-        },
-
-        husky: {
-            commit: {
-                script: 'nps prettify && nps doc && nps changelog',
-                silent: true
-            },
-            push: {
-                script: 'nps lint',
-                silent: true
-            }
         }
     }
 };

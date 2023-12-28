@@ -1,8 +1,12 @@
+## <small>0.5.5 (2023-12-28)</small>
+
+* build: improve build system to build doc on a separate branch ([a6b1f73](https://github.com/gobstones/gobstones-scripts/commit/a6b1f73)), closes [#11](https://github.com/gobstones/gobstones-scripts/issues/11)
+
+
+
 ## <small>0.5.4 (2023-11-23)</small>
 
-* feat: new generated package.json files for all projects ([a7e6460](https://github.com/gobstones/gobstones-scripts/commit/a7e6460)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
-
-
+-   feat: new generated package.json files for all projects ([a7e6460](https://github.com/gobstones/gobstones-scripts/commit/a7e6460)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
 
 ## <small>0.5.4 (2023-11-23)</small>
 
