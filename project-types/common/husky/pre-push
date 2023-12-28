@@ -41,13 +41,6 @@ LOCAL_OBJ_NAME=${INPUT_ARR[1]}
 REMOTE_REF=${INPUT_ARR[2]}
 REMOTE_OBJ_NAME=${INPUT_ARR[3]}
 
-echo $REMOTE_NAME;
-echo $REMOTE_URL;
-echo $LOCAL_REF;
-echo $LOCAL_OBJ_NAME;
-echo $REMOTE_REF;
-echo $REMOTE_OBJ_NAME;
-
 # We currently use this hook to verify that any commit (to any branch)
 # passes the tests configured.
 # If a tag is being pushed, then, we generate the documentation
@@ -58,13 +51,13 @@ echo $REMOTE_OBJ_NAME;
 
 # Show welcome message
 echo "**************************";
-echo "Running pre puh hooks";
+echo "Running pre push hooks";
 echo "**************************";
 echo "";
 
 # Run all the tests
 echo "Running tests";
-npx --no nps test;
+npx --no -- gobstones-scripts run test --silent;
 
 # If pushing a tag, generate doc and push them as
 # a "docs" branch in the remote.

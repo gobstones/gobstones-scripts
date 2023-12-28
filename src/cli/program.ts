@@ -19,7 +19,7 @@ export const program = commanderProgram;
 
 program
     .description(`${cli.banner()}\n\n${cli.welcome()}`)
-    .addHelpText('beforeAll', `${cli.banner()}\n\n${cli.welcome()}`)
+    .addHelpText('before', `${cli.banner()}\n\n${cli.welcome()}`)
     .version(config.version)
     .option('-c, --config')
     .action((options: { config?: boolean }) => {
@@ -45,14 +45,23 @@ program
             '"',
         'npm'
     )
+    .option('-s, --silent', 'Run silently, not displaying the banner', false)
     .option('-T, --test', 'Run using verdaccio as a registry', false)
     .action(
         (
             projectName: string,
-            options: { type?: string; packageManager?: string; test?: boolean }
+            options: { type?: string; packageManager?: string; silent?: boolean; test?: boolean }
         ) => {
             failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
             failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
+
+            if (!options.silent) {
+                cli.displayWelcomeForAction(
+                    `Creating a project by the name "${projectName}" of type ` +
+                        `"${options.type ?? config.loadedOptions.type}" using package manager ` +
+                        `"${options.packageManager ?? config.loadedOptions.manager}".`
+                );
+            }
 
             cli.runOrEnd(() => {
                 api.create(projectName, options.type, options.packageManager, options.test);
@@ -81,33 +90,38 @@ program
             '"',
         'npm'
     )
+    .option('-s, --silent', 'Run silently, not displaying the banner', false)
     .option('-T, --test', 'Run using verdaccio as a registry', false)
-    .action((options: { type?: string; packageManager?: string; test?: boolean }) => {
-        failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
-        failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
+    .action(
+        (options: { type?: string; packageManager?: string; silent?: boolean; test?: boolean }) => {
+            failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
+            failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
 
-        cli.displayWelcomeForAction(
-            `Initializing a project in the current directory of type ` +
-                `"${options.type ?? config.loadedOptions.type}" using package manager ` +
-                `"${options.packageManager ?? config.loadedOptions.manager}".`
-        );
-
-        cli.runOrEnd(() => {
-            api.init(
-                options.type ?? config.loadedOptions.type,
-                options.packageManager ?? config.loadedOptions.manager,
-                options.test
-            );
-        }, [
-            {
-                error: 'non empty folder',
-                msg:
-                    'Init expects the current folder to be empty, but the ' +
-                    'folder contains elements.\nEnsure that you are calling ' +
-                    'init from an empty folder an try again.'
+            if (!options.silent) {
+                cli.displayWelcomeForAction(
+                    `Initializing a project in the current directory of type ` +
+                        `"${options.type ?? config.loadedOptions.type}" using package manager ` +
+                        `"${options.packageManager ?? config.loadedOptions.manager}".`
+                );
             }
-        ]);
-    });
+
+            cli.runOrEnd(() => {
+                api.init(
+                    options.type ?? config.loadedOptions.type,
+                    options.packageManager ?? config.loadedOptions.manager,
+                    options.test
+                );
+            }, [
+                {
+                    error: 'non empty folder',
+                    msg:
+                        'Init expects the current folder to be empty, but the ' +
+                        'folder contains elements.\nEnsure that you are calling ' +
+                        'init from an empty folder an try again.'
+                }
+            ]);
+        }
+    );
 
 program
     .command('update')
@@ -126,31 +140,46 @@ program
             Object.keys(config.projectTypes).join('", "') +
             '"'
     )
+    .option('-s, --silent', 'Run silently, not displaying the banner', false)
     .option('-T, --test', 'Run using verdaccio as a registry', false)
-    .action((options: { items?: string; type?: string; force?: boolean; test?: boolean }) => {
-        failIfOptionInvalid(options, 'type', Object.keys(config.loadedOptions.type));
+    .action(
+        (options: {
+            items?: string;
+            type?: string;
+            force?: boolean;
+            silent?: boolean;
+            test?: boolean;
+        }) => {
+            failIfOptionInvalid(options, 'type', Object.keys(config.loadedOptions.type));
 
-        if (options.items !== 'all') {
-            failIfOptionInvalid(options, 'items', config[config.loadedOptions.type].onUpdate);
+            if (options.items !== 'all') {
+                failIfOptionInvalid(options, 'items', config[config.loadedOptions.type].onUpdate);
+            }
+
+            if (!options.silent) {
+                cli.displayWelcomeForAction(
+                    `Updating files in current project of type ` +
+                        `"${options.type ?? config.loadedOptions.type}" using package manager ` +
+                        `"${config.loadedOptions.manager}".\n\n` +
+                        `Files to update: ${options.items}`
+                );
+            }
+
+            cli.runOrEnd(() => {
+                const files = api.update(options.force, options.items, options.type, options.test);
+                const useAbsolute = config.useAbsolutePaths;
+                cli.display('Files updated:');
+                files.forEach((file) => {
+                    const fileName = useAbsolute
+                        ? file
+                        : path.relative(config.projectRootPath, file);
+                    cli.display('\t' + fileName, 'blue');
+                });
+            }, [
+                { error: 'non root folder', msg: 'Update should be run on the root of a project.' }
+            ]);
         }
-
-        cli.displayWelcomeForAction(
-            `Updating files in current project of type ` +
-                `"${options.type ?? config.loadedOptions.type}" using package manager ` +
-                `"${config.loadedOptions.manager}".\n\n` +
-                `Files to update: ${options.items}`
-        );
-
-        cli.runOrEnd(() => {
-            const files = api.update(options.force, options.items, options.type, options.test);
-            const useAbsolute = config.useAbsolutePaths;
-            cli.display('Files updated:');
-            files.forEach((file) => {
-                const fileName = useAbsolute ? file : path.relative(config.projectRootPath, file);
-                cli.display('\t' + fileName, 'blue');
-            });
-        }, [{ error: 'non root folder', msg: 'Update should be run on the root of a project.' }]);
-    });
+    );
 
 program
     .command('eject')
@@ -169,19 +198,22 @@ program
             Object.keys(config.projectTypes).join('", "') +
             '"'
     )
-    .action((options: { items?: string; type?: string; force?: boolean }) => {
+    .option('-s, --silent', 'Run silently, not displaying the banner', false)
+    .action((options: { items?: string; type?: string; force?: boolean; silent?: boolean }) => {
         failIfOptionInvalid(options, 'type', Object.keys(config.loadedOptions.type));
 
         if (options.items !== 'all') {
             failIfOptionInvalid(options, 'items', config[config.loadedOptions.type].onEject);
         }
 
-        cli.displayWelcomeForAction(
-            `Ejecting files in current project of type ` +
-                `"${options.type ?? config.loadedOptions.type}" using package manager ` +
-                `"${config.loadedOptions.manager}".\n\n` +
-                `Files to eject: ${options.items}`
-        );
+        if (!options.silent) {
+            cli.displayWelcomeForAction(
+                `Ejecting files in current project of type ` +
+                    `"${options.type ?? config.loadedOptions.type}" using package manager ` +
+                    `"${config.loadedOptions.manager}".\n\n` +
+                    `Files to eject: ${options.items}`
+            );
+        }
 
         cli.runOrEnd(() => {
             const files = api.eject(options.force, options.items, options.type);
@@ -203,16 +235,25 @@ program
             '"',
         'npm'
     )
-    .action((command: string, args: string[], options: { packageManager: string }) => {
-        failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
+    .option('-s, --silent', 'Run silently, not displaying the banner', false)
+    .action(
+        (
+            command: string,
+            args: string[],
+            options: { packageManager: string; silent?: boolean }
+        ) => {
+            failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
 
-        cli.displayWelcomeForAction(
-            (!command
-                ? `Displaying all available commands on project of type `
-                : `Running command "${command}" on project of type `) +
-                `"${config.loadedOptions.type}" using package manager ` +
-                `"${options.packageManager ?? config.loadedOptions.manager}".`
-        );
+            if (!options.silent) {
+                cli.displayWelcomeForAction(
+                    (!command
+                        ? `Displaying all available commands on project of type `
+                        : `Running command "${command}" on project of type `) +
+                        `"${config.loadedOptions.type}" using package manager ` +
+                        `"${options.packageManager ?? config.loadedOptions.manager}".`
+                );
+            }
 
-        api.run(command, args, options.packageManager, undefined);
-    });
+            api.run(command, args, options.packageManager, undefined);
+        }
+    );

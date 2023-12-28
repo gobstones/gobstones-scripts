@@ -35,11 +35,11 @@ echo "";
 
 # Run prettify
 echo "Run prettify\n";
-npx --no -- nps prettify;
+npx --no -- gobstones-scripts run prettify --silent ;
 
 # Run changelog
 echo "\nRun changelog\n";
-npx --no -- nps changelog;
+npx --no gobstones-scripts run changelog --silent ;
 
 # Add all generated files
 echo "\nAdd generated files to commit\n";
