@@ -42,4 +42,4 @@ used and how they should be modified, how to compile and so on.
 
 ## Contributing
 
-See the [Gobstones Platform Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.
+See our [Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.

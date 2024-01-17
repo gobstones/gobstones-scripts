@@ -39,7 +39,8 @@ module.exports = [
             'common-tags',
             'ansi-colors',
             'figlet',
-            'fs'
+            'fs',
+            'command-exists'
         ]
     },
     {
@@ -75,7 +76,8 @@ module.exports = [
             'common-tags',
             'ansi-colors',
             'figlet',
-            'fs'
+            'fs',
+            'command-exists'
         ]
     }
 ];

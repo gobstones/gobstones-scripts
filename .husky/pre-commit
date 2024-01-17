@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
+# Load husky
+. "$(dirname -- "$0")/_/husky.sh"
+# Set failing on command fail, pipe fail, and undefined variable use
+set -euo pipefail
 
 # This hook is invoked by git-commit, and can be bypassed with the
 # --no-verify option. It takes no parameters, and is invoked before
@@ -16,9 +20,6 @@
 
 # The default pre-commit hook, when enabled and with the hooks.allownonascii
 # config option unset or set to false prevents the use of non-ASCII filenames.
-
-# Load husky
-. "$(dirname -- "$0")/_/husky.sh";
 
 # Read parameters
 # NOTHING TO READ HERE

@@ -206,8 +206,8 @@ const getClassicConfigForPath = (path: string): ProjectTypeDefinition => ({
         onEject: true
     },
     typedoc: {
-        localPath: ['common/typedoc.js'],
-        projectPath: ['typedoc.js'],
+        localPath: ['common/typedoc.config.js'],
+        projectPath: ['typedoc.config.js'],
         onInit: false,
         onUpdate: false,
         onEject: true
@@ -264,8 +264,8 @@ export const webLibrary: ProjectTypeDefinition = addOnInitEjectUpdate(
 export const reactLibrary: ProjectTypeDefinition = addOnInitEjectUpdate(
     Object.assign(getClassicConfigForPath('react-library'), {
         typedoc: {
-            localPath: ['react-library/typedoc.js'],
-            projectPath: ['typedoc.js'],
+            localPath: ['react-library/typedoc.config.js'],
+            projectPath: ['typedoc.config.js'],
             onInit: false,
             onUpdate: false,
             onEject: true

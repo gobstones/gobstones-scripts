@@ -5,6 +5,7 @@
         "esbenp.prettier-vscode",
         "dbaeumer.vscode-eslint",
         "amatiasq.sort-imports",
-        "christian-kohler.path-intellisense"
+        "christian-kohler.path-intellisense",
+        "SantaCodes.santacodes-region-viewer"
     ]
 }

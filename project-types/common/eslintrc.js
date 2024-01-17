@@ -99,7 +99,8 @@ module.exports = {
         'max-len': [
             'error',
             {
-                code: 100
+                code: 100,
+                ignoreUrls: true
             }
         ],
         'no-alert': ['error'],

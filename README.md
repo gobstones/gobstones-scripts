@@ -255,4 +255,4 @@ Once the verdaccio server is configured for the first time, you should be able t
 
 ## Contributing
 
-See the [Gobstones Platform Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.
+See our [Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.

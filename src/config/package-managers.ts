@@ -3,6 +3,7 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import childProcess from 'child_process';
+import commandExists from 'command-exists';
 
 /**
  * Return the package manager in use based different features. First, by
@@ -15,7 +16,10 @@ import childProcess from 'child_process';
  *
  * @group Internal API Functions
  */
-function getPackageManager(): string {
+function getPackageManager(
+    availablePackageManagers: Record<string, PackageManagerDefinition>,
+    defaultPackageManager: string = 'npm'
+): string {
     const userAgent = process.env['npm_config_user_agent'];
     let whichFile;
     if (!userAgent) {
@@ -28,14 +32,16 @@ function getPackageManager(): string {
         }
     }
     const value = userAgent || whichFile;
-    if (value && value.indexOf('pnpm') >= 0) {
-        return 'pnpm';
-    } else if (value && value.indexOf('yarn') >= 0) {
-        return 'yarn';
-    } else if (value && value.indexOf('npm') >= 0) {
-        return 'npm';
+    let result: string | undefined;
+    for (const pm of Object.keys(availablePackageManagers)) {
+        if (value && value.indexOf(availablePackageManagers[pm].cmd) >= 0) {
+            if (commandExists.sync(availablePackageManagers[pm].cmd)) {
+                result = availablePackageManagers[pm].cmd;
+                break;
+            }
+        }
     }
-    return undefined;
+    return result ?? defaultPackageManager;
 }
 
 /**
@@ -44,6 +50,10 @@ function getPackageManager(): string {
  * @group Internal API Types
  */
 export interface PackageManagerDefinition {
+    /**
+     * The regular command name.
+     */
+    cmd: string;
     /**
      * The command used to install dependencies.
      */
@@ -68,6 +78,7 @@ export interface PackageManagerDefinition {
  * @group Internal API Objects
  */
 export const npm: PackageManagerDefinition = {
+    cmd: 'npm',
     install: 'npm install',
     run: 'npx',
     modulesFolders: ['node_modules'],
@@ -80,6 +91,7 @@ export const npm: PackageManagerDefinition = {
  * @group Internal API Objects
  */
 export const pnpm: PackageManagerDefinition = {
+    cmd: 'pnpm',
     install: 'pnpm install',
     run: 'pnpm exec',
     modulesFolders: ['node_modules', 'node_modules/@gobstones/gobstones-scripts/node_modules'],
@@ -92,6 +104,7 @@ export const pnpm: PackageManagerDefinition = {
  * @group Internal API Objects
  */
 export const yarn: PackageManagerDefinition = {
+    cmd: 'yarn',
     install: 'yarn install',
     run: 'npx',
     modulesFolders: ['node_modules'],
@@ -114,4 +127,4 @@ export const packageManagers: Record<string, PackageManagerDefinition> = {
  *
  * @group Internal API Objects
  */
-export const currentPackageManager: string = getPackageManager();
+export const currentPackageManager: string = getPackageManager(packageManagers);

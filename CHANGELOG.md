@@ -1,7 +1,26 @@
+## <small>0.6.1 (2024-01-18)</small>
+
+* build(husky): change the way the scripts are run in bash ([642d580](https://github.com/gobstones/gobstones-scripts/commit/642d580))
+
+
+
+## <small>0.6.1 (2024-01-18)</small>
+
+-   build(husky): change the way the scripts are run in bash ([bbefd51](https://github.com/gobstones/gobstones-scripts/commit/bbefd51))
+
+## <small>0.6.1 (2024-01-18)</small>
+
+-   build(husky): change the way the scripts are run in bash ([35de4ce](https://github.com/gobstones/gobstones-scripts/commit/35de4ce))
+
+## <small>0.6.1 (2024-01-17)</small>
+
+-   build(husky): change the way the scripts are run in bash ([5cafbb6](https://github.com/gobstones/gobstones-scripts/commit/5cafbb6))
+
+## <small>0.6.1 (2024-01-17)</small>
+
+-   build(husky): change the way the scripts are run in bash ([358243b](https://github.com/gobstones/gobstones-scripts/commit/358243b))
+
 ## 0.6.0 (2023-12-28)
-
-
-
 
 ## <small>0.5.6 (2023-12-28)</small>
 

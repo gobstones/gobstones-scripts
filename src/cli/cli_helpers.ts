@@ -125,7 +125,7 @@ export function printConfiguration(): void {
 
     display(`The files to use as configuration are:\n`);
     for (const file in configFiles) {
-        if (!configFiles[file]) continue;
+        if (typeof configFiles[file] !== 'string') continue;
         const filePath = useAbsolute
             ? configFiles[file]
             : path.relative(config.projectRootPath, configFiles[file]);

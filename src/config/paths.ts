@@ -6,9 +6,29 @@
 import { hasGobstonesScriptConfiguration, isGobstonesScriptLibrary } from './package-json-config';
 
 import childProcess from 'child_process';
+import commandExists from 'command-exists';
 import fs from 'fs-extra';
 import path from 'path';
 import process from 'process';
+
+/**
+ * Returns the root of a given path, or the root based on the system.
+ */
+function pathStart(thePath?: string): string {
+    const absolutePath = path.resolve(thePath);
+
+    const isWindows =
+        (process && process.platform === 'win32') ||
+        /^(msys|cygwin)$/.test(process.env.OSTYPE ?? '');
+
+    if (isWindows) {
+        return absolutePath && absolutePath.match(/^[A-Z]:\\/)
+            ? absolutePath.substring(0, 3)
+            : 'C:\\';
+    } /* is posix */ else {
+        return '/';
+    }
+}
 
 /**
  * Returns the current process path, which is supposed to
@@ -22,11 +42,11 @@ import process from 'process';
 function getProjectRootPath(): string {
     let detectedRootPath: string = '';
     // The obvious choice is the the current directory
-    let possibleRootPath: string = process.env['PWD'] ?? '/';
-
+    let possibleRootPath: string = process.env['PWD'] ?? process.cwd() ?? path.resolve('.');
+    const pathStartBySystem = pathStart(possibleRootPath);
     // Attempt to find the root in current directory and above
     // until no more directories are found
-    while (!detectedRootPath && possibleRootPath !== '/') {
+    while (!detectedRootPath && possibleRootPath !== pathStartBySystem) {
         // A valid root is one such that there is a package.json
         // that contains the gobstones-scripts entry in config
         if (hasGobstonesScriptConfiguration(path.join(possibleRootPath, 'package.json'))) {
@@ -63,7 +83,9 @@ function getGobstonesScriptsRootPath(): string {
         // First, check if we are running from the project itself, that may be
         // the same folder, or a folder further up
         let possibleRootPath = getProjectRootPath();
-        while (possibleRootPath !== '/') {
+        const pathStartBySystem = pathStart(possibleRootPath);
+
+        while (possibleRootPath !== pathStartBySystem) {
             if (isGobstonesScriptLibrary(path.join(possibleRootPath, 'package.json'))) {
                 // Found
                 detectedScriptRootPath = possibleRootPath;
@@ -75,10 +97,20 @@ function getGobstonesScriptsRootPath(): string {
         // Return the path to a particular location
         // based on the root folder string, the
         // file does not necessarily exists.
-        const getRootPath = function (rootString: string): string {
+        const getRootPath = function (command: string, args: string): string {
             try {
-                const processGettedPath = childProcess.execSync(rootString).toString().trim();
-                return path.join(processGettedPath || '', '@gobstones', 'gobstones-scripts');
+                if (commandExists.sync(command)) {
+                    // eslint-disable-next-line no-console
+                    console.log('COMMAND ' + command + 'EXISTS');
+                    const processGettedPath = childProcess
+                        .execSync(`${command} ${args}`)
+                        .toString()
+                        .trim();
+                    return path.join(processGettedPath || '', '@gobstones', 'gobstones-scripts');
+                } else {
+                    // eslint-disable-next-line no-console
+                    console.log('COMMAND ' + command + 'DOES NOT EXISTS');
+                }
             } catch {
                 return '';
             }
@@ -100,11 +132,11 @@ function getGobstonesScriptsRootPath(): string {
         // tool installed (which may fail if not installed), and
         // ensure the directory exists.
         const globalBasedOnToolPath = getExisting([
-            getRootPath('npm root --location=project'),
-            getRootPath('npm root --location=user'),
-            getRootPath('npm root --location=global'),
-            getRootPath('pnpm root'),
-            getRootPath('pnpm root --global')
+            getRootPath('npm', 'root --location=project'),
+            getRootPath('npm', 'root --location=user'),
+            getRootPath('npm', 'root --location=global'),
+            getRootPath('pnpm', 'root'),
+            getRootPath('pnpm', 'root --global')
         ]);
 
         // Also get a default path, which requires

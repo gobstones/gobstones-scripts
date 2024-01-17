@@ -1,4 +1,8 @@
 #!/usr/bin/env sh
+# Load husky
+. "$(dirname -- "$0")/_/husky.sh"
+# Set failing on command fail, pipe fail, and undefined variable use
+set -euo pipefail
 
 # This hook is invoked by git-commit and git-merge, and can be
 # bypassed with the --no-verify option. It takes a single
@@ -14,9 +18,6 @@
 
 # The default commit-msg hook, when enabled, detects duplicate
 # Signed-off-by trailers, and aborts the commit if one is found.
-
-# Load husky
-. "$(dirname -- "$0")/_/husky.sh";
 
 # Read parameters
 COMMIT_MSG_FILE=$1;
