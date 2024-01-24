@@ -11,4 +11,4 @@
  *
  * @group Internal: Values
  */
-export const version = '0.6.1';
+export const version = '0.7.0';

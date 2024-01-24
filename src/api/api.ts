@@ -116,7 +116,7 @@ function init(projectType?: string, packageManager?: string, isTest: boolean = f
  * to update the configuration. By appending **force** as a
  * subcommand, all files are updated to their latest version.
  *
- * @param files The file name to update, or "all" if all should be
+ * @param file The file name to update, or "all" if all should be
  *      updated (Defaults to `"all"`).
  * @param force Whether to force the update of files, that is,
  *      override already present files in the project with their newest version
@@ -187,8 +187,8 @@ function eject(file: string = 'all', force: boolean = false, projectType?: strin
  *
  * @param command The nps command to execute.
  * @param userArgs The nps command additional arguments.
- * @param projectTypeName The project type to use as configuration (Defaults to `"library"`).
- * @param packageManagerName The package manager to use when running commands.
+ * @param projectType The project type to use as configuration (Defaults to `"library"`).
+ * @param packageManager The package manager to use when running commands.
  *
  * @returns The list of updated files.
  *

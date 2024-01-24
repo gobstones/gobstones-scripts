@@ -109,7 +109,7 @@ The `update` sub-command is intended to update the project's configuration files
 
 The command has the following options.
 
--   `-i, --items <items> `: The items to update. One of `all`, `license`, `contributing`, `editorconfig`, `prettier`, `npm`, `eslint`, `git` or `commitlint`. Defaults to `all`.
+-   `-i, --items <item> `: The items to update. One of `all`, `license`, `contributing`, `editorconfig`, `prettier`, `npm`, `eslint`, `git` or `commitlint`. Defaults to `all`.
 -   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
 -   `-s, --silent`: Run silently, not displaying the tool's banner.
 -   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.
@@ -140,7 +140,7 @@ Some tools, like **typescript**, **rollup**, **typedoc**, **jest** and **nps** h
 
 This sub-command have the following options:
 
--   `-i, --items <items> `: The items to update. One of `all`, `nps`, `rollup`, `typescript`, `typedoc`, `jest`. Defaults to `all`.
+-   `-i, --items <item> `: The items to update. One of `all`, `nps`, `rollup`, `typescript`, `typedoc`, `jest`. Defaults to `all`.
 -   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
 -   `-s, --silent`: Run silently, not displaying the tool's banner.
 -   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.

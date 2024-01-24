@@ -1,15 +1,29 @@
-## <small>0.6.1 (2024-01-24)</small>
-
-* refactor: major refactor of configuration system ([3bf8c76](https://github.com/gobstones/gobstones-scripts/commit/3bf8c76))
-* build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+# [0.7.0](https://github.com/gobstones/gobstones-scripts/compare/v0.6.0...v0.7.0) (2024-01-24)
 
 
-### BREAKING CHANGE
+### Code Refactoring
+
+* major refactor of configuration system ([3cdc7c0](https://github.com/gobstones/gobstones-scripts/commit/3cdc7c046a635dfab5709649746efc517efd6c90))
+
+
+### BREAKING CHANGES
 
 * The API of the configuration was completely changed. The name of the typedoc
 configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
 consoles.
 
+
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   refactor: major refactor of configuration system ([3bf8c76](https://github.com/gobstones/gobstones-scripts/commit/3bf8c76))
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+### BREAKING CHANGE
+
+-   The API of the configuration was completely changed. The name of the typedoc
+    configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+    consoles.
 
 ## <small>0.6.1 (2024-01-24)</small>
 

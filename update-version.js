@@ -13,11 +13,7 @@ function replaceVersionInPackageJson(newVersion) {
 }
 
 function replaceVersionInConfig(newVersion) {
-    replaceInTextFile(
-        './src/config/tool-config-definitions/definitions.ts',
-        /const version = '.*'/g,
-        `const version = '${newVersion}'`
-    );
+    replaceInTextFile('./src/config/about.ts', /const version = '.*'/g, `const version = '${newVersion}'`);
 }
 
 function replaceVersionInProjectPackageJson(projectName, newVersion) {
@@ -32,9 +28,9 @@ function updateToVersion(newVersion) {
     replaceVersionInPackageJson(newVersion);
     replaceVersionInConfig(newVersion);
     replaceVersionInProjectPackageJson('library', newVersion);
-    replaceVersionInProjectPackageJson('cli-library', newVersion);
-    replaceVersionInProjectPackageJson('react-library', newVersion);
-    replaceVersionInProjectPackageJson('web-library', newVersion);
+    replaceVersionInProjectPackageJson('cliLibrary', newVersion);
+    replaceVersionInProjectPackageJson('reactLibrary', newVersion);
+    replaceVersionInProjectPackageJson('webLibrary', newVersion);
 }
 
 updateToVersion(process.argv[2]);

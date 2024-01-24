@@ -65,7 +65,7 @@
     "commander": "^11.1.0"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.6.1",
+    "@gobstones/gobstones-scripts": "^0.7.0",
     "husky": "^8.0.2"
   }
 }

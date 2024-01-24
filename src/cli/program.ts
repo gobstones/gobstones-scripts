@@ -175,7 +175,7 @@ program
     .description('update the root files of the project')
     .option('-f, --force', 'Whether to override previous values', false)
     .option(
-        '-i, --items <items>',
+        '-i, --items <item>',
         `The items to update. One of "all", ${config.projectTypeFilteredFiles.copiedOnUpdate.join('", "')}`,
         'all'
     )
@@ -228,7 +228,7 @@ program
     .description('eject the configuration files of the project')
     .option('-f, --force', 'Whether to override previous values', false)
     .option(
-        '-i, --items <items>',
+        '-i, --items <item>',
         `The items to update. One of "all", ${config.projectTypeFilteredFiles.copiedOnEject.join('", "')}`,
         'all'
     )

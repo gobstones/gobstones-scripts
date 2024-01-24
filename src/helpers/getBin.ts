@@ -28,7 +28,7 @@ import { PackageJsonReader } from '../helpers/PackageJsonReader';
  * @group Internal: Helpers
  */
 export function getBin(
-    projectRoot: string,
+    projectRootPath: string,
     packageManagerDefinition: PackageManagerDefinition,
     packageName: string,
     binName?: string
@@ -64,7 +64,7 @@ export function getBin(
         for (const modulesFolder of packageManagerDefinition.modulesFolders) {
             logger.debug(`[getBin]: Verifying at: ${modulesFolder}`);
 
-            const packageNamePath = path.join(projectRoot, modulesFolder, packageName, 'package.json');
+            const packageNamePath = path.join(projectRootPath, modulesFolder, packageName, 'package.json');
             if (fs.existsSync(packageNamePath)) {
                 logger.debug(`[getBin]: Found a package.json file at: ${packageNamePath}`, 'magenta');
 
@@ -80,7 +80,7 @@ export function getBin(
             } else {
                 logger.debug(`[getBin]: No package with name found. Attempting to find native binary.`, 'magenta');
 
-                const binFile = path.join(projectRoot, modulesFolder, '.bin', binName ?? packageName);
+                const binFile = path.join(projectRootPath, modulesFolder, '.bin', binName ?? packageName);
 
                 if (fs.existsSync(binFile)) {
                     // We found a possible binary, but in some cases
