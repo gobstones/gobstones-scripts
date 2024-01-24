@@ -1,20 +1,20 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { config } = require('@gobstones/gobstones-scripts');
 
+config.init();
+const rootDir = config.locations.projectRoot;
+const tsConfigPath = config.projectType.tsConfigJSON.toolingFile;
+
 module.exports = {
-    entryPoints: [config.projectRootPath + '/src'],
-    tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
+    entryPoints: [`${rootDir}/src`],
+    tsconfig: `${tsConfigPath}`,
     compilerOptions: {
-        rootDir: config.projectRootPath + '/src'
+        rootDir: `${rootDir}/src`
     },
     entryPointStrategy: 'expand',
-    out: config.projectRootPath + '/docs',
-    includes: config.projectRootPath + '/src',
-    exclude: [
-        config.projectRootPath + '/node_modules/**/*',
-        config.projectRootPath + '/**/*.test.ts',
-        config.projectRootPath + '/src/index.ts'
-    ],
+    out: `${rootDir}/docs`,
+    includes: `${rootDir}/src`,
+    exclude: [`${rootDir}/node_modules/**/*`, `${rootDir}/**/*.test.ts`, `${rootDir}/src/index.ts`],
     includeVersion: true,
     categorizeByGroup: true,
     excludeExternals: true,
@@ -23,11 +23,7 @@ module.exports = {
     hideGenerator: true,
     disableSources: true,
     githubPages: true,
-    plugin: [
-        'typedoc-plugin-merge-modules',
-        'typedoc-plugin-remove-references',
-        'typedoc-plugin-extras'
-    ],
+    plugin: ['typedoc-plugin-merge-modules', 'typedoc-plugin-remove-references', 'typedoc-plugin-extras'],
     // options added by typedoc-plugin-merge-modules
     mergeModulesMergeMode: 'module',
     // end of typedoc-plugin-merge-modules options

@@ -56,7 +56,7 @@ const defaultConfiguration = {
 
         prettify: {
             script:
-                'prettier --no-error-on-unmatched-pattern --write ./src/{**,.}/*.js ' +
+                'prettier --no-error-on-unmatched-pattern --write ./src/{**,.}/*.{js,ts} ' +
                 '&& prettier --no-error-on-unmatched-pattern --write ' +
                 './project-types/**/*.{ts,tsx,md,json} ' +
                 '&& prettier --no-error-on-unmatched-pattern --write ./.github/{**,.}/*.{yml,md} ' +
@@ -71,8 +71,7 @@ const defaultConfiguration = {
                 'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold ' +
                 '--prefix "[{name}]" --names verdaccio.serve,publish ' +
                 '"nps verdaccio.serve" ' +
-                ('"rimraf ./test/verdaccio/storage/* ' +
-                    '&& npm publish --registry http://localhost:4567"'),
+                ('"rimraf ./test/verdaccio/storage/* ' + '&& npm publish --registry http://localhost:4567"'),
             description: 'Run Verdaccio server and publish current version of library to it',
             serve: {
                 script: 'verdaccio --config ./test/verdaccio/config.yml',
@@ -84,7 +83,12 @@ const defaultConfiguration = {
         changelog: {
             script: 'conventional-changelog -p angular -i CHANGELOG.md -s',
             silent: true,
-            description: 'Generate changelog based on commits'
+            description: 'Generate changelog based on tags',
+            scratch: {
+                script: 'conventional-changelog -p angular -i CHANGELOG.md -s -r 0',
+                silent: true,
+                description: 'Generate changelog based on tags, starting from scratch'
+            }
         }
     }
 };

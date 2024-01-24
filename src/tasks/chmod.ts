@@ -1,11 +1,13 @@
-import { TaskConfigurationError } from './helpers/TaskError';
 /**
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { ifUnix } from './ifUnix';
-import { isNotDefined } from './helpers/isNotDefined';
 import { stripIndent } from 'common-tags';
+
+import { ifUnix } from './ifUnix';
+
+import { isNotDefined } from '../helpers/isNotDefined';
+import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the chmod task.

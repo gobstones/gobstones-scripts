@@ -1,6 +1,13 @@
 #!/usr/bin/env sh
+
 # Load husky
 . "$(dirname -- "$0")/_/husky.sh"
+
+# Read parameters
+COMMIT_MSG_FILE=$1;
+COMMIT_SOURCE=$2;
+SHA1=$3;
+
 # Set failing on command fail, pipe fail, and undefined variable use
 set -euo pipefail
 
@@ -27,11 +34,6 @@ set -euo pipefail
 
 # The sample prepare-commit-msg hook that comes with Git removes
 # the help message found in the commented portion of the commit template.
-
-# Read parameters
-COMMIT_MSG_FILE=$1;
-COMMIT_SOURCE=$2;
-SHA1=$3;
 
 # We use this hook to run "cz", that forces the build of a
 # semantic commit message through a prompt.

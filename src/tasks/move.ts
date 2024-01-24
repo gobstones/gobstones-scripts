@@ -1,13 +1,15 @@
-import { TaskConfigurationError } from './helpers/TaskError';
 /**
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
+import { stripIndent } from 'common-tags';
+
 import { copy } from './copy';
-import { isNotDefined } from './helpers/isNotDefined';
 import { remove } from './remove';
 import { serially } from './serially';
-import { stripIndent } from 'common-tags';
+
+import { isNotDefined } from '../helpers/isNotDefined';
+import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the move task.

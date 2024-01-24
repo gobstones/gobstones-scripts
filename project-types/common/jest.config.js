@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { config } = require('@gobstones/gobstones-scripts');
 
+config.init();
+const tsConfigPath = config.projectType.tsConfigJSON.toolingFile;
+
 module.exports = {
     preset: 'ts-jest',
     transform: {
         '^.+\\.tsx?$': [
             'ts-jest',
             {
-                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
+                tsconfig: `${tsConfigPath}`,
                 importHelpers: true
             }
         ]

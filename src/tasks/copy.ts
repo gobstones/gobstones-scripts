@@ -1,13 +1,16 @@
-import { TaskConfigurationError } from './helpers/TaskError';
 /**
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { config } from '../config';
-import { isNotDefined } from './helpers/isNotDefined';
 import path from 'path';
-import { runBin } from './runBin';
+
 import { stripIndent } from 'common-tags';
+
+import { runBin } from './runBin';
+
+import { config } from '../config';
+import { isNotDefined } from '../helpers/isNotDefined';
+import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the copy task.
@@ -24,7 +27,7 @@ export interface TaskCopyOptions {
      */
     dest: string;
     /**
-     * Wether the source is a directory. Defaults to false.
+     * Whether the source is a directory. Defaults to false.
      */
     isDir?: boolean;
 }
@@ -75,5 +78,4 @@ export function copy(options: TaskCopyOptions): string {
  *
  * @internal
  */
-const ncp = (args: string): string =>
-    `${runBin('cpy-cli', 'cpy')} --cwd="${config.projectRootPath}" ${args}`;
+const ncp = (args: string): string => `${runBin('cpy-cli', 'cpy')} --cwd="${config.locations.projectRoot}" ${args}`;

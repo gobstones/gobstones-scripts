@@ -2,8 +2,9 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { config } from '../config';
 import { runBin } from './runBin';
+
+import { config } from '../config';
 
 /**
  * This type represents the options that you can pass to the typedoc task.
@@ -30,7 +31,6 @@ export interface TaskTypedocOptions {
  * @group Main API Functions
  */
 export const typedoc = (options: TaskTypedocOptions = {}): string =>
-    `${runBin('typedoc')} --options ${
-        config.configurationFiles[config.loadedOptions.type].typedoc
-    } --tsconfig ${config.configurationFiles[config.loadedOptions.type].tsConfigFile}` +
+    `${runBin('typedoc')} --options ${config.projectType.typedoc.toolingFile} ` +
+    `--tsconfig ${config.projectType.tsConfigJSON.toolingFile}` +
     (options.watch ? ` --watch ${options.watch}` : '');

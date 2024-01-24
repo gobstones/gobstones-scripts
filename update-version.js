@@ -14,7 +14,7 @@ function replaceVersionInPackageJson(newVersion) {
 
 function replaceVersionInConfig(newVersion) {
     replaceInTextFile(
-        './src/config/tool.ts',
+        './src/config/tool-config-definitions/definitions.ts',
         /const version = '.*'/g,
         `const version = '${newVersion}'`
     );

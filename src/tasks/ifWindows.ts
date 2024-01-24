@@ -2,7 +2,7 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { isWindows } from './helpers/isWindows';
+import { isWindows } from '../helpers/isWindows';
 
 /**
  * Takes two scripts as a string and returns the first
@@ -16,5 +16,4 @@ import { isWindows } from './helpers/isWindows';
  *
  * @group Main API Functions
  */
-export const ifWindows = (script: string, altScript: string): string =>
-    isWindows() ? script : altScript;
+export const ifWindows = (script: string, altScript: string): string => (isWindows() ? script : altScript);

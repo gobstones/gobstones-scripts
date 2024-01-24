@@ -2,7 +2,7 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { isWindows } from './helpers/isWindows';
+import { isWindows } from '../helpers/isWindows';
 
 /**
  * Escape a string or array of strings replacing all quote and backslashes
@@ -16,9 +16,7 @@ import { isWindows } from './helpers/isWindows';
  */
 export function shellEscape(stringOrArray: string | string[]): string | string[] {
     const escapedPathSh = (path: string): string =>
-        !/^[A-Za-z0-9_/-]+$/.test(path)
-            ? ("'" + path.replace(/'/g, "'\"'\"'") + "'").replace(/''/g, '')
-            : path;
+        !/^[A-Za-z0-9_/-]+$/.test(path) ? ("'" + path.replace(/'/g, "'\"'\"'") + "'").replace(/''/g, '') : path;
 
     const escapedPathWin = (path: string): string =>
         !/^[A-Za-z0-9_/-]+$/.test(path) ? '"' + path.replace(/"/g, '""') + '"' : path;

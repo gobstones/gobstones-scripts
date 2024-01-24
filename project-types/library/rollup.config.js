@@ -1,12 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
 
+const { config } = require('@gobstones/gobstones-scripts');
 const commonjs = require('@rollup/plugin-commonjs');
 const typescript = require('@rollup/plugin-typescript');
 
-const { config } = require('@gobstones/gobstones-scripts');
-
 const packageJson = JSON.parse(fs.readFileSync('./package.json').toString());
+
+config.init();
+const tsConfigPath = config.projectType.tsConfigJSON.toolingFile;
 
 export default [
     {
@@ -26,7 +28,7 @@ export default [
         preserveSymlinks: true,
         plugins: [
             typescript({
-                tsconfig: config.configurationFiles[config.loadedOptions.type].tsConfigFile,
+                tsconfig: `${tsConfigPath}`,
                 declarationDir: './typings'
             }),
             commonjs()

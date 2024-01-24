@@ -1,6 +1,24 @@
 #!/usr/bin/env sh
+
 # Load husky
 . "$(dirname -- "$0")/_/husky.sh"
+
+# Read parameters
+REMOTE_NAME=$1;
+REMOTE_URL=$2;
+# Read the input and split it approprietly
+INPUT=$(cat);
+INPUT_ARR[0]='';
+INPUT_ARR[1]='';
+INPUT_ARR[2]='';
+INPUT_ARR[3]='';
+read -a INPUT_ARR <<< "$INPUT";
+
+LOCAL_REF=${INPUT_ARR[0]}
+LOCAL_OBJ_NAME=${INPUT_ARR[1]}
+REMOTE_REF=${INPUT_ARR[2]}
+REMOTE_OBJ_NAME=${INPUT_ARR[3]}
+
 # Set failing on command fail, pipe fail, and undefined variable use
 set -euo pipefail
 
@@ -29,22 +47,6 @@ set -euo pipefail
 # If this hook exits with a non-zero status, git push will abort without
 # pushing anything. Information about why the push is rejected may be
 # sent to the user by writing to standard error.
-
-# Read parameters
-REMOTE_NAME=$1;
-REMOTE_URL=$2;
-# Read the input and split it approprietly
-INPUT=$(cat);
-INPUT_ARR[0]='';
-INPUT_ARR[1]='';
-INPUT_ARR[2]='';
-INPUT_ARR[3]='';
-read -a INPUT_ARR <<< "$INPUT";
-
-LOCAL_REF=${INPUT_ARR[0]}
-LOCAL_OBJ_NAME=${INPUT_ARR[1]}
-REMOTE_REF=${INPUT_ARR[2]}
-REMOTE_OBJ_NAME=${INPUT_ARR[3]}
 
 # If pushing a tag, generate doc and push them as
 # a "docs" branch in the remote.

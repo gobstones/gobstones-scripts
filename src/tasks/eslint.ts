@@ -2,10 +2,12 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { TaskConfigurationError } from './helpers/TaskError';
-import { isNotDefined } from './helpers/isNotDefined';
-import { runBin } from './runBin';
 import { stripIndent } from 'common-tags';
+
+import { runBin } from './runBin';
+
+import { isNotDefined } from '../helpers/isNotDefined';
+import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the eslint task.
@@ -18,7 +20,7 @@ export interface TaskEslintOptions {
      */
     files: string;
     /**
-     * Wether to fix the issues found if possible. Defaults to false.
+     * Whether to fix the issues found if possible. Defaults to false.
      */
     fix?: boolean;
     /**
@@ -49,7 +51,7 @@ export function eslint(options: TaskEslintOptions): string {
             stripIndent`"eslint" requires options with the following signature:
                 {
                     files: string   // The files to lint, may be a glob pattern
-                    fix?: boolean  //Wether to fix the encountered error when possible
+                    fix?: boolean  // Whether to fix the encountered error when possible
                     extensions?: string // The extensions to consider
                 }`
         );
@@ -57,8 +59,7 @@ export function eslint(options: TaskEslintOptions): string {
     options.fix = options.fix ?? false;
     options.extensions = options.extensions ?? 'js,jsx,ts,tsx';
     return (
-        `${runBin('eslint')} ${options.files} --format stylish --ext ${
-            options.extensions
-        } --color` + (options.fix ? ' --fix' : '')
+        `${runBin('eslint')} ${options.files} --format stylish --ext ${options.extensions} --color` +
+        (options.fix ? ' --fix' : '')
     );
 }
