@@ -1,12 +1,14 @@
-import { TaskConfigurationError } from './helpers/TaskError';
 /**
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { config } from '../config';
-import { isNotDefined } from './helpers/isNotDefined';
-import { runBin } from './runBin';
 import { stripIndent } from 'common-tags';
+
+import { runBin } from './runBin';
+
+import { config } from '../config';
+import { isNotDefined } from '../helpers/isNotDefined';
+import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the tsx task.
@@ -48,8 +50,7 @@ export function tsx(options: TaskTsxOptions): string {
         );
     }
     return (
-        `${runBin('tsx')} ${options.file} --tsconfig ${
-            config.configurationFiles[config.loadedOptions.type].tsConfigFile
-        }` + (options.watch ? ` --watch ${options.watch}` : ' --ignore-watch')
+        `${runBin('tsx')} ${options.file} --tsconfig ${config.projectType.tsConfigJSON.toolingFile}` +
+        (options.watch ? ` --watch ${options.watch}` : ' --ignore-watch')
     );
 }

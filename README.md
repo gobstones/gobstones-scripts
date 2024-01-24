@@ -1,12 +1,10 @@
 # gobstones-scripts
 
-Gobstones Scripts is a CLI tool that helps in the creation of libraries for GobstonesWeb2 by hiding away the configuration files for several building tools, such as Typescript, Rollup, Webpack, Jest, nps and Typedoc.
+Gobstones Scripts is a CLI tool that helps in the creation of library projects for **GobstonesWeb2** by hiding away the configuration files for several building tools, such as Typescript, Rollup, Jest, nps and Typedoc, and providing configuration files in your project root for others.
 
-It also provides some pre-defined files for styling and linting, such as .editorconfig, prettier and ESLint support files, that are automatically copied to the root of your project during initialization.
+It also allows to execute nps scripts using this hidden configuration. Configurations may be overwritten at any time to provide more functionality, but defaults tend to work on most cases.
 
 You may thing of gobstones-script as some sort of create-react-app + react-scripts for the Gobstones Project libraries.
-
-Configurations may be overwritten at any time to provide more functionality, but defaults tend to work on most cases.
 
 [![Licence](https://img.shields.io/github/license/gobstones/gobstones-scripts?style=plastic&label=License&logo=open-source-initiative&logoColor=white&color=olivegreen)](https://github.com/gobstones/gobstones-scripts/blob/main/LICENSE) [![Version](https://img.shields.io/github/package-json/v/gobstones/gobstones-scripts?style=plastic&label=Version&logo=git-lfs&logoColor=white&color=crimson)](https://www.npmjs.com/package/@gobstones/gobstones-scripts) [![API Docs](https://img.shields.io/github/package-json/homepage/gobstones/gobstones-scripts?color=blue&label=API%20Docs&logo=gitbook&logoColor=white&style=plastic)](https://gobstones.github.io/gobstones-scripts)
 
@@ -22,13 +20,13 @@ There are two ways in which you can install gobstones-scripts, globally or local
 
 e global install allows to execute the _gobstones-scripts_ command globally, by installing the CLI to your path.
 
-The best thing about it is the ability to create new projects or to initialize a project in a specific folder. To install globally with **npm** run The best thing about it is the ability to create new projects or to initialize a project in a specific folder. To install globally with **npm** run
+The best thing about it is the ability to create new projects or to initialize a project in a specific folder. To install globally with **npm** run
 
 ```bash
 npm install --global @gobstones/gobstones-scripts
 ```
 
-You do not need the global installation in order to use _gobstones-scripts_ in a project, but it's useful if you are starting a project from scratch.
+You do not need the global installation in order to use _gobstones-scripts_ in a project, but it's useful if you are starting a project from scratch. If you are not planning to create new projects, we recommend to stick with the second method instead.
 
 ### Local install
 
@@ -38,8 +36,7 @@ To install locally to your already created project run the following with **npm*
 npm install --save-dev @gobstones/gobstones-scripts
 ```
 
-This will add _gobstones-scripts_ as a dependency to your project.
-Remember to install all peer dependencies too, as this are needed to run all tooling that _gobstones-scripts_ require.
+This will add _gobstones-scripts_ as a dependency to your project. This is useful to use _gobtones-scripts_ as a wrapper for configuration files and executing nps commands in your project. Almost all projects in **GobstonesWeb2** use this method, and the project is already added as a dependency that will get installed when running `npm install` on it.
 
 ## Running through CLI
 
@@ -65,16 +62,128 @@ Run the command always from the root of your project in order to execute local c
 
 ### CLI usage
 
-The CLI provides you with the following commands:
+The CLI is divided into a main command and multiple sub-commands.
 
--   **help**: Prints the tool help description. Also, the help is printed if no command is given
--   **version**: Prints the tool version information.
--   **config**: Prints the tool's configuration, such as, what is the identified root folder, the package folder and the files in use.
--   **create <projectName>**: Create a new library project in a subfolder with the given name. This includes creating all the required and recommended style files, define a package.json, git configuration files, visual studio code files, NPM configuration files, contribution guidelines, a readme, a license (MIT by default), install all dependencies, and initialize a git repository. This command is expected to be used when _gobstones-scripts_ is installed globally.
--   **init**: The same as create, but runs on the local folder as a project. That is, initialize a project in the current folder. Note that the folder must be empty in order to initialize a project in the folder. This command is expected to be used when _gobstones-scripts_ is installed globally.
--   **update [force]**: Override the missing configuration files that are created on an **init** or **create** command on the local project. This is intended to be run locally, on an already created project, to update the configuration. By appending **force** as a subcommand, all files are updated to their latest version.
--   **eject [force]**: Eject all the general configuration files to the root project. This includes configuration files for Typescript, Typedoc, JEST, Rollup, and nps. This command is intended to be run locally. If **force** is added, all previously created local files are updated to their latest version. If not, only missing files are copied.
--   **run [command]**: Run a command using **nps**. nps allows to run different scripts configured, such as scripts for linting, prettyfing, testing, generating documentation, running in development mode, and others.
+The main command is useful for getting usage help. Run the command without any flags to get information about the different options. Useful flags include:
+
+-   `-h --help`: display help for command
+-   `-v --version`: output the version number
+-   `-c, --config`: display the tool's detected configuration
+
+Utilities happen through sub-commands:
+
+#### create and init sub-commands
+
+The commands `create` an `init` are used to create or configure new projects. The `create` command is expected to be executed at any directory, and will create a new folder with the project name that will hold your project. On the other hand, `init` will initialize the project in the current directory, thus, expecting the same to be empty.
+
+-   `create [options] <project-name>`: create a new project with the given project name.
+-   `init [options]`: initialize a project in the current folder.
+
+A `<project-name>` is any valid project identifier, that is, any string that i valid folder name and contains no spaces.
+
+Valid options include:
+
+-   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
+-   `-p, --package-manager <package-manager>`: The project manager to use, one of `npm`, `yarn` or `pnpm`. Defaults to `npm`.
+-   `-s, --silent`: Run silently, not displaying the tool's banner.
+-   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.
+-   `-T, --test`: Run using verdaccio as a registry.
+
+A special mention is to be held for the `-T` flag, which is not self-explanatory. See the **Testing newer versions of the library** section in order to better understand what this flag does.
+
+Some common examples may be:
+
+```sh
+gobstones-scripts create -t reactLibrary my-react-library
+```
+
+```sh
+gobstones-scripts init -t cliLibrary
+```
+
+#### The update sub-command
+
+The `update` sub-command is intended to update the project's configuration files that live at the root of the project. This command is intended to be executed inside an already created project.
+
+-   `update [options]`: update the root files of the project.
+
+The command has the following options.
+
+-   `-i, --items <items> `: The items to update. One of `all`, `license`, `contributing`, `editorconfig`, `prettier`, `npm`, `eslint`, `git` or `commitlint`. Defaults to `all`.
+-   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
+-   `-s, --silent`: Run silently, not displaying the tool's banner.
+-   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.
+-   `-T, --test`: Run using verdaccio as a registry.
+
+By default, all root files are updated, but through the `-i` flag a specific file can be updated. `-i` flag expects only one file at a time, that is, execute as:
+
+```sh
+gobstones-scripts update -i npm
+gobstones-scripts update -i eslint
+```
+
+and do not execute as:
+
+```sh
+gobstones-scripts update -i npm, eslint
+```
+
+Although you can specify the type of the project using `-t`, if the project was created through gobstones-scripts, then the `package.json` will have a `config` section with the project configuration, including the type of the project that will be detected by the tool in case `-t` is not provided.
+
+#### The eject sub-command
+
+The `eject` sub-command allows you to eject the abstracted configuration files of the project.
+
+Some tools, like **typescript**, **rollup**, **typedoc**, **jest** and **nps** have their configuration files abstracted away, that is, these files live inside the **gobstones-scripts** node_modules folder themselves, and not at the root of your project. Most of the time, you will be fine with the provided default configuration, but in occasions, you might need to set up a different configuration for one of these tools for the project. This is where `eject` comes in. By ejecting, the configuration files will be copied to the root of your project, and these files will be used instead of the ones in the gobstones-scripts folder. Note that usually you will not need to eject all files, but only the one of a specific tool, use `-i` flag for that.
+
+-   `eject [options]`: eject the configuration files of the project.
+
+This sub-command have the following options:
+
+-   `-i, --items <items> `: The items to update. One of `all`, `nps`, `rollup`, `typescript`, `typedoc`, `jest`. Defaults to `all`.
+-   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
+-   `-s, --silent`: Run silently, not displaying the tool's banner.
+-   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.
+
+An example will be:
+
+```sh
+gobstones-scripts eject -i rollup
+```
+
+Although you can specify the type of the project using `-t`, if the project was created through gobstones-scripts, then the `package.json` will have a `config` section with the project configuration, including the type of the project that will be detected by the tool in case `-t` is not provided.
+
+#### The run sub-command
+
+The `run` sub-command is used to execute a particular `nps` command through the abstracted configuration provided by `gobstones-script` (except ejected files, in which cae, the ejected configuration will be used).
+
+-   `run [options] [command] [...args]`: run a command with nps.
+
+As you can see, you can call `run` with no options. In this case, the default `nps` command will be executed. Else, you can provide a particular command (one of the nps provided commands) and some arguments.
+
+Available options include:
+
+-   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
+-   `-p, --package-manager <package-manager>`: The project manager to use, one of `npm`, `yarn` or `pnpm`. Defaults to `npm`.
+-   `-s, --silent`: Run silently, not displaying the tool's banner.
+-   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.
+
+Available commands depend on project type, and can be found by executing the default action, as presenting the help is the default behavior for any project. Some common actions include
+
+-   `dev`: run the project in development mode.
+-   `build`: build the project and output it to `./dist`
+-   `test`: run the project's tests, generating coverage reports at `./coverage`.
+-   `test.serve`: run the project's tests, generating coverage reports at `./coverage`. and serve the generated folder in a local server.
+-   `doc`: build the documentation and output it to `./docs`
+-   `doc.serve`: build the documentation and output it to `./docs`, and serve the folder in a local server.
+-   `lint`: lint the files in the project.
+-   `lint.fix`: lint the files in the project and fix all auto-fixable errors.
+-   `prettify`: run prettier with auto-fix in all project files.
+-   `clear`: delete all auto-generated files.
+-   `changelog`: append the latest tag information to the changelog.
+-   `changelog.scratch`: generate the changelog based on tag information for the project.
+
+See the **Running commands using gobstones-scripts** for more information.
 
 ## How to configure the tool
 
@@ -255,4 +364,4 @@ Once the verdaccio server is configured for the first time, you should be able t
 
 ## Contributing
 
-See the [Gobstones Platform Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.
+See our [Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.

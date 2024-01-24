@@ -3,12 +3,14 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import childProcess from 'child_process';
-import { config } from '../config';
-import { failIfArgumentInvalid } from './validators';
-import fs from 'fs-extra';
 import path from 'path';
-import { tasks } from '../tasks';
+
+import fs from 'fs-extra';
 import tsconfigJs from 'tsconfig.js';
+
+import { FileDefinition, ProjectTypeDefinition, config } from '../config';
+import { logger } from '../helpers/Logger';
+import { tasks } from '../tasks';
 
 /**
  * Create a new library project in a subfolder with the given name.
@@ -21,30 +23,37 @@ import tsconfigJs from 'tsconfig.js';
  * @param projectName The name of the project to be created.
  * @param projectType The project type to create (Defaults to `"library"`).
  * @param packageManager The package manager to use when downloading dependencies.
+ * @param isTest Whether test information should be added to the .npmrc file.
  *
  * @throws If the argument for projectType or packageManager is invalid.
  * @throws If there's already a folder with the project name, or the folder is not empty.
  *
- * @group Main API Function
+ * @group API: Functions
  */
-export function create(
-    projectName: string,
-    projectType: string,
-    packageManager: string,
-    isTest: boolean = false
-): void {
-    // Set defaults if not given, or register loaded options
-    [projectType, packageManager] = loadOptions(projectType, packageManager);
+function create(projectName: string, projectType?: string, packageManager?: string, isTest: boolean = false): void {
+    config.init(projectType, packageManager, false, isTest);
 
-    // Validate arguments
-    failIfArgumentInvalid(projectType, 'projectType', Object.keys(config.projectTypes));
-    failIfArgumentInvalid(packageManager, 'packageManager', Object.keys(config.packageManagers));
+    logger.debug(
+        `[api] Requested a create action with values:` +
+            `\n\tprojectName: ${projectName}` +
+            `\n\tprojectType: ${config.executionEnvironment.projectType}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}` +
+            `\n\tisTest: ${config.executionEnvironment.isTestMode}`
+    );
 
-    const projectFolder = path.join(config.currentDir, projectName);
+    const projectFolder = path.join(config.environment.workingDirectory, projectName);
+
+    logger.debug(`[api] Attempting to create project in the following folder: ${projectFolder}`);
+
     if (!fs.existsSync(projectFolder)) {
+        logger.debug(`[api] Folder does not exist, creating folder at: ${projectFolder}`);
         fs.mkdirSync(projectFolder);
     }
-    changeDir(projectFolder);
+
+    logger.debug(`[api] Changing current directory to: ${projectFolder}`);
+    config.changeDir(projectFolder);
+
+    logger.debug(`[api] Calling project initialization`);
     init(projectType, packageManager, isTest);
 }
 
@@ -56,41 +65,48 @@ export function create(
  *
  * @param projectType The project type to initialize (Defaults to `"library"`).
  * @param packageManager The package manager to use when downloading dependencies.
+ * @param isTest Whether test information should be added to the .npmrc file.
  *
  * @throws If the current folder is not empty.
  *
- * @group Main API Function
+ * @group API: Functions
  */
-export function init(projectType: string, packageManager: string, isTest: boolean = false): void {
-    // Set defaults if not given, or register loaded options
-    [projectType, packageManager] = loadOptions(projectType, packageManager);
+function init(projectType?: string, packageManager?: string, isTest: boolean = false): void {
+    config.init(projectType, packageManager, false, isTest);
 
-    // Validate arguments
-    failIfArgumentInvalid(projectType, 'projectType', Object.keys(config.projectTypes));
-    failIfArgumentInvalid(packageManager, 'packageManager', Object.keys(config.packageManagers));
+    logger.debug(
+        `[api] Requested an init action with values:` +
+            `\n\tprojectType: ${config.executionEnvironment.projectType}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}` +
+            `\n\tisTest: ${config.executionEnvironment.isTestMode}`
+    );
 
-    const filesInFolder = fs.readdirSync(config.currentDir);
+    const filesInFolder = fs.readdirSync(config.locations.projectRoot);
+
     if (filesInFolder.length !== 0) {
         throw Error('non empty folder');
-        // TODO A better option will be to update
-        // the package.json and overwrite the required
-        // files, so it works even with existing projects.
-        // That implies reading and writing to the package.json
-        // and later call install to update packages. Once
-        // that is done, just call the update function with
-        // all to overwrite existing files with current configuration.
     }
 
-    const projectName: string = path.basename(config.currentDir);
+    const projectName: string = path.basename(config.locations.projectRoot);
+    logger.debug(`[api] The project name based on the current directory is ${projectName}`);
 
+    copyFilesFrom(config.projectType, config.projectTypeFilteredFiles.copiedOnInit, false, false, isTest);
+
+    logger.debug(`[api] Updated references to project name in files with: ${projectName}`);
     replaceInnerReferencesInFiles(
-        [path.join(config.currentDir, 'README.md'), path.join(config.currentDir, 'package.json')],
+        [
+            path.join(config.environment.workingDirectory, 'README.md'),
+            path.join(config.environment.workingDirectory, 'package.json')
+        ],
         /<library-name>/g,
         projectName
     );
 
-    runScript(config[packageManager].install);
+    logger.debug(`[api] Initializing the folder as a git repository`);
     runScript('git', ['init', '-q']);
+
+    logger.debug(`[api] Running the package manager "${packageManager}" installation step`);
+    runScript(config.packageManager.install);
 }
 
 /**
@@ -100,34 +116,34 @@ export function init(projectType: string, packageManager: string, isTest: boolea
  * to update the configuration. By appending **force** as a
  * subcommand, all files are updated to their latest version.
  *
- * @param force Wether to force the update of files, that is,
+ * @param files The file name to update, or "all" if all should be
+ *      updated (Defaults to `"all"`).
+ * @param force Whether to force the update of files, that is,
  *      override already present files in the project with their newest version
  *      (Defaults to `false`).
- * @param file The file name to update, or "all" if all should be
- *      updated (Defaults to `"all"`).
  * @param projectType The project type to update from (Defaults to `"library"`).
+ * @param isTest Whether test information should be added to the .npmrc file.
  *
  * @returns The list of updated files.
  *
- * @group Main API Function
+ * @group API: Functions
  */
-export function update(
-    force: boolean = false,
-    file: string = 'all',
-    projectType?: string,
-    isTest: boolean = false
-): string[] {
-    // Set defaults if not given, or register loaded options
-    [projectType] = loadOptions(projectType, undefined);
+function update(file: string = 'all', force: boolean = false, projectType?: string, isTest: boolean = false): string[] {
+    config.init(projectType, undefined, false, false);
 
-    // Validate arguments
-    failIfArgumentInvalid(projectType, 'projectType', Object.keys(config.projectTypes));
-    if (file !== 'all') {
-        failIfArgumentInvalid(file, 'file', config[projectType].onUpdate);
-    }
+    logger.debug(
+        `[api] Requested an update action with values:` +
+            `\n\tfile: ${file}` +
+            `\n\tforce: ${force}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}` +
+            `\n\tisTest: ${config.executionEnvironment.isTestMode}`
+    );
 
-    const filesToCopy = file === 'all' ? config[projectType].onUpdate : [file];
-    return copyFilesFrom(config[projectType], filesToCopy, force, false, isTest);
+    const filesToCopy = file === 'all' ? config.projectTypeFilteredFiles.copiedOnUpdate : [file];
+
+    logger.debug(`[api] About to copy files: ${filesToCopy.join(', ')}`);
+
+    return copyFilesFrom(config.projectType, filesToCopy, force, false, isTest);
 }
 /**
  * Eject all the general configuration files to the root project.
@@ -136,31 +152,32 @@ export function update(
  * **force** is added, all previously created local files are updated
  * to their latest version. If not, only missing files are copied.
  *
- * @param force Wether to force the ejection of files, that is,
- *      override already present files in the project with their newest version
- *      (Defaults to `false`).
  * @param file The file name to update, or "all" if all should
  *      be updated (Defaults to `"all"`).
+ * @param force Whether to force the ejection of files, that is,
+ *      override already present files in the project with their newest version
+ *      (Defaults to `false`).
  * @param projectType The project type to eject from (Defaults to `"library"`).
  *
  * @returns The list of updated files.
  *
- * @group Main API Function
+ * @group API: Functions
  */
-function eject(force: boolean = false, file: string = 'all', projectType?: string): string[] {
-    // Set defaults if not given, or register loaded options
-    [projectType] = loadOptions(projectType, undefined);
+function eject(file: string = 'all', force: boolean = false, projectType?: string): string[] {
+    config.init(projectType, undefined, false, false);
 
-    // Validate arguments
-    failIfArgumentInvalid(projectType, 'projectType', Object.keys(config.projectTypes));
-    if (file !== 'all') {
-        failIfArgumentInvalid(file, 'file', config[projectType].onEject);
-    }
+    logger.debug(
+        `[api] Requested an eject action with values:` +
+            `\n\tfile: ${file}` +
+            `\n\tforce: ${force}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
+    );
 
-    const filesToCopy = file === 'all' ? config[projectType].onEject : [file];
-    const filesCopied = copyFilesFrom(config[projectType], filesToCopy, force, false);
+    const filesToCopy = file === 'all' ? config.projectTypeFilteredFiles.copiedOnEject : [file];
 
-    return filesCopied;
+    logger.debug(`[api] About to copy files: ${filesToCopy.join(', ')}`);
+
+    return copyFilesFrom(config.projectType, filesToCopy, force, false);
 }
 
 /**
@@ -170,45 +187,54 @@ function eject(force: boolean = false, file: string = 'all', projectType?: strin
  *
  * @param command The nps command to execute.
  * @param userArgs The nps command additional arguments.
- * @param projectType The project type to use as configuration (Defaults to `"library"`).
- * @param packageManager The package manager to use when running commands.
+ * @param projectTypeName The project type to use as configuration (Defaults to `"library"`).
+ * @param packageManagerName The package manager to use when running commands.
  *
  * @returns The list of updated files.
  *
- * @group Main API Function
+ * @group API: Functions
  */
-function run(
-    command: string,
-    userArgs: string[] = [],
-    packageManager: string,
-    projectType: string
-): void {
-    // Set defaults if not given, or register loaded options
-    [projectType, packageManager] = loadOptions(projectType, packageManager);
+function run(command: string, userArgs: string[] = [], projectType?: string, packageManager?: string): void {
+    config.init(projectType, packageManager, false, false);
 
-    // Validate arguments
-    failIfArgumentInvalid(projectType, 'projectType', Object.keys(config.projectTypes));
-    failIfArgumentInvalid(packageManager, 'packageManager', Object.keys(config.packageManagers));
+    logger.debug(
+        `[api] Requested a run action with values:` +
+            `\n\tcommand: ${command}` +
+            `\n\tuserArgs: ${userArgs}` +
+            `\n\tprojectType: ${config.executionEnvironment.projectType}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
+    );
 
     const runCode = (deleteTsConfig = false): void => {
+        logger.debug(
+            `[api] Running code. Will ${deleteTsConfig ? '' : 'NOT'} delete configuration file after running.`
+        );
         runScript(
             tasks.runBin('nps'),
-            ['-c', config.configurationFiles[projectType].nps as string, command, ...userArgs],
+            ['-c', config.projectType.nps.toolingFile, command, ...userArgs],
             undefined,
             function () {
+                logger.debug(`[api] Execution finished.`);
                 if (deleteTsConfig) {
-                    fs.unlinkSync(config.configurationFiles[projectType].tsConfigFile);
+                    logger.debug(`[api] Deleting configuration file.`);
+                    fs.unlinkSync(config.projectType.tsConfigJSON.toolingFile);
                 }
             }
         );
     };
 
-    if (config.configurationFiles[projectType].tsConfigFileLocal) {
+    if (config.projectType.tsConfigJSON.toolingFile) {
+        logger.debug(`[api] Found a configuration file for TypeScript in the local folder.`);
         runCode(false);
     } else {
+        logger.debug(
+            `[api] Configuration file for TypeScript in local folder should ` +
+                `be generated for temporary execution. Definition will be copied from: ` +
+                `${config.projectType.typescript.toolingFile}`
+        );
         tsconfigJs
             .once({
-                root: config.configurationFiles[projectType].ts,
+                root: config.projectType.typescript.toolingFile,
                 addComments: 'none'
             })
             .then(function () {
@@ -218,35 +244,31 @@ function run(
 }
 
 /**
- * Change the current directory of the process to another one.
+ * Copy all files in a given project type definition that are present
+ * in the list of files to copy. If the file already exists in the
+ * final location stated in file definition, it will not be copied unless
+ * the overwrite option is set to true.
  *
- * @param dir The directory to change to
+ * If the dryRun option is set to true,
+ * no files will be copied, but the list of files that should have been copied
+ * is returned.
  *
- * @group Internal API Function
- */
-function changeDir(dir: string): string {
-    process.chdir(dir);
-    config.currentDir = dir;
-    config.projectRootPath = dir;
-    return dir;
-}
-
-/**
- * Copy all files from a folder to another. If overwrite is true, any existing
- * file will be overwritten. The toHide array may contain a set of files or
- * folder names that will be prefixed with "." after copying.
+ * If the addTestLine is set to true, then, if the file .npmrc is copied,
+ * the verdaccio test information will be written to the contents of the file.
  *
- * @param fromFolder The folder to copy from.
- * @param toFolder The folder to copy to.
- * @param overwrite Wether or not to overwrite the files already present.
- * @param toHide A list of files to hide after copying.
+ * @param projectTypeDef The project type definition that contains the
+ *  information of the files to copy.
+ * @param filesToCopy The actual list of files to copy.
+ * @param overwrite Whether or not to overwrite already present files
+ * @param dryRun Whether or not thi is a dry run.
+ * @param addTestLine Whether to add the verdaccio information line to the .npmrc file
  *
  * @returns The list of copied files names, full path.
  *
- * @group Internal API Function
+ * @group Internal: Functions
  */
 function copyFilesFrom(
-    fileDescriptors: string[],
+    projectTypeDef: ProjectTypeDefinition,
     filesToCopy: string[],
     overwrite: boolean = false,
     dryRun: boolean = false,
@@ -255,40 +277,49 @@ function copyFilesFrom(
     const copied: string[] = [];
 
     // Retain only file descriptors to copy
-    const fileDescriptorsToCopy = [];
+    const fileDescriptorsToCopy: FileDefinition[] = [];
     for (const fileToCopy of filesToCopy) {
-        fileDescriptorsToCopy.push(fileDescriptors[fileToCopy]);
+        fileDescriptorsToCopy.push(projectTypeDef[fileToCopy]);
     }
 
     // Copy those files
     for (const fileDescriptor of fileDescriptorsToCopy) {
-        for (let i = 0; i < fileDescriptor.localPath.length; i++) {
-            const localPath = fileDescriptor.localPath[i];
-            const projectPath = fileDescriptor.projectPath[i];
+        logger.debug(
+            `[api] Attempting to copy the files ` +
+                `"${fileDescriptor.gobstonesScriptsLocation.join(', ')}" ` +
+                `as "${fileDescriptor.projectLocation.join(', ')}"`
+        );
+        for (let i = 0; i < fileDescriptor.gobstonesScriptsLocation.length; i++) {
+            const gScriptsRelativePath = fileDescriptor.gobstonesScriptsLocation[i];
+            const projectPath = fileDescriptor.projectLocation[i];
 
-            const fullLocalPath = path.join(config.gobstonesScriptProjectPath, localPath);
-            const fullProjectPath = path.join(config.projectRootPath, projectPath);
+            const gScriptsFullPath = path.join(config.locations.gobstonesScriptsProjectsRoot, gScriptsRelativePath);
+            const fullProjectPath = path.join(config.locations.projectRoot, projectPath);
 
             // If files should be overwritten, then delete
             // file prior to copying
             if (overwrite && fs.existsSync(fullProjectPath)) {
+                logger.debug(`[api] File already exists in project and "force" set, deleting file.`);
                 if (!dryRun) {
                     fs.removeSync(fullProjectPath);
                 }
             }
 
             // Ensure always that the file exists prior to copying
-            if (fs.existsSync(fullLocalPath)) {
+            if (fs.existsSync(gScriptsFullPath)) {
+                logger.debug(`[api] Copying the file ${gScriptsFullPath}`);
                 if (!dryRun) {
-                    fs.copySync(fullLocalPath, fullProjectPath);
+                    fs.copySync(gScriptsFullPath, fullProjectPath);
                     if (fullProjectPath.endsWith('.npmrc') && addTestLine) {
-                        fs.appendFileSync(
-                            fullProjectPath,
-                            '@gobstones:registry=http://localhost:4567'
+                        logger.debug(
+                            `[api] Add the registry for verdaccio server to .npmrc, as we are running in test mode`
                         );
+                        fs.appendFileSync(fullProjectPath, '@gobstones:registry=http://localhost:4567');
                     }
                 }
                 copied.push(fullProjectPath);
+            } else {
+                logger.debug(`[api] Attempted to copy the file ${gScriptsFullPath}, but not found.`);
             }
         }
     }
@@ -304,19 +335,17 @@ function copyFilesFrom(
  * @param files The files in which to replace
  * @param reference The text to be replaced
  * @param newReference The new text to replace with
+ *
+ * @group Internal: Functions
  */
-function replaceInnerReferencesInFiles(
-    files: string[],
-    reference: string | RegExp,
-    newReference: string
-): void {
+function replaceInnerReferencesInFiles(files: string[], reference: string | RegExp, newReference: string): void {
     for (const file of files) {
+        logger.debug(`[api] Updating reference in file: ${file}`);
         if (fs.existsSync(file)) {
-            fs.writeFileSync(
-                file,
-                fs.readFileSync(file, 'utf-8').replace(reference, newReference),
-                'utf-8'
-            );
+            logger.debug(`[api] File found. Updating reference`);
+            fs.writeFileSync(file, fs.readFileSync(file, 'utf-8').replace(reference, newReference), 'utf-8');
+        } else {
+            logger.debug(`[api] File not found`);
         }
     }
 }
@@ -329,7 +358,7 @@ function replaceInnerReferencesInFiles(
  * @param options The options for the shell.
  * @param callback A function to call once the command has executed.
  *
- * @group Internal API Function
+ * @group Internal: Functions
  */
 function runScript(
     command: string,
@@ -344,47 +373,24 @@ function runScript(
     callback: (code: number, signal: NodeJS.Signals) => void | undefined = undefined
 ): void {
     try {
+        logger.debug(`[api] Attempting to execute ${command} with args: ${args}`);
         const cmd = childProcess.spawn(command, args, options);
         if (callback) {
             cmd.on('close', callback);
         }
     } catch (e) {
+        logger.debug(`[api] Execution failed`);
+        logger.warn(e.toString());
         process.stderr.write(e.toString());
         process.exit(1);
     }
 }
 
 /**
- * Load the options for a given project type and package manager.
- *
- * @param projectType The project type, if any.
- * @param packageManager The package manager, if any.
- *
- * @returns A pair with the project type loaded and the package manager to use.
- *
- * @group Internal API Function
- */
-function loadOptions(projectType?: string, packageManager?: string): [string, string] {
-    if (projectType) {
-        config.loadedOptions.type = projectType;
-        config.loadedOptions.status.type = 'cli';
-    } else {
-        projectType = config.loadedOptions.type;
-    }
-    if (packageManager) {
-        config.loadedOptions.manager = projectType;
-        config.loadedOptions.status.manager = 'cli';
-    } else {
-        packageManager = config.loadedOptions.manager;
-    }
-    return [projectType, packageManager];
-}
-
-/**
  * The api object contains all the available functions
  * of the API.
  *
- * @group Main API
+ * @group API: Main
  */
 export const api = {
     create,

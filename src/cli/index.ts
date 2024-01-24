@@ -20,11 +20,13 @@
  * - run    - Locally. Run an NPS command.
  *
  * It can also show the version information and the loaded configuration with the
- * `version` and `config` commands, and show the tool's help with the `help` command
+ * `--version` and `--config` flags, and show the tool's help with the `--help` flag
  *
  *
  * @module CLI
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  **/
 import { program } from './program';
+
+// Parse the program.
 program.parse();

@@ -1,11 +1,13 @@
-import { TaskConfigurationError } from './helpers/TaskError';
 /**
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { config } from '../config';
-import { isNotDefined } from './helpers/isNotDefined';
+
 import { runBin } from './runBin';
+
+import { config } from '../config';
+import { isNotDefined } from '../helpers/isNotDefined';
+import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
  * Returns the string for the bash command  to run
@@ -24,7 +26,5 @@ export function nps(action: string): string {
     if (isNotDefined(action)) {
         throw new TaskConfigurationError('"nps" expect a defined nps action as argument');
     }
-    return `${runBin('nps')} -c ${
-        config.configurationFiles[config.loadedOptions.type].nps
-    } ${action}`;
+    return `${runBin('nps')} -c ${config.projectType.nps.toolingFile} ${action}`;
 }

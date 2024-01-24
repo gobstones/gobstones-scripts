@@ -2,9 +2,10 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { TaskConfigurationError } from './helpers/TaskError';
 import { runBin } from './runBin';
 import { shellEscape } from './shellEscape';
+
+import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
  * The definition for a concurrently run script.
@@ -59,9 +60,7 @@ export type ConcurrentScript = ConcurrentScriptDefinition | string;
  */
 export function concurrently(scripts: Record<string, ConcurrentScript>): string {
     if (typeof scripts !== 'object') {
-        throw new TaskConfigurationError(
-            `concurrently expects an object with names as keys, and commands as values.`
-        );
+        throw new TaskConfigurationError(`concurrently expects an object with names as keys, and commands as values.`);
     }
 
     interface ReducedScriptDefinition {
@@ -75,10 +74,7 @@ export function concurrently(scripts: Record<string, ConcurrentScript>): string 
         scriptName: string,
         index: number
     ): ReducedScriptDefinition => {
-        if (
-            !scripts[scriptName] ||
-            (typeof scripts[scriptName] === 'object' && !scripts[scriptName]['script'])
-        ) {
+        if (!scripts[scriptName] || (typeof scripts[scriptName] === 'object' && !scripts[scriptName]['script'])) {
             return accumulator;
         }
 

@@ -1,11 +1,14 @@
-import { TaskConfigurationError } from './helpers/TaskError';
-import { isNotDefined } from './helpers/isNotDefined';
+import { stripIndent } from 'common-tags';
+
 import { runBin } from './runBin';
+
+import { isNotDefined } from '../helpers/isNotDefined';
+import { TaskConfigurationError } from '../helpers/TaskError';
+
 /**
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { stripIndent } from 'common-tags';
 
 /**
  * This type represents the options that you can pass to the serve task.

@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
     }
   },
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "is-ci || husky install",
     "start": "nps",
     "dev": "nps dev",
     "test": "nps lint",
@@ -89,6 +89,7 @@
     "ajv": "^8.12.0",
     "ansi-colors": "^4.1.3",
     "babel-jest": "^29.7.0",
+    "command-exists": "^1.2.9",
     "commander": "^11.1.0",
     "commitizen": "^4.3.0",
     "common-tags": "^1.8.2",
@@ -99,7 +100,7 @@
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "^8.53.0",
     "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-no-null": "^1.0.2",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "eslint-plugin-prettier": "^5.0.1",
@@ -133,5 +134,8 @@
     "typedoc-plugin-remove-references": "^0.0.6",
     "typescript": "^5.2.2",
     "vite": "^4.5.0"
+  },
+  "devDependencies": {
+    "@types/command-exists": "^1.2.3"
   }
 }

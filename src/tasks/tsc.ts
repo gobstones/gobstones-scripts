@@ -2,8 +2,9 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { config } from '../config';
 import { runBin } from './runBin';
+
+import { config } from '../config';
 
 /**
  * This type represents the options that you can pass to the tsc task.
@@ -17,7 +18,7 @@ export interface TaskTscOptions {
     outDir?: string;
 
     /**
-     * Wether to emit the JS output files or not
+     * Whether to emit the JS output files or not
      */
     emit: boolean;
 }
@@ -35,8 +36,6 @@ export interface TaskTscOptions {
  * @group Main API Functions
  */
 export const tsc = (options: TaskTscOptions = { emit: false }): string =>
-    `${runBin('tsc')} --project ${
-        config.configurationFiles[config.loadedOptions.type].tsConfigFile
-    }${!options.emit ? ' --noEmit' : ''}${
+    `${runBin('tsc')} --project ${config.projectType.tsConfigJSON.toolingFile}${!options.emit ? ' --noEmit' : ''}${
         options.emit && options.outDir ? ' --outDir ' + options.outDir : ''
     }`;

@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const { config } = require('@gobstones/gobstones-scripts');
 
+config.init();
+const rootDir = config.locations.projectRoot;
+
 module.exports = {
     'ts-node': {
         compilerOptions: {
@@ -9,13 +12,13 @@ module.exports = {
     },
     compilerOptions: {
         target: 'es2015',
-        rootDir: config.projectRootPath + '/src',
+        rootDir: `${rootDir}/src`,
         esModuleInterop: true,
         allowJs: true,
         sourceMap: true,
         declaration: true,
         declarationMap: true,
-        declarationDir: config.projectRootPath + '/dist/typings',
+        declarationDir: `${rootDir}/dist/typings`,
         moduleResolution: 'node',
         resolveJsonModule: true,
         stripInternal: true,
@@ -25,5 +28,5 @@ module.exports = {
         jsx: 'react',
         module: 'ESNext'
     },
-    include: [config.projectRootPath + '/src/**/*']
+    include: [`${rootDir}/src/**/*`]
 };

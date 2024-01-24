@@ -2,10 +2,12 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { TaskConfigurationError } from './helpers/TaskError';
-import { isNotDefined } from './helpers/isNotDefined';
-import { runBin } from './runBin';
 import { stripIndent } from 'common-tags';
+
+import { runBin } from './runBin';
+
+import { isNotDefined } from '../helpers/isNotDefined';
+import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the remove task.

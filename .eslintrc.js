@@ -9,13 +9,15 @@ module.exports = {
     env: {
         node: true
     },
-    plugins: ['@typescript-eslint', 'import', 'no-null', 'prefer-arrow', 'prettier'],
+    plugins: ['@typescript-eslint', 'import', 'no-null', 'prefer-arrow', 'prettier', 'import'],
     extends: [
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
         'plugin:@typescript-eslint/eslint-recommended',
         'plugin:prettier/recommended',
-        'prettier/prettier'
+        'prettier/prettier',
+        'plugin:import/recommended',
+        'plugin:import/typescript'
     ],
     noInlineConfig: false,
     reportUnusedDisableDirectives: true,
@@ -81,6 +83,21 @@ module.exports = {
             }
         ],
 
+        'import/no-unresolved': 'error',
+        'import/order': [
+            'error',
+            {
+                groups: ['builtin', 'external', 'internal', 'sibling', 'parent', 'index', 'unknown'],
+                'newlines-between': 'always',
+                alphabetize: {
+                    /* sort in ascending order. Options: ["ignore", "asc", "desc"] */
+                    order: 'asc',
+                    /* ignore case. Options: [true, false] */
+                    caseInsensitive: true
+                }
+            }
+        ],
+
         'arrow-body-style': ['error'],
         camelcase: ['error'],
         'capitalized-comments': ['off'],
@@ -99,7 +116,8 @@ module.exports = {
         'max-len': [
             'error',
             {
-                code: 100
+                code: 120,
+                ignoreUrls: true
             }
         ],
         'no-alert': ['error'],
@@ -140,6 +158,16 @@ module.exports = {
         'prefer-regex-literals': ['error'],
         radix: ['error'],
         'require-await': ['error'],
+        'sort-imports': [
+            'error',
+            {
+                ignoreCase: false,
+                ignoreDeclarationSort: true, // don"t want to sort import lines, use eslint-plugin-import instead
+                ignoreMemberSort: false,
+                memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
+                allowSeparatedGroups: true
+            }
+        ],
         'spaced-comment': ['error'],
         'use-isnan': ['error'],
         'valid-typeof': ['error'],

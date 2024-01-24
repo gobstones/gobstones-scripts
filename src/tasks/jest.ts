@@ -2,9 +2,10 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { config } from '../config';
 import { ifUnix } from './ifUnix';
 import { runBin } from './runBin';
+
+import { config } from '../config';
 
 /**
  * This type represents the options that you can pass to the jest task.
@@ -52,16 +53,17 @@ export function jest(
         (options.coverage ? ' --coverage ' : '') +
         (options.noThreshold ? ' --coverageThreshold "{}" ' : '') +
         (options.watch ? ' --watch' : '');
-    const jestStringBase = `${runBin('jest')} --config ${
-        config.configurationFiles[config.loadedOptions.type].jest
-    } --rootDir ${config.projectRootPath}`;
+    const jestStringBase =
+        `${runBin('jest')} ` +
+        `--config ${config.projectType.jest.toolingFile} ` +
+        `--rootDir ${config.locations.projectRoot}`;
     // Only for POSIX Based OSes, if a test file (withing test folder and ending in .test.ts)
     // contains the .only key, run exclusively that file, else, run all files as default behavior.
     // This fixes the ugly behavior of jest running all tests always, even on .only.
     // This does not work in Windows, which defaults to running all tests.
     return ifUnix(
-        `if grep -l "\\.only" ${config.projectRootPath}/test/{**,.}/*.test.ts; ` +
-            `then grep -l "\\.only" ${config.projectRootPath}/test/{**,.}/*.test.ts | xargs ` +
+        `if grep -l "\\.only" ${config.locations.projectRoot}/test/{**,.}/*.test.ts; ` +
+            `then grep -l "\\.only" ${config.locations.projectRoot}/test/{**,.}/*.test.ts | xargs ` +
             jestStringBase +
             '; ' +
             'else ' +

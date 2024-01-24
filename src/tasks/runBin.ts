@@ -2,7 +2,7 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { getBin } from './helpers/getBin';
+import { config } from '../config';
 
 /**
  * Get the string representing the command to run on a bash shell
@@ -19,12 +19,9 @@ import { getBin } from './helpers/getBin';
  * @group Main API Functions
  */
 export function runBin(packageName: string, binName?: string): string {
-    const element = getBin(packageName, binName);
-    if (element && element.mode === 'node') {
-        return `node --experimental-vm-modules ${element.binFile}`;
-    }
-    if (element && element.mode === 'sh') {
-        return `./${element.binFile}`;
-    }
+    // Initialize the tool. Will only do it first time getBin is called
+    config.init();
+    const element = config.getBinary(packageName, binName);
+    if (element) return element.command;
     return `echo "Could not find binary ${binName || packageName}"`;
 }

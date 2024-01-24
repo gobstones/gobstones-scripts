@@ -1,76 +1,145 @@
+## <small>0.6.1 (2024-01-24)</small>
+
+* refactor: major refactor of configuration system ([3bf8c76](https://github.com/gobstones/gobstones-scripts/commit/3bf8c76))
+* build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+
+### BREAKING CHANGE
+
+* The API of the configuration was completely changed. The name of the typedoc
+configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+consoles.
+
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   refactor: major refactor of configuration system ([cfdaa55](https://github.com/gobstones/gobstones-scripts/commit/cfdaa55))
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+### BREAKING CHANGE
+
+-   The API of the configuration was completely changed. The name of the typedoc
+    configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+    consoles.
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   refactor: major refactor of configuration system ([834ab7b](https://github.com/gobstones/gobstones-scripts/commit/834ab7b))
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+### BREAKING CHANGE
+
+-   The API of the configuration was completely changed. The name of the typedoc
+    configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+    consoles.
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   refactor: major refactor of configuration system ([3edd23c](https://github.com/gobstones/gobstones-scripts/commit/3edd23c))
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+### BREAKING CHANGE
+
+-   The API of the configuration was completely changed. The name of the typedoc
+    configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+    consoles.
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   refactor: major refactor of configuration system ([c3b46a0](https://github.com/gobstones/gobstones-scripts/commit/c3b46a0))
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+### BREAKING CHANGE
+
+-   The API of the configuration was completely changed. The name of the typedoc
+    configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+    consoles.
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   refactor: major refactor of configuration system ([75c44e1](https://github.com/gobstones/gobstones-scripts/commit/75c44e1))
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+### BREAKING CHANGE
+
+-   The API of the configuration was completely changed. The name of the typedoc
+    configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+    consoles.
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   refactor: major refactor of configuration system ([170fcfe](https://github.com/gobstones/gobstones-scripts/commit/170fcfe))
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+### BREAKING CHANGE
+
+-   The API of the configuration was completely changed. The name of the typedoc
+    configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+    consoles.
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   refactor: major refactor of configuration system ([ab8155b](https://github.com/gobstones/gobstones-scripts/commit/ab8155b))
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+### BREAKING CHANGE
+
+-   The API of the configuration was completely changed. The name of the typedoc
+    configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+    consoles.
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
+## <small>0.6.1 (2024-01-24)</small>
+
+-   build(husky): change the way the scripts are run in bash ([36476d7](https://github.com/gobstones/gobstones-scripts/commit/36476d7))
+
 ## 0.6.0 (2023-12-28)
 
-
-
+-   fix: bump version to 0.6.0 and fix minimal errors in husky ([ee3c04e](https://github.com/gobstones/gobstones-scripts/commit/ee3c04e))
 
 ## <small>0.5.6 (2023-12-28)</small>
 
+-   fix: make calls in husky pass through scripts ([4bd640c](https://github.com/gobstones/gobstones-scripts/commit/4bd640c)), closes [#12](https://github.com/gobstones/gobstones-scripts/issues/12) [#13](https://github.com/gobstones/gobstones-scripts/issues/13)
+
 ## <small>0.5.5 (2023-12-28)</small>
 
--   build: improve build system to build doc on a separate branch ([a6b1f73](https://github.com/gobstones/gobstones-scripts/commit/a6b1f73)), closes [#11](https://github.com/gobstones/gobstones-scripts/issues/11)
+-   build: improve build system to build doc on a separate branch ([fc10438](https://github.com/gobstones/gobstones-scripts/commit/fc10438)), closes [#11](https://github.com/gobstones/gobstones-scripts/issues/11)
 
 ## <small>0.5.4 (2023-11-23)</small>
 
--   feat: new generated package.json files for all projects ([a7e6460](https://github.com/gobstones/gobstones-scripts/commit/a7e6460)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
-
-## <small>0.5.4 (2023-11-23)</small>
-
--   feat: new generated package.json files for all projects ([92133b1](https://github.com/gobstones/gobstones-scripts/commit/92133b1)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
-
-## <small>0.5.4 (2023-11-23)</small>
-
--   feat: new generated package.json files for all projects ([22d4b90](https://github.com/gobstones/gobstones-scripts/commit/22d4b90)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
-
-## <small>0.5.4 (2023-11-22)</small>
-
--   fix: new generated package.json files for all projects ([d8e3e9d](https://github.com/gobstones/gobstones-scripts/commit/d8e3e9d)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
-
-## <small>0.5.4 (2023-11-22)</small>
+-   feat: new generated package.json files for all projects ([324170b](https://github.com/gobstones/gobstones-scripts/commit/324170b)), closes [#8](https://github.com/gobstones/gobstones-scripts/issues/8) [#9](https://github.com/gobstones/gobstones-scripts/issues/9) [#10](https://github.com/gobstones/gobstones-scripts/issues/10)
 
 ## <small>0.5.3 (2023-11-21)</small>
 
+-   fix: fix Binary package not being recognized as CommonJS in 0.5.2 ([ffa7489](https://github.com/gobstones/gobstones-scripts/commit/ffa7489)), closes [#7](https://github.com/gobstones/gobstones-scripts/issues/7)
+
 ## <small>0.5.2 (2023-11-21)</small>
 
-## <small>0.5.1 (2023-11-20)</small>
-
--   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
+-   fix: fix Binary package not being recognized in 0.5.1 ([1418bb6](https://github.com/gobstones/gobstones-scripts/commit/1418bb6)), closes [#7](https://github.com/gobstones/gobstones-scripts/issues/7) [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
 
 ## <small>0.5.1 (2023-11-20)</small>
 
--   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
-
-## <small>0.5.1 (2023-11-20)</small>
-
--   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
-
-## <small>0.5.1 (2023-11-20)</small>
-
--   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
-
-## <small>0.5.1 (2023-11-20)</small>
-
--   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
-
-## <small>0.5.1 (2023-11-20)</small>
-
--   feat: move code to typescript ([4bdcd37](https://github.com/gobstones/gobstones-scripts/commit/4bdcd37)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
-
-## <small>0.5.1 (2023-11-17)</small>
-
-## <small>0.5.1 (2023-11-17)</small>
+-   feat: move code to typescript ([d5c6007](https://github.com/gobstones/gobstones-scripts/commit/d5c6007)), closes [#5](https://github.com/gobstones/gobstones-scripts/issues/5)
 
 ## 0.5.0 (2023-11-10)
 
--   feat: change configuration location for the tooling ([2df1212](https://github.com/gobstones/gobstones-scripts/commit/2df1212))
+-   feat: change configuration location for the tooling ([720f3cb](https://github.com/gobstones/gobstones-scripts/commit/720f3cb))
 
 ### BREAKING CHANGE
 
 -   All projects now are required to change their package.json to adapt to the new
     configuration location
 
-## 0.5.0 (2023-11-10)
-
 ## <small>0.4.7 (2023-11-10)</small>
+
+-   fix: fix publishing on github releases not naming releases properly ([81a5ed5](https://github.com/gobstones/gobstones-scripts/commit/81a5ed5))
 
 ## <small>0.4.6 (2023-11-10)</small>
 

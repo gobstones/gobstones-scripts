@@ -2,8 +2,9 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  * @module API.Tasks
  */
-import { config } from '../config';
 import { runBin } from './runBin';
+
+import { config } from '../config';
 
 /**
  * This type represents the options that you can pass to the typedoc task.
@@ -30,6 +31,6 @@ export interface TaskRollupOptions {
  * @group Main API Functions
  */
 export const rollup = (options: TaskRollupOptions = {}): string =>
-    `${runBin('rollup')} --config ${config.configurationFiles[config.loadedOptions.type].rollup}` +
+    `${runBin('rollup')} --config ${config.projectType.rollup.toolingFile}` +
     (options.watch ? ` --watch ${options.watch}` : '') +
     ` --bundleConfigAsCjs`;
