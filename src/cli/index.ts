@@ -22,8 +22,8 @@
  * It can also show the version information and the loaded configuration with the
  * `--version` and `--config` flags, and show the tool's help with the `--help` flag
  *
- *
- * @module CLI
+ * @internal
+ * @module Internal.CLI
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  **/
 import { program } from './program';

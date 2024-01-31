@@ -31,19 +31,13 @@
   "packageManager": "npm@10.1.0",
   "scripts": {
     "prepare": "is-ci || husky install",
-    "prepack": "gobstones-scripts run build",
+    "prepack": "npm start build",
     "start": "gobstones-scripts run",
-    "dev": "gobstones-scripts run dev",
-    "build": "gobstones-scripts run build",
-    "test": "gobstones-scripts run test",
-    "doc": "gobstones-scripts run doc",
-    "lint": "gobstones-scripts run lint",
-    "prettify": "gobstones-scripts run prettify",
     "gbs": "gobstones-scripts"
   },
   "config": {
     "gobstones-scripts": {
-      "type": "react-library",
+      "type": "reactLibrary",
       "manager": "npm"
     }
   },
@@ -53,7 +47,7 @@
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.7.0",
+    "@gobstones/gobstones-scripts": "^0.7.1",
     "husky": "^8.0.2"
   }
 }

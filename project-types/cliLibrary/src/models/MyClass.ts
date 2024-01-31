@@ -1,15 +1,14 @@
 /**
- * To list all this elements as part of the "models" module,
- * you need to specify the "module" tag. For enything else,
- * this comment may be removed.
- *
- * @module Models
+ * @module API.Models
  * @author Your Name <yourname@company.com>
  */
 
 import { joinString } from '../helpers';
+
 /**
  * The documentation for MyClass.
+ *
+ * @group API: Classes
  */
 export class MyClass {
     /**
@@ -17,6 +16,8 @@ export class MyClass {
      * attached to it.
      *
      * @param text A text to attach to the string
+     *
+     * @returns The awesome made string.
      */
     public awesome(text?: string): string {
         return joinString('awesome', text);
@@ -26,6 +27,8 @@ export class MyClass {
      * attached to it.
      *
      * @param text A text to attach to the string
+     *
+     * @returns The not cooled string.
      */
     public notCool(text?: string): string {
         return joinString('not cool', text);

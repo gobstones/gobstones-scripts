@@ -12,7 +12,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
 /**
  * This type represents the options that you can pass to the replace task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskReplaceOptions {
     /**
@@ -44,7 +44,7 @@ export interface TaskReplaceOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function replace(options: TaskReplaceOptions): string {
     if (isNotDefined(options?.match) || isNotDefined(options?.file)) {

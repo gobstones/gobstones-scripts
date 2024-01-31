@@ -11,7 +11,7 @@
  *
  * Refer to README.md for more information.
  *
- * @module API
+ * @module API.Main
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 export * from './api';

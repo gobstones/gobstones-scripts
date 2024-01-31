@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import childProcess from 'child_process';
@@ -20,7 +20,8 @@ import { OSType } from '../config/config';
  * @param os The OS that is currently discovered as environment.
  * @param projectRootPath The currently identified project's root path.
  *
- * @group Internal: Helpers
+ * @internal
+ * @group Internal: Functions
  */
 export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string): string {
     logger.debug(`[getGobstonesScriptsRootPath]: Attempting to recover the gobstones-scripts folder location`, 'green');

@@ -12,7 +12,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
 /**
  * This type represents the options that you can pass to the chmod task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskChmodOptions {
     /**
@@ -35,7 +35,7 @@ export interface TaskChmodOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function chmod(options: TaskChmodOptions): string {
     if (isNotDefined(options?.files) || isNotDefined(options?.mod)) {

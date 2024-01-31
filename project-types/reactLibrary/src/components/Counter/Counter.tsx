@@ -1,3 +1,8 @@
+/**
+ * @module Components.Counter
+ * @author Your Name <yourname@company.com>
+ */
+
 import './Counter.css';
 
 import React, { useState } from 'react';
@@ -5,9 +10,11 @@ import React, { useState } from 'react';
 import reactIcon from './reactIcon.svg';
 
 /**
- * Properties for the [[Counter]] component.
+ * Properties for the {@link Counter} component.
  * This properties allows for the configuration of a counter component,
  * both with the label and the `onCountChange` event trigger.
+ *
+ * @group API: Props
  */
 export interface CounterProps {
     /** The label for the counter. It may include any text. If you use
@@ -37,6 +44,8 @@ export interface CounterProps {
  * component.
  *
  * @param props The configuration for the component.
+ *
+ * @group API: Components
  */
 export const Counter: React.FunctionComponent<CounterProps> = (props: CounterProps) => {
     const [count, setCount] = useState(0);

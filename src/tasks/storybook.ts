@@ -12,7 +12,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
 /**
  * This type represents the options that you can pass to the storybook start task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskStorybookStartOptions {
     /**
@@ -24,7 +24,7 @@ export interface TaskStorybookStartOptions {
 /**
  * This type represents the options that you can pass to the storybook build task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskStorybookBuildOptions {
     /**
@@ -37,7 +37,7 @@ export interface TaskStorybookBuildOptions {
  * The storybook object holds the different ways in you can run a
  * task in storybook, either by running start or build.
  *
- * @group Main API Functions
+ * @group API: Objects
  */
 export const storybook = {
     /**
@@ -68,7 +68,7 @@ export const storybook = {
             throw new TaskConfigurationError(
                 stripIndent`"storybook.build" expects options with the following signature:
             {
-                dir: str  // The port on which to run the storybook
+                outDir: str  // The output directory of the storybook
             }`
             );
         }

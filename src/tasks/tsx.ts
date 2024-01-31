@@ -13,7 +13,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
 /**
  * This type represents the options that you can pass to the tsx task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskTsxOptions {
     /**
@@ -37,7 +37,7 @@ export interface TaskTsxOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function tsx(options: TaskTsxOptions): string {
     if (isNotDefined(options?.file)) {

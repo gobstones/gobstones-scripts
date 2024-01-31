@@ -1,3 +1,10 @@
+/**
+ * This definitions are useful only as to provide a story for the component,
+ * and thus, do not require documentation.
+ *
+ * @ignore
+ * @author Your Name <yourname@company.com>
+ */
 import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 

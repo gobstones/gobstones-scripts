@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 
@@ -7,7 +7,8 @@
  * Represents an exception that is thrown if the configuration
  * for nps is wrongly defined.
  *
- * @group Internal: Types
+ * @internal
+ * @group Internal: Errors
  */
 export class TaskConfigurationError extends Error {
     public constructor(msg: string) {

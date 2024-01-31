@@ -5,7 +5,7 @@
  * in a simple way when you are using a CLI, as you don't have long
  * lasting state.
  *
- * @module Translation
+ * @module Internal.Translation
  * @author Your Name <yourname@company.com>
  */
 import { Translator } from '@gobstones/gobstones-core';
@@ -15,6 +15,16 @@ import { en } from './en';
 import { es } from './es';
 import { Locale } from './Locale';
 
+/**
+ * The list of all available locales. Add all the locales you define here.
+ *
+ * @group Internal: Objects
+ */
 export const availableLocales = { en, es };
 
+/**
+ * The internationalization object. Request translations to this object.
+ *
+ * @group Internal: Objects
+ */
 export const intl = new Translator<Locale>(availableLocales, 'en');

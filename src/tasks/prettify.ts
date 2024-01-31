@@ -12,7 +12,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
 /**
  * This type represents the options that you can pass to the typedoc task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskPrettifyOptions {
     /**
@@ -31,7 +31,7 @@ export interface TaskPrettifyOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function prettify(options: TaskPrettifyOptions): string {
     if (isNotDefined(options?.files)) {

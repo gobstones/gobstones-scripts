@@ -5,55 +5,28 @@
  * @module API.Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
-import { chmod } from './chmod';
-import { concurrently } from './concurrently';
-import { copy } from './copy';
-import { eslint } from './eslint';
-import { ifUnix } from './ifUnix';
-import { ifWindows } from './ifWindows';
-import { jest } from './jest';
-import { move } from './move';
-import { nps } from './nps';
-import { prettify } from './prettify';
-import { remove } from './remove';
-import { replace } from './replace';
-import { rollup } from './rollup';
-import { runBin } from './runBin';
-import { serially } from './serially';
-import { serve } from './serve';
-import { shellEscape } from './shellEscape';
-import { storybook } from './storybook';
-import { tsc } from './tsc';
-import { tsx } from './tsx';
-import { typedoc } from './typedoc';
-import { vite } from './vite';
-
-/**
- * A convenient object containing all tasks exported.
- *
- * @group Main API
- */
-export const tasks = {
-    chmod,
-    concurrently,
-    copy,
-    eslint,
-    ifUnix,
-    ifWindows,
-    jest,
-    move,
-    nps,
-    prettify,
-    remove,
-    replace,
-    rollup,
-    runBin,
-    serially,
-    serve,
-    shellEscape,
-    storybook,
-    tsc,
-    tsx,
-    typedoc,
-    vite
-};
+export * from './chmod';
+export * from './concurrently';
+export * from './copy';
+export * from './echo';
+export * from './eslint';
+export * from './ifUnix';
+export * from './ifWindows';
+export * from './jest';
+export * from './move';
+export * from './node';
+export * from './nps';
+export * from './npx';
+export * from './prettify';
+export * from './remove';
+export * from './replace';
+export * from './rollup';
+export * from './runBin';
+export * from './serially';
+export * from './serve';
+export * from './shellEscape';
+export * from './storybook';
+export * from './tsc';
+export * from './tsx';
+export * from './typedoc';
+export * from './vite';

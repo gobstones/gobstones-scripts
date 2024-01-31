@@ -9,7 +9,7 @@ import { config } from '../config';
 /**
  * This type represents the options that you can pass to the typedoc task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskRollupOptions {
     /**
@@ -28,7 +28,7 @@ export interface TaskRollupOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export const rollup = (options: TaskRollupOptions = {}): string =>
     `${runBin('rollup')} --config ${config.projectType.rollup.toolingFile}` +

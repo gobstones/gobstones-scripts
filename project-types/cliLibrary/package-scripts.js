@@ -2,9 +2,17 @@
 const { tasks } = require('@gobstones/gobstones-scripts');
 
 const defaultConfiguration = {
-    options: { 'help-style': 'basic' },
+    options: {
+        scripts: false,
+        logLevel: 'warn',
+        'help-style': 'basic'
+    },
+
     scripts: {
-        default: tasks.nps('help'),
+        default: {
+            script: tasks.nps('help'),
+            hiddenFromHelp: true
+        },
 
         dev: {
             script: tasks.serially(tasks.tsc({ emit: false }), tasks.tsx({ file: './src/index.ts' })),
@@ -50,7 +58,7 @@ const defaultConfiguration = {
                         'href", "./" + lastFolder + "/" + elems[i].getAttribute("href"));}}'
                 }),
                 description: 'Fix coverage generated reports in HTML that are outputed with broken links',
-                silent: true
+                hiddenFromHelp: true
             }
         },
 
@@ -84,20 +92,21 @@ const defaultConfiguration = {
         clean: {
             script: tasks.serially(tasks.nps('clean.dist'), tasks.nps('clean.docs'), tasks.nps('clean.coverage')),
             description: 'Remove all automatically generated files and folders',
+            hiddenFromHelp: true,
             dist: {
                 script: tasks.remove({ files: './dist' }),
                 description: 'Delete the dist folder',
-                silent: true
+                hiddenFromHelp: true
             },
             docs: {
                 script: tasks.remove({ files: './docs' }),
                 description: 'Delete the docs folder',
-                silent: true
+                hiddenFromHelp: true
             },
             coverage: {
                 script: tasks.remove({ files: './coverage' }),
                 description: 'Delete the coverage folder',
-                silent: true
+                hiddenFromHelp: true
             }
         },
 
@@ -126,13 +135,13 @@ const defaultConfiguration = {
         },
 
         changelog: {
-            script: 'conventional-changelog -p angular -i CHANGELOG.md -s',
-            silent: true,
+            script: tasks.npx('conventional-changelog -p angular -i CHANGELOG.md -s'),
             description: 'Generate changelog based on commits',
+            hiddenFromHelp: true,
             scratch: {
-                script: 'conventional-changelog -p angular -i CHANGELOG.md -s -r 0',
-                silent: true,
-                description: 'Generate changelog based on tags, starting from scratch'
+                script: tasks.npx('conventional-changelog -p angular -i CHANGELOG.md -s -r 0'),
+                description: 'Generate changelog based on tags, starting from scratch',
+                hiddenFromHelp: true
             }
         }
     }

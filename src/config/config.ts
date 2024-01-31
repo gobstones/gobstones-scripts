@@ -1,5 +1,5 @@
 /**
- * @module Config
+ * @module API.Config
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import path from 'path';
@@ -100,15 +100,20 @@ export interface FileDefinition {
      * Whether this file represents tooling configuration files
      * that can be overwritten with local configurations.
      */
-    isOverwritable: boolean;
+    isOverridable: boolean;
     /**
      * Whether this file contains reference to the generic project
      * name that should be updates.
      */
     requiresReferenceUpdate: boolean;
     /**
+     * Whether this file requires the data for testing (verdaccio server
+     * data) to be inserted to it.
+     */
+    requiresTestDataInjection: boolean;
+    /**
      * The detected tooling file to use. Only present if
-     * the file is overwritable. The full path of the file is saved.
+     * the file is overridable. The full path of the file is saved.
      * It's automatically calculated.
      */
     toolingFile?: string;
@@ -275,12 +280,14 @@ export interface ConfigExecutionEnvironment {
 export interface ConfigProjectTypes {
     /** The **library** project type. */
     library: ProjectTypeDefinition;
-    /** The **cli-library** project type. */
+    /** The **cliLibrary** project type. */
     cliLibrary: ProjectTypeDefinition;
-    /** The **react-library** project type. */
+    /** The **reactLibrary** project type. */
     reactLibrary: ProjectTypeDefinition;
-    /** The **web-library** project type. */
+    /** The **webLbrary** project type. */
     webLibrary: ProjectTypeDefinition;
+    /** The **noCode** project type. */
+    noCode: ProjectTypeDefinition;
 }
 
 /**
@@ -298,6 +305,8 @@ export interface ConfigFilteredProjectTypes {
     reactLibrary: FilteredFilesDefinition;
     /** The **web-library** filtered project type files. */
     webLibrary: FilteredFilesDefinition;
+    /** The **noCode** project type. */
+    noCode: FilteredFilesDefinition;
 }
 
 // ==========================================
@@ -502,8 +511,8 @@ export class Config {
      */
     public changeDir(dir: string): string {
         process.chdir(dir);
-        config._environment.workingDirectory = dir;
-        config._locations.projectRoot = dir;
+        this._environment.workingDirectory = dir;
+        this._locations.projectRoot = dir;
         return dir;
     }
 
@@ -635,15 +644,72 @@ export class Config {
      */
     private _loadProjectTypeDefinitions(): void {
         this._projectTypes = {
-            library: this._joinProjectTypeDefinitions(this._getCommonProjectTypeDefinition('library')),
-            cliLibrary: this._joinProjectTypeDefinitions(this._getCommonProjectTypeDefinition('cliLibrary')),
+            library: this._joinProjectTypeDefinitions(
+                this._getCommonProjectTypeDefinition(
+                    'library',
+                    ['src', 'test', 'packageJson', 'rollup', 'nps'],
+                    ['jestproxies', 'vite', 'stories', 'storybook', 'demos']
+                )
+            ),
+            cliLibrary: this._joinProjectTypeDefinitions(
+                this._getCommonProjectTypeDefinition(
+                    'cliLibrary',
+                    ['src', 'test', 'packageJson', 'rollup', 'nps'],
+                    ['jestproxies', 'vite', 'stories', 'storybook', 'demos']
+                )
+            ),
             reactLibrary: this._joinProjectTypeDefinitions(
-                this._getCommonProjectTypeDefinition('reactLibrary'),
-                this._getReactLibraryProjectTypeDefinition()
+                this._getCommonProjectTypeDefinition(
+                    'reactLibrary',
+                    [
+                        'src',
+                        'test',
+                        'packageJson',
+                        'rollup',
+                        'nps',
+                        'typedoc',
+                        'jestproxies',
+                        'vite',
+                        'stories',
+                        'storybook'
+                    ],
+                    ['demos']
+                )
             ),
             webLibrary: this._joinProjectTypeDefinitions(
-                this._getCommonProjectTypeDefinition('webLibrary'),
-                this._getWebLibraryProjectTypeDefinition()
+                this._getCommonProjectTypeDefinition(
+                    'webLibrary',
+                    ['demos'],
+                    ['jestproxies', 'vite', 'stories', 'storybook']
+                )
+            ),
+            noCode: this._joinProjectTypeDefinitions(
+                this._getCommonProjectTypeDefinition(
+                    'noCode',
+                    [],
+                    [
+                        'eslint',
+                        'tsConfigJSON',
+                        'typescript',
+                        'rollup',
+                        'typedoc',
+                        'jest',
+                        'jestproxies',
+                        'vite',
+                        'stories',
+                        'storybook',
+                        'demos'
+                    ]
+                ),
+                {
+                    // On node code, nps should always be copied to the project's root
+                    nps: this._fileDefinition('nps', 'noCode', [], [], {
+                        gobstonesScriptsLocation: ['<projectTypePath>/package-scripts.js'],
+                        projectLocation: ['package-scripts.js'],
+                        copyOnInit: true,
+                        isOverridable: true
+                    })
+                }
             )
         };
     }
@@ -656,200 +722,174 @@ export class Config {
      *
      * @returns A partial ProjectTypeDefinition.
      */
-    private _getCommonProjectTypeDefinition(projectTypePath: string): Partial<ProjectTypeDefinition> {
+    private _getCommonProjectTypeDefinition(
+        projectTypePath: string,
+        noCommonFiles: FileName[],
+        excludedFiles: FileName[]
+    ): ProjectTypeDefinition {
         return {
             // only on init
-            src: this._fileDefinition('src', {
-                gobstonesScriptsLocation: [projectTypePath + '/src'],
+            src: this._fileDefinition('src', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/src'],
                 projectLocation: ['src'],
                 copyOnInit: true
             }),
-            test: this._fileDefinition('test', {
-                gobstonesScriptsLocation: [projectTypePath + '/test'],
+            test: this._fileDefinition('test', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/test'],
                 projectLocation: ['test'],
                 copyOnInit: true
             }),
-            changelog: this._fileDefinition('changelog', {
-                gobstonesScriptsLocation: ['common/CHANGELOG.md'],
+            changelog: this._fileDefinition('changelog', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/CHANGELOG.md'],
                 projectLocation: ['CHANGELOG.md'],
                 copyOnInit: true
             }),
-            packageJson: this._fileDefinition('packageJson', {
-                gobstonesScriptsLocation: [projectTypePath + '/package-definition.json'],
+            packageJson: this._fileDefinition('packageJson', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/package-definition.json'],
                 projectLocation: ['package.json'],
-                copyOnInit: true
+                copyOnInit: true,
+                requiresReferenceUpdate: true
             }),
-            readme: this._fileDefinition('readme', {
-                gobstonesScriptsLocation: ['common/README.md'],
+            readme: this._fileDefinition('readme', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/README.md'],
                 projectLocation: ['README.md'],
-                copyOnInit: true
+                copyOnInit: true,
+                requiresReferenceUpdate: true
             }),
             // on init but also on any update
-            husky: this._fileDefinition('husky', {
-                gobstonesScriptsLocation: ['common/husky'],
+            husky: this._fileDefinition('husky', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/husky'],
                 projectLocation: ['.husky'],
                 copyOnInit: true
             }),
-            github: this._fileDefinition('github', {
-                gobstonesScriptsLocation: ['common/github'],
+            github: this._fileDefinition('github', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/github'],
                 projectLocation: ['.github'],
                 copyOnInit: true
             }),
-            vscode: this._fileDefinition('vscode', {
-                gobstonesScriptsLocation: ['common/vscode'],
+            vscode: this._fileDefinition('vscode', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/vscode'],
                 projectLocation: ['.vscode'],
                 copyOnInit: true
             }),
-            license: this._fileDefinition('license', {
-                gobstonesScriptsLocation: ['common/LICENSE'],
+            license: this._fileDefinition('license', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/LICENSE'],
                 projectLocation: ['LICENSE'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
-            contributing: this._fileDefinition('contributing', {
-                gobstonesScriptsLocation: ['common/CONTRIBUTING.md'],
+            contributing: this._fileDefinition('contributing', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/CONTRIBUTING.md'],
                 projectLocation: ['CONTRIBUTING.md'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
-            editorconfig: this._fileDefinition('editorconfig', {
-                gobstonesScriptsLocation: ['common/editorconfig'],
+            editorconfig: this._fileDefinition('editorconfig', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/editorconfig'],
                 projectLocation: ['.editorconfig'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
-            prettier: this._fileDefinition('prettier', {
-                gobstonesScriptsLocation: ['common/prettierignore', 'common/prettierrc'],
+            prettier: this._fileDefinition('prettier', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/prettierignore', '<projectTypePath>/prettierrc'],
                 projectLocation: ['.prettierignore', '.prettierrc'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
-            npm: this._fileDefinition('npm', {
-                gobstonesScriptsLocation: ['common/npmignore', 'common/npmrc'],
+            npm: this._fileDefinition('npm', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/npmignore', '<projectTypePath>/npmrc'],
                 projectLocation: ['.npmignore', '.npmrc'],
                 copyOnInit: true,
-                copyOnUpdate: true
+                copyOnUpdate: true,
+                requiresTestDataInjection: true
             }),
-            eslint: this._fileDefinition('eslint', {
-                gobstonesScriptsLocation: ['common/eslintrc.js'],
+            eslint: this._fileDefinition('eslint', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/eslintrc.js'],
                 projectLocation: ['.eslintrc.js'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
-            git: this._fileDefinition('git', {
-                gobstonesScriptsLocation: ['common/gitignore'],
+            git: this._fileDefinition('git', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/gitignore'],
                 projectLocation: ['.gitignore'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
-            commitlint: this._fileDefinition('commitlint', {
-                gobstonesScriptsLocation: ['common/czrc', 'common/commitlint.config.js'],
+            commitlint: this._fileDefinition('commitlint', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/czrc', '<projectTypePath>/commitlint.config.js'],
                 projectLocation: ['.czrc', 'commitlint.config.js'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
             // only on eject
-            nps: this._fileDefinition('nps', {
-                gobstonesScriptsLocation: [projectTypePath + '/package-scripts.js'],
+            nps: this._fileDefinition('nps', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/package-scripts.js'],
                 projectLocation: ['package-scripts.js'],
                 copyOnEject: true,
-                isOverwritable: true
+                isOverridable: true
             }),
-            rollup: this._fileDefinition('rollup', {
-                gobstonesScriptsLocation: [projectTypePath + '/rollup.config.js'],
+            rollup: this._fileDefinition('rollup', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/rollup.config.js'],
                 projectLocation: ['rollup.config.js'],
                 copyOnEject: true,
-                isOverwritable: true
+                isOverridable: true
             }),
-            typescript: this._fileDefinition('typescript', {
-                gobstonesScriptsLocation: ['common/tsconfig.js'],
+            typescript: this._fileDefinition('typescript', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/tsconfig.js'],
                 projectLocation: ['tsconfig.js'],
                 copyOnEject: true,
-                isOverwritable: true
+                isOverridable: true
             }),
-            tsConfigJSON: this._fileDefinition('tsConfigJSON', {
+            tsConfigJSON: this._fileDefinition('tsConfigJSON', projectTypePath, noCommonFiles, excludedFiles, {
                 // This file descriptor is used to find
                 // The tsconfig.json generated after running
                 // tsconfig.js, that's why it's not a real
                 // file in any project type, but it can be.
-                gobstonesScriptsLocation: ['common/tsconfig.json'],
+                gobstonesScriptsLocation: ['<projectTypePath>/tsconfig.json'],
                 projectLocation: ['tsconfig.json'],
-                isOverwritable: true
+                isOverridable: true
             }),
-            typedoc: this._fileDefinition('typedoc', {
-                gobstonesScriptsLocation: ['common/typedoc.config.js'],
+            typedoc: this._fileDefinition('typedoc', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/typedoc.config.js'],
                 projectLocation: ['typedoc.config.js'],
                 copyOnEject: true,
-                isOverwritable: true
+                isOverridable: true
             }),
-            jest: this._fileDefinition('jest', {
-                gobstonesScriptsLocation: ['common/jest.config.js'],
+            jest: this._fileDefinition('jest', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/jest.config.js'],
                 projectLocation: ['jest.config.js'],
                 copyOnEject: true,
-                isOverwritable: true
-            })
-        };
-    }
-
-    /**
-     * Returns the file information for all files that are
-     * exclusive to react-library projects
-     *
-     * @returns A partial ProjectTypeDefinition.
-     */
-    private _getReactLibraryProjectTypeDefinition(): Partial<ProjectTypeDefinition> {
-        return {
-            typedoc: this._fileDefinition('typedoc', {
-                gobstonesScriptsLocation: ['react-library/typedoc.config.js'],
-                projectLocation: ['typedoc.config.js'],
-                copyOnEject: true,
-                isOverwritable: true
+                isOverridable: true
             }),
-            jest: this._fileDefinition('jest', {
-                gobstonesScriptsLocation: ['common/jest.config.js'],
-                projectLocation: ['jest.config.js'],
-                copyOnEject: true,
-                isOverwritable: true
-            }),
-            jestproxies: this._fileDefinition('jestproxies', {
-                gobstonesScriptsLocation: ['react-library/jest'],
+            // Project specific
+            jestproxies: this._fileDefinition('jestproxies', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/jest'],
                 projectLocation: ['.jest'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
-            vite: this._fileDefinition('vite', {
-                gobstonesScriptsLocation: ['react-library/vite.config.ts'],
+            vite: this._fileDefinition('vite', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/vite.config.ts'],
                 projectLocation: ['vite.config.ts'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
-            stories: this._fileDefinition('stories', {
-                gobstonesScriptsLocation: ['react-library/stories'],
+            stories: this._fileDefinition('stories', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/stories'],
                 projectLocation: ['stories'],
                 copyOnInit: true
             }),
-            storybook: this._fileDefinition('storybook', {
-                gobstonesScriptsLocation: ['react-library/storybook'],
+            storybook: this._fileDefinition('storybook', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/storybook'],
                 projectLocation: ['.storybook'],
                 copyOnInit: true,
                 copyOnUpdate: true
-            })
-        };
-    }
-
-    /**
-     * Returns the file information for all files that are
-     * exclusive to web-library projects
-     *
-     * @returns A partial ProjectTypeDefinition.
-     */
-    private _getWebLibraryProjectTypeDefinition(): Partial<ProjectTypeDefinition> {
-        return {
-            demos: this._fileDefinition('demos', {
-                gobstonesScriptsLocation: ['web-library/demos'],
+            }),
+            demos: this._fileDefinition('demos', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/demos'],
                 projectLocation: ['demos'],
                 copyOnInit: true,
-                isOverwritable: false
+                isOverridable: false
             })
         };
     }
@@ -866,15 +906,15 @@ export class Config {
             copiedOnInit: retainKeysMatching(this._projectTypes[projectType], 'copyOnInit'),
             copiedOnEject: retainKeysMatching(this._projectTypes[projectType], 'copyOnEject'),
             copiedOnUpdate: retainKeysMatching(this._projectTypes[projectType], 'copyOnUpdate'),
-            toolingFiles: retainKeysMatching(this._projectTypes[projectType], 'isOverwritable')
+            toolingFiles: retainKeysMatching(this._projectTypes[projectType], 'isOverridable')
         });
 
-        this._filteredProjectTypes = {
-            library: getProcessed('library'),
-            cliLibrary: getProcessed('cliLibrary'),
-            reactLibrary: getProcessed('reactLibrary'),
-            webLibrary: getProcessed('webLibrary')
-        };
+        const filteredProjectTypes: Partial<ConfigFilteredProjectTypes> = {};
+
+        for (const projectType of Object.keys(this._projectTypes) as ProjectType[]) {
+            filteredProjectTypes[projectType] = getProcessed(projectType);
+        }
+        this._filteredProjectTypes = filteredProjectTypes as ConfigFilteredProjectTypes;
     }
     // ------------------------------------------
     // #endregion Private Initialization
@@ -900,21 +940,40 @@ export class Config {
      * @param partialFileInfo The partial information for this file definition.
      * @returns A full file definition.
      */
-    private _fileDefinition(name: FileName, partialFileInfo: Partial<FileDefinition>): FileDefinition {
-        const projectTypeInfo = Object.assign(
-            {
-                name,
-                gobstonesScriptsLocation: [],
-                projectLocation: [],
-                onInit: false,
-                onUpdate: false,
-                onEject: false,
-                isOverwritable: false
-            },
-            partialFileInfo
-        ) as FileDefinition;
+    private _fileDefinition(
+        name: FileName,
+        projectTypePath: string,
+        noCommonFiles: FileName[],
+        excludedFiles: FileName[],
+        partialFileInfo: Partial<FileDefinition>
+    ): FileDefinition {
+        // An empty FileDefinition will be ignored when processed
+        const baseElement: FileDefinition = {
+            name,
+            gobstonesScriptsLocation: [],
+            projectLocation: [],
+            copyOnInit: false,
+            copyOnUpdate: false,
+            copyOnEject: false,
+            isOverridable: false,
+            requiresReferenceUpdate: false,
+            requiresTestDataInjection: false
+        };
+        // If this file is ought to be excluded, just return the empty element
+        if (excludedFiles.includes(name)) {
+            return baseElement;
+        }
 
-        if (projectTypeInfo.isOverwritable) {
+        // This is a not excluded file, overwrite default values with the ones provided
+        const projectTypeInfo: FileDefinition = Object.assign(baseElement, partialFileInfo);
+
+        // Update the internal paths to the corresponding ones
+        projectTypeInfo.gobstonesScriptsLocation = projectTypeInfo.gobstonesScriptsLocation.map((e) =>
+            e.replace('<projectTypePath>', noCommonFiles.includes(name) ? projectTypePath : 'common')
+        );
+
+        // If it's overridable, update the tooling file reference
+        if (projectTypeInfo.isOverridable) {
             projectTypeInfo.toolingFile = getToolingFile(
                 this.locations.projectRoot,
                 this.locations.gobstonesScriptsProjectsRoot,
@@ -938,7 +997,8 @@ export class Config {
  * The config object exports all configuration functions in
  * a convenient element.
  *
- * @group Internal API
+ * @internal
+ * @group Internal: Objects
  */
 export const config: Config = new Config();
 // ==========================================

@@ -20,4 +20,4 @@ jobs:
             - name: Installing project dependencies
               run: npm install
             - name: Linting the code
-              run: npm run lint
+              run: npm start lint

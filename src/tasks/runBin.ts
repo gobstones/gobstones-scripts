@@ -16,7 +16,7 @@ import { config } from '../config';
  *
  * @returns The string for the command.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function runBin(packageName: string, binName?: string): string {
     // Initialize the tool. Will only do it first time getBin is called

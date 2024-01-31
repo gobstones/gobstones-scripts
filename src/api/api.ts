@@ -1,5 +1,5 @@
 /**
- * @module API
+ * @module API.Main
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import childProcess from 'child_process';
@@ -8,9 +8,8 @@ import path from 'path';
 import fs from 'fs-extra';
 import tsconfigJs from 'tsconfig.js';
 
-import { FileDefinition, ProjectTypeDefinition, config } from '../config';
+import { config } from '../config';
 import { logger } from '../helpers/Logger';
-import { tasks } from '../tasks';
 
 /**
  * Create a new library project in a subfolder with the given name.
@@ -30,7 +29,12 @@ import { tasks } from '../tasks';
  *
  * @group API: Functions
  */
-function create(projectName: string, projectType?: string, packageManager?: string, isTest: boolean = false): void {
+export function create(
+    projectName: string,
+    projectType?: string,
+    packageManager?: string,
+    isTest: boolean = false
+): void {
     config.init(projectType, packageManager, false, isTest);
 
     logger.debug(
@@ -71,7 +75,7 @@ function create(projectName: string, projectType?: string, packageManager?: stri
  *
  * @group API: Functions
  */
-function init(projectType?: string, packageManager?: string, isTest: boolean = false): void {
+export function init(projectType?: string, packageManager?: string, isTest: boolean = false): void {
     config.init(projectType, packageManager, false, isTest);
 
     logger.debug(
@@ -90,17 +94,7 @@ function init(projectType?: string, packageManager?: string, isTest: boolean = f
     const projectName: string = path.basename(config.locations.projectRoot);
     logger.debug(`[api] The project name based on the current directory is ${projectName}`);
 
-    copyFilesFrom(config.projectType, config.projectTypeFilteredFiles.copiedOnInit, false, false, isTest);
-
-    logger.debug(`[api] Updated references to project name in files with: ${projectName}`);
-    replaceInnerReferencesInFiles(
-        [
-            path.join(config.environment.workingDirectory, 'README.md'),
-            path.join(config.environment.workingDirectory, 'package.json')
-        ],
-        /<library-name>/g,
-        projectName
-    );
+    copyFilesFrom(config.projectType, config.projectTypeFilteredFiles.copiedOnInit, false, false, isTest, projectName);
 
     logger.debug(`[api] Initializing the folder as a git repository`);
     runScript('git', ['init', '-q']);
@@ -128,7 +122,12 @@ function init(projectType?: string, packageManager?: string, isTest: boolean = f
  *
  * @group API: Functions
  */
-function update(file: string = 'all', force: boolean = false, projectType?: string, isTest: boolean = false): string[] {
+export function update(
+    file: string = 'all',
+    force: boolean = false,
+    projectType?: string,
+    isTest: boolean = false
+): string[] {
     config.init(projectType, undefined, false, false);
 
     logger.debug(
@@ -139,11 +138,14 @@ function update(file: string = 'all', force: boolean = false, projectType?: stri
             `\n\tisTest: ${config.executionEnvironment.isTestMode}`
     );
 
+    const projectName: string = path.basename(config.locations.projectRoot);
+    logger.debug(`[api] The project name based on the current directory is ${projectName}`);
+
     const filesToCopy = file === 'all' ? config.projectTypeFilteredFiles.copiedOnUpdate : [file];
 
     logger.debug(`[api] About to copy files: ${filesToCopy.join(', ')}`);
 
-    return copyFilesFrom(config.projectType, filesToCopy, force, false, isTest);
+    return copyFilesFrom(config.projectType, filesToCopy, force, false, isTest, projectName);
 }
 /**
  * Eject all the general configuration files to the root project.
@@ -163,7 +165,7 @@ function update(file: string = 'all', force: boolean = false, projectType?: stri
  *
  * @group API: Functions
  */
-function eject(file: string = 'all', force: boolean = false, projectType?: string): string[] {
+export function eject(file: string = 'all', force: boolean = false, projectType?: string): string[] {
     config.init(projectType, undefined, false, false);
 
     logger.debug(
@@ -173,11 +175,14 @@ function eject(file: string = 'all', force: boolean = false, projectType?: strin
             `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
     );
 
+    const projectName: string = path.basename(config.locations.projectRoot);
+    logger.debug(`[api] The project name based on the current directory is ${projectName}`);
+
     const filesToCopy = file === 'all' ? config.projectTypeFilteredFiles.copiedOnEject : [file];
 
     logger.debug(`[api] About to copy files: ${filesToCopy.join(', ')}`);
 
-    return copyFilesFrom(config.projectType, filesToCopy, force, false);
+    return copyFilesFrom(config.projectType, filesToCopy, force, false, false, projectName);
 }
 
 /**
@@ -194,7 +199,7 @@ function eject(file: string = 'all', force: boolean = false, projectType?: strin
  *
  * @group API: Functions
  */
-function run(command: string, userArgs: string[] = [], projectType?: string, packageManager?: string): void {
+export function run(command: string, userArgs: string[] = [], projectType?: string, packageManager?: string): void {
     config.init(projectType, packageManager, false, false);
 
     logger.debug(
@@ -210,37 +215,43 @@ function run(command: string, userArgs: string[] = [], projectType?: string, pac
             `[api] Running code. Will ${deleteTsConfig ? '' : 'NOT'} delete configuration file after running.`
         );
         runScript(
-            tasks.runBin('nps'),
+            config.getBinary('nps', 'nps').command,
             ['-c', config.projectType.nps.toolingFile, command, ...userArgs],
-            undefined,
-            function () {
-                logger.debug(`[api] Execution finished.`);
-                if (deleteTsConfig) {
+            (code: number) => {
+                logger.debug(`[api] Execution finished with code: ${code}`);
+                if (deleteTsConfig && fs.existsSync(config.projectType.tsConfigJSON.toolingFile)) {
                     logger.debug(`[api] Deleting configuration file.`);
                     fs.unlinkSync(config.projectType.tsConfigJSON.toolingFile);
+                    config.projectType.tsConfigJSON.toolingFile = undefined;
                 }
-            }
+            },
+            undefined
         );
     };
 
     if (config.projectType.tsConfigJSON.toolingFile) {
-        logger.debug(`[api] Found a configuration file for TypeScript in the local folder.`);
-        runCode(false);
-    } else {
-        logger.debug(
-            `[api] Configuration file for TypeScript in local folder should ` +
-                `be generated for temporary execution. Definition will be copied from: ` +
-                `${config.projectType.typescript.toolingFile}`
-        );
-        tsconfigJs
-            .once({
-                root: config.projectType.typescript.toolingFile,
-                addComments: 'none'
-            })
-            .then(function () {
-                runCode(true);
-            });
+        logger.debug(`[api] Found a configuration file for TypeScript in the local folder. Deleting it.`);
+        fs.unlinkSync(config.projectType.tsConfigJSON.toolingFile);
     }
+
+    logger.debug(
+        `[api] Configuration file for TypeScript in local folder should ` +
+            `be generated for temporary execution. Definition will be copied from: ` +
+            `${config.projectType.typescript.toolingFile}`
+    );
+    tsconfigJs
+        .once({
+            root: config.projectType.typescript.toolingFile,
+            addComments: 'none',
+            logToConsole: false
+        })
+        .then(function () {
+            config.projectType.tsConfigJSON.toolingFile = path.join(
+                path.dirname(config.projectType.typescript.toolingFile),
+                path.basename(config.projectType.tsConfigJSON.projectLocation[0])
+            );
+            runCode(true);
+        });
 }
 
 /**
@@ -268,16 +279,17 @@ function run(command: string, userArgs: string[] = [], projectType?: string, pac
  * @group Internal: Functions
  */
 function copyFilesFrom(
-    projectTypeDef: ProjectTypeDefinition,
+    projectTypeDef: any,
     filesToCopy: string[],
     overwrite: boolean = false,
     dryRun: boolean = false,
-    addTestLine: boolean = false
+    addTestLine: boolean = false,
+    projectName: string
 ): string[] {
     const copied: string[] = [];
 
     // Retain only file descriptors to copy
-    const fileDescriptorsToCopy: FileDefinition[] = [];
+    const fileDescriptorsToCopy: any[] = [];
     for (const fileToCopy of filesToCopy) {
         fileDescriptorsToCopy.push(projectTypeDef[fileToCopy]);
     }
@@ -310,11 +322,27 @@ function copyFilesFrom(
                 logger.debug(`[api] Copying the file ${gScriptsFullPath}`);
                 if (!dryRun) {
                     fs.copySync(gScriptsFullPath, fullProjectPath);
-                    if (fullProjectPath.endsWith('.npmrc') && addTestLine) {
+
+                    // Insert testing data if it has to
+                    if (fileDescriptor.requiresTestDataInjection && addTestLine) {
                         logger.debug(
-                            `[api] Add the registry for verdaccio server to .npmrc, as we are running in test mode`
+                            `[api] Add the registry for verdaccio server to the file, as we are running in test mode`
                         );
                         fs.appendFileSync(fullProjectPath, '@gobstones:registry=http://localhost:4567');
+                    }
+
+                    // Perform text name replacements if it has to
+                    if (fileDescriptor.requiresReferenceUpdate) {
+                        logger.debug(`[api] Updated references to project name in file with: ${projectName}`);
+                        if (fs.existsSync(fullProjectPath)) {
+                            fs.writeFileSync(
+                                fullProjectPath,
+                                fs.readFileSync(fullProjectPath, 'utf-8').replace(/<library-name>/g, projectName),
+                                'utf-8'
+                            );
+                        } else {
+                            logger.debug(`[api] Could not update references, file was not copied.`);
+                        }
                     }
                 }
                 copied.push(fullProjectPath);
@@ -329,54 +357,38 @@ function copyFilesFrom(
 }
 
 /**
- * Replace all appearances of **reference** in the contents of all files in
- * **files** by the new string **newReference**.
- *
- * @param files The files in which to replace
- * @param reference The text to be replaced
- * @param newReference The new text to replace with
- *
- * @group Internal: Functions
- */
-function replaceInnerReferencesInFiles(files: string[], reference: string | RegExp, newReference: string): void {
-    for (const file of files) {
-        logger.debug(`[api] Updating reference in file: ${file}`);
-        if (fs.existsSync(file)) {
-            logger.debug(`[api] File found. Updating reference`);
-            fs.writeFileSync(file, fs.readFileSync(file, 'utf-8').replace(reference, newReference), 'utf-8');
-        } else {
-            logger.debug(`[api] File not found`);
-        }
-    }
-}
-
-/**
  * Run a CLI command as a child process.
  *
  * @param command The command to run.
  * @param args The arguments for the command to run.
- * @param options The options for the shell.
  * @param callback A function to call once the command has executed.
+ * @param options The options for the shell.
  *
  * @group Internal: Functions
  */
 function runScript(
     command: string,
     args: string[] = [],
+    callback?: (code: number, child: childProcess.ChildProcess, signal: NodeJS.Signals) => void,
     options: childProcess.SpawnOptionsWithStdioTuple<'inherit', 'inherit', 'inherit'> = {
         shell: true,
         stdio: ['inherit', 'inherit', 'inherit'],
         env: {
             ...process.env
         }
-    },
-    callback: (code: number, signal: NodeJS.Signals) => void | undefined = undefined
+    }
 ): void {
     try {
         logger.debug(`[api] Attempting to execute ${command} with args: ${args}`);
         const cmd = childProcess.spawn(command, args, options);
-        if (callback) {
-            cmd.on('close', callback);
+        if (typeof callback === 'function') {
+            logger.debug('[api] Callback given');
+            cmd.on('close', (code, signal) => {
+                logger.debug('[api] Command finished, calling callback');
+                callback(code, cmd, signal);
+            });
+        } else {
+            logger.debug('[api] No callback given');
         }
     } catch (e) {
         logger.debug(`[api] Execution failed`);
@@ -385,17 +397,3 @@ function runScript(
         process.exit(1);
     }
 }
-
-/**
- * The api object contains all the available functions
- * of the API.
- *
- * @group API: Main
- */
-export const api = {
-    create,
-    init,
-    eject,
-    update,
-    run
-};

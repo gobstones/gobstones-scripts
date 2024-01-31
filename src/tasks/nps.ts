@@ -20,7 +20,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function nps(action: string): string {
     if (isNotDefined(action)) {

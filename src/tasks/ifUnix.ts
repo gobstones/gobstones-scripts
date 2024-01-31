@@ -14,6 +14,6 @@ import { ifWindows } from './ifWindows';
  *
  * @return The bash script, first if system is unix, second if windows.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export const ifUnix = (script: string, altScript: string): string => ifWindows(altScript, script);

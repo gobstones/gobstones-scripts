@@ -1,3 +1,7 @@
+/**
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ * @module API.Tasks
+ */
 import { stripIndent } from 'common-tags';
 
 import { runBin } from './runBin';
@@ -6,14 +10,9 @@ import { isNotDefined } from '../helpers/isNotDefined';
 import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
- * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
- */
-
-/**
  * This type represents the options that you can pass to the serve task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskServeOptions {
     /**
@@ -32,7 +31,7 @@ export interface TaskServeOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function serve(options: TaskServeOptions): string {
     if (isNotDefined(options?.dir)) {

@@ -1,12 +1,13 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
-import chalk from 'ansi-colors';
+import colors from 'ansi-colors';
 
 /**
  * The different available log levels.
  *
+ * @internal
  * @group Internal: Types
  */
 export enum LogLevel {
@@ -21,7 +22,8 @@ export enum LogLevel {
  * the application, including messages that are always printed, debug information,
  * error messages and others.
  *
- * @group Internal: Types
+ * @internal
+ * @group Internal: Classes
  */
 export class Logger {
     /** Whether this logger is turned on */
@@ -127,7 +129,7 @@ export class Logger {
     private print(msg: string, style?: string, actualLevel?: LogLevel): void {
         if (this._on && (!actualLevel || this.isLevelGeqThan(actualLevel, this.level))) {
             if (style) {
-                msg = chalk[style](msg);
+                msg = colors[style](msg);
             }
             // eslint-disable-next-line no-console
             console.log(msg);
@@ -152,4 +154,10 @@ export class Logger {
     }
 }
 
+/**
+ * The default {@link Logger}.
+ *
+ * @internal
+ * @group Internal: Objects
+ */
 export const logger = new Logger(LogLevel.Error);

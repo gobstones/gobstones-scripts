@@ -1,12 +1,16 @@
 /**
  * This is the the definition for the Spanish language.
  *
- * @module Translation
+ * @module Internal.Translation
  * @author Your Name <yourname@company.com>
  */
 import { Locale } from './Locale';
 
-/* Define the language translations here */
+/**
+ * The language translations for the spanish language.
+ *
+ * @group Internal: Objects
+ */
 export const es: Locale = {
     program: {
         running: 'Corriendo en modo desarrollo'

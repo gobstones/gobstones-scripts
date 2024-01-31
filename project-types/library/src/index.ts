@@ -5,6 +5,7 @@
  * will probably just relay on a re-export in this file,
  * but being able to run it may be useful for debugging.
  *
+ * @ignore
  * @author Your Name <yourname@company.com>
  */
 import { MyClass } from './models';

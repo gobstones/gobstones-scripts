@@ -1,3 +1,7 @@
+/**
+ * @author Your Name <yourname@company.com>
+ */
+
 import { describe, expect, describe as given, it, describe as when, describe as withInput } from '@jest/globals';
 
 import { MyClass } from '../src/index';

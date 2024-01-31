@@ -2,7 +2,7 @@
  * This is the file that contains the CLI program.
  * One built, you may run this file from the command line.
  *
- * @module CLI
+ * @module Internal.CLI
  * @author Your Name <yourname@company.com>
  *
  */

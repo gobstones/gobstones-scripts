@@ -1,3 +1,10 @@
+/**
+ * Declaration file for all the different image type, so they can be
+ * used as modules in react components.
+ *
+ * @ignore
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ */
 declare module '*.svg' {
     const content: string;
     export default content;

@@ -1,3 +1,7 @@
+/**
+ * @ignore
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ */
 import { Preview } from '@storybook/react';
 
 const preview: Preview = {

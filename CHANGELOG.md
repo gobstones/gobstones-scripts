@@ -1,18 +1,43 @@
-# [0.7.0](https://github.com/gobstones/gobstones-scripts/compare/v0.6.0...v0.7.0) (2024-01-24)
+## [0.7.1](https://github.com/gobstones/gobstones-scripts/compare/v0.7.0...v0.7.1) (2024-02-02)
 
+
+### Features
+
+* added new type of project - noCode ([178087d](https://github.com/gobstones/gobstones-scripts/commit/178087d9d1840bdda93bc2e708cf9ed128f688f4))
+
+
+
+## [0.7.1](https://github.com/gobstones/gobstones-scripts/compare/v0.7.0...v0.7.1) (2024-02-02)
+
+### Features
+
+-   added new type of project - noCode ([8b89f4f](https://github.com/gobstones/gobstones-scripts/commit/8b89f4f29c74333f24d48a68530e391fd34cf18f))
+
+## [0.7.1](https://github.com/gobstones/gobstones-scripts/compare/v0.7.0...v0.7.1) (2024-02-02)
+
+### Features
+
+-   added new type of project - noCode ([3ef9617](https://github.com/gobstones/gobstones-scripts/commit/3ef9617cdf68f9fa494d36b3993d80342633e023))
+
+## [0.7.1](https://github.com/gobstones/gobstones-scripts/compare/v0.7.0...v0.7.1) (2024-02-02)
+
+### Features
+
+-   added new type of project - noCode ([3ef9617](https://github.com/gobstones/gobstones-scripts/commit/3ef9617cdf68f9fa494d36b3993d80342633e023))
+
+## [0.7.1](https://github.com/gobstones/gobstones-scripts/compare/v0.7.0...v0.7.1) (2024-01-31)
+
+# [0.7.0](https://github.com/gobstones/gobstones-scripts/compare/v0.6.0...v0.7.0) (2024-01-24)
 
 ### Code Refactoring
 
-* major refactor of configuration system ([3cdc7c0](https://github.com/gobstones/gobstones-scripts/commit/3cdc7c046a635dfab5709649746efc517efd6c90))
-
+-   major refactor of configuration system ([3cdc7c0](https://github.com/gobstones/gobstones-scripts/commit/3cdc7c046a635dfab5709649746efc517efd6c90))
 
 ### BREAKING CHANGES
 
-* The API of the configuration was completely changed. The name of the typedoc
-configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
-consoles.
-
-
+-   The API of the configuration was completely changed. The name of the typedoc
+    configuration file, typedoc.js, was changed to typedoc.config.js to properly support windows
+    consoles.
 
 ## <small>0.6.1 (2024-01-24)</small>
 

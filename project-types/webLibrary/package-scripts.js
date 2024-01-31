@@ -2,7 +2,12 @@
 const { tasks } = require('../../src/api');
 
 const defaultConfiguration = {
-    options: { 'help-style': 'basic' },
+    options: {
+        scripts: false,
+        logLevel: 'warn',
+        'help-style': 'basic'
+    },
+
     scripts: {
         default: tasks.nps('help'),
 
@@ -147,11 +152,11 @@ const defaultConfiguration = {
         },
 
         changelog: {
-            script: 'conventional-changelog -p angular -i CHANGELOG.md -s',
+            script: tasks.npx('conventional-changelog -p angular -i CHANGELOG.md -s'),
             silent: true,
             description: 'Generate changelog based on commits',
             scratch: {
-                script: 'conventional-changelog -p angular -i CHANGELOG.md -s -r 0',
+                script: tasks.npx('conventional-changelog -p angular -i CHANGELOG.md -s -r 0'),
                 silent: true,
                 description: 'Generate changelog based on tags, starting from scratch'
             }

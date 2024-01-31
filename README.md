@@ -195,6 +195,7 @@ When running a command using _gobstones-scripts_ the tool loads all configuratio
 -   If a configuration file for a tool is not present at the root of your project, then the default configuration file from gobstones-scripts is used. This configuration files are at `./node_modules/@gobstones/gobstones-scripts/config`, and they should not be modified by the end user. If you need changes over a default configuration, you should eject that configuration file to the root of your project.
 
 > A special mention is required for the typescript configuration file, **tsconfig.json**. You will see that this file is actually not present. We use **tsconfig.js** instead, and the corresponding JSON file is generated at runtime when running a command through gobstones-scripts. Using a js file for configuration provides the required flexibility for this project, that is not found in the JSON file, but a JSON file needs to be generated before running the Typescript compiler, as Typescript does not support javascript based configuration. Note that this is all handled automatically by gobstones-scripts, and you just need to remember to edit a tsconfig.js instead of json one if you need to override the default configuration.
+> If a tsconfig.json file is actually present, gobstones-script will delete it and use a .js file in its place.
 
 ## Running commands using gobstones-scripts
 

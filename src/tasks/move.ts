@@ -14,7 +14,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
 /**
  * This type represents the options that you can pass to the move task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskMoveOptions {
     /**
@@ -37,7 +37,7 @@ export interface TaskMoveOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function move(options: TaskMoveOptions): string {
     if (isNotDefined(options?.src) || isNotDefined(options?.dest)) {

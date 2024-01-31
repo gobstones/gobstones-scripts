@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 
@@ -9,7 +9,8 @@
  *
  * @returns true if defined, false otherwise
  *
- * @group Internal: Helpers
+ * @internal
+ * @group Internal: Functions
  */
 export const isNotDefined = (value: any): boolean =>
     // eslint-disable-next-line no-null/no-null

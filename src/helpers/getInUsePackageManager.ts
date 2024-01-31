@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import childProcess from 'child_process';
@@ -19,7 +19,8 @@ import { ConfigPackageManagers, PackageManager } from '../config/config';
  *
  * @returns The package manager in use
  *
- * @group Internal: Helpers
+ * @internal
+ * @group Internal: Functions
  */
 export function getInUsePackageManager(
     availablePackageManagers: ConfigPackageManagers,

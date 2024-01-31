@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import fs from 'fs';
@@ -8,7 +8,6 @@ import path from 'path';
 import { isWindows } from './isWindows';
 import { logger } from './Logger';
 
-import { ScriptType } from '../config';
 import { ExecutableScriptDefinition, PackageManagerDefinition } from '../config/config';
 import { PackageJsonReader } from '../helpers/PackageJsonReader';
 
@@ -25,7 +24,8 @@ import { PackageJsonReader } from '../helpers/PackageJsonReader';
  *
  * @returns The information for the binary execution, or undefined if no binary was found.
  *
- * @group Internal: Helpers
+ * @internal
+ * @group Internal: Functions
  */
 export function getBin(
     projectRootPath: string,
@@ -54,7 +54,7 @@ export function getBin(
         result = {
             scriptFile: binFile,
             command: `node --experimental-vm-modules ${binFile}`,
-            mode: 'node' as ScriptType
+            mode: 'node'
         };
     } catch (e) {
         logger.debug(`[getBin]: Could not detect through require.resolve`, 'magenta');
@@ -74,7 +74,7 @@ export function getBin(
                 result = {
                     scriptFile: binFile,
                     command: `node --experimental-vm-modules ${binFile}`,
-                    mode: 'node' as ScriptType
+                    mode: 'node'
                 };
                 break;
             } else {
@@ -97,7 +97,7 @@ export function getBin(
                         result = {
                             scriptFile: binFile,
                             command: `node --experimental-vm-modules ${binFile}`,
-                            mode: 'node' as ScriptType
+                            mode: 'node'
                         };
                         break;
                     }
@@ -112,7 +112,7 @@ export function getBin(
                             result = {
                                 scriptFile: `${binFile}.ps1`,
                                 command: `powershell ${binFile}.ps1`,
-                                mode: 'pwsh' as ScriptType
+                                mode: 'pwsh'
                             };
                             break;
                         }
@@ -126,7 +126,7 @@ export function getBin(
                             result = {
                                 scriptFile: `${binFile}.cmd`,
                                 command: `${binFile}.cmd`,
-                                mode: 'cmd' as ScriptType
+                                mode: 'cmd'
                             };
                             break;
                         }
@@ -165,7 +165,8 @@ export function getBin(
  *
  * @returns The path to the binary file.
  *
- * @group Internal API Functions
+ * @internal
+ * @group Internal: Functions
  */
 function getBinFile(packageJsonPath: string, packageRootDir: string, binName: string): string {
     logger.debug(`[getBin] Attempting to find the binary file: ${binName} using root: ${packageJsonPath}`, 'magenta');

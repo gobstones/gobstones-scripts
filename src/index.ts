@@ -6,6 +6,6 @@
  * @module Main
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
-export * from './api';
-export * from './config';
-export * from './tasks';
+export * as api from './api';
+export { config } from './config';
+export * as tasks from './tasks';

@@ -9,7 +9,7 @@ import { config } from '../config';
 /**
  * This type represents the options that you can pass to the tsc task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskTscOptions {
     /**
@@ -33,7 +33,7 @@ export interface TaskTscOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export const tsc = (options: TaskTscOptions = { emit: false }): string =>
     `${runBin('tsc')} --project ${config.projectType.tsConfigJSON.toolingFile}${!options.emit ? ' --noEmit' : ''}${

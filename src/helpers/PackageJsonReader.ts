@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import fs from 'fs';
@@ -12,7 +12,8 @@ import { logger } from './Logger';
  * If reading the file fails, the returned reader will always return undefined
  * for any property intended to be read.
  *
- * @group Internal: Types
+ * @internal
+ * @group Internal: Classes
  */
 export class PackageJsonReader {
     public _contents: any;

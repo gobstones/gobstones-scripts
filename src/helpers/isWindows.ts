@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 
@@ -8,7 +8,8 @@
  *
  * @returns true if Windows, false otherwise
  *
- * @group Internal: Helpers
+ * @internal
+ * @group Internal: Functions
  */
 export const isWindows = (): boolean =>
     process && (process.platform === 'win32' || /^(msys|cygwin)$/.test(process.env.OSTYPE ?? ''));

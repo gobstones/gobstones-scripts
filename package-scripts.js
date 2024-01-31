@@ -1,7 +1,15 @@
 const defaultConfiguration = {
-    options: { 'help-style': 'basic' },
+    options: {
+        scripts: false,
+        logLevel: 'warn',
+        'help-style': 'basic'
+    },
+
     scripts: {
-        default: 'nps help',
+        default: {
+            script: 'nps help',
+            hiddenFromHelp: true
+        },
 
         dev: {
             script: 'tsc --noEmit && tsx ./src/index.ts --ignore-watch',
@@ -33,15 +41,16 @@ const defaultConfiguration = {
         clean: {
             script: 'nps clean.dist && nps clean.docs',
             description: 'Remove all automatically generated files and folders',
+            hiddenFromHelp: true,
             dist: {
                 script: 'rimraf ./dist',
                 description: 'Delete the dist folder',
-                silent: true
+                hiddenFromHelp: true
             },
             docs: {
                 script: 'rimraf ./docs',
                 description: 'Delete the docs folder',
-                silent: true
+                hiddenFromHelp: true
             }
         },
 
@@ -75,19 +84,19 @@ const defaultConfiguration = {
             description: 'Run Verdaccio server and publish current version of library to it',
             serve: {
                 script: 'verdaccio --config ./test/verdaccio/config.yml',
-                silent: true,
-                description: 'Start the verdaccio server'
+                description: 'Start the verdaccio server',
+                hiddenFromHelp: true
             }
         },
 
         changelog: {
             script: 'conventional-changelog -p angular -i CHANGELOG.md -s',
-            silent: true,
+            hiddenFromHelp: true,
             description: 'Generate changelog based on tags',
             scratch: {
                 script: 'conventional-changelog -p angular -i CHANGELOG.md -s -r 0',
-                silent: true,
-                description: 'Generate changelog based on tags, starting from scratch'
+                description: 'Generate changelog based on tags, starting from scratch',
+                hiddenFromHelp: true
             }
         }
     }

@@ -14,6 +14,6 @@ import { isWindows } from '../helpers/isWindows';
  *
  * @return The bash script, first if system is windows, second if not.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export const ifWindows = (script: string, altScript: string): string => (isWindows() ? script : altScript);

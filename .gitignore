@@ -31,3 +31,6 @@ docs/
 
 # Verdaccio storage
 test/verdaccio/storage
+
+# Files that may be generated through teting or usage
+project-types/common/tsconfig.json

@@ -1,10 +1,14 @@
 /** @jest-environment jsdom */
-import { describe, expect, describe as given, it, describe as when } from '@jest/globals';
+/**
+ * @author Your Name <yourname@company.com>
+ */
+
+import { beforeEach, describe, expect, describe as given, it, describe as when } from '@jest/globals';
 import * as matchers from '@testing-library/jest-dom/matchers';
 import { act, render, screen } from '@testing-library/react';
 import React from 'react';
 
-import Counter from '../../../src/components/Counter';
+import { Counter } from '../../../src/components/Counter';
 
 expect.extend(matchers.default);
 

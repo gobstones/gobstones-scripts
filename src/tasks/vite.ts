@@ -7,7 +7,7 @@ import { runBin } from './runBin';
 /**
  * This type represents the options that you can pass to the vite task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskViteOptions {
     /**
@@ -23,6 +23,8 @@ export interface TaskViteOptions {
  * @param options Additional options, not in use currently.
  *
  * @returns The bash command string.
+ *
+ * @group Internal: Functions
  */
 const runVite = (mode: string, options?: TaskViteOptions): string => `${runBin('vite')} ${mode}`;
 
@@ -30,7 +32,7 @@ const runVite = (mode: string, options?: TaskViteOptions): string => `${runBin('
  * The vite object holds the different ways in you can run a task in vite,
  * either by running dev, build or preview.
  *
- * @group Main API Functions
+ * @group API: Objects
  */
 export const vite = {
     /**

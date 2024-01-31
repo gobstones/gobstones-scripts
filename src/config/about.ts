@@ -1,5 +1,5 @@
 /**
- * @module Config
+ * @module API.Config
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 /**
@@ -11,4 +11,4 @@
  *
  * @group Internal: Values
  */
-export const version = '0.7.0';
+export const version = '0.7.1';

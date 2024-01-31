@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import fs from 'fs';
@@ -18,7 +18,8 @@ import { OSType } from '../config/config';
  *
  * @returns The project's root path.
  *
- * @group Internal: Helpers
+ * @internal
+ * @group Internal: Functions
  */
 export function getProjectRootPath(os: OSType): string {
     logger.debug(`[getProjectRootPath]: Attempting to recover the project root path`, 'cyan');

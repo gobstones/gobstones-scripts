@@ -10,7 +10,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
 /**
  * The definition for a concurrently run script.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface ConcurrentScriptDefinition {
     /**
@@ -26,7 +26,7 @@ export interface ConcurrentScriptDefinition {
 /**
  * Represent a concurrent script to run.
  *
- @group Main API Types
+ @group API: Types
  */
 export type ConcurrentScript = ConcurrentScriptDefinition | string;
 
@@ -56,7 +56,7 @@ export type ConcurrentScript = ConcurrentScriptDefinition | string;
  *
  * @return The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function concurrently(scripts: Record<string, ConcurrentScript>): string {
     if (typeof scripts !== 'object') {

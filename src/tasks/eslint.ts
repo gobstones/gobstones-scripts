@@ -12,7 +12,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
 /**
  * This type represents the options that you can pass to the eslint task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskEslintOptions {
     /**
@@ -43,7 +43,7 @@ export interface TaskEslintOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function eslint(options: TaskEslintOptions): string {
     if (isNotDefined(options?.files)) {

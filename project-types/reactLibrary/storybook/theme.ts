@@ -1,3 +1,7 @@
+/**
+ * @ignore
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ */
 import { create } from '@storybook/theming/create';
 
 export default create({

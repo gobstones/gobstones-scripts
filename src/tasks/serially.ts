@@ -17,7 +17,7 @@
  *
  * @return The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function serially(...scripts: string[]): string {
     const scriptsLen = scripts.length;

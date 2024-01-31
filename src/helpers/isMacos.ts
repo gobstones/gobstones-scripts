@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 
@@ -8,6 +8,7 @@
  *
  * @returns true if MacOS, false otherwise
  *
- * @group Internal: Helpers
+ * @internal
+ * @group Internal: Functions
  */
 export const isMacos = (): boolean => process && process.platform === 'darwin';

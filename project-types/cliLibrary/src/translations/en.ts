@@ -1,12 +1,16 @@
 /**
  * This is the the definition for the English language.
  *
- * @module Translation
+ * @module Internal.Translation
  * @author Your Name <yourname@company.com>
  */
 import { Locale } from './Locale';
 
-/* Define the language translations here */
+/**
+ * The language translations for the english language.
+ *
+ * @group Internal: Objects
+ */
 export const en: Locale = {
     program: {
         running: 'Running in development mode'

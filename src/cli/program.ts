@@ -1,28 +1,30 @@
 /**
- * @module CLI
+ * @module Internal.CLI
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  **/
 import path from 'path';
 
 import { program as commanderProgram } from 'commander';
 
-import { cli } from './cli-helpers';
+import * as cli from './cli-helpers';
 
-import { api } from '../api';
+import * as api from '../api';
 import { config } from '../config';
 import { LogLevel, logger } from '../helpers/Logger';
 
 /**
  * The command line program definition
  *
- * @group API: Main
+ * @internal
+ * @group Internal: Main
  */
 export const program = commanderProgram;
 
 /**
  * The general program options.
  *
- * @group API: Types
+ * @internal
+ * @group Internal: Types
  */
 interface GeneralOptions {
     type?: string;
@@ -33,7 +35,8 @@ interface GeneralOptions {
 /**
  * The options that expect a package manager
  *
- * @group API: Types
+ * @internal
+ * @group Internal: Types
  */
 interface PackageManagerBasedOption {
     packageManager?: string;
@@ -42,14 +45,16 @@ interface PackageManagerBasedOption {
 /**
  * The general program options with the "--test" option added.
  *
- * @group API: Types
+ * @internal
+ * @group Internal: Types
  */
 type GeneralOptionsWithTest = GeneralOptions & { test?: boolean };
 
 /**
  * The options for command that expect a list of items.
  *
- * @group API: Types
+ * @internal
+ * @group Internal: Types
  */
 interface ItemBasedOptions {
     items?: string;
@@ -197,6 +202,8 @@ program
 
         failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
 
+        logger.log(JSON.stringify(config.projectTypeFilteredFiles));
+
         if (options.items !== 'all') {
             failIfOptionInvalid(options, 'items', config.projectTypeFilteredFiles.copiedOnUpdate);
         }
@@ -331,10 +338,10 @@ export function failIfOptionInvalid(options: any, optionName: string, possibleVa
     const optionNameCamelCased = optionName.replace(/-(.)/g, (_, group1) => group1.toUpperCase());
     const optionValue = options[optionNameCamelCased];
 
-    if (optionValue && !optionValue.includes(possibleValues)) {
+    if (optionValue && !possibleValues.includes(optionValue)) {
         const message =
             `The value "${optionValue}" is not a valid option for the argument "${optionName}"\n` +
-            `Please, select one of the following: ${possibleValues.join('", "')}`;
+            `Please, select one of the following: "${possibleValues.join('", "')}"`;
 
         logger.on();
         logger.error(message, 'bgRed');

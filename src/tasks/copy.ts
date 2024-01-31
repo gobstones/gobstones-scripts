@@ -15,7 +15,7 @@ import { TaskConfigurationError } from '../helpers/TaskError';
 /**
  * This type represents the options that you can pass to the copy task.
  *
- * @group Main API Types
+ * @group API: Types
  */
 export interface TaskCopyOptions {
     /**
@@ -42,7 +42,7 @@ export interface TaskCopyOptions {
  *
  * @returns The bash command string.
  *
- * @group Main API Functions
+ * @group API: Functions
  */
 export function copy(options: TaskCopyOptions): string {
     if (isNotDefined(options?.src) || isNotDefined(options?.dest)) {
@@ -76,6 +76,7 @@ export function copy(options: TaskCopyOptions): string {
  *
  * @return The command to run the rimraf binary with given arguments.
  *
+ * @group Internal: Functions
  * @internal
  */
 const ncp = (args: string): string => `${runBin('cpy-cli', 'cpy')} --cwd="${config.locations.projectRoot}" ${args}`;

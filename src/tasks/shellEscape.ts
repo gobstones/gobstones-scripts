@@ -12,7 +12,7 @@ import { isWindows } from '../helpers/isWindows';
  *
  * @returns The escaped string.
  *
- * @group Main API Functions
+ * @group @group API: Functions
  */
 export function shellEscape(stringOrArray: string | string[]): string | string[] {
     const escapedPathSh = (path: string): string =>

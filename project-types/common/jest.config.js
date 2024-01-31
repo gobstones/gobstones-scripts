@@ -24,6 +24,7 @@ module.exports = {
             statements: -10
         }
     },
+    coveragePathIgnorePatterns: ['<rootDir>/node_modules', '<rootDir>/.jest', '<rootDir>/test'],
     testPathIgnorePatterns: ['<rootDir>/src/test.ts'],
     transformIgnorePatterns: [],
     moduleNameMapper: {

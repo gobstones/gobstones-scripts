@@ -1,5 +1,5 @@
 /**
- * @module Helpers
+ * @module Internal.Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import fs from 'fs';
@@ -14,7 +14,8 @@ import { FileDefinition } from '../config/config';
  *
  * @param fileDef The file definition to locate the tooling for.
  *
- * @group Internal: Helpers
+ * @internal
+ * @group Internal: Functions
  */
 export const getToolingFile = (
     projectRoot: string,

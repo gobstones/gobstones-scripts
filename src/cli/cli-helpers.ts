@@ -1,15 +1,12 @@
 /**
- * Some helper functions for the CLI program application.
- *
- * @internal
- * @module CLI.Helpers
+ * @module Internal.CLI
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import fs from 'fs';
 import path from 'path';
 import process from 'process';
 
-import chalk from 'ansi-colors';
+import colors from 'ansi-colors';
 import figlet from 'figlet';
 
 import { config } from '../config';
@@ -20,7 +17,8 @@ import { logger } from '../helpers/Logger';
  *
  * @returns The gobstones-script banner.
  *
- * @group API: Functions
+ * @internal
+ * @group Internal: Functions
  */
 export function banner(): string {
     const text = figlet.textSync('gobstones-scripts', {
@@ -30,7 +28,7 @@ export function banner(): string {
         width: 120,
         whitespaceBreak: true
     });
-    return chalk.red(text);
+    return colors.red(text);
 }
 
 /**
@@ -38,7 +36,8 @@ export function banner(): string {
  *
  * @returns The welcome message.
  *
- * @group API: Functions
+ * @internal
+ * @group Internal: Functions
  */
 export const welcome = (): string => `Welcome to gobstones-scripts version ${config.environment.toolVersion}`;
 
@@ -48,7 +47,8 @@ export const welcome = (): string => `Welcome to gobstones-scripts version ${con
  *
  * @param message The message to display after welcome.
  *
- * @group API: Functions
+ * @internal
+ * @group Internal: Functions
  */
 export function displayWelcomeForAction(message: string): void {
     logger.log(banner());
@@ -67,7 +67,8 @@ export function displayWelcomeForAction(message: string): void {
  * @param errorsAndMessages An object associating inner
  *      possible error messages as keys and messages to output to the user as values.
  *
- * @group API: Functions
+ * @internal
+ * @group Internal: Functions
  */
 export function runOrEnd(action: () => any, errorsAndMessages: { error: string; msg: string }[]): void {
     try {
@@ -94,17 +95,18 @@ export function runOrEnd(action: () => any, errorsAndMessages: { error: string; 
 /**
  * Print the currently used configuration when the options contain the argument.
  *
- * @group API: Functions
+ * @internal
+ * @group Internal: Functions
  */
 export function printConfiguration(): void {
     logger.log(
         `The project configuration is:\n` +
-            `\n\tProject type:    ${chalk.blue(config.executionEnvironment.projectType)}` +
-            `\n\tProject manager: ${chalk.blue(config.executionEnvironment.packageManager)}`
+            `\n\tProject type:    ${colors.blue(config.executionEnvironment.projectType)}` +
+            `\n\tProject manager: ${colors.blue(config.executionEnvironment.packageManager)}`
     );
     logger.log(
-        `The detected root folder is:\n\t${chalk.blue(config.locations.projectRoot)}\n\n` +
-            `The detected gobstones scripts root folder is:\n\t${chalk.blue(config.locations.gobstonesScriptsRoot)}\n`
+        `The detected root folder is:\n\t${colors.blue(config.locations.projectRoot)}\n\n` +
+            `The detected gobstones scripts root folder is:\n\t${colors.blue(config.locations.gobstonesScriptsRoot)}\n`
     );
 
     const useAbsolute = config.executionEnvironment.useFullPaths;
@@ -124,20 +126,6 @@ export function printConfiguration(): void {
         const filePath = useAbsolute
             ? path.resolve(config.projectType[fileName].toolingFile)
             : path.relative(config.locations.projectRoot, config.projectType[fileName].toolingFile);
-        logger.log(`\t${fileName}: ${chalk.blue(filePath)}`);
+        logger.log(`\t${fileName}: ${colors.blue(filePath)}`);
     }
 }
-
-/**
- * The cli object exports all CLI helper functions in a convenient
- * object.
- *
- * @group API: Main
- */
-export const cli = {
-    banner,
-    welcome,
-    displayWelcomeForAction,
-    runOrEnd,
-    printConfiguration
-};
