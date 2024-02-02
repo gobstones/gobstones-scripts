@@ -760,17 +760,20 @@ export class Config {
             husky: this._fileDefinition('husky', projectTypePath, noCommonFiles, excludedFiles, {
                 gobstonesScriptsLocation: ['<projectTypePath>/husky'],
                 projectLocation: ['.husky'],
-                copyOnInit: true
+                copyOnInit: true,
+                copyOnUpdate: true
             }),
             github: this._fileDefinition('github', projectTypePath, noCommonFiles, excludedFiles, {
                 gobstonesScriptsLocation: ['<projectTypePath>/github'],
                 projectLocation: ['.github'],
-                copyOnInit: true
+                copyOnInit: true,
+                copyOnUpdate: true
             }),
             vscode: this._fileDefinition('vscode', projectTypePath, noCommonFiles, excludedFiles, {
                 gobstonesScriptsLocation: ['<projectTypePath>/vscode'],
                 projectLocation: ['.vscode'],
-                copyOnInit: true
+                copyOnInit: true,
+                copyOnUpdate: true
             }),
             license: this._fileDefinition('license', projectTypePath, noCommonFiles, excludedFiles, {
                 gobstonesScriptsLocation: ['<projectTypePath>/LICENSE'],

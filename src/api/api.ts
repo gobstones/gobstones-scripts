@@ -246,10 +246,12 @@ export function run(command: string, userArgs: string[] = [], projectType?: stri
             logToConsole: false
         })
         .then(function () {
-            config.projectType.tsConfigJSON.toolingFile = path.join(
-                path.dirname(config.projectType.typescript.toolingFile),
-                path.basename(config.projectType.tsConfigJSON.projectLocation[0])
-            );
+            if (config.projectType.typescript.toolingFile) {
+                config.projectType.tsConfigJSON.toolingFile = path.join(
+                    path.dirname(config.projectType.typescript.toolingFile),
+                    path.basename(config.projectType.tsConfigJSON.projectLocation[0])
+                );
+            }
             runCode(true);
         });
 }

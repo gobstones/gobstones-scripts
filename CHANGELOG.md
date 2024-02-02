@@ -1,11 +1,23 @@
-## [0.7.1](https://github.com/gobstones/gobstones-scripts/compare/v0.7.0...v0.7.1) (2024-02-02)
+## [0.7.2](https://github.com/gobstones/gobstones-scripts/compare/v0.7.1...v0.7.2) (2024-02-02)
 
+
+### Bug Fixes
+
+* **nocode:** noCode projects had a problem when trying to run certain tasks ([220160e](https://github.com/gobstones/gobstones-scripts/commit/220160e780b3bc07c3bad8f9bb8eed1369102e15))
+
+
+
+## [0.7.2](https://github.com/gobstones/gobstones-scripts/compare/v0.7.1...v0.7.2) (2024-02-02)
+
+### Bug Fixes
+
+-   **nocode:** noCode projects had a problem when trying to run certain tasks ([6161a28](https://github.com/gobstones/gobstones-scripts/commit/6161a282f36ea699f2cd585f5760e2968849ba39))
+
+## [0.7.1](https://github.com/gobstones/gobstones-scripts/compare/v0.7.0...v0.7.1) (2024-02-02)
 
 ### Features
 
-* added new type of project - noCode ([178087d](https://github.com/gobstones/gobstones-scripts/commit/178087d9d1840bdda93bc2e708cf9ed128f688f4))
-
-
+-   added new type of project - noCode ([178087d](https://github.com/gobstones/gobstones-scripts/commit/178087d9d1840bdda93bc2e708cf9ed128f688f4))
 
 ## [0.7.1](https://github.com/gobstones/gobstones-scripts/compare/v0.7.0...v0.7.1) (2024-02-02)
 
