@@ -15,10 +15,7 @@ const defaultConfiguration = {
         },
 
         dev: {
-            script: tasks.serially(
-                tasks.tsc({ emit: false }),
-                tasks.tsx({ file: './src/index.ts' })
-            ),
+            script: tasks.serially(tasks.tsc({ emit: false }), tasks.tsx({ file: './src/index.ts' })),
             description: 'Run "index.ts" in development mode',
             watch: {
                 script: tasks.tsx({ file: './src/index.ts', watch: './src/**/*.ts' }),
@@ -146,6 +143,17 @@ const defaultConfiguration = {
                 hiddenFromHelp: true
             },
             hiddenFromHelp: true
+        },
+
+        license: {
+            script: tasks.license(),
+            hiddenFromHelp: true,
+            description: 'Add license information to all code files in the project',
+            remove: {
+                script: tasks.license('remove'),
+                hiddenFromHelp: true,
+                description: 'Add license information to all code files in the project'
+            }
         }
     }
 };

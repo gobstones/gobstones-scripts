@@ -1,11 +1,36 @@
-## [0.7.2](https://github.com/gobstones/gobstones-scripts/compare/v0.7.1...v0.7.2) (2024-02-02)
+# [0.8.0](https://github.com/gobstones/gobstones-scripts/compare/v0.7.2...v0.8.0) (2024-04-05)
 
+
+### Features
+
+* added license text support ([022f5c1](https://github.com/gobstones/gobstones-scripts/commit/022f5c1763d88a7345bdeb8b964238485d5b9f39))
+
+
+### BREAKING CHANGES
+
+* Uppon commit, every file will end up with a license header
+
+
+
+# [0.8.0](https://github.com/gobstones/gobstones-scripts/compare/v0.7.2...v0.8.0) (2024-04-03)
+
+### Features
+
+-   added license text support ([62c887a](https://github.com/gobstones/gobstones-scripts/commit/62c887a1daba2c4c6efb767e02b4aa1b69bf393e))
+
+### BREAKING CHANGES
+
+-   Uppon commit, every file will end up with a license header
+
+# [0.8.0](https://github.com/gobstones/gobstones-scripts/compare/v0.7.2...v0.8.0) (2024-04-03)
+
+# [0.8.0](https://github.com/gobstones/gobstones-scripts/compare/v0.7.2...v0.8.0) (2024-04-03)
+
+## [0.7.2](https://github.com/gobstones/gobstones-scripts/compare/v0.7.1...v0.7.2) (2024-02-02)
 
 ### Bug Fixes
 
-* **nocode:** noCode projects had a problem when trying to run certain tasks ([220160e](https://github.com/gobstones/gobstones-scripts/commit/220160e780b3bc07c3bad8f9bb8eed1369102e15))
-
-
+-   **nocode:** noCode projects had a problem when trying to run certain tasks ([220160e](https://github.com/gobstones/gobstones-scripts/commit/220160e780b3bc07c3bad8f9bb8eed1369102e15))
 
 ## [0.7.2](https://github.com/gobstones/gobstones-scripts/compare/v0.7.1...v0.7.2) (2024-02-02)
 

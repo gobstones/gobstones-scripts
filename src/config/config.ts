@@ -1,10 +1,32 @@
+/*
+ * *****************************************************************************
+ * Copyright (C) National University of Quilmes 2018-2024
+ * Gobstones (TM) is a trademark of the National University of Quilmes.
+ *
+ * This program is free software distributed under the terms of the
+ * GNU Affero General Public License version 3. Additional terms added in compliance to section 7 of such license apply.
+ *
+ * You may read the full license at https://gobstones.github.org/gobstones-guidelines/LICENSE.
+ * *****************************************************************************
+ */
+/*
+ * *****************************************************************************
+ * Copyright (C) National University of Quilmes 2012-2024
+ * Gobstones (TM) is a registered trademark of the National University of Quilmes.
+ *
+ * This program is free software distributed under the terms of the
+ * GNU Affero General Public License version 3. Additional terms added in compliance to section 7 of such license apply.
+ *
+ * You may read the full license at https://gobstones.github.org/gobstones-guidelines/LICENSE.
+ * *****************************************************************************
+ */
 /**
  * @module API.Config
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 import path from 'path';
 
-import { version } from './about';
+import { testServer, version } from './about';
 
 import { getBin } from '../helpers/getBin';
 import { getGobstonesScriptsRootPath } from '../helpers/getGobstonesScriptsRootPath';
@@ -178,6 +200,10 @@ export interface ProjectTypeDefinition {
     storybook?: FileDefinition;
     /** The .tconfig.json file of the project type. */
     tsConfigJSON: FileDefinition;
+    /** The LICENSE_HEADER file of the project type. */
+    licenseHeader: FileDefinition;
+    /** The license.config.js file of the project type. */
+    licenseHeaderConfig: FileDefinition;
 }
 
 /**
@@ -228,6 +254,8 @@ export interface ConfigPackageManagers {
 export interface ConfigEnvironment {
     /** The running tool version. */
     toolVersion: string;
+    /** The running tool test server. */
+    toolTestServer: string;
     /** The current working directory, as detected through environment. */
     workingDirectory: string;
     /** The current operating system, as detected through environment. */
@@ -284,8 +312,6 @@ export interface ConfigProjectTypes {
     cliLibrary: ProjectTypeDefinition;
     /** The **reactLibrary** project type. */
     reactLibrary: ProjectTypeDefinition;
-    /** The **webLbrary** project type. */
-    webLibrary: ProjectTypeDefinition;
     /** The **noCode** project type. */
     noCode: ProjectTypeDefinition;
 }
@@ -303,8 +329,6 @@ export interface ConfigFilteredProjectTypes {
     cliLibrary: FilteredFilesDefinition;
     /** The **react-library** filtered project type files. */
     reactLibrary: FilteredFilesDefinition;
-    /** The **web-library** filtered project type files. */
-    webLibrary: FilteredFilesDefinition;
     /** The **noCode** project type. */
     noCode: FilteredFilesDefinition;
 }
@@ -582,6 +606,7 @@ export class Config {
     private _detectEnvironment(): void {
         this._environment = {
             toolVersion: version,
+            toolTestServer: testServer,
             operatingSystem: isWindows() ? 'windows' : isMacos() ? 'macos' : 'posix',
             workingDirectory: process.env['PWD'] ?? process.cwd() ?? path.resolve('.'),
             detectedPackageManager: getInUsePackageManager(this._packageManagers, 'npm')
@@ -674,13 +699,6 @@ export class Config {
                         'storybook'
                     ],
                     ['demos']
-                )
-            ),
-            webLibrary: this._joinProjectTypeDefinitions(
-                this._getCommonProjectTypeDefinition(
-                    'webLibrary',
-                    ['demos'],
-                    ['jestproxies', 'vite', 'stories', 'storybook']
                 )
             ),
             noCode: this._joinProjectTypeDefinitions(
@@ -852,6 +870,28 @@ export class Config {
                 projectLocation: ['tsconfig.json'],
                 isOverridable: true
             }),
+            licenseHeader: this._fileDefinition('licenseHeader', projectTypePath, noCommonFiles, excludedFiles, {
+                // This file descriptor is used to find
+                // The LICENSE_HEADER. In principle it should not be
+                // overridden at all.
+                gobstonesScriptsLocation: ['common/LICENSE_HEADER'],
+                projectLocation: ['LICENSE_HEADER'],
+                isOverridable: true
+            }),
+            licenseHeaderConfig: this._fileDefinition(
+                'licenseHeaderConfig',
+                projectTypePath,
+                noCommonFiles,
+                excludedFiles,
+                {
+                    // This file descriptor is used to find
+                    // The license.config.js. In principle it should not be
+                    // overridden at all.
+                    gobstonesScriptsLocation: ['common/license.config.js'],
+                    projectLocation: ['license.config.js'],
+                    isOverridable: true
+                }
+            ),
             typedoc: this._fileDefinition('typedoc', projectTypePath, noCommonFiles, excludedFiles, {
                 gobstonesScriptsLocation: ['<projectTypePath>/typedoc.config.js'],
                 projectLocation: ['typedoc.config.js'],

@@ -286,7 +286,7 @@ The underlying technologies in use include
 
 -   **typescript** (tsc for building)
 -   **rollup** (for bundling libraries and cli-libraries)
--   **vite** (for bundling web-libraries and react-libraries)
+-   **vite** (for bundling react-libraries)
 -   **eslint** (for linting)
 -   **prettier** (for styling)
 -   **typedoc** (for documentation generation)

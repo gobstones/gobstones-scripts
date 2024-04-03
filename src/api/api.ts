@@ -1,3 +1,25 @@
+/*
+ * *****************************************************************************
+ * Copyright (C) National University of Quilmes 2018-2024
+ * Gobstones (TM) is a trademark of the National University of Quilmes.
+ *
+ * This program is free software distributed under the terms of the
+ * GNU Affero General Public License version 3. Additional terms added in compliance to section 7 of such license apply.
+ *
+ * You may read the full license at https://gobstones.github.org/gobstones-guidelines/LICENSE.
+ * *****************************************************************************
+ */
+/*
+ * *****************************************************************************
+ * Copyright (C) National University of Quilmes 2012-2024
+ * Gobstones (TM) is a registered trademark of the National University of Quilmes.
+ *
+ * This program is free software distributed under the terms of the
+ * GNU Affero General Public License version 3. Additional terms added in compliance to section 7 of such license apply.
+ *
+ * You may read the full license at https://gobstones.github.org/gobstones-guidelines/LICENSE.
+ * *****************************************************************************
+ */
 /**
  * @module API.Main
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
@@ -210,25 +232,6 @@ export function run(command: string, userArgs: string[] = [], projectType?: stri
             `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
     );
 
-    const runCode = (deleteTsConfig = false): void => {
-        logger.debug(
-            `[api] Running code. Will ${deleteTsConfig ? '' : 'NOT'} delete configuration file after running.`
-        );
-        runScript(
-            config.getBinary('nps', 'nps').command,
-            ['-c', config.projectType.nps.toolingFile, command, ...userArgs],
-            (code: number) => {
-                logger.debug(`[api] Execution finished with code: ${code}`);
-                if (deleteTsConfig && fs.existsSync(config.projectType.tsConfigJSON.toolingFile)) {
-                    logger.debug(`[api] Deleting configuration file.`);
-                    fs.unlinkSync(config.projectType.tsConfigJSON.toolingFile);
-                    config.projectType.tsConfigJSON.toolingFile = undefined;
-                }
-            },
-            undefined
-        );
-    };
-
     if (config.projectType.tsConfigJSON.toolingFile) {
         logger.debug(`[api] Found a configuration file for TypeScript in the local folder. Deleting it.`);
         fs.unlinkSync(config.projectType.tsConfigJSON.toolingFile);
@@ -239,23 +242,80 @@ export function run(command: string, userArgs: string[] = [], projectType?: stri
             `be generated for temporary execution. Definition will be copied from: ` +
             `${config.projectType.typescript.toolingFile}`
     );
-    tsconfigJs
-        .once({
-            root: config.projectType.typescript.toolingFile,
-            addComments: 'none',
-            logToConsole: false
-        })
-        .then(function () {
+
+    jsToJson(
+        [config.projectType.typescript.toolingFile, config.projectType.licenseHeaderConfig.toolingFile],
+        (createdFiles: string[]) => {
             if (config.projectType.typescript.toolingFile) {
                 config.projectType.tsConfigJSON.toolingFile = path.join(
                     path.dirname(config.projectType.typescript.toolingFile),
                     path.basename(config.projectType.tsConfigJSON.projectLocation[0])
                 );
             }
-            runCode(true);
-        });
+
+            const deleteCreated = (created: string[]): void => {
+                for (const each of created) {
+                    if (fs.existsSync(each)) {
+                        logger.debug(`[api] Deleting configuration file: ${each}`);
+                        fs.unlinkSync(each);
+                    }
+                }
+            };
+
+            runScript(
+                config.getBinary('nps', 'nps').command,
+                ['-c', config.projectType.nps.toolingFile, command, ...userArgs],
+                (code: number) => {
+                    logger.debug(`[api] Execution finished with code: ${code}`);
+                    if (code !== 0) {
+                        logger.error(`[api] Script execution failed. See details above.`);
+                        process.exit(code);
+                    }
+                    config.projectType.tsConfigJSON.toolingFile = undefined;
+                    config.projectType.licenseHeaderConfig.toolingFile =
+                        config.projectType.licenseHeaderConfig.toolingFile.substring(
+                            0,
+                            config.projectType.licenseHeaderConfig.toolingFile.length - 2
+                        );
+                    deleteCreated(createdFiles);
+                },
+                undefined
+            );
+        }
+    );
 }
 
+function jsToJson(files: string[], callback: (created: string[]) => any): void {
+    const createdFiles = [];
+    const runChained = (remainingFiles: string[]): void => {
+        logger.debug(`[api] Creating configuration file: ${remainingFiles[0]}`);
+        tsconfigJs
+            .once({
+                root: remainingFiles[0],
+                addComments: 'none',
+                logToConsole: false
+            })
+            .then(function () {
+                // Assumed each file has .js extension,
+                // lets add the json file to the list.
+                createdFiles.push(remainingFiles[0] + 'on');
+                if (remainingFiles.length === 1) {
+                    // If no more files to convert,
+                    // run callback and delete elements
+                    callback(createdFiles);
+                } else {
+                    // Else, keep converting
+                    const others = [...remainingFiles];
+                    others.splice(0, 1);
+                    runChained(others);
+                }
+            })
+            .catch(function (e: any) {
+                logger.error(e);
+            });
+    };
+    runChained(files);
+}
 /**
  * Copy all files in a given project type definition that are present
  * in the list of files to copy. If the file already exists in the
@@ -330,7 +390,7 @@ function copyFilesFrom(
                         logger.debug(
                             `[api] Add the registry for verdaccio server to the file, as we are running in test mode`
                         );
-                        fs.appendFileSync(fullProjectPath, '@gobstones:registry=http://localhost:4567');
+                        fs.appendFileSync(fullProjectPath, config.environment.toolTestServer);
                     }
 
                     // Perform text name replacements if it has to

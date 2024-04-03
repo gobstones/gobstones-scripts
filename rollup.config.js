@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const commonjs = require('@rollup/plugin-commonjs');
 const fs = require('fs');
+
+const commonjs = require('@rollup/plugin-commonjs');
 const nodeResolve = require('@rollup/plugin-node-resolve');
 const typescript = require('@rollup/plugin-typescript');
 

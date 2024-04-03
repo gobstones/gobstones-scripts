@@ -44,6 +44,10 @@ npx --no -- nps prettify;
 echo "\nRun changelog\n";
 npx --no -- nps changelog;
 
+# Run license
+echo "\nAdd license text to code files\n";
+npx --no -- nps license;
+
 # Add all generated files
 echo "\nAdd generated files to commit\n";
 git add --all;

@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-var-requires, @typescript-eslint/explicit-function-return-type */
 const { readFileSync, writeFileSync } = require('fs');
 const process = require('process');
 
@@ -30,7 +31,7 @@ function updateToVersion(newVersion) {
     replaceVersionInProjectPackageJson('library', newVersion);
     replaceVersionInProjectPackageJson('cliLibrary', newVersion);
     replaceVersionInProjectPackageJson('reactLibrary', newVersion);
-    replaceVersionInProjectPackageJson('webLibrary', newVersion);
+    replaceVersionInProjectPackageJson('noCode', newVersion);
 }
 
 updateToVersion(process.argv[2]);

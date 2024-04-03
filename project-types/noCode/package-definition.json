@@ -36,13 +36,11 @@
   },
   "config": {
     "gobstones-scripts": {
-      "type": "library",
+      "type": "notCode",
       "manager": "npm"
     }
   },
-  "dependencies": {
-    "@gobstones/gobstones-core": "^0.4.7"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@gobstones/gobstones-scripts": "^0.8.0",
     "husky": "^8.0.2"

@@ -21,42 +21,30 @@
  * *****************************************************************************
  */
 /**
- * This module defines an internal locale definition that any translation
- * should comply to. Change this file according to your needs.
- *
- * @module Internal.Translation
- * @author Your Name <yourname@company.com>
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ * @module API.Tasks
  */
+import { runBin } from './runBin';
+
+import { config } from '../config';
+import { isNotDefined } from '../helpers/isNotDefined';
+import { TaskConfigurationError } from '../helpers/TaskError';
 
 /**
- * Locale is an interface that states the shape a translation for this tool
- * should comply with. Elements of translation object that comply to this
- * interface can be accessed using the elements in the {@link Internal.Translation!} module.
+ * Returns the string for the bash command to run
+ * the license-check-and-add command.
  *
- * @group Internal: Types
+ * @param mode The mode in wich to run, one of "add" (default) or "remove".
+ *
+ * @example license('add')
+ *
+ * @returns The bash command string.
+ *
+ * @group API: Functions
  */
-export interface Locale {
-    program: {
-        running: string;
-    };
-    cli: {
-        descriptions: {
-            language: string;
-            in: string;
-            out: string;
-            tool: string;
-            version: string;
-            help: string;
-        };
-        awesome: {
-            description: string;
-        };
-        notCool: {
-            description: string;
-        };
-        errors: {
-            file: string;
-            language: string;
-        };
-    };
+export function license(mode: string = 'add'): string {
+    if (isNotDefined(mode) || (mode !== 'add' && mode !== 'remove')) {
+        throw new TaskConfigurationError('"license" expects a string representing the mode, one of "add" or "remove"');
+    }
+    return `${runBin('license-check-and-add')} ${mode} -f ${config.projectType.licenseHeaderConfig.toolingFile}on`;
 }

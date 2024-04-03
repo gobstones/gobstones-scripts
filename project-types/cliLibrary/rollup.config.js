@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 const fs = require('fs');
-const path = require('path');
 
 const { config } = require('@gobstones/gobstones-scripts');
 const commonjs = require('@rollup/plugin-commonjs');
@@ -31,7 +30,7 @@ module.exports = [
         plugins: [
             typescript({
                 tsconfig: `${tsConfigPath}`,
-                declarationDir: path.join(path.dirname(packageJson.exports['.'].import.default), './typings')
+                declarationDir: './typings'
             }),
             commonjs()
         ],

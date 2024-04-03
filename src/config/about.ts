@@ -1,3 +1,25 @@
+/*
+ * *****************************************************************************
+ * Copyright (C) National University of Quilmes 2018-2024
+ * Gobstones (TM) is a trademark of the National University of Quilmes.
+ *
+ * This program is free software distributed under the terms of the
+ * GNU Affero General Public License version 3. Additional terms added in compliance to section 7 of such license apply.
+ *
+ * You may read the full license at https://gobstones.github.org/gobstones-guidelines/LICENSE.
+ * *****************************************************************************
+ */
+/*
+ * *****************************************************************************
+ * Copyright (C) National University of Quilmes 2012-2024
+ * Gobstones (TM) is a registered trademark of the National University of Quilmes.
+ *
+ * This program is free software distributed under the terms of the
+ * GNU Affero General Public License version 3. Additional terms added in compliance to section 7 of such license apply.
+ *
+ * You may read the full license at https://gobstones.github.org/gobstones-guidelines/LICENSE.
+ * *****************************************************************************
+ */
 /**
  * @module API.Config
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
@@ -11,4 +33,14 @@
  *
  * @group Internal: Values
  */
-export const version = '0.7.2';
+export const version = '0.8.0';
+
+/**
+ * The tool's test server address.
+ *
+ * This line is added to the .npmrc file of projects
+ * when they are created in test mode. It can also be used
+ * in any project that attempts to use the version from
+ * the verdaccio server instead of the regular one.
+ */
+export const testServer = '@gobstones:registry=http://localhost:4567';
