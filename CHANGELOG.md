@@ -1,16 +1,16 @@
-# [0.8.0](https://github.com/gobstones/gobstones-scripts/compare/v0.7.2...v0.8.0) (2024-04-05)
+## [0.8.1](https://github.com/gobstones/gobstones-scripts/compare/v0.8.0...v0.8.1) (2024-04-05)
 
+
+
+# [0.8.0](https://github.com/gobstones/gobstones-scripts/compare/v0.7.2...v0.8.0) (2024-04-05)
 
 ### Features
 
-* added license text support ([022f5c1](https://github.com/gobstones/gobstones-scripts/commit/022f5c1763d88a7345bdeb8b964238485d5b9f39))
-
+-   added license text support ([022f5c1](https://github.com/gobstones/gobstones-scripts/commit/022f5c1763d88a7345bdeb8b964238485d5b9f39))
 
 ### BREAKING CHANGES
 
-* Uppon commit, every file will end up with a license header
-
-
+-   Uppon commit, every file will end up with a license header
 
 # [0.8.0](https://github.com/gobstones/gobstones-scripts/compare/v0.7.2...v0.8.0) (2024-04-03)
 
