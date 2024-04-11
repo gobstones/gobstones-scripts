@@ -23,7 +23,7 @@
  *
  * @group Internal: Values
  */
-export const version = '0.8.2';
+export const version = '0.8.3';
 
 /**
  * The tool's test server address.

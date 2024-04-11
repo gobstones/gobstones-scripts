@@ -6,9 +6,15 @@ For longer description, refer to [Usage](#usage).
 
 Remove demo badge if this is a library without GUI. Also, delete this lines.
 
-[![Licence](https://img.shields.io/github/license/gobstones/<library-name>?style=plastic&label=License&logo=open-source-initiative&logoColor=white&color=olivegreen)](https://github.com/gobstones/<library-name>/blob/main/LICENSE) [![Version](https://img.shields.io/github/package-json/v/gobstones/<library-name>?style=plastic&label=Version&logo=git-lfs&logoColor=white&color=crimson)](https://www.npmjs.com/package/@gobstones/<library-name>) [![Repository](https://img.shields.io/github/package-json/repository/gobstones/<library-name>?color=orange&label=Repository&logo=github&logoColor=white&style=plastic)](https://gobstones.github.io/<library-name>) [![API Docs](https://img.shields.io/github/package-json/homepage/gobstones/<library-name>?color=blue&label=API%20Docs&logo=gitbook&logoColor=white&style=plastic)](https://gobstones.github.io/<library-name>) [![Demo Page](https://img.shields.io/github/package-json/demopage/gobstones/<library-name>?color=magenta&label=Demo%20Page&logo=storybook&logoColor=white&style=plastic)](https://gobstones.github.io/<library-name>)
+[![Licence](https://img.shields.io/badge/AGPL--3.0_with_additional_terms-olivegreen?style=plastic&label=License&logo=open-source-initiative&logoColor=white&color=olivegreen)](https://github.com/gobstones/<library-name>/blob/main/LICENSE) [![Version](https://img.shields.io/github/package-json/v/gobstones/gobstones-scripts?style=plastic&label=Version&logo=git-lfs&logoColor=white&color=crimson)](https://www.npmjs.com/package/@gobstones/gobstones-scripts)
 
-![GitHub Workflow Tests](https://img.shields.io/github/actions/workflow/status/gobstones/<library-name>/on-commit-test.yml?style=plastic&label=Tests&logo=github-actions&logoColor=white) ![GitHub Workflow Build](https://img.shields.io/github/actions/workflow/status/gobstones/<library-name>/on-commit-build.yml?style=plastic&label=Build&logo=github-actions&logoColor=white)
+[![API Docs](https://img.shields.io/github/package-json/homepage/gobstones/gobstones-scripts?color=blue&label=API%20Docs&logo=gitbook&logoColor=white&style=plastic)](https://gobstones.github.io/gobstones-scripts)
+
+[![Demo Page](https://img.shields.io/github/package-json/demopage/gobstones/<library-name>?color=magenta&label=Demo%20Page&logo=storybook&logoColor=white&style=plastic)](https://gobstones.github.io/<library-name>)
+
+![GitHub Workflow Tests](https://img.shields.io/github/actions/workflow/status/gobstones/gobstones-scripts/on-commit-test.yml?style=plastic&label=Tests&logo=github-actions&logoColor=white) ![GitHub Workflow Build](https://img.shields.io/github/actions/workflow/status/gobstones/gobstones-scripts/on-commit-build.yml?style=plastic&label=Build&logo=github-actions&logoColor=white)
+
+Add a longer description here if it's worth it.
 
 ## Install
 
@@ -42,4 +48,4 @@ used and how they should be modified, how to compile and so on.
 
 ## Contributing
 
-See our [Contributions Guidelines](https://github.com/gobstones/gobstones-guidelines) to contribute.
+See our [Contributions Guidelines](https://gobstones.github.io/gobstones-guidelines/) to contribute.

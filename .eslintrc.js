@@ -83,7 +83,7 @@ module.exports = {
             }
         ],
 
-        'import/no-unresolved': 'error',
+        'import/no-unresolved': ['error', { ignore: ['^@?[\\w\\d-_]+/?[\\w\\d-_]+/[\\w\\d-_]+$'] }],
         'import/order': [
             'error',
             {
