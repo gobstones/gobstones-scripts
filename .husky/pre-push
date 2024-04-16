@@ -8,19 +8,32 @@ REMOTE_NAME=$1;
 REMOTE_URL=$2;
 # Read the input and split it approprietly
 INPUT=$(cat);
-INPUT_ARR[0]='';
-INPUT_ARR[1]='';
-INPUT_ARR[2]='';
-INPUT_ARR[3]='';
-read -a INPUT_ARR <<< "$INPUT";
+I=0
+for WORD in $INPUT; do
+    case $I in
+        0)
+            LOCAL_REF=$WORD;;
+        1)
+            LOCAL_OBJ_NAME=$WORD;;
+        2)
+            REMOTE_REF=$WORD;;
+        3)
+            REMOTE_OBJ_NAME=$WORD;;
+    esac
+    I=$(I + 1)
+done
 
-LOCAL_REF=${INPUT_ARR[0]}
-LOCAL_OBJ_NAME=${INPUT_ARR[1]}
-REMOTE_REF=${INPUT_ARR[2]}
-REMOTE_OBJ_NAME=${INPUT_ARR[3]}
+case "$LOCAL_REF" in
+    refs\/tags*)
+        # Apply specific code when publishing tags
+        IS_TAG=1;;
+    *)
+        # Apply specific code when publishing any branch
+        IS_TAG=0;;
+esac
 
 # Set failing on command fail, pipe fail, and undefined variable use
-set -euo pipefail
+set -eu;
 
 # This hook is called by git-push and can be used to prevent a
 # push from taking place. The hook is called with two parameters
@@ -47,17 +60,6 @@ set -euo pipefail
 # If this hook exits with a non-zero status, git push will abort without
 # pushing anything. Information about why the push is rejected may be
 # sent to the user by writing to standard error.
-
-# If pushing a tag, generate doc and push them as
-# a "docs" branch in the remote.
-case "$LOCAL_REF" in
-    refs\/tags*)
-        # Apply specific code when publishing tags
-        IS_TAG=1;;
-    *)
-        # Apply specific code when publishing any branch
-        IS_TAG=0;;
-esac
 
 # We currently use this hook to verify that any commit (to any branch)
 # passes the tests configured.
