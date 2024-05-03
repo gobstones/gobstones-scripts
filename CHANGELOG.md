@@ -1,3 +1,8 @@
+## <small>0.8.4 (2024-05-05)</small>
+
+-   style: change casing of submodules to be uppercase always ([b2798a6](https://github.com/gobstones/gobstones-scripts/commit/b2798a6))
+-   fix: fix husky scripts not being POSIX compliant ([690f2ab](https://github.com/gobstones/gobstones-scripts/commit/690f2ab))
+
 ## [0.8.2](https://github.com/gobstones/gobstones-scripts/compare/v0.8.1...v0.8.2) (2024-04-05)
 
 ### Bug Fixes

@@ -28,10 +28,10 @@ function replaceVersionInProjectPackageJson(projectName, newVersion) {
 function updateToVersion(newVersion) {
     replaceVersionInPackageJson(newVersion);
     replaceVersionInConfig(newVersion);
-    replaceVersionInProjectPackageJson('library', newVersion);
-    replaceVersionInProjectPackageJson('cliLibrary', newVersion);
-    replaceVersionInProjectPackageJson('reactLibrary', newVersion);
-    replaceVersionInProjectPackageJson('noCode', newVersion);
+    replaceVersionInProjectPackageJson('Library', newVersion);
+    replaceVersionInProjectPackageJson('CLILibrary', newVersion);
+    replaceVersionInProjectPackageJson('ReactLibrary', newVersion);
+    replaceVersionInProjectPackageJson('NonCode', newVersion);
 }
 
 updateToVersion(process.argv[2]);

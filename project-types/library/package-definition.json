@@ -36,7 +36,7 @@
   },
   "config": {
     "gobstones-scripts": {
-      "type": "library",
+      "type": "Library",
       "manager": "npm"
     }
   },
@@ -44,7 +44,7 @@
     "@gobstones/gobstones-core": "^0.4.7"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.8.3",
+    "@gobstones/gobstones-scripts": "^0.8.4",
     "husky": "^8.0.2"
   }
 }

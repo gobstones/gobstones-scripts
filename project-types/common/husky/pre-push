@@ -15,15 +15,15 @@ LOCAL_OBJ_NAME=${INPUT_ARR[1]}
 REMOTE_REF=${INPUT_ARR[2]}
 REMOTE_OBJ_NAME=${INPUT_ARR[3]}
 
-# Set failing on command fail, pipe fail, and undefined variable use
-set -euo pipefail
+# Set failing on command fail, and undefined variable use
+set -eu;
 
 # This hook is called by git-push and can be used to prevent a
 # push from taking place. The hook is called with two parameters
 # which provide the name and location of the destination remote,
 # if a named remote is not being used both values will be the same.
 
-# Information about what is to be pushed is provided on the hook’s
+# Information about what is to be pushed is provided on the hook's
 # standard input with lines of the form:
 # <local ref> SP <local object name> SP <remote ref> SP <remote object name> LF
 
@@ -61,16 +61,5 @@ echo "";
 # Run all the tests
 echo "Running tests";
 npx --no -- gobstones-scripts run test --silent;
-
-# If pushing a tag, generate doc and push them as
-# a "docs" branch in the remote.
-case "$LOCAL_REF" in
-    refs\/tags*)
-        # Apply specific code when publishing tags
-        echo "\nYour tag is being pushed...\n";;
-    *)
-        # Apply specific code when publishing any branch
-        echo "\nYour branch is being pushed...\n";;
-esac
 
 exit 0;

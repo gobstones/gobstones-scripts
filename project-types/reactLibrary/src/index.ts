@@ -16,4 +16,4 @@
  * @ignore
  * @author Your Name <yourname@company.com>
  */
-export * from './components';
+export * from './Components';

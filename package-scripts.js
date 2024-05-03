@@ -80,7 +80,7 @@ module.exports = {
                 'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold ' +
                 '--prefix "[{name}]" --names verdaccio.serve,publish ' +
                 '"nps verdaccio.serve" ' +
-                '"rimraf ./test/verdaccio/storage/* && npm publish --registry http://localhost:4567"',
+                '"sleep 2s && rimraf ./test/verdaccio/storage/* && npm publish --registry http://localhost:4567"',
             description: 'Run Verdaccio server and publish current version of library to it',
             serve: {
                 script: 'verdaccio --config ./test/verdaccio/config.yml',
@@ -102,16 +102,16 @@ module.exports = {
 
         license: {
             script:
-                'npx tsconfig.js --once --root=./project-types/common/license.config.js --add-comments=none ' +
-                '&& license-check-and-add add -f ./project-types/common/license.config.json ' +
-                '&& npx rimraf ./project-types/common/license.config.json',
+                'npx tsconfig.js --once --root=./project-types/Common/license.config.js --add-comments=none ' +
+                '&& license-check-and-add add -f ./project-types/Common/license.config.json ' +
+                '&& npx rimraf ./project-types/Common/license.config.json',
             hiddenFromHelp: true,
             description: 'Add license information to all code files in the project',
             remove: {
                 script:
-                    'npx tsconfig.js --once --root=./project-types/common/license.config.js --add-comments=none ' +
-                    '&& license-check-and-add remove -f ./project-types/common/license.config.json ' +
-                    '&& npx rimraf ./project-types/common/license.config.json',
+                    'npx tsconfig.js --once --root=./project-types/Common/license.config.js --add-comments=none ' +
+                    '&& license-check-and-add remove -f ./project-types/Common/license.config.json ' +
+                    '&& npx rimraf ./project-types/Common/license.config.json',
 
                 hiddenFromHelp: true,
                 description: 'Add license information to all code files in the project'

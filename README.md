@@ -85,11 +85,12 @@ A `<project-name>` is any valid project identifier, that is, any string that i v
 
 Valid options include:
 
--   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
--   `-p, --package-manager <package-manager>`: The project manager to use, one of `npm`, `yarn` or `pnpm`. Defaults to `npm`.
--   `-s, --silent`: Run silently, not displaying the tool's banner.
--   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.
--   `-T, --test`: Run using verdaccio as a registry.
+-   `-t, --type <project-type>`: the project type to create, one of `Library`, `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
+-   `-p, --package-manager <package-manager>`: the project manager to use, one of `npm`, `yarn`, `pnpm`(default: "npm")
+-   `-s --silent`: run silently, not displaying the tool's banner (default: false)
+-   `-D, --debug`: run in debug mode, printing all the internal tool's processing (default: false)
+-   `-T, --test`: run using verdaccio as a registry (default: false)
+-   `-h, --help`: display help for command
 
 A special mention is to be held for the `-T` flag, which is not self-explanatory. See the **Testing newer versions of the library** section in order to better understand what this flag does.
 
@@ -111,11 +112,12 @@ The `update` sub-command is intended to update the project's configuration files
 
 The command has the following options.
 
--   `-i, --items <item> `: The items to update. One of `all`, `license`, `contributing`, `editorconfig`, `prettier`, `npm`, `eslint`, `git` or `commitlint`. Defaults to `all`.
--   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
--   `-s, --silent`: Run silently, not displaying the tool's banner.
--   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.
--   `-T, --test`: Run using verdaccio as a registry.
+-   `-i, --items <item> `: the items to update. One of `all`, `husky`, `github`, `vscode`, `license`, `contributing`, `editorconfig`, `prettier`, `npm`, `eslint`, `git`, `commitlint` (default: `all`)
+-   `-t, --type <project-type>`: the project type to create, one of `Library`, `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
+-   `-s --silent`: run silently, not displaying the tool's banner (default: false)
+-   `-D, --debug`: run in debug mode, printing all the internal tool's processing (default: false)
+-   `-T, --test`: run using verdaccio as a registry (default: false)
+-   `-h, --help`: display help for command
 
 By default, all root files are updated, but through the `-i` flag a specific file can be updated. `-i` flag expects only one file at a time, that is, execute as:
 
@@ -142,10 +144,11 @@ Some tools, like **typescript**, **rollup**, **typedoc**, **jest** and **nps** h
 
 This sub-command have the following options:
 
--   `-i, --items <item> `: The items to update. One of `all`, `nps`, `rollup`, `typescript`, `typedoc`, `jest`. Defaults to `all`.
--   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
--   `-s, --silent`: Run silently, not displaying the tool's banner.
--   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.
+-   `-i, --items <item> `: The items to update. One of `all`, nps`, `rollup`, `typescript`, `typedoc`, `jest` (default: "all")
+-   `-t, --type <project-type>`: the project type to create, one of `Library`, `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
+-   `-s --silent`: run silently, not displaying the tool's banner (default: false)
+-   `-D, --debug`: run in debug mode, printing all the internal tool's processing (default: false)
+-   `-h, --help`: display help for command
 
 An example will be:
 
@@ -165,10 +168,11 @@ As you can see, you can call `run` with no options. In this case, the default `n
 
 Available options include:
 
--   `-t, --type <project-type>`: The project type to create, one of `library`, `cliLibrary`, `reactLibrary` or `webLibrary`. Defaults to `library`.
--   `-p, --package-manager <package-manager>`: The project manager to use, one of `npm`, `yarn` or `pnpm`. Defaults to `npm`.
--   `-s, --silent`: Run silently, not displaying the tool's banner.
--   `-D, --debug`: Run in debug mode, printing all the internal tool's processing.
+-   `-t, --type <project-type>`: the project type to create, one of `Library`, `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
+-   `-p, --package-manager <package-manager>`: the project manager to use, one of `npm`, `yarn`, `pnpm`(default: "npm")
+-   `-s --silent`: run silently, not displaying the tool's banner (default: false)
+-   `-D, --debug`: run in debug mode, printing all the internal tool's processing (default: false)
+-   `-h, --help`: display help for command
 
 Available commands depend on project type, and can be found by executing the default action, as presenting the help is the default behavior for any project. Some common actions include
 
@@ -220,25 +224,13 @@ Or if you want to run the linter:
 npm start lint
 ```
 
-On a newly created project, there are also some additional scripts in your package json that are useful when building and automating, but that can be quite handy when running, such as `test` or `build`, so you can run directly by:
-
-```bash
-npm test
-```
-
-or
-
-```bash
-npm run build
-```
-
 You may add additional nps commands by overriding the tools `package-scripts.js` file. But there are a few gotchas.
 
 ### Gotchas of overriding nps configuration
 
-When running using _gobstones-scripts_ the configuration files for the building and running tools, such as Typescript compiler configuration, may live in your projects root or be default's, that live in the _gobstones-script_ configuration folder in `node_modules`. The tool first checks what configuration files are to be used, and then calls the appropriate commands with that configuration file as an option. So it's not just as easy as calling `jest` or `rollup`, as an argument to indicate which configuration file is going to be used needs to be included.
+When running using _gobstones-scripts_ the configuration files for the building and running tools, such as Typescript compiler configuration, may live in your projects root or be the default one, that lives in the _gobstones-script_ configuration folder in `node_modules`. The tool first checks what configuration files are to be used, and then calls the appropriate commands with that configuration file as an option. So it's not just as easy as calling `jest` or `rollup`, as an argument to indicate which configuration file is going to be used needs to be included.
 
-The default `package-scripts.js` handles this by importing `tools` from the _gobstones-scripts_ source (see usage as a module for more information), and calling some functions that the tooling provide. Some functions include i.e. the `jest` or the `rollup` function, that call the underlying tool with the appropriate configuration file as an argument. This is achieved by using the configuration that the API exposes.
+The default `package-scripts.js` handles this by importing `Tasks` from the _gobstones-scripts_ source (see usage as a module for more information), and calling some functions that the tooling provide. Some functions include i.e. the `jest` or the `rollup` function, that call the underlying tool with the appropriate configuration file as an argument. This is achieved by using the configuration that the API exposes.
 
 ## API
 
@@ -250,11 +242,11 @@ import gobstones_scripts from '@gobstones/gobstones-scripts';
 
 Typings are exported so it can be used in TypeScript without additional packages.
 
-The API exposes the `create`, `init`, `update`, `eject` and `run` functions that are explained in the CLI. It also provides access to the version and the configuration through the `version` and `config` attributes.
+The API exposes the `create`, `init`, `update`, `eject` and `run` functions that are explained in the CLI. It also provides access to the version and the configuration through the `config` attribute.
 
-Additionally, it provides a ser of functions that are useful for extending the `package-scripts.js` with custom actions, without having to worry about calling the tooling system with the corresponding configuration files. This are exposed at the `tools` object. The `tools` object provides functions such as `jest`, `rollup`, `tsc` and other handy actions such as `rename`, `concurrently` and `series`, that act as expected.
+Additionally, it provides a ser of functions that are useful for extending the `package-scripts.js` with custom actions, without having to worry about calling the tooling system with the corresponding configuration files. This are exposed at the `tasks` object. The `tasks` object provides functions such as `jest`, `rollup`, `tsc` and other handy actions such as `rename`, `concurrently` and `serially`, that act as expected.
 
-You may read their documentation in the source code.
+You may read their documentation through the published API documentation.
 
 ## Usage with other package managers
 
@@ -265,7 +257,8 @@ installation.
 Nonetheless, _gobstones-scripts_ has been tested to work with
 **yarn** too. _gobstones-scripts_ relies on a flat _node_modules_,
 in order to hide away packages, so **pnpm** will not work with this
-tool.
+tool, although it does support it as an argument for easy extension
+in a near by future.
 
 Some internal commands relay on calling **npm install** or **npx**,
 which are replace to their counterparts in other package managers if
@@ -317,25 +310,36 @@ node update-version.js <version>
 
 Where `<version>` is a specific version using major, minor and patch system. After calling the tool, the version will be updated everywhere for the tool.
 
+## Testing and building your code
+
+The tool includes the scripts `test` and `build` to test and build the tools accordingly.
+The `test` currently only performs linting, so it's effectively the same as calling `lint`, but this may change in the future, so we recommend you to run `test` instead. Run it by calling:
+
+```sh
+npm start test
+```
+
+The `build` command does perform a build action and generates the executable file and all JS api files. Run it by calling:
+
+```sh
+npm start build
+```
+
 ## Testing newer versions of the library
 
 This tool relies heavily on the packaging system. In that sense, the library need to be published in order to be tested, which constitutes a problem, as it cannot be tested without publishing. For that, we make use of [verdaccio](http://verdaccio.org). Verdaccio provides a private server, which can run locally. By running verdaccio locally, then the newer versions of the library can be tested using such server instead of having to publish to npm.
 
 Firs, publish the script globally using `npm link`, so you have an easy way of calling the tool.
 
-You can then run the verdaccio server and publish the library to it by running
+You can then run the verdaccio server and publish the library to it by running:
 
 ```sh
 npm start verdaccio
 ```
 
-Also, the following command performs the same:
-
-```sh
-npm run build
-```
-
-While, on the other hand, `npm test` performs the same after running the linter.
+> WARNING: Note that verdaccio expect that you have updated the
+> version of the package to a number that is not used, even in the
+> npmjs registry. Be sure to update it before running the command.
 
 While the server is still running, you can run the globally installed script, adding the testing flag to any command (`--test` or `-T`). This flag instructs the tool to search the library in the verdaccio server instead of npmjs registry.
 
@@ -351,6 +355,10 @@ This will run the verdaccio server, but it will not attempt to publish the libra
 npm adduser --registry http://localhost:4567
 ```
 
+Notice the `httpasswd` file inside the `test/verdaccio` folder, which containes
+the users and their hashed passwords. If you forgot your password, you may delete the contents of the file and start over. Remember that, as this is for
+local testing only, you should stick with a simple username and password. Something you may remember. By default we use the `gobstones` username with the `gobstones` password.
+
 Then login to the registry:
 
 ```sh
@@ -363,7 +371,7 @@ After that, you should be able to publish your library by doing:
 npm publish --registry http://localhost:4567
 ```
 
-Once the verdaccio server is configured for the first time, you should be able to stop it and the re-run and publish using the `npm start verdaccio` command.
+Once the verdaccio server is configured for the first time, you should be able to stop it and then re-run and publish using the `npm start verdaccio` command.
 
 ## Contributing
 

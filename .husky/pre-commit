@@ -6,7 +6,7 @@
 # Read parameters
 # NOTHING TO READ HERE
 
-# Set failing on command fail, pipe fail, and undefined variable use
+# Set failing on command fail, and undefined variable use
 set -eu;
 
 # This hook is invoked by git-commit, and can be bypassed with the
@@ -36,6 +36,10 @@ echo "Running pre commit hooks";
 echo "**************************";
 echo "";
 
+# Run license
+echo "\nAdd license text to code files\n";
+npx --no -- nps license;
+
 # Run prettify
 echo "Run prettify\n";
 npx --no -- nps prettify;
@@ -43,10 +47,6 @@ npx --no -- nps prettify;
 # Run changelog
 echo "\nRun changelog\n";
 npx --no -- nps changelog;
-
-# Run license
-echo "\nAdd license text to code files\n";
-npx --no -- nps license;
 
 # Add all generated files
 echo "\nAdd generated files to commit\n";

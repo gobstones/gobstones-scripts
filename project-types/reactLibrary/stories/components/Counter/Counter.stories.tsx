@@ -20,7 +20,7 @@
 import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 
-import { Counter } from '../../../src/components/Counter';
+import { Counter } from '../../../src/Components/Counter';
 
 export default {
     title: 'Gobstones/Counter',

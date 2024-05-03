@@ -15,7 +15,7 @@
  * @author Your Name <yourname@company.com>
  */
 
-import { joinString } from '../helpers';
+import { joinString } from '../Helpers';
 
 /**
  * The documentation for MyClass.

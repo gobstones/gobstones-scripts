@@ -8,8 +8,8 @@ COMMIT_MSG_FILE=$1;
 COMMIT_SOURCE=$2;
 SHA1=$3;
 
-# Set failing on command fail, pipe fail, and undefined variable use
-set -euo pipefail
+# Set failing on command fail, and undefined variable use
+set -eu;
 
 # This hook is invoked by git-commit right after preparing
 # the default log message, and before the editor is started.

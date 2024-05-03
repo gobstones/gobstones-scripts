@@ -20,10 +20,10 @@
  * @ignore
  * @author Your Name <yourname@company.com>
  */
-import { MyClass } from './models';
-import { intl } from './translations';
+import { MyClass } from './Models';
+import { intl } from './Translations';
 
-export * from './models/MyClass';
+export * from './Models/MyClass';
 
 // eslint-disable-next-line no-console
 console.log(intl.translate('program.running'));

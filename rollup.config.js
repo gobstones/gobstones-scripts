@@ -45,7 +45,7 @@ module.exports = [
         ]
     },
     {
-        input: 'src/cli/index.ts',
+        input: 'src/CLI/index.ts',
         output: [
             {
                 sourcemap: true,

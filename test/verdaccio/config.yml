@@ -19,7 +19,7 @@ web:
     title: gobstones-scripts@verdaccio
     # comment out to disable gravatar support
     # gravatar: false
-    # by default packages are ordercer ascendant (asc|desc)
+    # by default packages are orderer ascendant (asc|desc)
     # sort_packages: asc
     # convert your UI to the dark side
     darkMode: true
@@ -31,7 +31,7 @@ web:
     # In combination with darkMode you can force specific theme
     showThemeSwitch: true
     showFooter: false
-    # showSearch: true
+    showSearch: true
     showRaw: false
     showDownloadTarball: false
     #  HTML tags injected after manifest <scripts/>

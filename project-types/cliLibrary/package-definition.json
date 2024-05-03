@@ -50,7 +50,7 @@
   },
   "config": {
     "gobstones-scripts": {
-      "type": "cliLibrary",
+      "type": "CLILibrary",
       "manager": "npm"
     }
   },
@@ -59,7 +59,7 @@
     "commander": "^11.1.0"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.8.3",
+    "@gobstones/gobstones-scripts": "^0.8.4",
     "husky": "^8.0.2"
   }
 }

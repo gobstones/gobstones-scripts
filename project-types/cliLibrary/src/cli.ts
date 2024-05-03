@@ -20,8 +20,8 @@
  */
 import { cli, readJSON } from '@gobstones/gobstones-core/cli';
 
-import { MyClass } from './models/MyClass';
-import { intl } from './translations';
+import { MyClass } from './Models/MyClass';
+import { intl } from './Translations';
 
 const packageJSON = readJSON('../package.json');
 
