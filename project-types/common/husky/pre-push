@@ -8,12 +8,29 @@ REMOTE_NAME=$1;
 REMOTE_URL=$2;
 # Read the input and split it approprietly
 INPUT=$(cat);
-INPUT_ARR=($INPUT);
+COUNTER=0;
+for WORD in $INPUT; do
+    case $COUNTER in
+        0)
+            LOCAL_REF=$WORD;;
+        1)
+            LOCAL_OBJ_NAME=$WORD;;
+        2)
+            REMOTE_REF=$WORD;;
+        3)
+            REMOTE_OBJ_NAME=$WORD;;
+    esac
+    COUNTER=$((COUNTER + 1))
+done
 
-LOCAL_REF=${INPUT_ARR[0]}
-LOCAL_OBJ_NAME=${INPUT_ARR[1]}
-REMOTE_REF=${INPUT_ARR[2]}
-REMOTE_OBJ_NAME=${INPUT_ARR[3]}
+case "$LOCAL_REF" in
+    refs\/tags*)
+        # Apply specific code when publishing tags
+        IS_TAG=1;;
+    *)
+        # Apply specific code when publishing any branch
+        IS_TAG=0;;
+esac
 
 # Set failing on command fail, and undefined variable use
 set -eu;

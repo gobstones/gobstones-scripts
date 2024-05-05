@@ -1,3 +1,8 @@
+## <small>0.8.5 (2024-05-05)</small>
+
+
+
+
 ## <small>0.8.4 (2024-05-05)</small>
 
 -   style: change casing of submodules to be uppercase always ([b2798a6](https://github.com/gobstones/gobstones-scripts/commit/b2798a6))
