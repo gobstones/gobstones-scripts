@@ -114,7 +114,7 @@ module.exports = {
                     '&& npx rimraf ./project-types/Common/license.config.json',
 
                 hiddenFromHelp: true,
-                description: 'Add license information to all code files in the project'
+                description: 'Remove license information to all code files in the project'
             }
         }
     }

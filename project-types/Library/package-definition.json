@@ -4,13 +4,12 @@
   "description": "A New Gobstones Project Library",
   "repository": "https://github.com/gobstones/<library-name>",
   "homepage": "https://gobstones.github.io/<library-name>",
-  "demopage": "https://gobstones.github.io/<library-name>/demo",
   "author": "John Doe <john.doe@gmail.com>",
   "license": "AGPL-3.0",
-  "keywords": ["Gobstones", "Library", "React"],
+  "keywords": ["Gobstones", "Library", "Keywords"],
   "main": "./dist/cjs/index.cjs",
   "module": "./dist/esm/index.mjs",
-  "types": "./dist/cjs/typings/index.d.ts",
+  "typings": "./dist/esm/typings/index.d.ts",
   "exports": {
     ".": {
       "import": {
@@ -37,17 +36,15 @@
   },
   "config": {
     "gobstones-scripts": {
-      "type": "ReactLibrary",
+      "type": "Library",
       "manager": "npm"
     }
   },
   "dependencies": {
-    "@gobstones/gobstones-core": "^0.4.7",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "@gobstones/gobstones-core": "^0.4.7"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.8.5",
+    "@gobstones/gobstones-scripts": "^0.8.6",
     "husky": "^8.0.2"
   }
 }
