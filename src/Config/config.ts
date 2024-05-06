@@ -864,7 +864,7 @@ export class Config {
                 // This file descriptor is used to find
                 // The LICENSE_HEADER. In principle it should not be
                 // overridden at all.
-                gobstonesScriptsLocation: ['common/LICENSE_HEADER'],
+                gobstonesScriptsLocation: ['Common/LICENSE_HEADER'],
                 projectLocation: ['LICENSE_HEADER'],
                 isOverridable: true
             }),
@@ -877,7 +877,7 @@ export class Config {
                     // This file descriptor is used to find
                     // The license.config.js. In principle it should not be
                     // overridden at all.
-                    gobstonesScriptsLocation: ['common/license.config.js'],
+                    gobstonesScriptsLocation: ['Common/license.config.js'],
                     projectLocation: ['license.config.js'],
                     isOverridable: true
                 }

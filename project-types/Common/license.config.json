@@ -1,1 +1,0 @@
-{"license":"undefined","ignore":["docs/","test/","project-types/**/src/**/!(*.ts|*.tsx)","project-types/**/test/**/*","dist/**/!(*.d.ts|*.js|*.cjs|*.mjs)","**/!(*.ts|*.tsx)"],"defaultFormat":{"prepend":"/*","append":"*/"},"licenseFormats":{"ts|tsx|js|jsx":{"prepend":"/*","append":" */","eachLine":{"prepend":" * "}}},"trailingWhitespace":"TRIM"}
