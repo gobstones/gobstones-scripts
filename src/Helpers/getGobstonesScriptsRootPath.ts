@@ -10,10 +10,16 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.Helpers
+ * ----------------------------------------------------
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
+
 import childProcess from 'child_process';
 import fs from 'fs';
 import path from 'path';
@@ -26,14 +32,13 @@ import { PackageJsonReader } from './PackageJsonReader';
 import { OSType } from '../Config/config';
 
 /**
- * Returns the @gobstones/gobstones-scripts root path. That is, the path to
- * the module in the users node_modules folder.
+ * Returns the `@gobstones/gobstones-scripts` root path. That is, the path to
+ * the module in the users `node_modules` folder.
  *
- * @param os The OS that is currently discovered as environment.
- * @param projectRootPath The currently identified project's root path.
+ * @param os - The OS that is currently discovered as environment.
+ * @param projectRootPath - The currently identified project's root path.
  *
- * @internal
- * @group Internal: Functions
+ * @returns The root path of the `gobstones-scripts` project.
  */
 export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string): string {
     logger.debug(`[getGobstonesScriptsRootPath]: Attempting to recover the gobstones-scripts folder location`, 'green');
@@ -61,11 +66,11 @@ export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string)
         // the same folder, or a folder further up
         let possibleRootPath = projectRootPath;
 
-        const pathStartBySystem =
-            os === 'windows'
-                ? possibleRootPath && possibleRootPath.match(/^[A-Z]:\\/)
-                    ? possibleRootPath.substring(0, 3)
-                    : 'C:\\'
+        const pathStartBySystem
+            = os === 'windows'
+                ? (possibleRootPath?.match(/^[A-Z]:\\/)
+                        ? possibleRootPath.substring(0, 3)
+                        : 'C:\\')
                 : '/';
 
         logger.debug(
@@ -111,8 +116,8 @@ export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string)
         const attemptForCommandWithLocations = (command: string, locations: string[]): string | undefined => {
             if (commandExists.sync(command)) {
                 logger.debug(
-                    `[getGobstonesScriptsRootPath]: Attempting to see if gobstones-scripts ` +
-                        `is installed globally through ${command}`,
+                    `[getGobstonesScriptsRootPath]: Attempting to see if gobstones-scripts `
+                    + `is installed globally through ${command}`,
                     'green'
                 );
 
@@ -147,7 +152,7 @@ export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string)
             () => attemptForCommandWithLocations('pnpm', ['pnpm root', 'pnpm root --global'])
         ];
         while (!detectedScriptRootPath && indexToLocation < actionsToFindLocation.length) {
-            detectedScriptRootPath = actionsToFindLocation[indexToLocation]();
+            detectedScriptRootPath = actionsToFindLocation[indexToLocation]() || '';
             indexToLocation++;
         }
 

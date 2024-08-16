@@ -14,7 +14,7 @@
  * This module provides tasks that can be imported and used
  * in your personal nps files.
  *
- * @module API.Tasks
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 export * from './chmod';

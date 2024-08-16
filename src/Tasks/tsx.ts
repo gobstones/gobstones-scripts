@@ -11,8 +11,8 @@
  * *****************************************************************************
  */
 /**
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
  */
 import { stripIndent } from 'common-tags';
 
@@ -24,8 +24,6 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the tsx task.
- *
- * @group API: Types
  */
 export interface TaskTsxOptions {
     /**
@@ -43,16 +41,14 @@ export interface TaskTsxOptions {
  * Returns the string for the bash command  to run
  * tsx with the gobstones-script detected configuration.
  *
- * @param options The options applied when running typedoc.
+ * @param options - The options applied when running typedoc.
  *
  * @example tsx({file: './src/index.ts', watch: false })
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function tsx(options: TaskTsxOptions): string {
-    if (isNotDefined(options?.file)) {
+    if (isNotDefined(options.file)) {
         throw new TaskConfigurationError(
             stripIndent`"tsx" requires options with the following signature:
                 {
@@ -62,7 +58,7 @@ export function tsx(options: TaskTsxOptions): string {
         );
     }
     return (
-        `${runBin('tsx')} ${options.file} --tsconfig ${config.projectType.tsConfigJSON.toolingFile}` +
-        (options.watch ? ` --watch ${options.watch}` : ' --ignore-watch')
+        `${runBin('tsx')} ${options.watch ? 'watch' : ''} `
+        + `${options.file} --tsconfig ${config.projectType.tsConfigJSON.toolingFile}`
     );
 }

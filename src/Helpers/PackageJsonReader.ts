@@ -10,10 +10,16 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.Helpers
+ * ----------------------------------------------------
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
+
 import fs from 'fs';
 
 import { logger } from './Logger';
@@ -23,13 +29,17 @@ import { logger } from './Logger';
  * JSON file and accessing the properties of it in an easy fashion.
  * If reading the file fails, the returned reader will always return undefined
  * for any property intended to be read.
- *
- * @internal
- * @group Internal: Classes
  */
 export class PackageJsonReader {
-    public _contents: any;
-    public constructor(packageJsonLocation?: string) {
+    /** The contents of the package.json read file. */
+    public _contents: unknown;
+
+    /**
+     * Create a new PackageJsonReader.
+     *
+     * @param packageJsonLocation - The location of the file to read.
+     */
+    public constructor(packageJsonLocation: string) {
         logger.debug(
             `[PackageJsonReader]: Attempting to read package.json configuration at: ${packageJsonLocation}`,
             'yellow'
@@ -44,8 +54,11 @@ export class PackageJsonReader {
         }
     }
 
-    public getValueAt(key: string): any {
-        let nextValue = this._contents;
+    /**
+     * Return the associated value for a given key.
+     */
+    public getValueAt(key: string): unknown {
+        let nextValue: unknown = this._contents;
         const keys = key.split('.');
 
         for (const k of keys) {

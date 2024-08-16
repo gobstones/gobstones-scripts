@@ -10,10 +10,16 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.Helpers
+ * ----------------------------------------------------
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
+
 import fs from 'fs';
 import path from 'path';
 
@@ -24,10 +30,11 @@ import { FileDefinition } from '../Config/config';
 /**
  * Locate the tooling file to use for the given type definition.
  *
- * @param fileDef The file definition to locate the tooling for.
+ * @param projectRoot - The root directory for the project.
+ * @param gobstonesScriptsProjectsRoot - The root directory for the gobstones-scripts package.
+ * @param fileDef - The file definition to locate the tooling for.
  *
- * @internal
- * @group Internal: Functions
+ * @returns The tooling file path for the given file definition, or undefined if none could be found.
  */
 export const getToolingFile = (
     projectRoot: string,

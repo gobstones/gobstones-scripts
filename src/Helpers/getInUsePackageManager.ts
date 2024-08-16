@@ -10,10 +10,16 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.Helpers
+ * ----------------------------------------------------
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
+
 import childProcess from 'child_process';
 
 import commandExists from 'command-exists';
@@ -24,15 +30,15 @@ import { ConfigPackageManagers, PackageManager } from '../Config/config';
 
 /**
  * Return the package manager in use based different features. First, by
- * identifying the current runner through the "npm_config_user_agent" environment
+ * identifying the current runner through the `npm_config_user_agent` environment
  * variable. It such variable is not set, which is common for global runs,
- * attempts to identify the runner by locating the global "gobstones-scripts"
- * command. If no match is found, defaults to npm.
+ * attempts to identify the runner by locating the global `gobstones-scripts`
+ * command. If no match is found, defaults to `npm`.
+ *
+ * @param availablePackageManagers - The list of all available package managers.
+ * @param defaultPackageManager The default package manager to use.
  *
  * @returns The package manager in use
- *
- * @internal
- * @group Internal: Functions
  */
 export function getInUsePackageManager(
     availablePackageManagers: ConfigPackageManagers,
@@ -40,8 +46,8 @@ export function getInUsePackageManager(
 ): PackageManager {
     logger.debug(`[getInUsePackageManager]: Attempting to locate package manager in use`, 'gray');
 
-    const userAgent = process.env['npm_config_user_agent'];
-    let whichFile: string;
+    const userAgent = process.env.npm_config_user_agent;
+    let whichFile: string = '';
 
     if (!userAgent) {
         logger.debug(
@@ -60,17 +66,17 @@ export function getInUsePackageManager(
                 .output.toString()
                 .replace(/,/g, '')
                 .trim();
-        } catch (e) {
+        } catch {
             logger.debug(`[getInUsePackageManager]: "which" may not be installed in this system.`, 'cyan');
         }
     }
-    const value = userAgent || whichFile;
+    const value = userAgent ?? whichFile;
 
-    logger.debug(`[getInUsePackageManager]: Found gobstones-scripts ar: ${value}`, 'gray');
+    logger.debug(`[getInUsePackageManager]: Found gobstones-scripts at: ${value}`, 'gray');
 
     let result: string | undefined;
-    for (const pm of Object.keys(availablePackageManagers)) {
-        if (value && value.indexOf(availablePackageManagers[pm].cmd) >= 0) {
+    for (const pm of Object.keys(availablePackageManagers) as (keyof ConfigPackageManagers)[]) {
+        if (value?.includes(availablePackageManagers[pm].cmd)) {
             if (commandExists.sync(availablePackageManagers[pm].cmd)) {
                 result = availablePackageManagers[pm].cmd;
                 break;

@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { stripIndent } from 'common-tags';
 
 import { runBin } from './runBin';
@@ -23,8 +27,6 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the typedoc task.
- *
- * @group API: Types
  */
 export interface TaskPrettifyOptions {
     /**
@@ -37,16 +39,14 @@ export interface TaskPrettifyOptions {
  * Returns the string for the bash command  to run
  * prettier with the gobstones-script detected configuration.
  *
- * @param options The options applied when running typedoc.
+ * @param options - The options applied when running typedoc.
  *
  * @example prettier({ files: './src/** /*' })
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function prettify(options: TaskPrettifyOptions): string {
-    if (isNotDefined(options?.files)) {
+    if (isNotDefined(options.files)) {
         throw new TaskConfigurationError(
             stripIndent`"prettier" requires options with the following signature:
                 {

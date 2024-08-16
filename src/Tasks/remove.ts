@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { stripIndent } from 'common-tags';
 
 import { runBin } from './runBin';
@@ -23,8 +27,6 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the remove task.
- *
- * @group API: Types
  */
 export interface TaskRemoveOptions {
     /**
@@ -37,16 +39,14 @@ export interface TaskRemoveOptions {
  * Returns the string for the bash command  to run
  * a remove file command, deleting them from disk.
  *
- * @param options The options applied when running the copy.
+ * @param options - The options applied when running the copy.
  *
  * @example remove({ files: './dist' })
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function remove(options: TaskRemoveOptions): string {
-    if (isNotDefined(options?.files)) {
+    if (isNotDefined(options.files)) {
         throw new TaskConfigurationError(
             stripIndent`"remove" requires options with the following signature:
                 {
@@ -61,7 +61,7 @@ export function remove(options: TaskRemoveOptions): string {
  * Returns the string for the bash command  to run
  * rimraf with some arguments.
  *
- * @param args args to pass to rimraf
+ * @param args - args to pass to rimraf
  *
  * @return The command to run the rimraf binary with given arguments.
  *

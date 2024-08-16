@@ -10,10 +10,16 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.Helpers
+ * ----------------------------------------------------
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
+
 import fs from 'fs';
 import path from 'path';
 
@@ -29,15 +35,12 @@ import { ExecutableScriptDefinition, PackageManagerDefinition } from '../Config/
  * be given, if not given, the name of the binary is assumed to be the same
  * of that of the package.
  *
- * @param projectRootPath The currently identified project's root path.
- * @param packageManagerDefinition The definition to all available package managers.
- * @param packageName The name of the package holding the binary.
- * @param binName The name of the binary that it's intended to be retrieved.
+ * @param projectRootPath - The currently identified project's root path.
+ * @param packageManagerDefinition - The definition to all available package managers.
+ * @param packageName - The name of the package holding the binary.
+ * @param binName - The name of the binary that it's intended to be retrieved.
  *
  * @returns The information for the binary execution, or undefined if no binary was found.
- *
- * @internal
- * @group Internal: Functions
  */
 export function getBin(
     projectRootPath: string,
@@ -50,7 +53,7 @@ export function getBin(
     }
 
     // Hold the result of the file found for caching it at the end.
-    let result: Partial<ExecutableScriptDefinition>;
+    let result: Partial<ExecutableScriptDefinition> = {};
 
     logger.debug(`[getBin]: Attempting to find binary file "${binName}" for the package "${packageName}"`, 'magenta');
 
@@ -68,7 +71,7 @@ export function getBin(
             command: `node --experimental-vm-modules ${binFile}`,
             mode: 'node'
         };
-    } catch (e) {
+    } catch {
         logger.debug(`[getBin]: Could not detect through require.resolve`, 'magenta');
 
         logger.debug(`[getBin]: Attempting to find binary in binary folders of current package manager`, 'magenta');
@@ -92,7 +95,7 @@ export function getBin(
             } else {
                 logger.debug(`[getBin]: No package with name found. Attempting to find native binary.`, 'magenta');
 
-                const binFile = path.join(projectRootPath, modulesFolder, '.bin', binName ?? packageName);
+                const binFile = path.join(projectRootPath, modulesFolder, '.bin', binName || packageName);
 
                 if (fs.existsSync(binFile)) {
                     // We found a possible binary, but in some cases
@@ -157,7 +160,7 @@ export function getBin(
             }
         }
     }
-    if (!result) {
+    if (Object.keys(result).length === 0) {
         logger.debug(`[getBin]: Could not find a binary file`, 'magenta');
         return undefined;
     }
@@ -171,23 +174,22 @@ export function getBin(
 /**
  * Returns the bin file for a given package and binary file.
  *
- * @param packageJsonPath The path of the requested package's package.json
- * @param packageRootDir The path to root of the package that contains the binary directory
- * @param binName The name of the binary that we want the path of.
+ * @param packageJsonPath - The path of the requested package's package.json
+ * @param packageRootDir - The path to root of the package that contains the binary directory
+ * @param binName - The name of the binary that we want the path of.
  *
  * @returns The path to the binary file.
  *
  * @internal
- * @group Internal: Functions
  */
 function getBinFile(packageJsonPath: string, packageRootDir: string, binName: string): string {
     logger.debug(`[getBin] Attempting to find the binary file: ${binName} using root: ${packageJsonPath}`, 'magenta');
 
     const pkgJsonReader = new PackageJsonReader(packageJsonPath);
-    let pkgBinDefinition: any = pkgJsonReader.getValueAt('bin');
+    let pkgBinDefinition = pkgJsonReader.getValueAt('bin') as string | Record<string, string>;
 
-    const binRelativeToPackgeInJson: string =
-        pkgBinDefinition && typeof pkgBinDefinition === 'object'
+    const binRelativeToPackgeInJson: string
+        = pkgBinDefinition && typeof pkgBinDefinition === 'object'
             ? (pkgBinDefinition = pkgBinDefinition[binName])
             : pkgBinDefinition;
 

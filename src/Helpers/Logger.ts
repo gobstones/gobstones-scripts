@@ -10,17 +10,20 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.Helpers
+ * ----------------------------------------------------
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
+
 import colors from 'ansi-colors';
 
 /**
  * The different available log levels.
- *
- * @internal
- * @group Internal: Types
  */
 export enum LogLevel {
     Error = 'error',
@@ -33,9 +36,6 @@ export enum LogLevel {
  * This class provides a centralize way to report messages in the terminal through
  * the application, including messages that are always printed, debug information,
  * error messages and others.
- *
- * @internal
- * @group Internal: Classes
  */
 export class Logger {
     /** Whether this logger is turned on */
@@ -51,7 +51,7 @@ export class Logger {
      *
      * @returns the receiver logger.
      */
-    public on(): Logger {
+    public on(): this {
         this._on = true;
         return this;
     }
@@ -61,7 +61,7 @@ export class Logger {
      *
      * @returns the receiver logger.
      */
-    public off(): Logger {
+    public off(): this {
         this._on = false;
         return this;
     }
@@ -69,12 +69,12 @@ export class Logger {
     /**
      * Log a message as an error, if the level allows it and the logger is on.
      *
-     * @param msg The message to print.
-     * @param style A style on which to print the message
+     * @param msg - The message to print.
+     * @param style - A style on which to print the message
      *
      * @returns the receiver logger.
      */
-    public error(msg: string, style?: string): Logger {
+    public error(msg: string, style?: string): this {
         this.print(msg, style, LogLevel.Error);
         return this;
     }
@@ -82,12 +82,12 @@ export class Logger {
     /**
      * Log a message as an warning, if the level allows it and the logger is on.
      *
-     * @param msg The message to print.
-     * @param style A style on which to print the message
+     * @param msg - The message to print.
+     * @param style - A style on which to print the message
      *
      * @returns the receiver logger.
      */
-    public warn(msg: string, style?: string): Logger {
+    public warn(msg: string, style?: string): this {
         this.print(msg, style, LogLevel.Warn);
         return this;
     }
@@ -95,12 +95,12 @@ export class Logger {
     /**
      * Log a message as information, if the level allows it and the logger is on.
      *
-     * @param msg The message to print.
-     * @param style A style on which to print the message
+     * @param msg - The message to print.
+     * @param style - A style on which to print the message
      *
      * @returns the receiver logger.
      */
-    public info(msg: string, style?: string): Logger {
+    public info(msg: string, style?: string): this {
         this.print(msg, style, LogLevel.Info);
         return this;
     }
@@ -108,12 +108,12 @@ export class Logger {
     /**
      * Log a message as debug information, if the level allows it and the logger is on.
      *
-     * @param msg The message to print.
-     * @param style A style on which to print the message
+     * @param msg - The message to print.
+     * @param style - A style on which to print the message
      *
      * @returns the receiver logger.
      */
-    public debug(msg: string, style?: string): Logger {
+    public debug(msg: string, style?: string): this {
         this.print(msg, style, LogLevel.Debug);
         return this;
     }
@@ -121,12 +121,12 @@ export class Logger {
     /**
      * Log a message regardless of the active level, but only if the logger is on.
      *
-     * @param msg The message to print.
-     * @param style A style on which to print the message
+     * @param msg - The message to print.
+     * @param style - A style on which to print the message
      *
      * @returns the receiver logger.
      */
-    public log(msg: string, style?: string): Logger {
+    public log(msg: string, style?: string): this {
         this.print(msg, style);
         return this;
     }
@@ -134,13 +134,14 @@ export class Logger {
     /**
      * Print the given message in the terminal, if the log level allows it and the logger is on.
      *
-     * @param msg The message to print
-     * @param style The style to use for printing.
-     * @param actualLevel The actual level on which the message should be printed.
+     * @param msg - The message to print
+     * @param style - The style to use for printing.
+     * @param actualLevel - The actual level on which the message should be printed.
      */
     private print(msg: string, style?: string, actualLevel?: LogLevel): void {
         if (this._on && (!actualLevel || this.isLevelGeqThan(actualLevel, this.level))) {
             if (style) {
+                // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
                 msg = colors[style](msg);
             }
             // eslint-disable-next-line no-console
@@ -151,25 +152,22 @@ export class Logger {
     /**
      * Answers if the first level is greater or equal than the second one.
      *
-     * @param level1 The first level to compare
-     * @param level2 The second level to compare.
+     * @param level1 - The first level to compare
+     * @param level2 - The second level to compare.
      *
-     * @returns true if the first level is greater or equal than the second.
+     * @returns `true` if the first level is greater or equal than the second, `false` otherwise.
      */
     private isLevelGeqThan(level1: LogLevel, level2: LogLevel): boolean {
         return (
-            level1 === LogLevel.Error ||
-            (level1 === LogLevel.Warn && level2 !== LogLevel.Error) ||
-            (level1 === LogLevel.Info && level2 !== LogLevel.Error && level2 !== LogLevel.Warn) ||
-            level2 === LogLevel.Debug
+            level1 === LogLevel.Error
+            || (level1 === LogLevel.Warn && level2 !== LogLevel.Error)
+            || (level1 === LogLevel.Info && level2 !== LogLevel.Error && level2 !== LogLevel.Warn)
+            || level2 === LogLevel.Debug
         );
     }
 }
 
 /**
  * The default {@link Logger}.
- *
- * @internal
- * @group Internal: Objects
  */
 export const logger = new Logger(LogLevel.Error);

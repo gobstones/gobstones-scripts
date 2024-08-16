@@ -18,7 +18,8 @@
         "resolveJsonModule": true,
         "stripInternal": true,
         "composite": false,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "strictNullChecks": true
     },
     "include": ["./src/**/*"]
 }

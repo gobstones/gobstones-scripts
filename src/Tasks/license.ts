@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { runBin } from './runBin';
 
 import { config } from '../Config';
@@ -24,13 +28,11 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
  * Returns the string for the bash command to run
  * the license-check-and-add command.
  *
- * @param mode The mode in which to run, one of "add" (default) or "remove".
+ * @param mode - The mode in which to run, one of "add" (default) or "remove".
  *
  * @example license('add')
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function license(mode: string = 'add'): string {
     if (isNotDefined(mode) || (mode !== 'add' && mode !== 'remove')) {

@@ -10,18 +10,20 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.Helpers
+ * ----------------------------------------------------
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
 
 /**
  * Answers if the platform is windows.
  *
- * @returns true if Windows, false otherwise
- *
- * @internal
- * @group Internal: Functions
+ * @returns `true` if the current OS is Windows, `false` otherwise.
  */
 export const isWindows = (): boolean =>
     process && (process.platform === 'win32' || /^(msys|cygwin)$/.test(process.env.OSTYPE ?? ''));

@@ -10,25 +10,29 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.CLI
+ * ----------------------------------------------------
+ * @module CLI
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- **/
+ *
+ * @internal
+ * ----------------------------------------------------
+ */
+
 import path from 'path';
 
 import { program as commanderProgram } from 'commander';
 
 import * as cli from './cli-helpers';
 
+import { t } from '../@i18n';
 import * as api from '../API';
 import { config } from '../Config';
 import { LogLevel, logger } from '../Helpers/Logger';
 
 /**
  * The command line program definition
- *
- * @internal
- * @group Internal: Main
  */
 export const program = commanderProgram;
 
@@ -36,7 +40,6 @@ export const program = commanderProgram;
  * The general program options.
  *
  * @internal
- * @group Internal: Types
  */
 interface GeneralOptions {
     type?: string;
@@ -48,7 +51,6 @@ interface GeneralOptions {
  * The options that expect a package manager
  *
  * @internal
- * @group Internal: Types
  */
 interface PackageManagerBasedOption {
     packageManager?: string;
@@ -58,7 +60,6 @@ interface PackageManagerBasedOption {
  * The general program options with the "--test" option added.
  *
  * @internal
- * @group Internal: Types
  */
 type GeneralOptionsWithTest = GeneralOptions & { test?: boolean };
 
@@ -66,7 +67,6 @@ type GeneralOptionsWithTest = GeneralOptions & { test?: boolean };
  * The options for command that expect a list of items.
  *
  * @internal
- * @group Internal: Types
  */
 interface ItemBasedOptions {
     items?: string;
@@ -80,7 +80,7 @@ program
     .description(`${cli.banner()}\n\n${cli.welcome()}`)
     .addHelpText('before', `${cli.banner()}\n\n${cli.welcome()}`)
     .version(config.environment.toolVersion, '-v --version')
-    .option('-c, --config', "display the tool's detected configuration")
+    .option('-c, --config', t('cli:descriptions.args.config'))
     .action((options: { config?: boolean }) => {
         if (!options.config) {
             program.outputHelp();
@@ -92,22 +92,20 @@ program
 
 program
     .command('create <project-name>')
-    .description('create a new project with the given project name')
+    .description(t('descriptions.commands.create'))
     .option(
-        '-t, --type <project-type> the project type to create, one of "' +
-            Object.keys(config.projectTypes).join('", "') +
-            '"',
+        '-t, --type <project-type>',
+        t('cli:descriptions.args.type', { options: `"${Object.keys(config.projectTypes).join('", "')}"` }),
         'Library'
     )
     .option(
-        '-p, --package-manager <package-manager> the project manager to use, one of "' +
-            Object.keys(config.packageManagers).join('", "') +
-            '"',
+        '-p, --package-manager <package-manager>',
+        t('cli:descriptions.args.packageManager', { options: `"${Object.keys(config.packageManagers).join('", "')}"` }),
         'npm'
     )
-    .option('-s, --silent', "run silently, not displaying the tool's banner", false)
-    .option('-D, --debug', "run in debug mode, printing all the internal tool's processing", false)
-    .option('-T, --test', 'run using verdaccio as a registry', false)
+    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
+    .option('-T, --test', t('cli:descriptions.args.test'), false)
     .action((projectName: string, options: PackageManagerBasedOption & GeneralOptionsWithTest) => {
         if (options.debug) {
             logger.level = LogLevel.Debug;
@@ -119,44 +117,37 @@ program
         failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
         failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
 
-        config.init(options.type, options.packageManager, options.debug, options.test);
+        config.init(options.type, options.packageManager, options.debug, options.test, undefined);
 
         cli.displayWelcomeForAction(
-            `Creating a project by the name "${projectName}" of type ` +
-                `"${config.executionEnvironment.projectType}" using package manager ` +
-                `"${config.executionEnvironment.packageManager}".`
+            t('cli:messages.creatingProject', {
+                projectName,
+                projectType: config.executionEnvironment.projectType,
+                packageManager: config.executionEnvironment.packageManager
+            })
         );
 
         cli.runOrEnd(() => {
             api.create(projectName, options.type, options.packageManager, options.test);
-        }, [
-            {
-                error: 'non empty folder',
-                msg:
-                    'Create expects that a folder with the project name ' +
-                    'does not exists or if it does, it should be empty.'
-            }
-        ]);
+        });
     });
 
 program
     .command('init')
-    .description('initialize a project in the current folder')
+    .description(t('descriptions.commands.init'))
     .option(
-        '-t, --type <project-type> the project type to create, one of "' +
-            Object.keys(config.projectTypes).join('", "') +
-            '"',
+        '-t, --type <project-type>',
+        t('cli:descriptions.args.type', { options: `"${Object.keys(config.projectTypes).join('", "')}"` }),
         'Library'
     )
     .option(
-        '-p, --package-manager <package-manager> the project manager to use, one of "' +
-            Object.keys(config.packageManagers).join('", "') +
-            '"',
+        '-p, --package-manager <package-manager>',
+        t('cli:descriptions.args.packageManager', { options: `"${Object.keys(config.packageManagers).join('", "')}"` }),
         'npm'
     )
-    .option('-s, --silent', "run silently, not displaying the tool's banner", false)
-    .option('-D, --debug', "run in debug mode, printing all the internal tool's processing", false)
-    .option('-T, --test', 'run using verdaccio as a registry', false)
+    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
+    .option('-T, --test', t('cli:descriptions.args.test'), false)
     .action((options: PackageManagerBasedOption & GeneralOptionsWithTest) => {
         if (options.debug) {
             logger.level = LogLevel.Debug;
@@ -168,30 +159,23 @@ program
         failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
         failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
 
-        config.init(options.type, options.packageManager, options.debug, options.test);
+        config.init(options.type, options.packageManager, options.debug, options.test, undefined);
 
         cli.displayWelcomeForAction(
-            `Initializing a project in the current directory of type ` +
-                `"${config.executionEnvironment.projectType}" using package manager ` +
-                `"${config.executionEnvironment.packageManager}".`
+            t('cli:messages.initializingProject', {
+                projectType: config.executionEnvironment.projectType,
+                packageManager: config.executionEnvironment.packageManager
+            })
         );
 
         cli.runOrEnd(() => {
             api.init(config.executionEnvironment.projectType, config.executionEnvironment.packageManager, options.test);
-        }, [
-            {
-                error: 'non empty folder',
-                msg:
-                    'Init expects the current folder to be empty, but the ' +
-                    'folder contains elements.\nEnsure that you are calling ' +
-                    'init from an empty folder an try again.'
-            }
-        ]);
+        });
     });
 
 program
     .command('update')
-    .description('update the root files of the project')
+    .description(t('descriptions.commands.update'))
     .option('-f, --force', 'whether to override previous values', false)
     .option(
         '-i, --items <item>',
@@ -199,13 +183,13 @@ program
         'all'
     )
     .option(
-        '-t, --type <project-type> the project type to create, one of "' +
-            Object.keys(config.projectTypes).join('", "') +
-            '"'
+        '-t, --type <project-type> the project type to create, one of "'
+        + Object.keys(config.projectTypes).join('", "')
+        + '"'
     )
-    .option('-s, --silent', "run silently, not displaying the tool's banner", false)
-    .option('-D, --debug', "run in debug mode, printing all the internal tool's processing", false)
-    .option('-T, --test', 'run using verdaccio as a registry', false)
+    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
+    .option('-T, --test', t('cli:descriptions.args.test'), false)
     .action((options: GeneralOptionsWithTest & ItemBasedOptions) => {
         if (options.debug) {
             logger.level = LogLevel.Debug;
@@ -222,13 +206,14 @@ program
             failIfOptionInvalid(options, 'items', config.projectTypeFilteredFiles.copiedOnUpdate);
         }
 
-        config.init(options.type, undefined, options.debug, options.test);
+        config.init(options.type, undefined, options.debug, options.test, undefined);
 
         cli.displayWelcomeForAction(
-            `Updating files in current project of type ` +
-                `"${config.executionEnvironment.projectType}" using package manager ` +
-                `"${config.executionEnvironment.packageManager}".\n\n` +
-                `Files to update: ${options.items}`
+            t('cli:messages.updatingFiles', {
+                projectType: config.executionEnvironment.projectType,
+                packageManager: config.executionEnvironment.packageManager,
+                files: options.items ?? ''
+            })
         );
 
         cli.runOrEnd(() => {
@@ -241,12 +226,12 @@ program
                 const fileName = useAbsolute ? file : path.relative(config.locations.projectRoot, file);
                 logger.log(`\t${fileName}`, 'blue');
             });
-        }, [{ error: 'non root folder', msg: 'Update should be run on the root of a project.' }]);
+        });
     });
 
 program
     .command('eject')
-    .description('eject the configuration files of the project')
+    .description(t('descriptions.commands.eject'))
     .option('-f, --force', 'whether to override previous values', false)
     .option(
         '-i, --items <item>',
@@ -254,12 +239,11 @@ program
         'all'
     )
     .option(
-        '-t, --type <project-type> the project type to create, one of "' +
-            Object.keys(config.projectTypes).join('", "') +
-            '"'
+        '-t, --type <project-type>',
+        t('cli:descriptions.args.type', { options: `"${Object.keys(config.projectTypes).join('", "')}"` })
     )
-    .option('-s, --silent', "run silently, not displaying the tool's banner", false)
-    .option('-D, --debug', "run in debug mode, printing all the internal tool's processing", false)
+    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
     .action((options: GeneralOptions & ItemBasedOptions) => {
         if (options.debug) {
             logger.level = LogLevel.Debug;
@@ -274,13 +258,14 @@ program
             failIfOptionInvalid(options, 'items', config.projectTypeFilteredFiles.copiedOnEject);
         }
 
-        config.init(options.type, undefined, options.debug, false);
+        config.init(options.type, undefined, options.debug, undefined, undefined);
 
         cli.displayWelcomeForAction(
-            `Ejecting files in current project of type ` +
-                `"${config.executionEnvironment.projectType}" using package manager ` +
-                `"${config.executionEnvironment.packageManager}".\n\n` +
-                `Files to update: ${options.items}`
+            t('cli:messages.ejectingFiles', {
+                projectType: config.executionEnvironment.projectType,
+                packageManager: config.executionEnvironment.packageManager,
+                files: options.items ?? ''
+            })
         );
 
         cli.runOrEnd(() => {
@@ -292,71 +277,82 @@ program
                 const fileName = useAbsolute ? file : path.relative(config.locations.projectRoot, file);
                 logger.log(`\t${fileName}`, 'blue');
             });
-        }, [{ error: 'non root folder', msg: 'Eject should be run on the root of a project.' }]);
+        });
     });
 
 program
     .command('run [command] [...args]')
-    .description('run a command with nps')
+    .description(t('descriptions.commands.run'))
     .option(
-        '-t, --type <project-type> the project type to create, one of "' +
-            Object.keys(config.projectTypes).join('", "') +
-            '"'
+        '-t, --type <project-type>',
+        t('cli:descriptions.args.type', { options: `"${Object.keys(config.projectTypes).join('", "')}"` })
     )
     .option(
-        '-p, --package-manager <package-manager> the project manager to use, one of "' +
-            Object.keys(config.packageManagers).join('", "') +
-            '"',
+        '-p, --package-manager <package-manager>',
+        t('cli:descriptions.args.packageManager', { options: `"${Object.keys(config.packageManagers).join('", "')}"` }),
         'npm'
     )
-    .option('-s, --silent', "run silently, not displaying the tool's banner", false)
-    .option('-D, --debug', "run in debug mode, printing all the internal tool's processing", false)
-    .action((command: string, args: string[], options: PackageManagerBasedOption & GeneralOptions) => {
-        if (options.debug) {
-            logger.level = LogLevel.Debug;
+    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
+    .option('-j, --use-local-tsconfig-json', t('cli:descriptions.args.useLocalTsconfigJson'), false)
+    .action(
+        (
+            command: string,
+            args: string[],
+            options: PackageManagerBasedOption & GeneralOptions & { useLocalTsconfigJson: boolean }
+        ) => {
+            if (options.debug) {
+                logger.level = LogLevel.Debug;
+            }
+            if (options.silent) {
+                logger.off();
+            }
+
+            failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
+            failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
+
+            config.init(options.type, options.packageManager, options.debug, undefined, options.useLocalTsconfigJson);
+
+            cli.displayWelcomeForAction(
+                !command
+                    ? t('cli:messages.presentingCommands', {
+                        projectType: config.executionEnvironment.projectType,
+                        packageManager: config.executionEnvironment.packageManager
+                    })
+                    : t('cli:messages.executingCommands', {
+                        command,
+                        projectType: config.executionEnvironment.projectType,
+                        packageManager: config.executionEnvironment.packageManager
+                    })
+            );
+
+            cli.runOrEnd(() => {
+                api.run(command, args, undefined, options.packageManager, options.useLocalTsconfigJson);
+            });
         }
-        if (options.silent) {
-            logger.off();
-        }
-
-        failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
-        failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
-
-        config.init(options.type, options.packageManager, options.debug, false);
-
-        cli.displayWelcomeForAction(
-            (!command
-                ? `Displaying all available commands on project of type `
-                : `Running command "${command}" on project of type `) +
-                `"${config.executionEnvironment.projectType}" using package manager ` +
-                `"${config.executionEnvironment.packageManager}".`
-        );
-
-        api.run(command, args, undefined, options.packageManager);
-    });
+    );
 
 /**
  * Throw an error if the given value at the options object (if any) is not a valid
  * option for the given option name, if the possible values is one of the given
  * possible values.
  *
- * @param options The object containing all options.
- * @param optionName The option name to verify.
- * @param possibleValues The possible values the option can take.
+ * @param options - The object containing all options.
+ * @param optionName - The option name to verify.
+ * @param possibleValues - The possible values the option can take.
  *
  * @throws if there is an option given and the value is not one of the possible values.
- *
- * @group Internal: Functions
  */
-export function failIfOptionInvalid(options: any, optionName: string, possibleValues: string[]): void {
-    const optionNameCamelCased = optionName.replace(/-(.)/g, (_, group1) => group1.toUpperCase());
-    const optionValue = options[optionNameCamelCased];
+export function failIfOptionInvalid(options: unknown, optionName: string, possibleValues: string[]): void {
+    const optionNameCamelCased = optionName.replace(/-(.)/g, (_, group1) => (group1 as string).toUpperCase());
+    const optionValue = (options as Record<string, string>)[optionNameCamelCased];
 
     if (optionValue && !possibleValues.includes(optionValue)) {
-        const message =
-            `The value "${optionValue}" is not a valid option for the argument "${optionName}"\n` +
-            `Please, select one of the following: "${possibleValues.join('", "')}"`;
-
+        const message = t('cli:errors.invalidOption', {
+            optionValue,
+            optionName,
+            options: `"${possibleValues.join('", "')}"`
+        });
         logger.on();
         logger.error(message, 'bgRed');
         process.exit(1);

@@ -10,10 +10,12 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module API.Config
+ * @module Config
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
+
 import path from 'path';
 
 import { testServer, version } from './about';
@@ -33,31 +35,26 @@ import { PackageJsonReader } from '../Helpers/PackageJsonReader';
 // ==========================================
 /**
  * Models the possible values of operating systems.
- * @group API: Types
  */
 export type OSType = 'macos' | 'posix' | 'windows';
 
 /**
  * Models the different type of executable scripts.
- * @group API: Types
  */
 export type ScriptType = 'node' | 'sh' | 'pwsh' | 'cmd';
 
 /**
  * Models the possible values of package managers.
- * @group API: Types
  */
 export type PackageManager = keyof ConfigPackageManagers;
 
 /**
  * Models the possible values of project types.
- * @group API: Types
  */
 export type ProjectType = keyof ConfigProjectTypes;
 
 /**
  * Models the possible values of project type's file.
- * @group API: Types
  */
 export type FileName = keyof ProjectTypeDefinition;
 
@@ -70,7 +67,6 @@ export type FileName = keyof ProjectTypeDefinition;
 // ==========================================
 /**
  * Models a package manager definition and basic commands and folder it has.
- * @group API: Types
  */
 export interface PackageManagerDefinition {
     /** The name of this package manager */
@@ -90,7 +86,6 @@ export interface PackageManagerDefinition {
 /**
  * Models a project type's file definition and the expected behavior of
  * the file.
- * @group API: Types
  */
 export interface FileDefinition {
     /**
@@ -123,17 +118,22 @@ export interface FileDefinition {
      * data) to be inserted to it.
      */
     requiresTestDataInjection: boolean;
+}
+
+/**
+ * Models a project type's file definition that has tooling content
+ */
+export interface FileDefinitionWithTooling extends FileDefinition {
     /**
      * The detected tooling file to use. Only present if
      * the file is overridable. The full path of the file is saved.
      * It's automatically calculated.
      */
-    toolingFile?: string;
+    toolingFile: string;
 }
 
 /**
  * Models a project type's file definitions.
- * @group API: Types
  */
 export interface ProjectTypeDefinition {
     /** The package.json file of the project type. */
@@ -169,15 +169,15 @@ export interface ProjectTypeDefinition {
     /** The .eslint file of the project type. */
     eslint: FileDefinition;
     /** The package-scripts.js file of the project type. */
-    nps: FileDefinition;
+    nps: FileDefinitionWithTooling;
     /** The .tsconfig.js file of the project type. */
-    typescript: FileDefinition;
+    typescript: FileDefinitionWithTooling;
     /** The .rollup.config.js file of the project type. */
-    rollup: FileDefinition;
+    rollup: FileDefinitionWithTooling;
     /** The .typedoc.config.js file of the project type. */
-    typedoc: FileDefinition;
+    typedoc: FileDefinitionWithTooling;
     /** The .jest.config.js file of the project type. */
-    jest: FileDefinition;
+    jest: FileDefinitionWithTooling;
     /** The .jestproxies folder of the project type. */
     jestproxies?: FileDefinition;
     /** The demos folder of the project type. */
@@ -189,17 +189,16 @@ export interface ProjectTypeDefinition {
     /** The .storybook folder of the project type. */
     storybook?: FileDefinition;
     /** The .tconfig.json file of the project type. */
-    tsConfigJSON: FileDefinition;
+    tsConfigJSON: FileDefinitionWithTooling;
     /** The LICENSE_HEADER file of the project type. */
-    licenseHeader: FileDefinition;
+    licenseHeader: FileDefinitionWithTooling;
     /** The license.config.js file of the project type. */
-    licenseHeaderConfig: FileDefinition;
+    licenseHeaderConfig: FileDefinitionWithTooling;
 }
 
 /**
  * Models a project type's file definition names, after
  * being filtered by category.
- * @group API: Types
  */
 export interface FilteredFilesDefinition {
     /** The list of file names to be copied on init. */
@@ -224,7 +223,6 @@ export interface FilteredFilesDefinition {
  * Models the configuration for all the available
  * package managers. It's one of the main {@link Config}
  * sections.
- * @group API: Types
  */
 export interface ConfigPackageManagers {
     /** The configuration for **npm**. */
@@ -239,7 +237,6 @@ export interface ConfigPackageManagers {
  * Models the configuration for the system's
  * environment, as detected by node. Is one of the
  * main {@link Config} sections.
- * @group API: Types
  */
 export interface ConfigEnvironment {
     /** The running tool version. */
@@ -258,7 +255,6 @@ export interface ConfigEnvironment {
  * Models the configuration for all the different
  * locations this tool manages. It's one of the main
  * {@link Config} sections.
- * @group API: Types
  */
 export interface ConfigLocations {
     /** The root of the currently running project. */
@@ -274,7 +270,6 @@ export interface ConfigLocations {
  * environment. That is, the loaded state of execution
  * for this particular run. Is one of the main
  * {@link Config} sections.
- * @group API: Types
  */
 export interface ConfigExecutionEnvironment {
     /** The currently in use project type. */
@@ -284,16 +279,17 @@ export interface ConfigExecutionEnvironment {
     /** Whether the tool should use full paths when displaying any. */
     useFullPaths: boolean;
     /** Whether the tool is running in debug mode. */
-    isDebugMode: boolean;
+    debug: boolean;
     /** Whether the tool is running in test mode. */
-    isTestMode: boolean;
+    test: boolean;
+    /** Whether the tool should expect a local tsconfig.json file instead of building from a .js one. */
+    useLocalTsconfigJson: boolean;
 }
 
 /**
  * Models the configuration for the different types
  * of project templates that exist. It's one of the main
  * {@link Config} sections.
- * @group API: Types
  */
 export interface ConfigProjectTypes {
     /** The **Library** project type. */
@@ -310,7 +306,6 @@ export interface ConfigProjectTypes {
  * Models the configuration of filtered file definitions
  * for the different types of project templates that exist.
  * It's one of the main {@link Config} sections.
- * @group API: Types
  */
 export interface ConfigFilteredProjectTypes {
     /** The **Library** filtered project type files. */
@@ -332,7 +327,6 @@ export interface ConfigFilteredProjectTypes {
 // ==========================================
 /**
  * Models an executable file path and characteristics.
- * @group API: Types
  */
 export interface ExecutableScriptDefinition {
     /** The node package name this executable belongs to. */
@@ -364,8 +358,6 @@ export interface ExecutableScriptDefinition {
  * This object is also the main entry point to obtain configuration options of the tool
  * as to obtain the located directories, tooling files and obtain location for the
  * executable scripts for different tools.
- *
- * @group API: Main
  */
 export class Config {
     // ------------------------------------------
@@ -375,9 +367,11 @@ export class Config {
     private _lastInitializationValues?: {
         apiGivenProjectType?: string;
         apiGivenPackageManager?: string;
-        isDebugMode: boolean;
-        isTestMode: boolean;
+        debug: boolean;
+        test: boolean;
+        useLocalTsconfigJson: boolean;
     };
+
     /** The subpart of the configuration corresponding to package managers. */
     private _packageManagers: ConfigPackageManagers;
     /** The subpart of the configuration corresponding to the environment. */
@@ -391,7 +385,7 @@ export class Config {
     /** The subpart of the configuration corresponding to the different project type filtered files. */
     private _filteredProjectTypes: ConfigFilteredProjectTypes;
     /** A cache for the executable scripts already detected. */
-    private _binaryFilesCache: Record<string, ExecutableScriptDefinition>;
+    private _binaryFilesCache: Record<string, ExecutableScriptDefinition | undefined>;
     // ------------------------------------------
     // #endregion Private Properties
     // ------------------------------------------
@@ -477,9 +471,10 @@ export class Config {
     public init(
         apiGivenProjectType?: string,
         apiGivenPackageManager?: string,
-        isDebugMode: boolean = false,
-        isTestMode: boolean = false
-    ): Config {
+        debug?: boolean,
+        test?: boolean,
+        useLocalTsconfigJson?: boolean
+    ): this {
         if (!this._lastInitializationValues) {
             logger.debug(`[config] Initializing configuration from scratch`);
 
@@ -491,20 +486,22 @@ export class Config {
         }
 
         if (
-            !this._lastInitializationValues ||
-            this._lastInitializationValues.apiGivenProjectType !== apiGivenProjectType ||
-            this._lastInitializationValues.apiGivenPackageManager !== apiGivenPackageManager ||
-            this._lastInitializationValues.isDebugMode !== isDebugMode ||
-            this._lastInitializationValues.isTestMode !== isTestMode
+            !this._lastInitializationValues
+            || (apiGivenProjectType && this._lastInitializationValues.apiGivenProjectType !== apiGivenProjectType)
+            || (apiGivenPackageManager
+            && this._lastInitializationValues.apiGivenPackageManager !== apiGivenPackageManager)
+            || (debug && this._lastInitializationValues.debug !== debug)
+            || (test && this._lastInitializationValues.test !== test)
         ) {
             logger.debug(`[config] Already initialized, updating CLI/API parameters`);
-            this._initializeExecutionEnvironment(apiGivenProjectType, apiGivenPackageManager, isDebugMode, isTestMode);
-            this._lastInitializationValues = {
+            this._initializeExecutionEnvironment(
                 apiGivenProjectType,
                 apiGivenPackageManager,
-                isDebugMode,
-                isTestMode
-            };
+                debug,
+                test,
+                useLocalTsconfigJson
+            );
+            this._lastInitializationValues = this._executionEnvironment;
         }
         return this;
     }
@@ -519,9 +516,7 @@ export class Config {
      * Change the current directory of the process to another one.
      * Additionally, update the global configuration to match.
      *
-     * @param dir The directory to change to
-     *
-     * @group Internal API Function
+     * @param dir - The directory to change to
      */
     public changeDir(dir: string): string {
         process.chdir(dir);
@@ -536,8 +531,8 @@ export class Config {
      * simple {@link getBin} helper, this method provides caching, as to not
      * attempt to find the element twice.
      *
-     * @param packageName The package name that contains the binary file.
-     * @param binName The binary file to execute.
+     * @param packageName - The package name that contains the binary file.
+     * @param binName - The binary file to execute.
      *
      * @returns The executable to run, or undefined if not found.
      */
@@ -598,7 +593,7 @@ export class Config {
             toolVersion: version,
             toolTestServer: testServer,
             operatingSystem: isWindows() ? 'windows' : isMacos() ? 'macos' : 'posix',
-            workingDirectory: process.env['PWD'] ?? process.cwd() ?? path.resolve('.'),
+            workingDirectory: process.env.PWD ?? process.cwd() ?? path.resolve('.'),
             detectedPackageManager: getInUsePackageManager(this._packageManagers, 'npm')
         };
     }
@@ -626,16 +621,18 @@ export class Config {
      * Priority is given to CLI/API given, then the package.json configuration
      * and lastly defaults.
      *
-     * @param apiGivenProjectType The CLI/API given value for project type to use, if any.
-     * @param apiGivenPackageManager The CLI/API given value for package manager to use, if any.
-     * @param isDebugMode The CLI/API given value to know if we are running in debug mode.
-     * @param isTestMode The CLI/API given value to know if we are running in test mode.
+     * @param apiGivenProjectType - The CLI/API given value for project type to use, if any.
+     * @param apiGivenPackageManager - The CLI/API given value for package manager to use, if any.
+     * @param debug - The CLI/API given value to know if we are running in debug mode.
+     * @param test - The CLI/API given value to know if we are running in test mode.
+     * @param useLocalTsconfigJson - The CLI/API given value to know if we should use the default tsconfig.json file.
      */
     private _initializeExecutionEnvironment(
         apiGivenProjectType?: string,
         apiGivenPackageManager?: string,
-        isDebugMode: boolean = false,
-        isTestMode: boolean = false
+        debug?: boolean,
+        test?: boolean,
+        useLocalTsconfigJson?: boolean
     ): void {
         if (apiGivenProjectType && !Object.keys(this._projectTypes).includes(apiGivenProjectType)) {
             throw new Error('Invalid project type');
@@ -645,11 +642,18 @@ export class Config {
         }
         const pkgReader = new PackageJsonReader(path.join(this._locations.projectRoot, 'package.json'));
         this._executionEnvironment = {
-            projectType: apiGivenProjectType ?? pkgReader.getValueAt('config.gobstones-scripts.type') ?? 'Library',
-            packageManager: apiGivenPackageManager ?? pkgReader.getValueAt('config.gobstones-scripts.manager') ?? 'npm',
-            useFullPaths: pkgReader.getValueAt('config.gobstones-scripts.use-full-paths') ?? false,
-            isDebugMode,
-            isTestMode
+            projectType: (apiGivenProjectType
+            ?? pkgReader.getValueAt('config.gobstones-scripts.type')
+            ?? 'Library') as keyof ConfigProjectTypes,
+            packageManager: (apiGivenPackageManager
+            ?? pkgReader.getValueAt('config.gobstones-scripts.manager')
+            ?? 'npm') as keyof ConfigPackageManagers,
+            useFullPaths: (pkgReader.getValueAt('config.gobstones-scripts.use-full-paths') ?? false) as boolean,
+            useLocalTsconfigJson: (useLocalTsconfigJson
+            ?? pkgReader.getValueAt('config.gobstones-scripts.use-local-tsconfig-json')
+            ?? false) as boolean,
+            debug: (debug ?? pkgReader.getValueAt('config.gobstones-scripts.debug') ?? false) as boolean,
+            test: (test ?? pkgReader.getValueAt('config.gobstones-scripts.test') ?? false) as boolean
         };
     }
 
@@ -711,7 +715,7 @@ export class Config {
                 ),
                 {
                     // On node code, nps should always be copied to the project's root
-                    nps: this._fileDefinition('nps', 'NonCode', [], [], {
+                    nps: this._fileDefinitionWithTooling('nps', 'NonCode', [], [], {
                         gobstonesScriptsLocation: ['<projectTypePath>/package-scripts.js'],
                         projectLocation: ['package-scripts.js'],
                         copyOnInit: true,
@@ -726,7 +730,7 @@ export class Config {
      * Returns the file information for all files that are common to any
      * project. Expects the route of the project's subfolder.
      *
-     * @param projectTypePath The route of the project's subfolder (e.g. 'cli-Library')
+     * @param projectTypePath - The route of the project's subfolder (e.g. 'cli-Library')
      *
      * @returns A partial ProjectTypeDefinition.
      */
@@ -815,8 +819,8 @@ export class Config {
                 requiresTestDataInjection: true
             }),
             eslint: this._fileDefinition('eslint', projectTypePath, noCommonFiles, excludedFiles, {
-                gobstonesScriptsLocation: ['<projectTypePath>/eslintrc.js'],
-                projectLocation: ['.eslintrc.js'],
+                gobstonesScriptsLocation: ['<projectTypePath>/eslint.config.mjs'],
+                projectLocation: ['eslint.config.mjs'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
@@ -827,48 +831,60 @@ export class Config {
                 copyOnUpdate: true
             }),
             commitlint: this._fileDefinition('commitlint', projectTypePath, noCommonFiles, excludedFiles, {
-                gobstonesScriptsLocation: ['<projectTypePath>/czrc', '<projectTypePath>/commitlint.config.js'],
-                projectLocation: ['.czrc', 'commitlint.config.js'],
+                gobstonesScriptsLocation: ['<projectTypePath>/czrc', '<projectTypePath>/commitlint.config.mjs'],
+                projectLocation: ['.czrc', 'commitlint.config.mjs'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
             // only on eject
-            nps: this._fileDefinition('nps', projectTypePath, noCommonFiles, excludedFiles, {
+            nps: this._fileDefinitionWithTooling('nps', projectTypePath, noCommonFiles, excludedFiles, {
                 gobstonesScriptsLocation: ['<projectTypePath>/package-scripts.js'],
                 projectLocation: ['package-scripts.js'],
                 copyOnEject: true,
                 isOverridable: true
             }),
-            rollup: this._fileDefinition('rollup', projectTypePath, noCommonFiles, excludedFiles, {
-                gobstonesScriptsLocation: ['<projectTypePath>/rollup.config.js'],
-                projectLocation: ['rollup.config.js'],
+            rollup: this._fileDefinitionWithTooling('rollup', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/rollup.config.mjs'],
+                projectLocation: ['rollup.config.mjs'],
                 copyOnEject: true,
                 isOverridable: true
             }),
-            typescript: this._fileDefinition('typescript', projectTypePath, noCommonFiles, excludedFiles, {
-                gobstonesScriptsLocation: ['<projectTypePath>/tsconfig.js'],
-                projectLocation: ['tsconfig.js'],
+            typescript: this._fileDefinitionWithTooling('typescript', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/tsconfig.cjs'],
+                projectLocation: ['tsconfig.cjs'],
                 copyOnEject: true,
                 isOverridable: true
             }),
-            tsConfigJSON: this._fileDefinition('tsConfigJSON', projectTypePath, noCommonFiles, excludedFiles, {
-                // This file descriptor is used to find
-                // The tsconfig.json generated after running
-                // tsconfig.js, that's why it's not a real
-                // file in any project type, but it can be.
-                gobstonesScriptsLocation: ['<projectTypePath>/tsconfig.json'],
-                projectLocation: ['tsconfig.json'],
-                isOverridable: true
-            }),
-            licenseHeader: this._fileDefinition('licenseHeader', projectTypePath, noCommonFiles, excludedFiles, {
-                // This file descriptor is used to find
-                // The LICENSE_HEADER. In principle it should not be
-                // overridden at all.
-                gobstonesScriptsLocation: ['Common/LICENSE_HEADER'],
-                projectLocation: ['LICENSE_HEADER'],
-                isOverridable: true
-            }),
-            licenseHeaderConfig: this._fileDefinition(
+            tsConfigJSON: this._fileDefinitionWithTooling(
+                'tsConfigJSON',
+                projectTypePath,
+                noCommonFiles,
+                excludedFiles,
+                {
+                    // This file descriptor is used to find
+                    // The tsconfig.json generated after running
+                    // tsconfig.js, that's why it's not a real
+                    // file in any project type, but it can be.
+                    gobstonesScriptsLocation: ['<projectTypePath>/tsconfig.json'],
+                    projectLocation: ['tsconfig.json'],
+                    isOverridable: true
+                }
+            ),
+            licenseHeader: this._fileDefinitionWithTooling(
+                'licenseHeader',
+                projectTypePath,
+                noCommonFiles,
+                excludedFiles,
+                {
+                    // This file descriptor is used to find
+                    // The LICENSE_HEADER. In principle it should not be
+                    // overridden at all.
+                    gobstonesScriptsLocation: ['Common/LICENSE_HEADER'],
+                    projectLocation: ['LICENSE_HEADER'],
+                    isOverridable: true
+                }
+            ),
+            licenseHeaderConfig: this._fileDefinitionWithTooling(
                 'licenseHeaderConfig',
                 projectTypePath,
                 noCommonFiles,
@@ -877,20 +893,20 @@ export class Config {
                     // This file descriptor is used to find
                     // The license.config.js. In principle it should not be
                     // overridden at all.
-                    gobstonesScriptsLocation: ['Common/license.config.js'],
-                    projectLocation: ['license.config.js'],
+                    gobstonesScriptsLocation: ['Common/license.config.cjs'],
+                    projectLocation: ['license.config.cjs'],
                     isOverridable: true
                 }
             ),
-            typedoc: this._fileDefinition('typedoc', projectTypePath, noCommonFiles, excludedFiles, {
-                gobstonesScriptsLocation: ['<projectTypePath>/typedoc.config.js'],
-                projectLocation: ['typedoc.config.js'],
+            typedoc: this._fileDefinitionWithTooling('typedoc', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/typedoc.config.mjs'],
+                projectLocation: ['typedoc.config.mjs'],
                 copyOnEject: true,
                 isOverridable: true
             }),
-            jest: this._fileDefinition('jest', projectTypePath, noCommonFiles, excludedFiles, {
-                gobstonesScriptsLocation: ['<projectTypePath>/jest.config.js'],
-                projectLocation: ['jest.config.js'],
+            jest: this._fileDefinitionWithTooling('jest', projectTypePath, noCommonFiles, excludedFiles, {
+                gobstonesScriptsLocation: ['<projectTypePath>/jest.config.mjs'],
+                projectLocation: ['jest.config.mjs'],
                 copyOnEject: true,
                 isOverridable: true
             }),
@@ -902,8 +918,8 @@ export class Config {
                 copyOnUpdate: true
             }),
             vite: this._fileDefinition('vite', projectTypePath, noCommonFiles, excludedFiles, {
-                gobstonesScriptsLocation: ['<projectTypePath>/vite.config.ts'],
-                projectLocation: ['vite.config.ts'],
+                gobstonesScriptsLocation: ['<projectTypePath>/vite.config.mjs'],
+                projectLocation: ['vite.config.mjs'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),
@@ -933,7 +949,7 @@ export class Config {
      */
     private _loadProcessedProjectTypeDefinitions(): void {
         const retainKeysMatching = (o: ProjectTypeDefinition, onKey: string): FileName[] =>
-            Object.keys(o).filter((e) => o[e][onKey]) as FileName[];
+            (Object.keys(o) as (keyof ProjectTypeDefinition)[]).filter((e) => o[e]?.[onKey]);
 
         const getProcessed = (projectType: ProjectType): FilteredFilesDefinition => ({
             copiedOnInit: retainKeysMatching(this._projectTypes[projectType], 'copyOnInit'),
@@ -962,15 +978,15 @@ export class Config {
      * Does not verify that the result contains all keys.
      */
     private _joinProjectTypeDefinitions(...partialInfos: Partial<ProjectTypeDefinition>[]): ProjectTypeDefinition {
-        return Object.assign({}, ...partialInfos);
+        return Object.assign({}, ...partialInfos) as ProjectTypeDefinition;
     }
 
     /**
      * Return a file definition with defaults, that will be overwritten by the
      * partial file definition given.
      *
-     * @param name The name of the file definition.
-     * @param partialFileInfo The partial information for this file definition.
+     * @param name - The name of the file definition.
+     * @param partialFileInfo - The partial information for this file definition.
      * @returns A full file definition.
      */
     private _fileDefinition(
@@ -1005,13 +1021,41 @@ export class Config {
             e.replace('<projectTypePath>', noCommonFiles.includes(name) ? projectTypePath : 'Common')
         );
 
+        return projectTypeInfo;
+    }
+
+    /**
+     * Return a file definition with defaults, that will be overwritten by the
+     * partial file definition given.
+     *
+     * @param name - The name of the file definition.
+     * @param partialFileInfo - The partial information for this file definition.
+     * @returns A full file definition.
+     */
+    private _fileDefinitionWithTooling(
+        name: FileName,
+        projectTypePath: string,
+        noCommonFiles: FileName[],
+        excludedFiles: FileName[],
+        partialFileInfo: Partial<FileDefinition>
+    ): FileDefinitionWithTooling {
+        const projectTypeInfo = this._fileDefinition(
+            name,
+            projectTypePath,
+            noCommonFiles,
+            excludedFiles,
+            partialFileInfo
+        ) as FileDefinitionWithTooling;
         // If it's overridable, update the tooling file reference
         if (projectTypeInfo.isOverridable) {
-            projectTypeInfo.toolingFile = getToolingFile(
+            const toolingFile = getToolingFile(
                 this.locations.projectRoot,
                 this.locations.gobstonesScriptsProjectsRoot,
                 projectTypeInfo
             );
+            if (toolingFile) {
+                projectTypeInfo.toolingFile = toolingFile;
+            }
         }
         return projectTypeInfo;
     }
@@ -1031,7 +1075,6 @@ export class Config {
  * a convenient element.
  *
  * @internal
- * @group Internal: Objects
  */
 export const config: Config = new Config();
 // ==========================================

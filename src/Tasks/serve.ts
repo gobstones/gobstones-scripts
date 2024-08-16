@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { stripIndent } from 'common-tags';
 
 import { runBin } from './runBin';
@@ -23,8 +27,6 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the serve task.
- *
- * @group API: Types
  */
 export interface TaskServeOptions {
     /**
@@ -37,16 +39,14 @@ export interface TaskServeOptions {
  * Returns the string for the bash command  to run
  * serve with default configuration.
  *
- * @param options The options applied when running serve.
+ * @param options - The options applied when running serve.
  *
  * @example serve({ dir: './coverage' })
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function serve(options: TaskServeOptions): string {
-    if (isNotDefined(options?.dir)) {
+    if (isNotDefined(options.dir)) {
         throw new TaskConfigurationError(
             stripIndent`"serve" requires options with the following signature:
         {

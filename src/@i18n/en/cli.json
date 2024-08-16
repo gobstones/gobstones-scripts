@@ -1,0 +1,38 @@
+{
+    "descriptions": {
+        "commands": {
+            "create": "create a new project with the given project name",
+            "init": "initialize a project in the current folder",
+            "update": "update the root files of the project",
+            "eject": "eject the configuration files of the project",
+            "run": "run a command with nps with the configuration of gobstones-scrips"
+        },
+        "args": {
+            "config": "display the tool's detected configuration",
+            "type": "the project type to create, one of {{options}}",
+            "packageManager": "the project manager to use, one of {{options}}",
+            "silent": "run silently, not displaying the tool's banner",
+            "debug": "run in debug mode, printing all the internal tool's processing",
+            "test": "run using verdaccio as a registry",
+            "useLocalTsconfigJson": "Use the tsconfig.json file at project root"
+        }
+    },
+    "messages": {
+        "welcome": "Welcome to gobstones-scripts version {{version}}",
+        "creatingProject": "Creating a project by the name '{{projectName}}' of type '{{projectType}}' using package manager '{{packageManager}}'.",
+        "initializingProject": "Initializing a project in the current directory of type '{{projectType}}' using package manager '{{packageManager}}'.",
+        "updatingFiles": "Updating files in current project of type '{{projectType}}' using package manager '{{packageManager}}'. Files to update: {{files}}",
+        "ejectingFiles": "Ejecting files in current project of type '{{projectType}}' using package manager '{{packageManager}}'. Files to eject: {{files}}",
+        "presentingCommands": "Displaying all available commands on project of type '{{projectType}}' using package manager '{{packageManager}}'.",
+        "executingCommands": "Running command '{{command}}' on project of type '{{projectType}}' using package manager '{{packageManager}}'.",
+        "configuration": "The project configuration is:\n\n\tProject type: {{projectType}}\n\tProject manager: {{projectManager}}\n\tRunning in test mode: {{isTestMode}}\n\tRunning in debug mode: {{isDebugMode}}\n\tUsing local tsconfig.json: {{usingLocalTsConfig}}\n\tUsing full paths: {{usingFullPaths}}\n",
+        "folders": "The detected root folder is:\n\t{{- rootFolder}}\n\nThe detected gobstones scripts root folder is:\n\t{{- gobstonesScriptsFolder}}\n",
+        "files": "The files {{pathType}} to use as configuration are:"
+    },
+    "errors": {
+        "invalidOption": "The value '{{optionValue}}' is not a valid option for the argument '{{optionName}}'\nPlease, select one of the following: {{options}}",
+        "unexpected": "An unexpected error ocurred. Run the tool in debug mode to see the full error message",
+        "emptyFolder": "The target folder should be empty (current folder for init, folder with project name on create). But the folder contains elements.\nEnsure that the target folder is empty an try again.",
+        "undefinedTsConfig": "The current configuration states a tsconfig.json file to be present at the project root, but the file was not found."
+    }
+}

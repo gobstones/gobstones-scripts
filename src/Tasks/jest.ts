@@ -10,18 +10,20 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { runBin } from './runBin';
 
 import { config } from '../Config';
 
 /**
  * This type represents the options that you can pass to the jest task.
- *
- * @group API: Types
  */
 export interface TaskJestOptions {
     /**
@@ -45,13 +47,11 @@ export interface TaskJestOptions {
  * (This only works on UNIX based systems, not Windows). You may modify
  * the behavior based on arguments.
  *
- * @param options The nps action to run.
+ * @param options - The nps action to run.
  *
  * @example jest({ coverage: true })
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function jest(
     options: TaskJestOptions = {
@@ -60,13 +60,13 @@ export function jest(
         watch: false
     }
 ): string {
-    const additionalArgs =
-        (options.coverage ? ' --coverage ' : '') +
-        (options.noThreshold ? ' --coverageThreshold "{}" ' : '') +
-        (options.watch ? ' --watch' : '');
-    const jestStringBase =
-        `${runBin('jest')} ` +
-        `--config ${config.projectType.jest.toolingFile} ` +
-        `--rootDir ${config.locations.projectRoot}`;
+    const additionalArgs
+        = (options.coverage ? ' --coverage ' : '')
+        + (options.noThreshold ? ' --coverageThreshold "{}" ' : '')
+        + (options.watch ? ' --watch' : '');
+    const jestStringBase
+        = `${runBin('jest')} `
+        + `--config ${config.projectType.jest.toolingFile} `
+        + `--rootDir ${config.locations.projectRoot}`;
     return `${jestStringBase} --coverage ${additionalArgs}`;
 }

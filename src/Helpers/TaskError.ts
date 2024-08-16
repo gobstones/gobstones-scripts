@@ -10,17 +10,21 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.Helpers
+ * ----------------------------------------------------
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
 
 /**
  * Represents an exception that is thrown if the configuration
  * for nps is wrongly defined.
  *
- * @internal
- * @group Internal: Errors
+ * @group Errors
  */
 export class TaskConfigurationError extends Error {
     public constructor(msg: string) {

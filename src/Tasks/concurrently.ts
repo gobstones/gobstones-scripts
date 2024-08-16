@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { runBin } from './runBin';
 import { shellEscape } from './shellEscape';
 
@@ -21,8 +25,6 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
 
 /**
  * The definition for a concurrently run script.
- *
- * @group API: Types
  */
 export interface ConcurrentScriptDefinition {
     /**
@@ -37,8 +39,6 @@ export interface ConcurrentScriptDefinition {
 
 /**
  * Represent a concurrent script to run.
- *
- @group API: Types
  */
 export type ConcurrentScript = ConcurrentScriptDefinition | string;
 
@@ -50,7 +50,7 @@ export type ConcurrentScript = ConcurrentScriptDefinition | string;
  * can be specified or is defaulted and the label is based
  * on the key for the script.
  *
- * @param scripts The scripts to run.
+ * @param scripts - The scripts to run.
  *
  * @example
  * // returns a bit of a long script that can vary slightly
@@ -67,8 +67,6 @@ export type ConcurrentScript = ConcurrentScriptDefinition | string;
  * })
  *
  * @return The bash command string.
- *
- * @group API: Functions
  */
 export function concurrently(scripts: Record<string, ConcurrentScript>): string {
     if (typeof scripts !== 'object') {
@@ -86,7 +84,7 @@ export function concurrently(scripts: Record<string, ConcurrentScript>): string 
         scriptName: string,
         index: number
     ): ReducedScriptDefinition => {
-        if (!scripts[scriptName] || (typeof scripts[scriptName] === 'object' && !scripts[scriptName]['script'])) {
+        if (!scripts[scriptName] || (typeof scripts[scriptName] === 'object' && !scripts[scriptName].script)) {
             return accumulator;
         }
 
@@ -101,10 +99,8 @@ export function concurrently(scripts: Record<string, ConcurrentScript>): string 
             'bgYellow.bold'
         ];
 
-        const scriptObj: ConcurrentScriptDefinition =
-            typeof scripts[scriptName] === 'object'
-                ? (scripts[scriptName] as ConcurrentScriptDefinition)
-                : { script: scripts[scriptName] as string };
+        const scriptObj: ConcurrentScriptDefinition
+            = typeof scripts[scriptName] === 'object' ? scripts[scriptName] : { script: scripts[scriptName] };
 
         scriptObj.color = scriptObj.color ?? defaultColors[index % defaultColors.length];
 

@@ -11,13 +11,14 @@
  * *****************************************************************************
  */
 /**
- * The Tasks.Internal module contains functions
+ * The Internal module contains functions
  * that are used by the Tasks module. The usage of
  * this functions is internal only, and are not exported.
  *
- * @internal
- * @module Internal.Helpers
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
  */
 // Avoid re exporting, or we will end up with circular dependencies.
 // Module in helpers should be imported directly from their file.

@@ -20,10 +20,10 @@
  */
 import { cli, readJSON } from '@gobstones/gobstones-core/cli';
 
+import { t } from './@i18n';
 import { MyClass } from './Models/MyClass';
-import { intl } from './Translations';
 
-const packageJSON = readJSON('../package.json');
+const packageJSON = readJSON('../package.json') as { name: string; version: string };
 
 interface CLIArguments {
     language: string;
@@ -32,25 +32,24 @@ interface CLIArguments {
 }
 
 // Read from the package.json in order to retrieve the name and version
-const name = (packageJSON.name as string).split('/').slice(-1).pop() ?? 'gobstones-app';
-const versionNumber = packageJSON.version as string;
+const name = packageJSON.name.split('/').slice(-1).pop() ?? 'gobstones-app';
+const versionNumber = packageJSON.version;
 
 cli({
-    translator: intl,
     texts: {
         name,
         versionNumber,
-        help: 'cli.descriptions.help',
-        tool: 'cli.descriptions.tool',
-        language: 'cli.descriptions.language',
-        languageError: 'cli.errors.language',
-        version: 'cli.descriptions.version'
+        help: t('cli:descriptions.help'),
+        tool: t('cli:descriptions.tool'),
+        language: t('cli:descriptions.language'),
+        languageError: t('cli:errors.language'),
+        version: t('cli:descriptions.version')
     }
 })
-    .command('awesome [text] [text2]', 'cli.awesome.description', (cmd) => {
-        cmd.input('cli.descriptions.in', 'cli.errors.file')
-            .output('cli.descriptions.out')
-            .action((app, _, opts: CLIArguments) => {
+    .command('awesome [text] [text2]', t('application:class.awesome'), (cmd) => {
+        cmd.input(t('cli:descriptions.in'), t('cli:errors.file'))
+            .output('cli:descriptions.out')
+            .action((app, _, _opts: CLIArguments) => {
                 app.outputHelpOnNoArgs();
                 const input = app.read();
                 const myclass = new MyClass();
@@ -58,10 +57,10 @@ cli({
                 app.write(output);
             });
     })
-    .command('notCool [text]', 'cli.notCool.description', (cmd) => {
-        cmd.input('cli.descriptions.in', 'cli.errors.file')
-            .output('cli.descriptions.out')
-            .action((app, _, opts: CLIArguments) => {
+    .command('notCool [text]', t('application:class.notCool'), (cmd) => {
+        cmd.input(t('cli:descriptions.in'), t('cli:errors.file'))
+            .output(t('cli:descriptions.out'))
+            .action((app, _, _opts: CLIArguments) => {
                 app.outputHelpOnNoArgs();
                 const input = app.read();
                 const myclass = new MyClass();

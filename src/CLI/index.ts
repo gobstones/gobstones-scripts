@@ -34,10 +34,13 @@
  * It can also show the version information and the loaded configuration with the
  * `--version` and `--config` flags, and show the tool's help with the `--help` flag
  *
- * @internal
- * @module Internal.CLI
+ * @module CLI
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- **/
+ *
+ * @internal
+ */
+
+import './cli-helpers';
 import { program } from './program';
 
 // Parse the program.

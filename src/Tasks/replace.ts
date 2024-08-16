@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { stripIndent } from 'common-tags';
 
 import { runBin } from './runBin';
@@ -23,8 +27,6 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the replace task.
- *
- * @group API: Types
  */
 export interface TaskReplaceOptions {
     /**
@@ -50,16 +52,14 @@ export interface TaskReplaceOptions {
  * a replacement of text in a file or set of files
  * within a folder.
  *
- * @param options The options applied when running the replacement.
+ * @param options - The options applied when running the replacement.
  *
  * @example replace({ match: 'foo', replace: 'bar', file: '*.txt' })
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function replace(options: TaskReplaceOptions): string {
-    if (isNotDefined(options?.match) || isNotDefined(options?.file)) {
+    if (isNotDefined(options.match) || isNotDefined(options.file)) {
         throw new TaskConfigurationError(
             stripIndent`"replace" requires options with the following signature:
                 {
@@ -70,10 +70,10 @@ export function replace(options: TaskReplaceOptions): string {
         );
     }
     return (
-        `${runBin('replace')} ` +
-        `'${options.match}' ` +
-        `'${options.replace ?? ''}' ` +
-        `${options.file} ` +
-        `--recursive --silent`
+        `${runBin('replace')} `
+        + `'${options.match}' `
+        + `'${options.replace ?? ''}' `
+        + `${options.file} `
+        + `--recursive --silent`
     );
 }

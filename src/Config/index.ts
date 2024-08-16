@@ -10,11 +10,13 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
  * This module contains all the configuration the app need to be aware of
  * to clone projects and to configure them.
  *
- * @module API.Config
+ * @module Config
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
+
 export { config } from './config';

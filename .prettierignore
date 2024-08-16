@@ -21,3 +21,15 @@ tsconfig.build.json
 pnpm-lock.yaml
 package-lock.json
 yarn.lock
+
+# Disable JS and TS files, as we will use ESLint for styling
+# instead of recurring to prettier.
+**/*.js
+**/*.jsx
+**/*.cjs
+**/*.mjs
+**/*.ts
+**/*.tsx
+**/*.cts
+**/*.mts
+

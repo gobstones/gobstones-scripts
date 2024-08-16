@@ -44,7 +44,7 @@
     "@gobstones/gobstones-core": "^0.4.7"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.8.7",
+    "@gobstones/gobstones-scripts": "^0.9.0",
     "husky": "^8.0.2"
   }
 }

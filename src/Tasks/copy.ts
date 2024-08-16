@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import path from 'path';
 
 import { stripIndent } from 'common-tags';
@@ -26,8 +30,6 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the copy task.
- *
- * @group API: Types
  */
 export interface TaskCopyOptions {
     /**
@@ -48,16 +50,14 @@ export interface TaskCopyOptions {
  * Returns the string for the bash command  to run
  * a copy command, copying a file or directory to another location.
  *
- * @param options The options applied when running the move.
+ * @param options - The options applied when running the move.
  *
  * @example copy({src :'./dist/index.js', dist: './dist/index.es.js'})
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function copy(options: TaskCopyOptions): string {
-    if (isNotDefined(options?.src) || isNotDefined(options?.dest)) {
+    if (isNotDefined(options.src) || isNotDefined(options.dest)) {
         throw new TaskConfigurationError(
             stripIndent`"rename" requires options with the following signature:
                 {
@@ -84,11 +84,10 @@ export function copy(options: TaskCopyOptions): string {
  * cpy-cli is a dependency of nps-utils, so it does not need to
  * be installed separately.
  *
- * @param args args to pass to cpy-cli
+ * @param args - args to pass to cpy-cli
  *
  * @return The command to run the rimraf binary with given arguments.
  *
- * @group Internal: Functions
  * @internal
  */
 const ncp = (args: string): string => `${runBin('cpy-cli', 'cpy')} --cwd="${config.locations.projectRoot}" ${args}`;

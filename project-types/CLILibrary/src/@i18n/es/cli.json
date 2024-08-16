@@ -1,0 +1,38 @@
+{
+    "descriptions": {
+        "commands": {
+            "create": "crea un nuevo proyecto en la carpeta con el nombre del mismo",
+            "init": "inicializa un proyecto en la carpeta actual",
+            "update": "actualiza los archivos de la raíz del proyecto",
+            "eject": "extrae y presenta los archivos de configuración en la raíz del proyecto",
+            "run": "ejecuta un comando con nps con la configuración de gobstones-scrips"
+        },
+        "args": {
+            "config": "muestra la configuración de la herramienta",
+            "type": "el tipo de proyecto a crear, alguno de {{options}}\"",
+            "packageManager": "el manejador de proyectos a utilizar, alguno de {{options}}",
+            "silent": "correr silenciosamente, sin mostrar la cabecera de la herramienta",
+            "debug": "correr en modo de depuración, imprimiendo toda la traza de ejecución del código",
+            "test": "correr usando verdaccio como registro",
+            "useLocalTsconfigJson": "usar el archivo de configuración tsconfig.json de la raíz del proyecto"
+        }
+    },
+    "messages": {
+        "welcome": "Bienvenido a gobstones-scripts versión {{version}}",
+        "creatingProject": "Creando un proyecto con el nombre '{{projectName}}' del tipo '{{projectType}}' usando el manejador '{{packageManager}}'.",
+        "initializingProject": "Inicializando un proyecto en el directorio actual del tipo '{{projectType}}' usando el manejador '{{packageManager}}'.",
+        "updatingFiles": "Actualizando archivos del proyecto actual del tipo '{{projectType}}' usando el manejador '{{packageManager}}'. Archivos a actualizar: {{files}}",
+        "ejectingFiles": "Eyectando archivos del proyecto actual del tipo '{{projectType}}' usando el manejador '{{packageManager}}'. Archivos a eyectar: {{files}}",
+        "presentingCommands": "Mostranso todos los comandos para el proyecto del tipo '{{projectType}}' usando el manejador '{{packageManager}}'.",
+        "executingCommands": "Ejecutando comando '{{command}}' en proyecto del tipo '{{projectType}}' usando el manejador '{{packageManager}}'.",
+        "configuration": "La configuración del proyecto es:\n\n\tTipo de proyecto: {{projectType}}\n\tManejador de proyecto: {{projectManager}}\n\tCorriendo en modo test: {{isTestMode}}\n\tCorriendo en modo depuración: {{isDebugMode}}\n\tUsando el archivo tsconfig.json: {{usingLocalTsConfig}}\n\tUsando rutas completas: {{usingFullPaths}}\n",
+        "folders": "La carpeta raíz detectada es:\n\t{{- rootFolder}}\n\nLa carpeta raíz de gobstones-scripts es:\n\t{{- gobstonesScriptsFolder}}\n",
+        "files": "Los archivos {{pathType}} para usar como configuración son:"
+    },
+    "errors": {
+        "invalidOption": "El valor '{{optionValue}}' no es una opción válida para el argumento '{{optionName}}'\nPor favor, seleccione alguno de los siguientes: {{options}}",
+        "unexpected": "Ocurrió un error inesperado. Ejecuta la herramienta en modo de depuración para ver el mensaje completo de error.",
+        "emptyFolder": "La carpeta objetivo debe estar vacía (la carpeta actual en caso de init, o la del mismo nombre del proyecto en caso de create), sin embargo contiene elementos.\nAseguresé de que la carpeta está vacía y vuelva a intentar.",
+        "undefinedTsConfig": "La configuración actual indica que se va a usar un archivo tsconfig.json en la raíz del proyecto, pero el archivo no existe."
+    }
+}

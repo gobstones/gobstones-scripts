@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { config } from '../Config';
 
 /**
@@ -23,17 +27,15 @@ import { config } from '../Config';
  * If the binary is not found, it will use an echo that outputs
  * the not found binary file.
  *
- * @param packageName The package that contains the executable.
- * @param binName The executable binary.
+ * @param packageName - The package that contains the executable.
+ * @param binName - The executable binary.
  *
  * @returns The string for the command.
- *
- * @group API: Functions
  */
 export function runBin(packageName: string, binName?: string): string {
     // Initialize the tool. Will only do it first time getBin is called
     config.init();
-    const element = config.getBinary(packageName, binName);
+    const element = config.getBinary(packageName, binName || packageName);
     if (element) return element.command;
     return `echo "Could not find binary ${binName || packageName}"`;
 }

@@ -1,0 +1,14 @@
+{
+    "descriptions": {
+        "language": "The tool`s running language",
+        "in": "The input file",
+        "out": "The output file",
+        "tool": "The most awesome tool",
+        "version": "Display the version",
+        "help": "Display the help"
+    },
+    "errors": {
+        "file": "File does not exist",
+        "language": "Locale does not exist"
+    }
+}

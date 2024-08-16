@@ -1,7 +1,7 @@
 module.exports = {
     options: {
-        scripts: false,
-        logLevel: 'warn',
+        'scripts': false,
+        'logLevel': 'warn',
         'help-style': 'basic'
     },
 
@@ -22,10 +22,7 @@ module.exports = {
         },
 
         build: {
-            script:
-                'nps clean.dist ' +
-                '&& rollup --config ./rollup.config.js --bundleConfigAsCjs ' +
-                '&& chmod +x ./dist/cjs/cli.cjs',
+            script: 'nps clean.dist && rollup --config ./rollup.config.mjs && chmod +x ./dist/cjs/cli.cjs',
             description: 'Build the application into "dist" folder'
         },
 
@@ -35,6 +32,15 @@ module.exports = {
             serve: {
                 script: 'nps doc && serve ./docs',
                 description: 'Run Typedoc and generate docs, then serve the docs as HTML'
+            },
+            watch: {
+                serve: {
+                    script:
+                        'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold '
+                        + '--prefix "[{name}]" --names typedoc,serve '
+                        + '"typedoc --watch" "serve ./docs"',
+                    description: 'Run Typedoc on watch mode, then serve the docs as HTML'
+                }
             }
         },
 
@@ -55,32 +61,29 @@ module.exports = {
         },
 
         lint: {
-            script: 'eslint ./src --format stylish --ext js,jsx,ts,tsx --color',
+            script: 'eslint --format stylish --color',
             description: 'Run ESLint on all the files (src and tests)',
             fix: {
-                script: 'eslint ./src --format stylish --ext js,jsx,ts,tsx --color --fix',
+                script: 'eslint --format stylish --color --fix',
                 description: 'Run ESLint on all the files (src and tests) with --fix option'
             }
         },
 
         prettify: {
             script:
-                'prettier --no-error-on-unmatched-pattern --write ./src/{**,.}/*.{js,ts} ' +
-                '&& prettier --no-error-on-unmatched-pattern --write ' +
-                './project-types/**/*.{ts,tsx,md,json} ' +
-                '&& prettier --no-error-on-unmatched-pattern --write ./.github/{**,.}/*.{yml,md} ' +
-                '&& prettier --no-error-on-unmatched-pattern --write ./.vscode/*.json ' +
-                '&& prettier --no-error-on-unmatched-pattern --write ./*.{json,md,js} ' +
-                '&& prettier --no-error-on-unmatched-pattern --write .prettierrc',
+                'prettier --no-error-on-unmatched-pattern --write '
+                + './{src,project-types,.github,.vscode}/{**,.}' // folders
+                + '/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js} ' // extensions
+                + '&& prettier --no-error-on-unmatched-pattern --write .prettierrc',
             description: 'Run Prettier on all the files, writing the results'
         },
 
         verdaccio: {
             script:
-                'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold ' +
-                '--prefix "[{name}]" --names verdaccio.serve,publish ' +
-                '"nps verdaccio.serve" ' +
-                '"sleep 2s && rimraf ./test/verdaccio/storage/* && npm publish --registry http://localhost:4567"',
+                'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold '
+                + '--prefix "[{name}]" --names verdaccio.serve,publish '
+                + '"nps verdaccio.serve" '
+                + '"sleep 2s && rimraf ./test/verdaccio/storage/* && npm publish --registry http://localhost:4567"',
             description: 'Run Verdaccio server and publish current version of library to it',
             serve: {
                 script: 'verdaccio --config ./test/verdaccio/config.yml',
@@ -102,16 +105,18 @@ module.exports = {
 
         license: {
             script:
-                'npx tsconfig.js --once --root=./project-types/Common/license.config.js --add-comments=none ' +
-                '&& license-check-and-add add -f ./project-types/Common/license.config.json ' +
-                '&& npx rimraf ./project-types/Common/license.config.json',
+                'nps build'
+                + '&& npx tsconfig.js --once --root=./project-types/Common/license.config.cjs --add-comments=none '
+                + '&& license-check-and-add add -f ./project-types/Common/license.config.json '
+                + '&& npx rimraf ./project-types/Common/license.config.json',
             hiddenFromHelp: true,
             description: 'Add license information to all code files in the project',
             remove: {
                 script:
-                    'npx tsconfig.js --once --root=./project-types/Common/license.config.js --add-comments=none ' +
-                    '&& license-check-and-add remove -f ./project-types/Common/license.config.json ' +
-                    '&& npx rimraf ./project-types/Common/license.config.json',
+                    'nps build'
+                    + '&& npx tsconfig.js --once --root=./project-types/Common/license.config.cjs --add-comments=none '
+                    + '&& license-check-and-add remove -f ./project-types/Common/license.config.json '
+                    + '&& npx rimraf ./project-types/Common/license.config.json',
 
                 hiddenFromHelp: true,
                 description: 'Remove license information to all code files in the project'

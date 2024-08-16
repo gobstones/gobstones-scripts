@@ -10,28 +10,36 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import colors from 'ansi-colors';
 
 /**
  * Returns the string for the bash command to run
  * an echo, showing a message.
  *
- * @param text The message to display
- * @param styles One or more styles to apply to the text.
+ * @param text - The message to display
+ * @param styles - One or more styles to apply to the text.
  *
  * @example echo('print this', 'bgRed blue')
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
-export const echo = (text: string, styles?: string): string => {
-    const parsedStyles = styles?.split(' ').map((e) => e.trim());
-    const style = parsedStyles?.reduce((acc, e) => acc?.[e] as any, colors);
+export function echo(text: string, styles?: string): string {
+    const parsedStyles = styles ? styles.split(' ').map((e) => e.trim()) : [];
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const style: (t: string) => string = parsedStyles.reduce(
+        (acc: unknown, e: string) =>
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+            acc?.[e],
+        colors
+    );
 
-    return `echo "${style ? style(text) : text}"`;
-};
+    return `echo "${styles ? style(text) : text}"`;
+}

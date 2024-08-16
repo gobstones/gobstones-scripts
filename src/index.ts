@@ -10,14 +10,15 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
  *
  * This is the main exported module, it just exports
  * the api, config and tasks modules
  *
- * @module Main
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
+
 export * as api from './API';
 export { config } from './Config';
 export * as tasks from './Tasks';

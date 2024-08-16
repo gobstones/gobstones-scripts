@@ -10,18 +10,20 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { runBin } from './runBin';
 
 import { config } from '../Config';
 
 /**
  * This type represents the options that you can pass to the typedoc task.
- *
- * @group API: Types
  */
 export interface TaskTypedocOptions {
     /**
@@ -34,15 +36,13 @@ export interface TaskTypedocOptions {
  * Returns the string for the bash command  to run
  * typedoc with the gobstones-script detected configuration.
  *
- * @param options The options applied when running typedoc.
+ * @param options - The options applied when running typedoc.
  *
  * @example typedoc()
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export const typedoc = (options: TaskTypedocOptions = {}): string =>
-    `${runBin('typedoc')} --options ${config.projectType.typedoc.toolingFile} ` +
-    `--tsconfig ${config.projectType.tsConfigJSON.toolingFile}` +
-    (options.watch ? ` --watch ${options.watch}` : '');
+    `${runBin('typedoc')} --options ${config.projectType.typedoc.toolingFile} `
+    + `--tsconfig ${config.projectType.tsConfigJSON.toolingFile}`
+    + (options.watch ? ` --watch ${options.watch}` : '');

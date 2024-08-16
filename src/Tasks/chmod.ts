@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { stripIndent } from 'common-tags';
 
 import { ifUnix } from './ifUnix';
@@ -23,8 +27,6 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the chmod task.
- *
- * @group API: Types
  */
 export interface TaskChmodOptions {
     /**
@@ -41,16 +43,14 @@ export interface TaskChmodOptions {
  * Returns the string for the bash command  to run
  * a chmod command. Only working in unix based systems.
  *
- * @param options The options applied when running the chmod.
+ * @param options - The options applied when running the chmod.
  *
  * @example chmod({  files: './dist/files', mod: '+x' })
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function chmod(options: TaskChmodOptions): string {
-    if (isNotDefined(options?.files) || isNotDefined(options?.mod)) {
+    if (isNotDefined(options.files) || isNotDefined(options.mod)) {
         throw new TaskConfigurationError(
             stripIndent`"chmod" requires options with the following signature:
             {

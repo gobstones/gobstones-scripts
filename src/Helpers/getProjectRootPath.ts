@@ -10,10 +10,16 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.Helpers
+ * ----------------------------------------------------
+ * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
+
 import fs from 'fs';
 import path from 'path';
 
@@ -26,22 +32,24 @@ import { OSType } from '../Config/config';
  * If it cannot be identified, it returns the current working directory
  * as the project's root path.
  *
- * @param os The OS that is currently discovered as environment.
+ * @param os - The OS that is currently discovered as environment.
  *
  * @returns The project's root path.
- *
- * @internal
- * @group Internal: Functions
  */
 export function getProjectRootPath(os: OSType): string {
     logger.debug(`[getProjectRootPath]: Attempting to recover the project root path`, 'cyan');
 
     // The obvious choice is the the current directory
-    let possibleRootPath: string = process.env['PWD'] ?? process.cwd() ?? path.resolve('.');
+    let possibleRootPath: string = process.env.PWD
+        ? process.env.PWD
+        : process.cwd()
+            ? process.cwd()
+            : path.resolve('.');
 
-    const pathStartBySystem =
-        os === 'windows'
-            ? possibleRootPath && possibleRootPath.match(/^[A-Z]:\\/)
+    const pathStartBySystem
+        = os === 'windows'
+            // eslint-disable-next-line no-null/no-null
+            ? possibleRootPath.match(/^[A-Z]:\\/) !== null
                 ? possibleRootPath.substring(0, 3)
                 : 'C:\\'
             : '/';
@@ -69,7 +77,8 @@ export function getProjectRootPath(os: OSType): string {
             'cyan'
         );
     }
-    possibleRootPath = process.env['PWD'] ?? process.cwd() ?? path.resolve('.');
+
+    possibleRootPath = process.env.PWD ? process.env.PWD : process.cwd() ? process.cwd() : path.resolve('.');
 
     logger.debug(`[getProjectRootPath]: Reached root directory and no project root found.`, 'cyan');
     logger.debug(`[getProjectRootPath]: Considering current working directory as project's root`, 'cyan');

@@ -10,10 +10,16 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module Internal.CLI
+ * ----------------------------------------------------
+ * @module CLI
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ *
+ * @internal
+ * ----------------------------------------------------
  */
+
 import fs from 'fs';
 import path from 'path';
 import process from 'process';
@@ -21,19 +27,18 @@ import process from 'process';
 import colors from 'ansi-colors';
 import figlet from 'figlet';
 
+import { t } from '../@i18n';
 import { config } from '../Config';
+import { FileDefinitionWithTooling } from '../Config/config';
 import { logger } from '../Helpers/Logger';
 
 /**
  * Returns the gobstones-scripts banner that will be printed in CLI.
  *
  * @returns The gobstones-script banner.
- *
- * @internal
- * @group Internal: Functions
  */
 export function banner(): string {
-    const text = figlet.textSync('gobstones-scripts', {
+    const text: string = figlet.textSync('gobstones-scripts', {
         font: 'Standard',
         horizontalLayout: 'fitted',
         verticalLayout: 'default',
@@ -47,20 +52,14 @@ export function banner(): string {
  * Returns the gobstones-scripts welcome message in the CLI.
  *
  * @returns The welcome message.
- *
- * @internal
- * @group Internal: Functions
  */
-export const welcome = (): string => `Welcome to gobstones-scripts version ${config.environment.toolVersion}`;
+export const welcome = (): string => t('cli:messages.welcome', { version: config.environment.toolVersion });
 
 /**
  * Display the welcome message of the gobstones-script tool
  * and immediately after, the given message.
  *
- * @param message The message to display after welcome.
- *
- * @internal
- * @group Internal: Functions
+ * @param message - The message to display after welcome.
  */
 export function displayWelcomeForAction(message: string): void {
     logger.log(banner());
@@ -75,29 +74,28 @@ export function displayWelcomeForAction(message: string): void {
  * message in some cases. errorsAndMessages matches on those inner messages
  * and outputs the associated message to the user in a style with red background.
  *
- * @param action A function to be executed and catch on failure.
- * @param errorsAndMessages An object associating inner
+ * @param action - A function to be executed and catch on failure.
+ * @param errorsAndMessages - An object associating inner
  *      possible error messages as keys and messages to output to the user as values.
- *
- * @internal
- * @group Internal: Functions
  */
-export function runOrEnd(action: () => any, errorsAndMessages: { error: string; msg: string }[]): void {
+export function runOrEnd(action: () => void): void {
     try {
         action();
-    } catch (e) {
-        let message: string = `ERROR: ${e.message}`;
-        logger.on();
-        for (const i in errorsAndMessages) {
-            if (e.message === errorsAndMessages[i].error) {
-                message = `ERROR: ${errorsAndMessages[i].msg}`;
-                logger.error(message, 'bgRed');
-                process.exit(1);
-            }
+    } catch (e: unknown) {
+        const error = e as { message: string };
+
+        let message: string;
+        if (error.message === 'errors.emptyFolder') {
+            message = t('cli:errors.emptyFolder');
+        } else if (error.message === 'errors.undefinedTsConfig') {
+            message = t('cli:errors.undefinedTsConfig');
+        } else {
+            message = t('cli:errors.unexpected');
         }
-        if (!config.executionEnvironment.isDebugMode) {
-            message = `ERROR: An unexpected error ocurred. Run the tool in debug mode to see the full error message.`;
-            logger.error(message, 'bgRed');
+
+        logger.on();
+        if (!config.executionEnvironment.debug) {
+            logger.error('ERROR: ' + message, 'bgRed');
             process.exit(1);
         }
         throw e;
@@ -106,19 +104,23 @@ export function runOrEnd(action: () => any, errorsAndMessages: { error: string; 
 
 /**
  * Print the currently used configuration when the options contain the argument.
- *
- * @internal
- * @group Internal: Functions
  */
 export function printConfiguration(): void {
     logger.log(
-        `The project configuration is:\n` +
-            `\n\tProject type:    ${colors.blue(config.executionEnvironment.projectType)}` +
-            `\n\tProject manager: ${colors.blue(config.executionEnvironment.packageManager)}`
+        t('cli:messages.configuration', {
+            projectType: colors.blue(config.executionEnvironment.projectType),
+            projectManager: colors.blue(config.executionEnvironment.packageManager),
+            isTestMode: colors.blue(config.executionEnvironment.test ? 'yes' : 'no'),
+            isDebugMode: colors.blue(config.executionEnvironment.debug ? 'yes' : 'no'),
+            usingLocalTsConfig: colors.blue(config.executionEnvironment.useLocalTsconfigJson ? 'yes' : 'no'),
+            usingFullPaths: colors.blue(config.executionEnvironment.useFullPaths ? 'yes' : 'no')
+        })
     );
     logger.log(
-        `The detected root folder is:\n\t${colors.blue(config.locations.projectRoot)}\n\n` +
-            `The detected gobstones scripts root folder is:\n\t${colors.blue(config.locations.gobstonesScriptsRoot)}\n`
+        t('cli:messages.folders', {
+            rootFolder: colors.blue(config.locations.projectRoot),
+            gobstonesScriptsFolder: colors.blue(config.locations.gobstonesScriptsRoot)
+        })
     );
 
     const useAbsolute = config.executionEnvironment.useFullPaths;
@@ -126,18 +128,21 @@ export function printConfiguration(): void {
     let configFiles = config.projectTypeFilteredFiles.toolingFiles;
     // Do not expose tsConfigJSON, but show it's file, if not auto-generated
     // as the typescript one.
-    if (fs.existsSync(config.projectType.tsConfigJSON.toolingFile)) {
+    if (config.projectType.tsConfigJSON.toolingFile && fs.existsSync(config.projectType.tsConfigJSON.toolingFile)) {
         config.projectType.typescript.toolingFile = config.projectType.tsConfigJSON.toolingFile;
     }
     configFiles = configFiles.filter((e) => e !== 'tsConfigJSON').sort();
 
-    logger.log(`The files ${useAbsolute ? '(full path)' : '(relative path)'} to use as configuration are:\n`);
+    logger.log(t('cli:messages.files', { pathType: useAbsolute ? '(full path)' : '(relative path)' }));
 
     for (const fileName of configFiles) {
-        if (!config.projectType[fileName].toolingFile) continue;
+        if (!(config.projectType[fileName] as FileDefinitionWithTooling).toolingFile) continue;
         const filePath = useAbsolute
-            ? path.resolve(config.projectType[fileName].toolingFile)
-            : path.relative(config.locations.projectRoot, config.projectType[fileName].toolingFile);
+            ? path.resolve((config.projectType[fileName] as FileDefinitionWithTooling).toolingFile)
+            : path.relative(
+                config.locations.projectRoot,
+                (config.projectType[fileName] as FileDefinitionWithTooling).toolingFile
+            );
         logger.log(`\t${fileName}: ${colors.blue(filePath)}`);
     }
 }

@@ -20,12 +20,13 @@
  * @ignore
  * @author Your Name <yourname@company.com>
  */
+
+import { t } from './@i18n';
 import { MyClass } from './Models';
-import { intl } from './Translations';
 
 export * from './Models/MyClass';
 
 // eslint-disable-next-line no-console
-console.log(intl.translate('program.running'));
+console.log(t('program.running'));
 // eslint-disable-next-line no-console
 console.log(new MyClass().awesome('hola'));

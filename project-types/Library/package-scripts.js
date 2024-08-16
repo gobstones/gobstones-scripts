@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const { tasks } = require('@gobstones/gobstones-scripts');
 
 const defaultConfiguration = {
     options: {
-        scripts: false,
-        logLevel: 'warn',
+        'scripts': false,
+        'logLevel': 'warn',
         'help-style': 'basic'
     },
 
@@ -49,13 +48,13 @@ const defaultConfiguration = {
                     file: './coverage',
                     match: 'prettyPrint\\(\\)',
                     replace:
-                        'prettyPrint();var elems = document.querySelectorAll' +
-                        '("td.file a");for (var i=0; i< elems.length; i++) ' +
-                        '{if (document.location.pathname && !document.location.' +
-                        'pathname.endsWith("html")) {var pathParts = document.' +
-                        'location.pathname.split("/");var lastFolder = ' +
-                        'pathParts[pathParts.length-1];elems[i].setAttribute("' +
-                        'href", "./" + lastFolder + "/" + elems[i].getAttribute("href"));}}'
+                        'prettyPrint();var elems = document.querySelectorAll'
+                        + '("td.file a");for (var i=0; i< elems.length; i++) '
+                        + '{if (document.location.pathname && !document.location.'
+                        + 'pathname.endsWith("html")) {var pathParts = document.'
+                        + 'location.pathname.split("/");var lastFolder = '
+                        + 'pathParts[pathParts.length-1];elems[i].setAttribute("'
+                        + 'href", "./" + lastFolder + "/" + elems[i].getAttribute("href"));}}'
                 }),
                 description: 'Fix coverage generated reports in HTML that are outputed with broken links',
                 hiddenFromHelp: true
@@ -111,25 +110,19 @@ const defaultConfiguration = {
         },
 
         lint: {
-            script: tasks.serially(tasks.eslint({ files: './src' }), tasks.eslint({ files: './test' })),
+            script: tasks.serially(tasks.eslint()),
             description: 'Run ESLint on all the files (src and tests)',
             fix: {
-                script: tasks.serially(
-                    tasks.eslint({ files: './src', fix: true }),
-                    tasks.eslint({ files: './test', fix: true })
-                ),
+                script: tasks.serially(tasks.eslint({ fix: true })),
                 description: 'Run ESLint on all the files (src and tests) with --fix option'
             }
         },
 
         prettify: {
             script: tasks.serially(
-                tasks.prettify({ files: './src/{**,.}/*.ts' }),
-                tasks.prettify({ files: './test/{**,.}/*.ts' }),
-                tasks.prettify({ files: './.github/{**,.}/*.{yml,md}' }),
-                tasks.prettify({ files: './.vscode/*.json' }),
-                tasks.prettify({ files: './*.{json,md,js}' }),
-                tasks.prettify({ files: '.prettierrc' })
+                tasks.prettify({
+                    files: './{src,test,.github,.vscode}/{**,.}/*.{js,jsx,cjs,mjs,ts,tsx,cts,mts,json,yml,md}'
+                })
             ),
             description: 'Run Prettier on all the files, writing the results'
         },

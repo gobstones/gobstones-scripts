@@ -21,9 +21,11 @@
  * tooling that may be used on your `package-scripts.js` if you decide to
  * override it.
  *
- * Refer to README.md for more information.
+ * Refer to `README` for more information.
  *
- * @module API.Main
+ *
+ * @module API
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 export * from './api';
+export * from './FileSystemError';

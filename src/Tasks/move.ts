@@ -10,10 +10,14 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { stripIndent } from 'common-tags';
 
 import { copy } from './copy';
@@ -25,8 +29,6 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
 
 /**
  * This type represents the options that you can pass to the move task.
- *
- * @group API: Types
  */
 export interface TaskMoveOptions {
     /**
@@ -43,16 +45,14 @@ export interface TaskMoveOptions {
  * Returns the string for the bash command  to run
  * a move command, moving files from one location to another.
  *
- * @param options The options applied when running the move.
+ * @param options - The options applied when running the move.
  *
  * @example move({ src: './src', dest: './dist' })
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export function move(options: TaskMoveOptions): string {
-    if (isNotDefined(options?.src) || isNotDefined(options?.dest)) {
+    if (isNotDefined(options.src) || isNotDefined(options.dest)) {
         throw new TaskConfigurationError(
             stripIndent`"move" requires options with the following signature:
                 {

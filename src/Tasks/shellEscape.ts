@@ -10,24 +10,27 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { isWindows } from '../Helpers/isWindows';
 
 /**
  * Escape a string or array of strings replacing all quote and backslashes
  * appearing in it.
  *
- * @param stringOrArray The string or array of strings to escape.
+ * @param stringOrArray - The string or array of strings to escape.
  *
  * @returns The escaped string.
- *
- * @group @group API: Functions
  */
 export function shellEscape(stringOrArray: string | string[]): string | string[] {
     const escapedPathSh = (path: string): string =>
+        // eslint-disable-next-line @stylistic/quotes
         !/^[A-Za-z0-9_/-]+$/.test(path) ? ("'" + path.replace(/'/g, "'\"'\"'") + "'").replace(/''/g, '') : path;
 
     const escapedPathWin = (path: string): string =>

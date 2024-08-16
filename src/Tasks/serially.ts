@@ -10,9 +10,12 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
 
 /**
@@ -21,15 +24,13 @@
  * that is, the command to run serially a set of commands.
  * This involves joining all commands with '&&'.
  *
- * @param scripts Any number of commands as strings.
+ * @param scripts - Any number of commands as strings.
  *
  * @example
  * series('eslint', 'jest', 'webpack --env.production')
  * // returns 'eslint && jest && webpack --env.production'
  *
  * @return The bash command string.
- *
- * @group API: Functions
  */
 export function serially(...scripts: string[]): string {
     const scriptsLen = scripts.length;

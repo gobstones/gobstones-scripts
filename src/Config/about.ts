@@ -10,20 +10,20 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
- * @module API.Config
+ * @module Config
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
+
 /**
  * The tool's version number
  *
  * This needs to be here in order to avoid reading the package.json, which
  * is not reliable between different implementations of package managers
  * and that may lead to false readings.
- *
- * @group Internal: Values
  */
-export const version = '0.8.7';
+export const version = '0.9.0';
 
 /**
  * The tool's test server address.

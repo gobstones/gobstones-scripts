@@ -10,18 +10,20 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
+ * ----------------------------------------------------
+ * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * @module API.Tasks
+ * ----------------------------------------------------
  */
+
 import { runBin } from './runBin';
 
 import { config } from '../Config';
 
 /**
  * This type represents the options that you can pass to the tsc task.
- *
- * @group API: Types
  */
 export interface TaskTscOptions {
     /**
@@ -39,13 +41,11 @@ export interface TaskTscOptions {
  * Returns the string for the bash command  to run
  * tsc with the gobstones-script detected configuration.
  *
- * @param options The options applied when running typedoc.
+ * @param options - The options applied when running typedoc.
  *
  * @example tsc({file: './src/index.ts' })
  *
  * @returns The bash command string.
- *
- * @group API: Functions
  */
 export const tsc = (options: TaskTscOptions = { emit: false }): string =>
     `${runBin('tsc')} --project ${config.projectType.tsConfigJSON.toolingFile}${!options.emit ? ' --noEmit' : ''}${
