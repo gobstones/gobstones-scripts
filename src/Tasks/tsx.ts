@@ -47,7 +47,7 @@ export interface TaskTsxOptions {
  *
  * @returns The bash command string.
  */
-export function tsx(options: TaskTsxOptions): string {
+export const tsx = (options: TaskTsxOptions): string => {
     if (isNotDefined(options.file)) {
         throw new TaskConfigurationError(
             stripIndent`"tsx" requires options with the following signature:
@@ -58,7 +58,7 @@ export function tsx(options: TaskTsxOptions): string {
         );
     }
     return (
-        `${runBin('tsx')} ${options.watch ? 'watch' : ''} `
-        + `${options.file} --tsconfig ${config.projectType.tsConfigJSON.toolingFile}`
+        `${runBin('tsx')} ${options.watch ? 'watch' : ''} ` +
+        `${options.file} --tsconfig ${config.projectType.tsConfigJSON.toolingFile}`
     );
-}
+};

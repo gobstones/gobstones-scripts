@@ -159,10 +159,10 @@ export class Logger {
      */
     private isLevelGeqThan(level1: LogLevel, level2: LogLevel): boolean {
         return (
-            level1 === LogLevel.Error
-            || (level1 === LogLevel.Warn && level2 !== LogLevel.Error)
-            || (level1 === LogLevel.Info && level2 !== LogLevel.Error && level2 !== LogLevel.Warn)
-            || level2 === LogLevel.Debug
+            level1 === LogLevel.Error ||
+            (level1 === LogLevel.Warn && level2 !== LogLevel.Error) ||
+            (level1 === LogLevel.Info && level2 !== LogLevel.Error && level2 !== LogLevel.Warn) ||
+            level2 === LogLevel.Debug
         );
     }
 }

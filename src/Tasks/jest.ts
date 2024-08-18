@@ -53,20 +53,20 @@ export interface TaskJestOptions {
  *
  * @returns The bash command string.
  */
-export function jest(
+export const jest = (
     options: TaskJestOptions = {
         coverage: true,
         noThreshold: false,
         watch: false
     }
-): string {
-    const additionalArgs
-        = (options.coverage ? ' --coverage ' : '')
-        + (options.noThreshold ? ' --coverageThreshold "{}" ' : '')
-        + (options.watch ? ' --watch' : '');
-    const jestStringBase
-        = `${runBin('jest')} `
-        + `--config ${config.projectType.jest.toolingFile} `
-        + `--rootDir ${config.locations.projectRoot}`;
+): string => {
+    const additionalArgs =
+        (options.coverage ? ' --coverage ' : '') +
+        (options.noThreshold ? ' --coverageThreshold "{}" ' : '') +
+        (options.watch ? ' --watch' : '');
+    const jestStringBase =
+        `${runBin('jest')} ` +
+        `--config ${config.projectType.jest.toolingFile} ` +
+        `--rootDir ${config.locations.projectRoot}`;
     return `${jestStringBase} --coverage ${additionalArgs}`;
-}
+};

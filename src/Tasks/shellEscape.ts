@@ -28,9 +28,8 @@ import { isWindows } from '../Helpers/isWindows';
  *
  * @returns The escaped string.
  */
-export function shellEscape(stringOrArray: string | string[]): string | string[] {
+export const shellEscape = (stringOrArray: string | string[]): string | string[] => {
     const escapedPathSh = (path: string): string =>
-        // eslint-disable-next-line @stylistic/quotes
         !/^[A-Za-z0-9_/-]+$/.test(path) ? ("'" + path.replace(/'/g, "'\"'\"'") + "'").replace(/''/g, '') : path;
 
     const escapedPathWin = (path: string): string =>
@@ -42,9 +41,9 @@ export function shellEscape(stringOrArray: string | string[]): string | string[]
         return escapedPath(stringOrArray);
     } else {
         const ret: string[] = [];
-        stringOrArray.forEach(function (member) {
+        stringOrArray.forEach((member) => {
             ret.push(escapedPath(member));
         });
         return ret.join(' ');
     }
-}
+};

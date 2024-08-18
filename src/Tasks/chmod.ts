@@ -49,7 +49,7 @@ export interface TaskChmodOptions {
  *
  * @returns The bash command string.
  */
-export function chmod(options: TaskChmodOptions): string {
+export const chmod = (options: TaskChmodOptions): string => {
     if (isNotDefined(options.files) || isNotDefined(options.mod)) {
         throw new TaskConfigurationError(
             stripIndent`"chmod" requires options with the following signature:
@@ -61,4 +61,4 @@ export function chmod(options: TaskChmodOptions): string {
         );
     }
     return ifUnix(`chmod ${options.mod} ${options.files}`, `echo 'chmod not available in windows'`);
-}
+};

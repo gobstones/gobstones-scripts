@@ -35,9 +35,9 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
  *
  * @returns The bash command string.
  */
-export function nps(action: string): string {
+export const nps = (action: string): string => {
     if (isNotDefined(action)) {
         throw new TaskConfigurationError('"nps" expect a defined nps action as argument');
     }
     return `${runBin('nps')} -c ${config.projectType.nps.toolingFile} ${action}`;
-}
+};

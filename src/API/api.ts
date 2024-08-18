@@ -48,15 +48,15 @@ import { logger } from '../Helpers/Logger';
  *
  * {@link FileSystemError}: If there's already a folder with the project name, or the folder is not empty.
  */
-export function create(projectName: string, projectType?: string, packageManager?: string, test?: boolean): void {
+export const create = (projectName: string, projectType?: string, packageManager?: string, test?: boolean): void => {
     config.init(projectType, packageManager, undefined, test, undefined);
 
     logger.debug(
-        `[api] Requested a create action with values:`
-        + `\n\tprojectName: ${projectName}`
-        + `\n\tprojectType: ${config.executionEnvironment.projectType}`
-        + `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
-        + `\n\tisTest: ${config.executionEnvironment.test ? 'true' : 'false'}`
+        `[api] Requested a create action with values:` +
+            `\n\tprojectName: ${projectName}` +
+            `\n\tprojectType: ${config.executionEnvironment.projectType}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}` +
+            `\n\tisTest: ${config.executionEnvironment.test ? 'true' : 'false'}`
     );
 
     const projectFolder = path.join(config.environment.workingDirectory, projectName);
@@ -73,7 +73,7 @@ export function create(projectName: string, projectType?: string, packageManager
 
     logger.debug(`[api] Calling project initialization`);
     init(projectType, packageManager, test);
-}
+};
 
 /**
  * The same as {@link create}, but runs on the local folder as a project.
@@ -87,14 +87,14 @@ export function create(projectName: string, projectType?: string, packageManager
  *
  * @throws If the current folder is not empty.
  */
-export function init(projectType?: string, packageManager?: string, test?: boolean): void {
+export const init = (projectType?: string, packageManager?: string, test?: boolean): void => {
     config.init(projectType, packageManager, undefined, test, undefined);
 
     logger.debug(
-        `[api] Requested an init action with values:`
-        + `\n\tprojectType: ${config.executionEnvironment.projectType}`
-        + `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
-        + `\n\tisTest: ${config.executionEnvironment.test ? 'true' : 'false'}`
+        `[api] Requested an init action with values:` +
+            `\n\tprojectType: ${config.executionEnvironment.projectType}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}` +
+            `\n\tisTest: ${config.executionEnvironment.test ? 'true' : 'false'}`
     );
 
     const filesInFolder = fs.readdirSync(config.locations.projectRoot);
@@ -113,7 +113,7 @@ export function init(projectType?: string, packageManager?: string, test?: boole
 
     logger.debug(`[api] Running the package manager "${packageManager ?? ''}" installation step`);
     runScript(config.packageManager.install);
-}
+};
 
 /**
  * Override the missing configuration files that are created on
@@ -132,15 +132,15 @@ export function init(projectType?: string, packageManager?: string, test?: boole
  *
  * @returns The list of updated files.
  */
-export function update(file: string = 'all', force?: boolean, projectType?: string, test?: boolean): string[] {
+export const update = (file: string = 'all', force?: boolean, projectType?: string, test?: boolean): string[] => {
     config.init(projectType, undefined, undefined, undefined, undefined);
 
     logger.debug(
-        `[api] Requested an update action with values:`
-        + `\n\tfile: ${file}`
-        + `\n\tforce: ${force ? 'true' : 'false'}`
-        + `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
-        + `\n\tisTest: ${config.executionEnvironment.test ? 'true' : 'false'}`
+        `[api] Requested an update action with values:` +
+            `\n\tfile: ${file}` +
+            `\n\tforce: ${force ? 'true' : 'false'}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}` +
+            `\n\tisTest: ${config.executionEnvironment.test ? 'true' : 'false'}`
     );
 
     const projectName: string = path.basename(config.locations.projectRoot);
@@ -158,7 +158,7 @@ export function update(file: string = 'all', force?: boolean, projectType?: stri
         test,
         projectName
     );
-}
+};
 /**
  * Eject all the general configuration files to the root project.
  * This includes configuration files for Typescript, Typedoc, JEST,
@@ -175,14 +175,14 @@ export function update(file: string = 'all', force?: boolean, projectType?: stri
  *
  * @returns The list of updated files.
  */
-export function eject(file: string = 'all', force?: boolean, projectType?: string): string[] {
+export const eject = (file: string = 'all', force?: boolean, projectType?: string): string[] => {
     config.init(projectType, undefined, undefined, undefined, undefined);
 
     logger.debug(
-        `[api] Requested an eject action with values:`
-        + `\n\tfile: ${file}`
-        + `\n\tforce: ${force ? 'true' : 'false'}`
-        + `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
+        `[api] Requested an eject action with values:` +
+            `\n\tfile: ${file}` +
+            `\n\tforce: ${force ? 'true' : 'false'}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
     );
 
     const projectName: string = path.basename(config.locations.projectRoot);
@@ -200,7 +200,7 @@ export function eject(file: string = 'all', force?: boolean, projectType?: strin
         false,
         projectName
     );
-}
+};
 
 /**
  * Run a command using **nps**. nps allows to run different scripts
@@ -216,27 +216,27 @@ export function eject(file: string = 'all', force?: boolean, projectType?: strin
  *
  * @returns The list of updated files.
  */
-export function run(
+export const run = (
     command: string,
     userArgs: string[] = [],
     projectType?: string,
     packageManager?: string,
     usePlainTsConfig?: boolean
-): void {
+): void => {
     config.init(projectType, packageManager, undefined, undefined, usePlainTsConfig);
 
     logger.debug(
-        `[api] Requested a run action with values:`
-        + `\n\tcommand: ${command}`
-        + `\n\tuserArgs: ${userArgs.toString()}`
-        + `\n\tprojectType: ${config.executionEnvironment.projectType}`
-        + `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
-        + `\n\tusePlainTsConfig: ${config.executionEnvironment.useLocalTsconfigJson ? 'yes' : 'no'}`
+        `[api] Requested a run action with values:` +
+            `\n\tcommand: ${command}` +
+            `\n\tuserArgs: ${userArgs.toString()}` +
+            `\n\tprojectType: ${config.executionEnvironment.projectType}` +
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}` +
+            `\n\tusePlainTsConfig: ${config.executionEnvironment.useLocalTsconfigJson ? 'yes' : 'no'}`
     );
 
     if (
-        config.executionEnvironment.useLocalTsconfigJson
-        && !fs.existsSync(config.projectType.tsConfigJSON.toolingFile)
+        config.executionEnvironment.useLocalTsconfigJson &&
+        !fs.existsSync(config.projectType.tsConfigJSON.toolingFile)
     ) {
         throw new FileSystemError('errors.undefinedTsConfig');
     }
@@ -247,20 +247,20 @@ export function run(
             logger.debug(`[api] No deletion as the usePlainTsConfig is set to true.`);
         } else {
             logger.debug(
-                `[api] Deleting as usePlainTsConfig is set to false, and it's probably a `
-                + `leftover from previous executions.`
+                `[api] Deleting as usePlainTsConfig is set to false, and it's probably a ` +
+                    `leftover from previous executions.`
             );
             fs.unlinkSync(config.projectType.tsConfigJSON.toolingFile);
         }
     }
 
     logger.debug(
-        `[api] Configuration file for TypeScript in local folder should `
-        + `be generated for temporary execution. Definition will be copied from: `
-        + (config.projectType.typescript.toolingFile ?? '')
+        `[api] Configuration file for TypeScript in local folder should ` +
+            `be generated for temporary execution. Definition will be copied from: ` +
+            (config.projectType.typescript.toolingFile ?? '')
     );
 
-    function runCommand(filesToDeleteAfterExecution: string[]): void {
+    const runCommand = (filesToDeleteAfterExecution: string[]): void => {
         const deleteCreated = (created: string[]): void => {
             for (const each of created) {
                 if (fs.existsSync(each)) {
@@ -283,8 +283,8 @@ export function run(
                     process.exit(code);
                 }
                 config.projectType.tsConfigJSON.toolingFile = '';
-                config.projectType.licenseHeaderConfig.toolingFile
-                    = config.projectType.licenseHeaderConfig.toolingFile.substring(
+                config.projectType.licenseHeaderConfig.toolingFile =
+                    config.projectType.licenseHeaderConfig.toolingFile.substring(
                         0,
                         config.projectType.licenseHeaderConfig.toolingFile.length - 2
                     );
@@ -292,11 +292,11 @@ export function run(
             },
             undefined
         );
-    }
+    };
 
-    const filesToConvert = !config.executionEnvironment.useLocalTsconfigJson
-        ? [config.projectType.typescript.toolingFile ?? '', config.projectType.licenseHeaderConfig.toolingFile ?? '']
-        : [config.projectType.licenseHeaderConfig.toolingFile ?? ''];
+    const filesToConvert = config.executionEnvironment.useLocalTsconfigJson
+        ? [config.projectType.licenseHeaderConfig.toolingFile ?? '']
+        : [config.projectType.typescript.toolingFile ?? '', config.projectType.licenseHeaderConfig.toolingFile ?? ''];
 
     jsToJson(filesToConvert, (createdFiles: string[]) => {
         if (config.projectType.typescript.toolingFile && !config.executionEnvironment.useLocalTsconfigJson) {
@@ -307,7 +307,7 @@ export function run(
         }
         runCommand(createdFiles);
     });
-}
+};
 
 /**
  * Convert a set of .js files in CJS format into a matching
@@ -319,7 +319,7 @@ export function run(
  *
  * @internal
  */
-function jsToJson(files: string[], callback: (created: string[]) => void): void {
+const jsToJson = (files: string[], callback: (created: string[]) => void): void => {
     const createdFiles: string[] = [];
     const runChained = (remainingFiles: string[]): void => {
         logger.debug(`[api] Creating configuration file: ${remainingFiles[0]}`);
@@ -329,7 +329,7 @@ function jsToJson(files: string[], callback: (created: string[]) => void): void 
                 addComments: 'none',
                 logToConsole: false
             })
-            .then(function () {
+            .then(() => {
                 for (const remainingFile of remainingFiles) {
                     createdFiles.push(
                         remainingFile.substring(0, remainingFile.length - path.extname(remainingFile).length) + '.json'
@@ -346,12 +346,12 @@ function jsToJson(files: string[], callback: (created: string[]) => void): void 
                     runChained(others);
                 }
             })
-            .catch(function (e: unknown) {
+            .catch((e: unknown) => {
                 logger.error(e as string);
             });
     };
     runChained(files);
-}
+};
 /**
  * Copy all files in a given project type definition that are present
  * in the list of files to copy. If the file already exists in the
@@ -376,14 +376,14 @@ function jsToJson(files: string[], callback: (created: string[]) => void): void 
  *
  * @internal
  */
-function copyFilesFrom(
+const copyFilesFrom = (
     projectTypeDef: ProjectTypeDefinition,
     filesToCopy: (keyof ProjectTypeDefinition)[],
     overwrite: boolean = false,
     dryRun: boolean = false,
     addTestLine: boolean = false,
     projectName: string
-): string[] {
+): string[] => {
     const copied: string[] = [];
 
     // Retain only file descriptors to copy
@@ -397,9 +397,9 @@ function copyFilesFrom(
     // Copy those files
     for (const fileDescriptor of fileDescriptorsToCopy) {
         logger.debug(
-            `[api] Attempting to copy the files `
-            + `"${fileDescriptor.gobstonesScriptsLocation.join(', ')}" `
-            + `as "${fileDescriptor.projectLocation.join(', ')}"`
+            `[api] Attempting to copy the files ` +
+                `"${fileDescriptor.gobstonesScriptsLocation.join(', ')}" ` +
+                `as "${fileDescriptor.projectLocation.join(', ')}"`
         );
         for (let i = 0; i < fileDescriptor.gobstonesScriptsLocation.length; i++) {
             const gScriptsRelativePath = fileDescriptor.gobstonesScriptsLocation[i];
@@ -454,7 +454,7 @@ function copyFilesFrom(
 
     // Return a list of all copied files
     return copied;
-}
+};
 
 /**
  * Run a CLI command as a child process.
@@ -466,7 +466,7 @@ function copyFilesFrom(
  *
  * @internal
  */
-function runScript(
+const runScript = (
     command: string,
     args: string[] = [],
     callback?: (code: number | null, child: childProcess.ChildProcess, signal: NodeJS.Signals | null) => void,
@@ -477,7 +477,7 @@ function runScript(
             ...process.env
         }
     }
-): void {
+): void => {
     try {
         logger.debug(`[api] Attempting to execute ${command} with args: ${args.toString()}`);
         const cmd = childProcess.spawn(command, args, options);
@@ -497,4 +497,4 @@ function runScript(
         process.stderr.write(error.toString());
         process.exit(1);
     }
-}
+};

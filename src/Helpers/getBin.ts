@@ -42,12 +42,12 @@ import { ExecutableScriptDefinition, PackageManagerDefinition } from '../Config/
  *
  * @returns The information for the binary execution, or undefined if no binary was found.
  */
-export function getBin(
+export const getBin = (
     projectRootPath: string,
     packageManagerDefinition: PackageManagerDefinition,
     packageName: string,
     binName?: string
-): ExecutableScriptDefinition | undefined {
+): ExecutableScriptDefinition | undefined => {
     if (!binName) {
         binName = packageName;
     }
@@ -169,7 +169,7 @@ export function getBin(
         packageName,
         binName
     }) as ExecutableScriptDefinition;
-}
+};
 
 /**
  * Returns the bin file for a given package and binary file.
@@ -182,14 +182,14 @@ export function getBin(
  *
  * @internal
  */
-function getBinFile(packageJsonPath: string, packageRootDir: string, binName: string): string {
+const getBinFile = (packageJsonPath: string, packageRootDir: string, binName: string): string => {
     logger.debug(`[getBin] Attempting to find the binary file: ${binName} using root: ${packageJsonPath}`, 'magenta');
 
     const pkgJsonReader = new PackageJsonReader(packageJsonPath);
     let pkgBinDefinition = pkgJsonReader.getValueAt('bin') as string | Record<string, string>;
 
-    const binRelativeToPackgeInJson: string
-        = pkgBinDefinition && typeof pkgBinDefinition === 'object'
+    const binRelativeToPackgeInJson: string =
+        pkgBinDefinition && typeof pkgBinDefinition === 'object'
             ? (pkgBinDefinition = pkgBinDefinition[binName])
             : pkgBinDefinition;
 
@@ -200,4 +200,4 @@ function getBinFile(packageJsonPath: string, packageRootDir: string, binName: st
     logger.debug(`[getBin] Path for binary found as: ${fullBinPath}`, 'magenta');
 
     return fullBinPath;
-}
+};

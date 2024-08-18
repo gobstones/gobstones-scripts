@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": {
     "type": "git",
@@ -9,13 +9,7 @@
   "homepage": "https://gobstones.github.io/gobstones-scripts",
   "author": "Alan Rodas Bonjour <alanrodas@gmail.com>",
   "license": "AGPL-3.0",
-  "keywords": [
-    "Gobstones",
-    "Scripts",
-    "Build",
-    "Run",
-    "Projects"
-  ],
+  "keywords": ["Gobstones", "Scripts", "Build", "Run", "Projects"],
   "bin": {
     "gobstones-scripts": "./dist/cjs/cli.cjs"
   },
@@ -46,12 +40,8 @@
   },
   "typesVersions": {
     "*": {
-      "cli": [
-        "./dist/esm/typings/cli.d.ts"
-      ],
-      "*": [
-        "./dist/esm/typings/index.d.ts"
-      ]
+      "cli": ["./dist/esm/typings/cli.d.ts"],
+      "*": ["./dist/esm/typings/index.d.ts"]
     }
   },
   "packageManager": "npm@10.1.0",
@@ -85,7 +75,6 @@
     "@storybook/react": "^8.2.8",
     "@storybook/react-vite": "^8.2.8",
     "@storybook/theming": "^8.2.8",
-    "@stylistic/eslint-plugin": "^2.6.4",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@types/command-exists": "^1.2.3",
@@ -110,9 +99,11 @@
     "cpy-cli": "^5.0.0",
     "cz-conventional-changelog": "^3.3.0",
     "eslint": "9.8.0",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-no-null": "^1.0.2",
     "eslint-plugin-prefer-arrow": "^1.2.3",
+    "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react-refresh": "^0.4.9",
     "figlet": "^1.7.0",
     "fs-extra": "^11.2.0",
@@ -129,6 +120,8 @@
     "nps": "^5.10.0",
     "postcss": "^8.4.41",
     "prettier": "^3.3.3",
+    "prettier-plugin-ini": "^1.2.0",
+    "prettier-plugin-sh": "^0.14.0",
     "react-i18next": "^15.0.1",
     "replace": "^1.2.2",
     "rimraf": "^6.0.1",

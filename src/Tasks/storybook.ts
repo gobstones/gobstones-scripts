@@ -73,7 +73,7 @@ export const storybook = {
      *
      * @returns The bash command string.
      */
-    build(options: TaskStorybookBuildOptions): string {
+    build: (options: TaskStorybookBuildOptions): string => {
         if (isNotDefined(options.outDir)) {
             throw new TaskConfigurationError(
                 stripIndent`"storybook.build" expects options with the following signature:

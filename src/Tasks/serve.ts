@@ -45,7 +45,7 @@ export interface TaskServeOptions {
  *
  * @returns The bash command string.
  */
-export function serve(options: TaskServeOptions): string {
+export const serve = (options: TaskServeOptions): string => {
     if (isNotDefined(options.dir)) {
         throw new TaskConfigurationError(
             stripIndent`"serve" requires options with the following signature:
@@ -55,4 +55,4 @@ export function serve(options: TaskServeOptions): string {
         );
     }
     return `${runBin('serve')} ${options.dir}`;
-}
+};

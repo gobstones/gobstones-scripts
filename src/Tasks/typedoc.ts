@@ -43,6 +43,6 @@ export interface TaskTypedocOptions {
  * @returns The bash command string.
  */
 export const typedoc = (options: TaskTypedocOptions = {}): string =>
-    `${runBin('typedoc')} --options ${config.projectType.typedoc.toolingFile} `
-    + `--tsconfig ${config.projectType.tsConfigJSON.toolingFile}`
-    + (options.watch ? ` --watch ${options.watch}` : '');
+    `${runBin('typedoc')} --options ${config.projectType.typedoc.toolingFile} ` +
+    `--tsconfig ${config.projectType.tsConfigJSON.toolingFile}` +
+    (options.watch ? ` --watch ${options.watch}` : '');

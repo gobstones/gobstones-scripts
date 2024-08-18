@@ -45,7 +45,7 @@ export interface TaskPrettifyOptions {
  *
  * @returns The bash command string.
  */
-export function prettify(options: TaskPrettifyOptions): string {
+export const prettify = (options: TaskPrettifyOptions): string => {
     if (isNotDefined(options.files)) {
         throw new TaskConfigurationError(
             stripIndent`"prettier" requires options with the following signature:
@@ -55,4 +55,4 @@ export function prettify(options: TaskPrettifyOptions): string {
         );
     }
     return `${runBin('prettier')} --no-error-on-unmatched-pattern --write ${options.files}`;
-}
+};

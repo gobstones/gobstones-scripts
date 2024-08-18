@@ -31,9 +31,9 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
  *
  * @returns The bash command string.
  */
-export function node(script: string): string {
+export const node = (script: string): string => {
     if (isNotDefined(script)) {
         throw new TaskConfigurationError('"node" expects a string as argument');
     }
     return `node ${script}`;
-}
+};

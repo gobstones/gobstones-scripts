@@ -36,20 +36,20 @@ import { OSType } from '../Config/config';
  *
  * @returns The project's root path.
  */
-export function getProjectRootPath(os: OSType): string {
+export const getProjectRootPath = (os: OSType): string => {
     logger.debug(`[getProjectRootPath]: Attempting to recover the project root path`, 'cyan');
 
     // The obvious choice is the the current directory
     let possibleRootPath: string = process.env.PWD
         ? process.env.PWD
         : process.cwd()
-            ? process.cwd()
-            : path.resolve('.');
+          ? process.cwd()
+          : path.resolve('.');
 
-    const pathStartBySystem
-        = os === 'windows'
-            // eslint-disable-next-line no-null/no-null
-            ? possibleRootPath.match(/^[A-Z]:\\/) !== null
+    const pathStartBySystem =
+        os === 'windows'
+            ? // eslint-disable-next-line no-null/no-null
+              possibleRootPath.match(/^[A-Z]:\\/) !== null
                 ? possibleRootPath.substring(0, 3)
                 : 'C:\\'
             : '/';
@@ -85,4 +85,4 @@ export function getProjectRootPath(os: OSType): string {
     logger.debug(`[getProjectRootPath]: Project's root path set to: ${possibleRootPath}`, 'cyan');
 
     return possibleRootPath;
-}
+};

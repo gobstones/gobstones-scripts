@@ -32,7 +32,7 @@
  *
  * @return The bash command string.
  */
-export function serially(...scripts: string[]): string {
+export const serially = (...scripts: string[]): string => {
     const scriptsLen = scripts.length;
     const tasks = Array(scriptsLen);
     for (let currentKey = 0; currentKey < scriptsLen; currentKey++) {
@@ -40,4 +40,4 @@ export function serially(...scripts: string[]): string {
     }
 
     return tasks.filter(Boolean).join(' && ');
-}
+};

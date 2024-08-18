@@ -45,7 +45,7 @@ export interface TaskRemoveOptions {
  *
  * @returns The bash command string.
  */
-export function remove(options: TaskRemoveOptions): string {
+export const remove = (options: TaskRemoveOptions): string => {
     if (isNotDefined(options.files)) {
         throw new TaskConfigurationError(
             stripIndent`"remove" requires options with the following signature:
@@ -55,7 +55,7 @@ export function remove(options: TaskRemoveOptions): string {
         );
     }
     return rimraf(options.files);
-}
+};
 
 /**
  * Returns the string for the bash command  to run

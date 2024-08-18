@@ -51,7 +51,7 @@ export interface TaskMoveOptions {
  *
  * @returns The bash command string.
  */
-export function move(options: TaskMoveOptions): string {
+export const move = (options: TaskMoveOptions): string => {
     if (isNotDefined(options.src) || isNotDefined(options.dest)) {
         throw new TaskConfigurationError(
             stripIndent`"move" requires options with the following signature:
@@ -62,4 +62,4 @@ export function move(options: TaskMoveOptions): string {
         );
     }
     return serially(copy({ src: options.src, dest: options.dest }), remove({ files: options.src }));
-}
+};

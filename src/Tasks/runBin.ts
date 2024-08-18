@@ -32,10 +32,10 @@ import { config } from '../Config';
  *
  * @returns The string for the command.
  */
-export function runBin(packageName: string, binName?: string): string {
+export const runBin = (packageName: string, binName?: string): string => {
     // Initialize the tool. Will only do it first time getBin is called
     config.init();
     const element = config.getBinary(packageName, binName || packageName);
     if (element) return element.command;
     return `echo "Could not find binary ${binName || packageName}"`;
-}
+};

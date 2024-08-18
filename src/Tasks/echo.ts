@@ -31,7 +31,7 @@ import colors from 'ansi-colors';
  *
  * @returns The bash command string.
  */
-export function echo(text: string, styles?: string): string {
+export const echo = (text: string, styles?: string): string => {
     const parsedStyles = styles ? styles.split(' ').map((e) => e.trim()) : [];
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const style: (t: string) => string = parsedStyles.reduce(
@@ -42,4 +42,4 @@ export function echo(text: string, styles?: string): string {
     );
 
     return `echo "${styles ? style(text) : text}"`;
-}
+};

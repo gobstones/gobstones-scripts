@@ -40,10 +40,10 @@ import { ConfigPackageManagers, PackageManager } from '../Config/config';
  *
  * @returns The package manager in use
  */
-export function getInUsePackageManager(
+export const getInUsePackageManager = (
     availablePackageManagers: ConfigPackageManagers,
     defaultPackageManager: PackageManager = 'npm'
-): PackageManager {
+): PackageManager => {
     logger.debug(`[getInUsePackageManager]: Attempting to locate package manager in use`, 'gray');
 
     const userAgent = process.env.npm_config_user_agent;
@@ -96,4 +96,4 @@ export function getInUsePackageManager(
 
         return result as PackageManager;
     }
-}
+};

@@ -9,7 +9,7 @@ module.exports = {
             module: 'commonjs'
         }
     },
-    'compilerOptions': {
+    compilerOptions: {
         target: 'es2015',
         rootDir: `${rootDir}/src`,
         esModuleInterop: true,
@@ -27,5 +27,5 @@ module.exports = {
         jsx: 'react',
         module: 'ESNext'
     },
-    'include': [`${rootDir}/src/**/*`]
+    include: [`${rootDir}/src/**/*`]
 };

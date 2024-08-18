@@ -103,9 +103,9 @@ program
         t('cli:descriptions.args.packageManager', { options: `"${Object.keys(config.packageManagers).join('", "')}"` }),
         'npm'
     )
-    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
-    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
-    .option('-T, --test', t('cli:descriptions.args.test'), false)
+    .option('-s, --silent', t('cli:descriptions.args.silent'), undefined)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), undefined)
+    .option('-T, --test', t('cli:descriptions.args.test'), undefined)
     .action((projectName: string, options: PackageManagerBasedOption & GeneralOptionsWithTest) => {
         if (options.debug) {
             logger.level = LogLevel.Debug;
@@ -145,9 +145,9 @@ program
         t('cli:descriptions.args.packageManager', { options: `"${Object.keys(config.packageManagers).join('", "')}"` }),
         'npm'
     )
-    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
-    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
-    .option('-T, --test', t('cli:descriptions.args.test'), false)
+    .option('-s, --silent', t('cli:descriptions.args.silent'), undefined)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), undefined)
+    .option('-T, --test', t('cli:descriptions.args.test'), undefined)
     .action((options: PackageManagerBasedOption & GeneralOptionsWithTest) => {
         if (options.debug) {
             logger.level = LogLevel.Debug;
@@ -176,20 +176,20 @@ program
 program
     .command('update')
     .description(t('descriptions.commands.update'))
-    .option('-f, --force', 'whether to override previous values', false)
+    .option('-f, --force', 'whether to override previous values', undefined)
     .option(
         '-i, --items <item>',
         `the items to update. One of "all", "${config.projectTypeFilteredFiles.copiedOnUpdate.join('", "')}"`,
         'all'
     )
     .option(
-        '-t, --type <project-type> the project type to create, one of "'
-        + Object.keys(config.projectTypes).join('", "')
-        + '"'
+        '-t, --type <project-type> the project type to create, one of "' +
+            Object.keys(config.projectTypes).join('", "') +
+            '"'
     )
-    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
-    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
-    .option('-T, --test', t('cli:descriptions.args.test'), false)
+    .option('-s, --silent', t('cli:descriptions.args.silent'), undefined)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), undefined)
+    .option('-T, --test', t('cli:descriptions.args.test'), undefined)
     .action((options: GeneralOptionsWithTest & ItemBasedOptions) => {
         if (options.debug) {
             logger.level = LogLevel.Debug;
@@ -232,7 +232,7 @@ program
 program
     .command('eject')
     .description(t('descriptions.commands.eject'))
-    .option('-f, --force', 'whether to override previous values', false)
+    .option('-f, --force', 'whether to override previous values', undefined)
     .option(
         '-i, --items <item>',
         `the items to update. One of "all", "${config.projectTypeFilteredFiles.copiedOnEject.join('", "')}"`,
@@ -242,8 +242,8 @@ program
         '-t, --type <project-type>',
         t('cli:descriptions.args.type', { options: `"${Object.keys(config.projectTypes).join('", "')}"` })
     )
-    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
-    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
+    .option('-s, --silent', t('cli:descriptions.args.silent'), undefined)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), undefined)
     .action((options: GeneralOptions & ItemBasedOptions) => {
         if (options.debug) {
             logger.level = LogLevel.Debug;
@@ -292,9 +292,9 @@ program
         t('cli:descriptions.args.packageManager', { options: `"${Object.keys(config.packageManagers).join('", "')}"` }),
         'npm'
     )
-    .option('-s, --silent', t('cli:descriptions.args.silent'), false)
-    .option('-D, --debug', t('cli:descriptions.args.debug'), false)
-    .option('-j, --use-local-tsconfig-json', t('cli:descriptions.args.useLocalTsconfigJson'), false)
+    .option('-s, --silent', t('cli:descriptions.args.silent'), undefined)
+    .option('-D, --debug', t('cli:descriptions.args.debug'), undefined)
+    .option('-j, --use-local-tsconfig-json', t('cli:descriptions.args.useLocalTsconfigJson'), undefined)
     .action(
         (
             command: string,
@@ -316,14 +316,14 @@ program
             cli.displayWelcomeForAction(
                 !command
                     ? t('cli:messages.presentingCommands', {
-                        projectType: config.executionEnvironment.projectType,
-                        packageManager: config.executionEnvironment.packageManager
-                    })
+                          projectType: config.executionEnvironment.projectType,
+                          packageManager: config.executionEnvironment.packageManager
+                      })
                     : t('cli:messages.executingCommands', {
-                        command,
-                        projectType: config.executionEnvironment.projectType,
-                        packageManager: config.executionEnvironment.packageManager
-                    })
+                          command,
+                          projectType: config.executionEnvironment.projectType,
+                          packageManager: config.executionEnvironment.packageManager
+                      })
             );
 
             cli.runOrEnd(() => {
@@ -343,7 +343,7 @@ program
  *
  * @throws if there is an option given and the value is not one of the possible values.
  */
-export function failIfOptionInvalid(options: unknown, optionName: string, possibleValues: string[]): void {
+export const failIfOptionInvalid = (options: unknown, optionName: string, possibleValues: string[]): void => {
     const optionNameCamelCased = optionName.replace(/-(.)/g, (_, group1) => (group1 as string).toUpperCase());
     const optionValue = (options as Record<string, string>)[optionNameCamelCased];
 
@@ -357,4 +357,4 @@ export function failIfOptionInvalid(options: unknown, optionName: string, possib
         logger.error(message, 'bgRed');
         process.exit(1);
     }
-}
+};

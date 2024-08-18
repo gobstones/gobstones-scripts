@@ -34,9 +34,9 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
  *
  * @returns The bash command string.
  */
-export function license(mode: string = 'add'): string {
+export const license = (mode: string = 'add'): string => {
     if (isNotDefined(mode) || (mode !== 'add' && mode !== 'remove')) {
         throw new TaskConfigurationError('"license" expects a string representing the mode, one of "add" or "remove"');
     }
     return `${runBin('license-check-and-add')} ${mode} -f ${config.projectType.licenseHeaderConfig.toolingFile}on`;
-}
+};

@@ -58,7 +58,7 @@ export interface TaskReplaceOptions {
  *
  * @returns The bash command string.
  */
-export function replace(options: TaskReplaceOptions): string {
+export const replace = (options: TaskReplaceOptions): string => {
     if (isNotDefined(options.match) || isNotDefined(options.file)) {
         throw new TaskConfigurationError(
             stripIndent`"replace" requires options with the following signature:
@@ -70,10 +70,10 @@ export function replace(options: TaskReplaceOptions): string {
         );
     }
     return (
-        `${runBin('replace')} `
-        + `'${options.match}' `
-        + `'${options.replace ?? ''}' `
-        + `${options.file} `
-        + `--recursive --silent`
+        `${runBin('replace')} ` +
+        `'${options.match}' ` +
+        `'${options.replace ?? ''}' ` +
+        `${options.file} ` +
+        `--recursive --silent`
     );
-}
+};

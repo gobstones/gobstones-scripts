@@ -52,7 +52,7 @@ export interface TaskEslintOptions {
  *
  * @returns The bash command string.
  */
-export function eslint(options: TaskEslintOptions = {}): string {
+export const eslint = (options: TaskEslintOptions = {}): string => {
     /*
         throw new TaskConfigurationError(
             stripIndent`"eslint" requires options with the following signature:
@@ -64,4 +64,4 @@ export function eslint(options: TaskEslintOptions = {}): string {
     */
     options.fix = options.fix ?? false;
     return `${runBin('eslint')} ${options.files ?? ''} --format stylish --color` + (options.fix ? ' --fix' : '');
-}
+};

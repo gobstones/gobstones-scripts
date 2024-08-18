@@ -56,7 +56,7 @@ export interface TaskCopyOptions {
  *
  * @returns The bash command string.
  */
-export function copy(options: TaskCopyOptions): string {
+export const copy = (options: TaskCopyOptions): string => {
     if (isNotDefined(options.src) || isNotDefined(options.dest)) {
         throw new TaskConfigurationError(
             stripIndent`"rename" requires options with the following signature:
@@ -75,7 +75,7 @@ export function copy(options: TaskCopyOptions): string {
         const destFile = path.basename(options.dest);
         return ncp(`${options.src} ${destFolder} --rename ${destFile}`);
     }
-}
+};
 
 /**
  * Returns the string for the bash command  to run

@@ -2,8 +2,8 @@ const { tasks } = require('@gobstones/gobstones-scripts');
 
 const defaultConfiguration = {
     options: {
-        'scripts': false,
-        'logLevel': 'warn',
+        scripts: false,
+        logLevel: 'warn',
         'help-style': 'basic'
     },
 

@@ -68,7 +68,7 @@ export type ConcurrentScript = ConcurrentScriptDefinition | string;
  *
  * @return The bash command string.
  */
-export function concurrently(scripts: Record<string, ConcurrentScript>): string {
+export const concurrently = (scripts: Record<string, ConcurrentScript>): string => {
     if (typeof scripts !== 'object') {
         throw new TaskConfigurationError(`concurrently expects an object with names as keys, and commands as values.`);
     }
@@ -99,8 +99,8 @@ export function concurrently(scripts: Record<string, ConcurrentScript>): string 
             'bgYellow.bold'
         ];
 
-        const scriptObj: ConcurrentScriptDefinition
-            = typeof scripts[scriptName] === 'object' ? scripts[scriptName] : { script: scripts[scriptName] };
+        const scriptObj: ConcurrentScriptDefinition =
+            typeof scripts[scriptName] === 'object' ? scripts[scriptName] : { script: scripts[scriptName] };
 
         scriptObj.color = scriptObj.color ?? defaultColors[index % defaultColors.length];
 
@@ -128,4 +128,4 @@ export function concurrently(scripts: Record<string, ConcurrentScript>): string 
     ];
     const concurrentlyBin = runBin('concurrently', 'concurrently');
     return `${concurrentlyBin} ${flags.join(' ')}`;
-}
+};

@@ -19,9 +19,9 @@ export default {
     excludeTags: ['@override', '@virtual', '@satisfies', '@overload'],
     visibilityFilters: {
         '@internal': false,
-        'protected': false,
-        'private': false,
-        'inherited': false
+        protected: false,
+        private: false,
+        inherited: false
     },
     theme: 'gobstones',
     mergeModulesMergeMode: 'module-category'

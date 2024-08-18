@@ -1,7 +1,7 @@
 module.exports = {
     options: {
-        'scripts': false,
-        'logLevel': 'warn',
+        scripts: false,
+        logLevel: 'warn',
         'help-style': 'basic'
     },
 
@@ -36,9 +36,9 @@ module.exports = {
             watch: {
                 serve: {
                     script:
-                        'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold '
-                        + '--prefix "[{name}]" --names typedoc,serve '
-                        + '"typedoc --watch" "serve ./docs"',
+                        'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold ' +
+                        '--prefix "[{name}]" --names typedoc,serve ' +
+                        '"typedoc --watch" "serve ./docs"',
                     description: 'Run Typedoc on watch mode, then serve the docs as HTML'
                 }
             }
@@ -71,19 +71,28 @@ module.exports = {
 
         prettify: {
             script:
-                'prettier --no-error-on-unmatched-pattern --write '
-                + './{src,project-types,.github,.vscode}/{**,.}' // folders
-                + '/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js} ' // extensions
-                + '&& prettier --no-error-on-unmatched-pattern --write .prettierrc',
+                // Husky files
+                'prettier --no-error-on-unmatched-pattern --write ' +
+                './.husky/*[^_]' +
+                // Project folders
+                '&& prettier --no-error-on-unmatched-pattern --write ' +
+                './{.github,.vscode,project-types,src}/{**,.}' + // folders
+                '/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js} ' + // extensions
+                // Root hidden files
+                '&& prettier --no-error-on-unmatched-pattern --write ' +
+                '{.czrc,.editorconfig,.gitignore,.npmignore,.npmrc,.prettierrc}' +
+                // Root files
+                '&& prettier --no-error-on-unmatched-pattern --write ' +
+                './*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}', // extensions
             description: 'Run Prettier on all the files, writing the results'
         },
 
         verdaccio: {
             script:
-                'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold '
-                + '--prefix "[{name}]" --names verdaccio.serve,publish '
-                + '"nps verdaccio.serve" '
-                + '"sleep 2s && rimraf ./test/verdaccio/storage/* && npm publish --registry http://localhost:4567"',
+                'concurrently --kill-others-on-fail --prefix-colors bgBlue.bold,bgMagenta.bold ' +
+                '--prefix "[{name}]" --names verdaccio.serve,publish ' +
+                '"nps verdaccio.serve" ' +
+                '"sleep 2s && rimraf ./test/verdaccio/storage/* && npm publish --registry http://localhost:4567"',
             description: 'Run Verdaccio server and publish current version of library to it',
             serve: {
                 script: 'verdaccio --config ./test/verdaccio/config.yml',
@@ -105,18 +114,18 @@ module.exports = {
 
         license: {
             script:
-                'nps build'
-                + '&& npx tsconfig.js --once --root=./project-types/Common/license.config.cjs --add-comments=none '
-                + '&& license-check-and-add add -f ./project-types/Common/license.config.json '
-                + '&& npx rimraf ./project-types/Common/license.config.json',
+                'nps build' +
+                '&& npx tsconfig.js --once --root=./project-types/Common/license.config.cjs --add-comments=none ' +
+                '&& license-check-and-add add -f ./project-types/Common/license.config.json ' +
+                '&& npx rimraf ./project-types/Common/license.config.json',
             hiddenFromHelp: true,
             description: 'Add license information to all code files in the project',
             remove: {
                 script:
-                    'nps build'
-                    + '&& npx tsconfig.js --once --root=./project-types/Common/license.config.cjs --add-comments=none '
-                    + '&& license-check-and-add remove -f ./project-types/Common/license.config.json '
-                    + '&& npx rimraf ./project-types/Common/license.config.json',
+                    'nps build' +
+                    '&& npx tsconfig.js --once --root=./project-types/Common/license.config.cjs --add-comments=none ' +
+                    '&& license-check-and-add remove -f ./project-types/Common/license.config.json ' +
+                    '&& npx rimraf ./project-types/Common/license.config.json',
 
                 hiddenFromHelp: true,
                 description: 'Remove license information to all code files in the project'

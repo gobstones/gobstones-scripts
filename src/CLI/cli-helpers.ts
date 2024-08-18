@@ -37,7 +37,7 @@ import { logger } from '../Helpers/Logger';
  *
  * @returns The gobstones-script banner.
  */
-export function banner(): string {
+export const banner = (): string => {
     const text: string = figlet.textSync('gobstones-scripts', {
         font: 'Standard',
         horizontalLayout: 'fitted',
@@ -46,7 +46,7 @@ export function banner(): string {
         whitespaceBreak: true
     });
     return colors.red(text);
-}
+};
 
 /**
  * Returns the gobstones-scripts welcome message in the CLI.
@@ -61,13 +61,13 @@ export const welcome = (): string => t('cli:messages.welcome', { version: config
  *
  * @param message - The message to display after welcome.
  */
-export function displayWelcomeForAction(message: string): void {
+export const displayWelcomeForAction = (message: string): void => {
     logger.log(banner());
     logger.log(welcome());
     logger.log('');
     logger.log(message);
     logger.log('');
-}
+};
 /**
  * Run a function and print an error message if it fails.
  * The action is expected to be executed and produce an error with a given
@@ -78,7 +78,7 @@ export function displayWelcomeForAction(message: string): void {
  * @param errorsAndMessages - An object associating inner
  *      possible error messages as keys and messages to output to the user as values.
  */
-export function runOrEnd(action: () => void): void {
+export const runOrEnd = (action: () => void): void => {
     try {
         action();
     } catch (e: unknown) {
@@ -100,12 +100,12 @@ export function runOrEnd(action: () => void): void {
         }
         throw e;
     }
-}
+};
 
 /**
  * Print the currently used configuration when the options contain the argument.
  */
-export function printConfiguration(): void {
+export const printConfiguration = (): void => {
     logger.log(
         t('cli:messages.configuration', {
             projectType: colors.blue(config.executionEnvironment.projectType),
@@ -140,9 +140,9 @@ export function printConfiguration(): void {
         const filePath = useAbsolute
             ? path.resolve((config.projectType[fileName] as FileDefinitionWithTooling).toolingFile)
             : path.relative(
-                config.locations.projectRoot,
-                (config.projectType[fileName] as FileDefinitionWithTooling).toolingFile
-            );
+                  config.locations.projectRoot,
+                  (config.projectType[fileName] as FileDefinitionWithTooling).toolingFile
+              );
         logger.log(`\t${fileName}: ${colors.blue(filePath)}`);
     }
-}
+};

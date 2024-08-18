@@ -40,7 +40,7 @@ import { OSType } from '../Config/config';
  *
  * @returns The root path of the `gobstones-scripts` project.
  */
-export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string): string {
+export const getGobstonesScriptsRootPath = (os: OSType, projectRootPath: string): string => {
     logger.debug(`[getGobstonesScriptsRootPath]: Attempting to recover the gobstones-scripts folder location`, 'green');
 
     // Return if previously calculated
@@ -66,12 +66,8 @@ export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string)
         // the same folder, or a folder further up
         let possibleRootPath = projectRootPath;
 
-        const pathStartBySystem
-            = os === 'windows'
-                ? (possibleRootPath?.match(/^[A-Z]:\\/)
-                        ? possibleRootPath.substring(0, 3)
-                        : 'C:\\')
-                : '/';
+        const pathStartBySystem =
+            os === 'windows' ? (possibleRootPath?.match(/^[A-Z]:\\/) ? possibleRootPath.substring(0, 3) : 'C:\\') : '/';
 
         logger.debug(
             `[getGobstonesScriptsRootPath]: Verifying if "${possibleRootPath}" is the gobstones-scripts root folder`,
@@ -100,7 +96,7 @@ export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string)
         // Return the path to a particular location
         // based on the root folder string, the
         // file does not necessarily exists.
-        const getRootPath = function (command: string): string {
+        const getRootPath = (command: string): string => {
             try {
                 const processGettedPath = childProcess.execSync(command).toString().trim();
                 return path.join(processGettedPath || '', '@gobstones', 'gobstones-scripts');
@@ -116,8 +112,8 @@ export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string)
         const attemptForCommandWithLocations = (command: string, locations: string[]): string | undefined => {
             if (commandExists.sync(command)) {
                 logger.debug(
-                    `[getGobstonesScriptsRootPath]: Attempting to see if gobstones-scripts `
-                    + `is installed globally through ${command}`,
+                    `[getGobstonesScriptsRootPath]: Attempting to see if gobstones-scripts ` +
+                        `is installed globally through ${command}`,
                     'green'
                 );
 
@@ -179,4 +175,4 @@ export function getGobstonesScriptsRootPath(os: OSType, projectRootPath: string)
     logger.debug(`[getGobstonesScriptsRootPath]: Could not find the gobstones-script project library`, 'green');
 
     throw Error('cannot find script root');
-}
+};

@@ -1,4 +1,5 @@
 {
+    "plugins": ["prettier-plugin-ini", "prettier-plugin-sh"],
     "printWidth": 120,
     "tabWidth": 4,
     "useTabs": false,
@@ -26,8 +27,15 @@
             }
         },
         {
-            "files": ["*.json", "**/*.json"],
+            "files": ["*.json", "**/*.json", ".czrc", "**/.czrc"],
             "options": {
+                "parser": "json"
+            }
+        },
+        {
+            "files": ["package.json"],
+            "options": {
+                "tabWidth": 2,
                 "parser": "json"
             }
         },
@@ -50,23 +58,15 @@
             }
         },
         {
-            "files": ["package.json"],
+            "files": ["**/*.ini", ".editorconfig", ".npmrc"],
             "options": {
-                "tabWidth": 2,
-                "parser": "json"
+                "parser": "ini"
             }
         },
         {
-            "files": ["**/package-definition.json"],
+            "files": [".gitignore", ".npmignore", ".husky/*"],
             "options": {
-                "tabWidth": 2,
-                "parser": "json"
-            }
-        },
-        {
-            "files": [".prettierrc"],
-            "options": {
-                "parser": "json"
+                "parser": "sh"
             }
         }
     ]

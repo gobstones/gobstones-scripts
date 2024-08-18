@@ -26,7 +26,7 @@ import i18next from 'i18next';
 import i18nextCLILanguageDetector from 'i18next-cli-language-detector';
 import i18nextBackend from 'i18next-fs-backend';
 
-function currentPath(): string {
+const currentPath = (): string => {
     const currentModuleDir = __dirname || import.meta.dirname;
     const translationsFolder = '@i18n';
     let nextDir = currentModuleDir;
@@ -36,7 +36,7 @@ function currentPath(): string {
     // eslint-disable-next-line no-console
     console.log(path.join(nextDir, translationsFolder));
     return path.join(nextDir, translationsFolder);
-}
+};
 
 void i18next
     .use(i18nextCLILanguageDetector)
@@ -50,4 +50,5 @@ void i18next
         }
     });
 
+// eslint-disable-next-line import/export
 export * from 'i18next';

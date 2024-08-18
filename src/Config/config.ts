@@ -486,12 +486,12 @@ export class Config {
         }
 
         if (
-            !this._lastInitializationValues
-            || (apiGivenProjectType && this._lastInitializationValues.apiGivenProjectType !== apiGivenProjectType)
-            || (apiGivenPackageManager
-            && this._lastInitializationValues.apiGivenPackageManager !== apiGivenPackageManager)
-            || (debug && this._lastInitializationValues.debug !== debug)
-            || (test && this._lastInitializationValues.test !== test)
+            !this._lastInitializationValues ||
+            (apiGivenProjectType && this._lastInitializationValues.apiGivenProjectType !== apiGivenProjectType) ||
+            (apiGivenPackageManager &&
+                this._lastInitializationValues.apiGivenPackageManager !== apiGivenPackageManager) ||
+            (debug && this._lastInitializationValues.debug !== debug) ||
+            (test && this._lastInitializationValues.test !== test)
         ) {
             logger.debug(`[config] Already initialized, updating CLI/API parameters`);
             this._initializeExecutionEnvironment(
@@ -642,16 +642,16 @@ export class Config {
         }
         const pkgReader = new PackageJsonReader(path.join(this._locations.projectRoot, 'package.json'));
         this._executionEnvironment = {
-            projectType: (apiGivenProjectType
-            ?? pkgReader.getValueAt('config.gobstones-scripts.type')
-            ?? 'Library') as keyof ConfigProjectTypes,
-            packageManager: (apiGivenPackageManager
-            ?? pkgReader.getValueAt('config.gobstones-scripts.manager')
-            ?? 'npm') as keyof ConfigPackageManagers,
+            projectType: (apiGivenProjectType ??
+                pkgReader.getValueAt('config.gobstones-scripts.type') ??
+                'Library') as keyof ConfigProjectTypes,
+            packageManager: (apiGivenPackageManager ??
+                pkgReader.getValueAt('config.gobstones-scripts.manager') ??
+                'npm') as keyof ConfigPackageManagers,
             useFullPaths: (pkgReader.getValueAt('config.gobstones-scripts.use-full-paths') ?? false) as boolean,
-            useLocalTsconfigJson: (useLocalTsconfigJson
-            ?? pkgReader.getValueAt('config.gobstones-scripts.use-local-tsconfig-json')
-            ?? false) as boolean,
+            useLocalTsconfigJson: (useLocalTsconfigJson ??
+                pkgReader.getValueAt('config.gobstones-scripts.use-local-tsconfig-json') ??
+                false) as boolean,
             debug: (debug ?? pkgReader.getValueAt('config.gobstones-scripts.debug') ?? false) as boolean,
             test: (test ?? pkgReader.getValueAt('config.gobstones-scripts.test') ?? false) as boolean
         };
@@ -806,8 +806,8 @@ export class Config {
                 copyOnUpdate: true
             }),
             prettier: this._fileDefinition('prettier', projectTypePath, noCommonFiles, excludedFiles, {
-                gobstonesScriptsLocation: ['<projectTypePath>/prettierignore', '<projectTypePath>/prettierrc'],
-                projectLocation: ['.prettierignore', '.prettierrc'],
+                gobstonesScriptsLocation: ['<projectTypePath>/prettierrc'],
+                projectLocation: ['.prettierrc'],
                 copyOnInit: true,
                 copyOnUpdate: true
             }),

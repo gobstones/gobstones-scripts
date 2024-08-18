@@ -4,9 +4,9 @@ import { fileURLToPath } from 'url';
 import { fixupPluginRules, includeIgnoreFile } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import eslintJs from '@eslint/js';
-import stylistic from '@stylistic/eslint-plugin';
 import eslintPluginNoNull from 'eslint-plugin-no-null';
 import eslintPluginPreferArrow from 'eslint-plugin-prefer-arrow';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 import eslintTs from 'typescript-eslint';
 
@@ -34,7 +34,7 @@ const compat = new FlatCompat({
  * @returns {import("eslint").ESLint.Plugin}
  */
 // eslint-disable-next-line no-unused-vars
-function legacyPlugin(name, alias = name) {
+const legacyPlugin = (name, alias = name) => {
     const plugin = compat.plugins(name)[0]?.plugins?.[alias];
 
     if (!plugin) {
@@ -42,7 +42,7 @@ function legacyPlugin(name, alias = name) {
     }
 
     return fixupPluginRules(plugin);
-}
+};
 
 const gitignorePath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '.gitignore');
 // #endregion Compatibility with old plugins section
@@ -54,6 +54,8 @@ const config = eslintTs.config(
     includeIgnoreFile(gitignorePath),
     // Recommended settings from ESLint for JS
     eslintJs.configs.recommended,
+    // Prettier plugin usage
+    eslintPluginPrettierRecommended,
     // Import default settings. Import is not yet ESLint 9 compatible
     ...compat.extends(
         'plugin:import/recommended',
@@ -61,17 +63,6 @@ const config = eslintTs.config(
         'plugin:import/warnings',
         'plugin:import/typescript'
     ),
-    stylistic.configs.customize({
-        indent: 4,
-        quotes: 'single',
-        semi: true,
-        jsx: true,
-        arrowParens: true,
-        braceStyle: '1tbs',
-        blockSpacing: true,
-        quoteProps: 'consistent-as-needed',
-        commaDangle: 'never'
-    }),
     // Custom settings and rules for all JS and TS files
     {
         linterOptions: {
@@ -92,25 +83,18 @@ const config = eslintTs.config(
             // import: legacyPlugin('eslint-plugin-import', 'import')
         },
         settings: {
-            'import/ignore': ['i18next', 'fs', 'path']
+            // 'import/ignore': ['i18next', 'fs', 'path']
         },
         rules: {
             // Non plugin rules
             'no-console': ['error'],
             'arrow-body-style': ['error'],
             'no-shadow': ['off'],
-            'camelcase': ['error'],
+            camelcase: ['error'],
             'capitalized-comments': ['off'],
             'default-case': ['error'],
             'dot-location': ['error', 'property'],
-            'eqeqeq': ['error', 'smart'],
-            'max-len': [
-                'error',
-                {
-                    code: 120,
-                    ignoreUrls: true
-                }
-            ],
+            eqeqeq: ['error', 'smart'],
             'no-alert': ['error'],
             'no-bitwise': ['error'],
             'no-caller': ['error'],
@@ -147,7 +131,7 @@ const config = eslintTs.config(
             'one-var': ['error', 'never'],
             'prefer-const': ['error'],
             'prefer-regex-literals': ['error'],
-            'radix': ['error'],
+            radix: ['error'],
             'require-await': ['error'],
 
             'sort-imports': [
@@ -164,7 +148,7 @@ const config = eslintTs.config(
             'spaced-comment': ['error'],
             'use-isnan': ['error'],
             'valid-typeof': ['error'],
-            'yoda': ['error'],
+            yoda: ['error'],
 
             // No Null plugin
             'no-null/no-null': ['error'],
@@ -174,7 +158,7 @@ const config = eslintTs.config(
                 'error',
                 {
                     disallowPrototype: true,
-                    singleReturnOnly: true,
+                    singleReturnOnly: false,
                     classPropertiesAllowed: false
                 }
             ],
@@ -205,10 +189,10 @@ const config = eslintTs.config(
             'import/order': [
                 'error',
                 {
-                    'groups': ['builtin', 'external', 'internal', 'sibling', 'parent', 'index', 'unknown'],
+                    groups: ['builtin', 'external', 'internal', 'sibling', 'parent', 'index', 'unknown'],
                     'newlines-between': 'always',
 
-                    'alphabetize': {
+                    alphabetize: {
                         order: 'asc',
                         caseInsensitive: true
                     }

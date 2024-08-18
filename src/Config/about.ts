@@ -23,7 +23,7 @@
  * is not reliable between different implementations of package managers
  * and that may lead to false readings.
  */
-export const version = '0.9.0';
+export const version = '0.9.1';
 
 /**
  * The tool's test server address.

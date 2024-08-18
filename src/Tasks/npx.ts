@@ -31,9 +31,9 @@ import { TaskConfigurationError } from '../Helpers/TaskError';
  *
  * @returns The bash command string.
  */
-export function npx(action: string): string {
+export const npx = (action: string): string => {
     if (isNotDefined(action)) {
         throw new TaskConfigurationError('"npx" expects a defined npx action as argument');
     }
     return `npx ${action}`;
-}
+};

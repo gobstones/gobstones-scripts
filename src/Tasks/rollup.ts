@@ -43,6 +43,6 @@ export interface TaskRollupOptions {
  * @returns The bash command string.
  */
 export const rollup = (options: TaskRollupOptions = {}): string =>
-    `${runBin('rollup')} --config ${config.projectType.rollup.toolingFile}`
-    + (options.watch ? ` --watch ${options.watch}` : '')
-    + ` --bundleConfigAsCjs`;
+    `${runBin('rollup')} --config ${config.projectType.rollup.toolingFile}` +
+    (options.watch ? ` --watch ${options.watch}` : '') +
+    ` --bundleConfigAsCjs`;
