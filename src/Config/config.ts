@@ -16,6 +16,7 @@
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 
+import fs from 'fs';
 import path from 'path';
 
 import { testServer, version } from './about';
@@ -651,7 +652,7 @@ export class Config {
             useFullPaths: (pkgReader.getValueAt('config.gobstones-scripts.use-full-paths') ?? false) as boolean,
             useLocalTsconfigJson: (useLocalTsconfigJson ??
                 pkgReader.getValueAt('config.gobstones-scripts.use-local-tsconfig-json') ??
-                false) as boolean,
+                fs.existsSync(path.join(this._locations.projectRoot, 'package.json'))) as boolean,
             debug: (debug ?? pkgReader.getValueAt('config.gobstones-scripts.debug') ?? false) as boolean,
             test: (test ?? pkgReader.getValueAt('config.gobstones-scripts.test') ?? false) as boolean
         };
@@ -666,14 +667,14 @@ export class Config {
             Library: this._joinProjectTypeDefinitions(
                 this._getCommonProjectTypeDefinition(
                     'Library',
-                    ['src', 'test', 'packageJson', 'rollup', 'nps'],
+                    ['src', 'test', 'packageJson', 'typescript', 'rollup', 'nps'],
                     ['jestproxies', 'vite', 'stories', 'storybook', 'demos']
                 )
             ),
             CLILibrary: this._joinProjectTypeDefinitions(
                 this._getCommonProjectTypeDefinition(
                     'CLILibrary',
-                    ['src', 'test', 'packageJson', 'rollup', 'nps'],
+                    ['src', 'test', 'packageJson', 'typescript', 'rollup', 'nps'],
                     ['jestproxies', 'vite', 'stories', 'storybook', 'demos']
                 )
             ),
@@ -684,6 +685,7 @@ export class Config {
                         'src',
                         'test',
                         'packageJson',
+                        'typescript',
                         'rollup',
                         'nps',
                         'typedoc',
@@ -698,7 +700,7 @@ export class Config {
             NonCode: this._joinProjectTypeDefinitions(
                 this._getCommonProjectTypeDefinition(
                     'NonCode',
-                    [],
+                    ['src', 'test', 'packageJson'],
                     [
                         'eslint',
                         'tsConfigJSON',
@@ -715,7 +717,7 @@ export class Config {
                 ),
                 {
                     // On node code, nps should always be copied to the project's root
-                    nps: this._fileDefinitionWithTooling('nps', 'NonCode', [], [], {
+                    nps: this._fileDefinitionWithTooling('nps', 'NonCode', ['nps'], [], {
                         gobstonesScriptsLocation: ['<projectTypePath>/package-scripts.js'],
                         projectLocation: ['package-scripts.js'],
                         copyOnInit: true,
@@ -730,7 +732,9 @@ export class Config {
      * Returns the file information for all files that are common to any
      * project. Expects the route of the project's subfolder.
      *
-     * @param projectTypePath - The route of the project's subfolder (e.g. 'cli-Library')
+     * @param projectTypePath - The route of the project's subfolder (e.g. 'CLILibrary' or 'NonCode')
+     * @param noCommonFiles - The filenames to search in the project specific folder, instead of the common.
+     * @param excludedFiles - Files from the common folder to exclude from this project definition.
      *
      * @returns A partial ProjectTypeDefinition.
      */
@@ -850,8 +854,9 @@ export class Config {
                 isOverridable: true
             }),
             typescript: this._fileDefinitionWithTooling('typescript', projectTypePath, noCommonFiles, excludedFiles, {
-                gobstonesScriptsLocation: ['<projectTypePath>/tsconfig.cjs'],
-                projectLocation: ['tsconfig.cjs'],
+                gobstonesScriptsLocation: ['<projectTypePath>/tsconfig.json'],
+                projectLocation: ['tsconfig.json'],
+                copyOnInit: true,
                 copyOnEject: true,
                 isOverridable: true
             }),

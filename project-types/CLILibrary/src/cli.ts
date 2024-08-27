@@ -10,6 +10,7 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
  * This is the file that contains the CLI program.
  * One built, you may run this file from the command line.
@@ -46,7 +47,7 @@ cli({
         version: t('cli:descriptions.version')
     }
 })
-    .command('awesome [text] [text2]', t('application:class.awesome'), (cmd) => {
+    .command('awesome [text] [text2]', t('cli:commands.awesome'), (cmd) => {
         cmd.input(t('cli:descriptions.in'), t('cli:errors.file'))
             .output('cli:descriptions.out')
             .action((app, _, _opts: CLIArguments) => {
@@ -57,7 +58,7 @@ cli({
                 app.write(output);
             });
     })
-    .command('notCool [text]', t('application:class.notCool'), (cmd) => {
+    .command('notCool [text]', t('cli:commands.notcool'), (cmd) => {
         cmd.input(t('cli:descriptions.in'), t('cli:errors.file'))
             .output(t('cli:descriptions.out'))
             .action((app, _, _opts: CLIArguments) => {

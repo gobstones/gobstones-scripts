@@ -17,6 +17,7 @@
  * @module Tasks
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
+export * from './changelog';
 export * from './chmod';
 export * from './concurrently';
 export * from './copy';

@@ -7,6 +7,10 @@
         "version": "Display the version",
         "help": "Display the help"
     },
+    "commands": {
+        "awesome": "The awesome command",
+        "notcool": "The not cool command"
+    },
     "errors": {
         "file": "File does not exist",
         "language": "Locale does not exist"

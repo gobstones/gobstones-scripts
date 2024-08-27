@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-const { readFileSync, writeFileSync } = require('fs');
-const process = require('process');
+import { readFileSync, writeFileSync } from 'fs';
+import process from 'process';
 
 const replaceInTextFile = (filename, textPresent, newText) => {
     const contents = readFileSync(filename, 'utf-8');

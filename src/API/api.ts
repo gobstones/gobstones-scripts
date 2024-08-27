@@ -283,27 +283,42 @@ export const run = (
                     process.exit(code);
                 }
                 config.projectType.tsConfigJSON.toolingFile = '';
-                config.projectType.licenseHeaderConfig.toolingFile =
-                    config.projectType.licenseHeaderConfig.toolingFile.substring(
-                        0,
-                        config.projectType.licenseHeaderConfig.toolingFile.length - 2
-                    );
+                config.projectType.licenseHeaderConfig.toolingFile = '';
                 deleteCreated(filesToDeleteAfterExecution);
             },
             undefined
         );
     };
 
-    const filesToConvert = config.executionEnvironment.useLocalTsconfigJson
-        ? [config.projectType.licenseHeaderConfig.toolingFile ?? '']
-        : [config.projectType.typescript.toolingFile ?? '', config.projectType.licenseHeaderConfig.toolingFile ?? ''];
+    const filesToConvert = (
+        config.executionEnvironment.useLocalTsconfigJson
+            ? [config.projectType.licenseHeaderConfig.toolingFile ?? '']
+            : [
+                  config.projectType.typescript.toolingFile ?? '',
+                  config.projectType.licenseHeaderConfig.toolingFile ?? ''
+              ]
+    ).filter((e) => e !== '');
 
     jsToJson(filesToConvert, (createdFiles: string[]) => {
-        if (config.projectType.typescript.toolingFile && !config.executionEnvironment.useLocalTsconfigJson) {
-            config.projectType.tsConfigJSON.toolingFile = path.join(
-                path.dirname(config.projectType.typescript.toolingFile),
-                path.basename(config.projectType.tsConfigJSON.projectLocation[0])
+        for (const createdFile of createdFiles) {
+            const createdFileNoPath = path.basename(createdFile);
+            const createdFileNoExtension = createdFileNoPath.substring(
+                0,
+                createdFileNoPath.length - path.extname(createdFileNoPath).length
             );
+
+            if (
+                config.projectType.tsConfigJSON.toolingFile !== undefined &&
+                path.basename(config.projectType.tsConfigJSON.toolingFile).startsWith(createdFileNoExtension)
+            ) {
+                config.projectType.tsConfigJSON.toolingFile = createdFile;
+            }
+            if (
+                config.projectType.licenseHeaderConfig.toolingFile !== undefined &&
+                path.basename(config.projectType.licenseHeaderConfig.toolingFile).startsWith(createdFileNoExtension)
+            ) {
+                config.projectType.licenseHeaderConfig.toolingFile = createdFile;
+            }
         }
         runCommand(createdFiles);
     });

@@ -1,8 +1,28 @@
+## <small>0.9.1 (2024-09-04)</small>
+
+-   feat(project-types): updated project types to have latest eslint and typedoc configurations ([761676d](https://github.com/gobstones/gobstones-scripts/commit/761676d)), closes [#7](https://github.com/gobstones/gobstones-scripts/issues/7)
+-   fix(cli): fix a bug preventing the use of package.json config when using CLI ([f07a82f](https://github.com/gobstones/gobstones-scripts/commit/f07a82f))
+
+### BREAKING CHANGE
+
+-   The task copy now has different arguments expected.
+
+## <small>0.9.1 (2024-09-03)</small>
+
+-   feat(project-types): updated project types to have latest eslint and typedoc configurations ([5e9e91f](https://github.com/gobstones/gobstones-scripts/commit/5e9e91f)), closes [#7](https://github.com/gobstones/gobstones-scripts/issues/7)
+-   fix(cli): fix a bug preventing the use of package.json config when using CLI ([f07a82f](https://github.com/gobstones/gobstones-scripts/commit/f07a82f))
+
+### BREAKING CHANGE
+
+-   The task copy now has different arguments expected.
+
+## <small>0.9.1 (2024-08-27)</small>
+
+-   fix(cli): fix a bug preventing the use of package.json config when using CLI ([f07a82f](https://github.com/gobstones/gobstones-scripts/commit/f07a82f))
+
 ## <small>0.9.1 (2024-08-19)</small>
 
-* fix(cli): fix a bug preventing the use of package.json config when using CLI ([00698dd](https://github.com/gobstones/gobstones-scripts/commit/00698dd))
-
-
+-   fix(cli): fix a bug preventing the use of package.json config when using CLI ([00698dd](https://github.com/gobstones/gobstones-scripts/commit/00698dd))
 
 ## <small>0.9.1 (2024-08-18)</small>
 

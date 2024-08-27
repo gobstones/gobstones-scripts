@@ -1,7 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { fixupPluginRules, includeIgnoreFile } from '@eslint/compat';
+import { includeIgnoreFile } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import eslintJs from '@eslint/js';
 import eslintPluginNoNull from 'eslint-plugin-no-null';
@@ -10,61 +10,47 @@ import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 import globals from 'globals';
 import eslintTs from 'typescript-eslint';
 
-const tsConfigPath = './tsconfig.json';
+const baseUrl = path.resolve(path.dirname(fileURLToPath(import.meta.url)));
 
-// eslint-disable-next-line no-unused-vars
-const _jsFiles = ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.mjs', 'src/**/*.cjs'];
-const _tsFiles = ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.mts', 'src/**/*.cts'];
+const tsConfigPath = path.join(baseUrl, 'tsconfig.json');
+const gitignorePath = path.join(baseUrl, '.gitignore');
+
+const compat = new FlatCompat({
+    baseDirectory: baseUrl,
+    recommendedConfig: eslintJs.configs.recommended
+});
 
 const withFilesOnly = (config, files) =>
     config.map((e) => {
         e.files = files;
         return e;
     });
-
-// region Compatibility with old plugins section
-const compat = new FlatCompat({
-    baseDirectory: path.dirname(fileURLToPath(import.meta.url)),
-    recommendedConfig: eslintJs.configs.recommended
-});
-
-/**
- * @param {string} name the plugin name
- * @param {string} alias the plugin alias
- * @returns {import("eslint").ESLint.Plugin}
- */
-// eslint-disable-next-line no-unused-vars
-const legacyPlugin = (name, alias = name) => {
-    const plugin = compat.plugins(name)[0]?.plugins?.[alias];
-
-    if (!plugin) {
-        throw new Error(`Unable to resolve plugin ${name} and/or alias ${alias}`);
-    }
-
-    return fixupPluginRules(plugin);
-};
-
-const gitignorePath = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '.gitignore');
-// #endregion Compatibility with old plugins section
-
-// recommended configuration only for ts files
+const _jsFiles = ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.mjs', 'src/**/*.cjs'];
+const _tsFiles = ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.mts', 'src/**/*.cts'];
+const _codeFiles = [..._jsFiles, ..._tsFiles];
 
 const config = eslintTs.config(
     // Add all .gitignore files to the ignore path
     includeIgnoreFile(gitignorePath),
+    // Asure oackage-scripts as CJS, to avoid no-undef issues
+    { files: ['**/package-scripts.js'], languageOptions: { globals: globals.node } },
     // Recommended settings from ESLint for JS
     eslintJs.configs.recommended,
     // Prettier plugin usage
     eslintPluginPrettierRecommended,
     // Import default settings. Import is not yet ESLint 9 compatible
-    ...compat.extends(
-        'plugin:import/recommended',
-        'plugin:import/errors',
-        'plugin:import/warnings',
-        'plugin:import/typescript'
+    ...withFilesOnly(
+        compat.extends(
+            'plugin:import/recommended',
+            'plugin:import/errors',
+            'plugin:import/warnings',
+            'plugin:import/typescript'
+        ),
+        _codeFiles
     ),
     // Custom settings and rules for all JS and TS files
     {
+        files: _codeFiles,
         linterOptions: {
             reportUnusedDisableDirectives: true
         },

@@ -37,7 +37,8 @@
     "config": {
         "gobstones-scripts": {
             "type": "NonCode",
-            "manager": "npm"
+            "manager": "npm",
+            "use-local-tsconfig-json": false
         }
     },
     "dependencies": {},

@@ -33,8 +33,6 @@ const currentPath = (): string => {
     while (!fs.existsSync(path.join(nextDir, translationsFolder))) {
         nextDir = path.dirname(nextDir);
     }
-    // eslint-disable-next-line no-console
-    console.log(path.join(nextDir, translationsFolder));
     return path.join(nextDir, translationsFolder);
 };
 

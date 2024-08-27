@@ -35,13 +35,15 @@ echo ""
 echo "\nAdd license text to code files\n"
 npx --no -- nps license
 
+# Run changelog
+echo "\nRun changelog\n"
+if git-log &> /dev/null; then
+    npx --no -- nps changelog
+fi
+
 # Run prettify
 echo "Run prettify\n"
 npx --no -- nps prettify
-
-# Run changelog
-echo "\nRun changelog\n"
-npx --no -- nps changelog
 
 # Add all generated files
 echo "\nAdd generated files to commit\n"

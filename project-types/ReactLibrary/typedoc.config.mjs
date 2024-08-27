@@ -6,33 +6,21 @@ const tsConfigPath = config.projectType.tsConfigJSON.toolingFile;
 
 export default {
     entryPoints: [`${rootDir}/src`],
+    entryPointStrategy: 'expand',
     tsconfig: `${tsConfigPath}`,
     compilerOptions: {
         rootDir: `${rootDir}/src`
     },
-    entryPointStrategy: 'expand',
     out: `${rootDir}/docs`,
-    includes: `${rootDir}/src`,
     exclude: [
         `${rootDir}/node_modules/**/*`,
         `${rootDir}/**/*.test.ts`,
-        `${rootDir}/src/index.ts`,
-        `${rootDir}/src/custom.d.ts`,
-        `${rootDir}/src/**/index.ts`
+        `${rootDir}/src/@types/**/*`,
+        `${rootDir}/src/index.ts`
     ],
-    includeVersion: true,
-    categorizeByGroup: true,
+    plugin: ['@gobstones/typedoc-theme-gobstones'],
+    theme: 'gobstones',
     excludeExternals: true,
     excludeInternal: false,
-    excludePrivate: false,
-    hideGenerator: true,
-    disableSources: true,
-    githubPages: true,
-    plugin: ['typedoc-plugin-merge-modules', 'typedoc-plugin-remove-references', 'typedoc-plugin-extras'],
-    // options added by typedoc-plugin-merge-modules
-    mergeModulesMergeMode: 'module',
-    // end of typedoc-plugin-merge-modules options
-    // options added by typedoc-plugin-extras
-    favicon: '.github/favicon.ico'
-    // end of typedoc-plugin-extras options
+    excludePrivate: false
 };

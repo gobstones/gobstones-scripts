@@ -68,5 +68,5 @@ export const jest = (
         `${runBin('jest')} ` +
         `--config ${config.projectType.jest.toolingFile} ` +
         `--rootDir ${config.locations.projectRoot}`;
-    return `${jestStringBase} --coverage ${additionalArgs}`;
+    return `${jestStringBase} ${additionalArgs}`;
 };

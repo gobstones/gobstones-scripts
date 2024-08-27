@@ -10,6 +10,7 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
 /**
  * This file is the one that runs when you perform a
  * npm start dev. It just imports some classes and prints
@@ -27,6 +28,6 @@ import { MyClass } from './Models';
 export * from './Models/MyClass';
 
 // eslint-disable-next-line no-console
-console.log(t('program.running'));
+console.log(t('application:program.running'));
 // eslint-disable-next-line no-console
 console.log(new MyClass().awesome('hola'));

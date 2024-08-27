@@ -6,23 +6,10 @@ export default {
         rootDir: './src'
     },
     out: './docs',
-    exclude: ['./node_modules/**/*', './**/*.test.ts', './src/index.ts'],
-    includeVersion: true,
-    categorizeByGroup: true,
+    exclude: ['./node_modules/**/*', './**/*.test.ts', './src/@types/**/*', './src/index.ts'],
+    plugin: ['@gobstones/typedoc-theme-gobstones'],
+    theme: 'gobstones',
     excludeExternals: true,
     excludeInternal: false,
-    excludePrivate: false,
-    hideGenerator: true,
-    disableSources: false,
-    githubPages: true,
-    plugin: ['@gobstones/typedoc-theme-gobstones'],
-    excludeTags: ['@override', '@virtual', '@satisfies', '@overload'],
-    visibilityFilters: {
-        '@internal': false,
-        protected: false,
-        private: false,
-        inherited: false
-    },
-    theme: 'gobstones',
-    mergeModulesMergeMode: 'module-category'
+    excludePrivate: false
 };

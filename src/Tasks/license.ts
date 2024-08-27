@@ -18,6 +18,8 @@
  * ----------------------------------------------------
  */
 
+import path from 'path';
+
 import { runBin } from './runBin';
 
 import { config } from '../Config';
@@ -38,5 +40,13 @@ export const license = (mode: string = 'add'): string => {
     if (isNotDefined(mode) || (mode !== 'add' && mode !== 'remove')) {
         throw new TaskConfigurationError('"license" expects a string representing the mode, one of "add" or "remove"');
     }
-    return `${runBin('license-check-and-add')} ${mode} -f ${config.projectType.licenseHeaderConfig.toolingFile}on`;
+    if (!config.projectType.licenseHeaderConfig.toolingFile.endsWith('json')) {
+        config.projectType.licenseHeaderConfig.toolingFile =
+            config.projectType.licenseHeaderConfig.toolingFile.substring(
+                0,
+                config.projectType.licenseHeaderConfig.toolingFile.length -
+                    path.extname(config.projectType.licenseHeaderConfig.toolingFile).length
+            ) + '.json';
+    }
+    return `${runBin('license-check-and-add')} ${mode} -f ${config.projectType.licenseHeaderConfig.toolingFile}`;
 };

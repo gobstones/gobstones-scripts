@@ -41,9 +41,13 @@ export interface TaskCopyOptions {
      */
     dest: string;
     /**
-     * Whether the source is a directory. Defaults to false.
+     * The current directory from where to copy.
      */
-    isDir?: boolean;
+    cwd?: string;
+    /**
+     * A rename patter to apply to the files.
+     */
+    rename?: string;
 }
 
 /**
@@ -59,22 +63,23 @@ export interface TaskCopyOptions {
 export const copy = (options: TaskCopyOptions): string => {
     if (isNotDefined(options.src) || isNotDefined(options.dest)) {
         throw new TaskConfigurationError(
-            stripIndent`"rename" requires options with the following signature:
+            stripIndent`"copy" requires options with the following signature:
                 {
-                    src: string   // The file or folder to copy on
-                    dest: string  // The file or folder to copy to
-                    isDir?: boolean // Whether the copies element is a dir
-                                    // that should be copied recursively, defaults to false.
+                    src: string     // The file or folder to copy on
+                    dest: string    // The file or folder to copy to
+                    cwd?: string    // The current directory from where to copy
+                    rename?: string // A rename patter to apply to the files
                 }`
         );
     }
-    const destFolder = path.dirname(options.dest);
-    if (options.isDir) {
-        return ncp(`${options.src} ${destFolder}`);
-    } else {
-        const destFile = path.basename(options.dest);
-        return ncp(`${options.src} ${destFolder} --rename ${destFile}`);
+    let args = '';
+    if (options.cwd) {
+        args += `--cwd=${path.join(config.locations.projectRoot, options.cwd)}`;
     }
+    if (options.rename) {
+        args += ` --rename=${options.rename}`;
+    }
+    return ncp(`${options.src} ${options.dest} ${args}`);
 };
 
 /**
@@ -90,4 +95,4 @@ export const copy = (options: TaskCopyOptions): string => {
  *
  * @internal
  */
-const ncp = (args: string): string => `${runBin('cpy-cli', 'cpy')} --cwd="${config.locations.projectRoot}" ${args}`;
+const ncp = (args: string): string => `${runBin('cpy-cli', 'cpy')} ${args}`;

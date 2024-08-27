@@ -120,14 +120,14 @@ const defaultConfiguration = {
         },
 
         changelog: {
-            script: tasks.npx('conventional-changelog -p angular -i CHANGELOG.md -s'),
+            script: tasks.changelog(),
             description: 'Generate changelog based on commits',
-            hiddenFromHelp: true,
             scratch: {
-                script: tasks.npx('conventional-changelog -p angular -i CHANGELOG.md -s -r 0'),
+                script: tasks.changelog({ scratch: true }),
                 description: 'Generate changelog based on tags, starting from scratch',
                 hiddenFromHelp: true
-            }
+            },
+            hiddenFromHelp: true
         },
 
         license: {

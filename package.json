@@ -47,6 +47,7 @@
   "packageManager": "npm@10.1.0",
   "scripts": {
     "prepare": "husky",
+    "prepack": "npm start build",
     "start": "nps"
   },
   "dependencies": {
@@ -75,6 +76,7 @@
     "@storybook/react": "^8.2.8",
     "@storybook/react-vite": "^8.2.8",
     "@storybook/theming": "^8.2.8",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.4.8",
     "@testing-library/react": "^16.0.0",
     "@types/command-exists": "^1.2.3",
@@ -135,7 +137,6 @@
     "tsconfig.js": "^3.0.0",
     "tsx": "^4.17.0",
     "typedoc": "^0.26.5",
-    "typedoc-plugin-mdn-links": "^3.2.7",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.0.1",
     "vite": "^5.4.0"
