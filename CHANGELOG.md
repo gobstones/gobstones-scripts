@@ -1,3 +1,5 @@
+## <small>0.9.2 (2024-09-04)</small>
+
 ## <small>0.9.1 (2024-09-04)</small>
 
 -   feat(project-types): updated project types to have latest eslint and typedoc configurations ([761676d](https://github.com/gobstones/gobstones-scripts/commit/761676d)), closes [#7](https://github.com/gobstones/gobstones-scripts/issues/7)
