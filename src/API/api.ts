@@ -12,10 +12,8 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module API
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
- * ----------------------------------------------------
  */
 
 import childProcess from 'child_process';
@@ -27,8 +25,14 @@ import tsconfigJs from 'tsconfig.js';
 import { FileSystemError } from './FileSystemError';
 
 import { config } from '../Config';
-import { FileDefinition, ProjectTypeDefinition } from '../Config/config';
+import {
+    FileDefinition,
+    FileDefinitionWithTooling,
+    FileName,
+    ProjectTypeDefinition
+} from '../Config/helpers/project-types';
 import { logger } from '../Helpers/Logger';
+import { CommandExecutionError } from './CommandExecutionError';
 
 /**
  * Create a new library project in a subfolder with the given name.
@@ -49,7 +53,7 @@ import { logger } from '../Helpers/Logger';
  * {@link FileSystemError}: If there's already a folder with the project name, or the folder is not empty.
  */
 export const create = (projectName: string, projectType?: string, packageManager?: string, test?: boolean): void => {
-    config.init(projectType, packageManager, undefined, test, undefined);
+    config.init(projectType, packageManager, undefined, test);
 
     logger.debug(
         `[api] Requested a create action with values:` +
@@ -88,7 +92,7 @@ export const create = (projectName: string, projectType?: string, packageManager
  * @throws If the current folder is not empty.
  */
 export const init = (projectType?: string, packageManager?: string, test?: boolean): void => {
-    config.init(projectType, packageManager, undefined, test, undefined);
+    config.init(projectType, packageManager, undefined, test);
 
     logger.debug(
         `[api] Requested an init action with values:` +
@@ -109,10 +113,10 @@ export const init = (projectType?: string, packageManager?: string, test?: boole
     copyFilesFrom(config.projectType, config.projectTypeFilteredFiles.copiedOnInit, false, false, test, projectName);
 
     logger.debug(`[api] Initializing the folder as a git repository`);
-    runScript('git', ['init', '-q']);
+    runScript('git', ['init', '-q'], 'ignore');
 
     logger.debug(`[api] Running the package manager "${packageManager ?? ''}" installation step`);
-    runScript(config.packageManager.install);
+    runScript(config.packageManager.install, [], 'ignore');
 };
 
 /**
@@ -133,7 +137,7 @@ export const init = (projectType?: string, packageManager?: string, test?: boole
  * @returns The list of updated files.
  */
 export const update = (file: string = 'all', force?: boolean, projectType?: string, test?: boolean): string[] => {
-    config.init(projectType, undefined, undefined, undefined, undefined);
+    config.init(projectType, undefined, undefined, undefined);
 
     logger.debug(
         `[api] Requested an update action with values:` +
@@ -176,7 +180,7 @@ export const update = (file: string = 'all', force?: boolean, projectType?: stri
  * @returns The list of updated files.
  */
 export const eject = (file: string = 'all', force?: boolean, projectType?: string): string[] => {
-    config.init(projectType, undefined, undefined, undefined, undefined);
+    config.init(projectType, undefined, undefined, undefined);
 
     logger.debug(
         `[api] Requested an eject action with values:` +
@@ -211,53 +215,18 @@ export const eject = (file: string = 'all', force?: boolean, projectType?: strin
  * @param userArgs - The nps command additional arguments.
  * @param projectType - The project type to use as configuration (Defaults to `"library"`).
  * @param packageManager - The package manager to use when running commands.
- * @param usePlainTsConfig - Wether to use the plain tsconfig.json in project
- *                  folder instead of generating one from .js file.
  *
  * @returns The list of updated files.
  */
-export const run = (
-    command: string,
-    userArgs: string[] = [],
-    projectType?: string,
-    packageManager?: string,
-    usePlainTsConfig?: boolean
-): void => {
-    config.init(projectType, packageManager, undefined, undefined, usePlainTsConfig);
+export const run = (command: string, userArgs: string[] = [], projectType?: string, packageManager?: string): void => {
+    config.init(projectType, packageManager, undefined, undefined);
 
     logger.debug(
         `[api] Requested a run action with values:` +
             `\n\tcommand: ${command}` +
             `\n\tuserArgs: ${userArgs.toString()}` +
             `\n\tprojectType: ${config.executionEnvironment.projectType}` +
-            `\n\tpackageManager: ${config.executionEnvironment.packageManager}` +
-            `\n\tusePlainTsConfig: ${config.executionEnvironment.useLocalTsconfigJson ? 'yes' : 'no'}`
-    );
-
-    if (
-        config.executionEnvironment.useLocalTsconfigJson &&
-        !fs.existsSync(config.projectType.tsConfigJSON.toolingFile)
-    ) {
-        throw new FileSystemError('errors.undefinedTsConfig');
-    }
-
-    if (config.projectType.tsConfigJSON.toolingFile) {
-        logger.debug(`[api] Found a configuration file for TypeScript in the local folder.`);
-        if (config.executionEnvironment.useLocalTsconfigJson) {
-            logger.debug(`[api] No deletion as the usePlainTsConfig is set to true.`);
-        } else {
-            logger.debug(
-                `[api] Deleting as usePlainTsConfig is set to false, and it's probably a ` +
-                    `leftover from previous executions.`
-            );
-            fs.unlinkSync(config.projectType.tsConfigJSON.toolingFile);
-        }
-    }
-
-    logger.debug(
-        `[api] Configuration file for TypeScript in local folder should ` +
-            `be generated for temporary execution. Definition will be copied from: ` +
-            (config.projectType.typescript.toolingFile ?? '')
+            `\n\tpackageManager: ${config.executionEnvironment.packageManager}`
     );
 
     const runCommand = (filesToDeleteAfterExecution: string[]): void => {
@@ -270,58 +239,22 @@ export const run = (
             }
         };
 
-        const binary = config.getBinary('nps', 'nps');
+        const binary = config.getBinary('zx', 'zx');
         if (!binary) return;
 
-        runScript(
-            binary.command,
-            ['-c', config.projectType.nps.toolingFile, command, ...userArgs],
-            (code: number) => {
-                logger.debug(`[api] Execution finished with code: ${code.toString()}`);
-                if (code !== 0) {
-                    logger.error(`[api] Script execution failed. See details above.`);
-                    process.exit(code);
-                }
-                config.projectType.tsConfigJSON.toolingFile = '';
-                config.projectType.licenseHeaderConfig.toolingFile = '';
+        runScript(binary.command, ['./.scripts/_cli.ts', command, ...userArgs], 'inherit', (code: number) => {
+            logger.debug(`[api] Execution finished with code: ${code.toString()}`);
+            if (code !== 0) {
+                logger.error(`[api] Script execution failed. See details above.`);
                 deleteCreated(filesToDeleteAfterExecution);
-            },
-            undefined
-        );
+                process.exit(code);
+            }
+            config.projectType.typescript.toolingFiles.main = '';
+            deleteCreated(filesToDeleteAfterExecution);
+        });
     };
 
-    const filesToConvert = (
-        config.executionEnvironment.useLocalTsconfigJson
-            ? [config.projectType.licenseHeaderConfig.toolingFile ?? '']
-            : [
-                  config.projectType.typescript.toolingFile ?? '',
-                  config.projectType.licenseHeaderConfig.toolingFile ?? ''
-              ]
-    ).filter((e) => e !== '');
-
-    jsToJson(filesToConvert, (createdFiles: string[]) => {
-        for (const createdFile of createdFiles) {
-            const createdFileNoPath = path.basename(createdFile);
-            const createdFileNoExtension = createdFileNoPath.substring(
-                0,
-                createdFileNoPath.length - path.extname(createdFileNoPath).length
-            );
-
-            if (
-                config.projectType.tsConfigJSON.toolingFile !== undefined &&
-                path.basename(config.projectType.tsConfigJSON.toolingFile).startsWith(createdFileNoExtension)
-            ) {
-                config.projectType.tsConfigJSON.toolingFile = createdFile;
-            }
-            if (
-                config.projectType.licenseHeaderConfig.toolingFile !== undefined &&
-                path.basename(config.projectType.licenseHeaderConfig.toolingFile).startsWith(createdFileNoExtension)
-            ) {
-                config.projectType.licenseHeaderConfig.toolingFile = createdFile;
-            }
-        }
-        runCommand(createdFiles);
-    });
+    jsToJson(config.projectTypeGenerateableFiles, runCommand);
 };
 
 /**
@@ -329,43 +262,66 @@ export const run = (
  * JSON files through evaluation. Execute the callback with
  * the converted file paths after all files were converted.
  *
- * @param files - The js files to convert to json files
+ * @param creatableFiles - The js files to convert to json files
  * @param callback - The callback to execute after conversion.
  *
  * @internal
  */
-const jsToJson = (files: string[], callback: (created: string[]) => void): void => {
+const jsToJson = (
+    creatableFiles: Partial<Record<FileName, Record<string, string>>>,
+    callback: (created: string[]) => void
+): void => {
     const createdFiles: string[] = [];
-    const runChained = (remainingFiles: string[]): void => {
-        logger.debug(`[api] Creating configuration file: ${remainingFiles[0]}`);
+    const runChained = (fileDefinitions: [FileName, Record<string, string>][], onFinished: () => void): void => {
+        if (fileDefinitions.length === 0) {
+            // Nothing to convert, finish
+            onFinished();
+            return;
+        }
+        if (Object.keys(fileDefinitions[1]).length === 0) {
+            // Nothing more to convert for this filename, go to next.
+            const [_, ...restOfFiles] = fileDefinitions;
+            runChained(restOfFiles, onFinished);
+            return;
+        }
+        const [currentFileDef, ...remainingFilesDef] = fileDefinitions;
+        const currentFilename = currentFileDef[0];
+        const filesToConvert = currentFileDef[1];
+
+        const currentFileToConvertKey = Object.keys(filesToConvert)[0];
+        const currentFileToConvert = filesToConvert[currentFileToConvertKey];
+        const remainingFilesToConvert = { ...filesToConvert };
+        // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+        delete remainingFilesToConvert[currentFileToConvertKey];
+
+        logger.debug(`[api] Creating configuration file: ${currentFileToConvert}`);
         tsconfigJs
             .once({
-                root: remainingFiles[0],
+                root: currentFileToConvert,
                 addComments: 'none',
                 logToConsole: false
             })
             .then(() => {
-                for (const remainingFile of remainingFiles) {
-                    createdFiles.push(
-                        remainingFile.substring(0, remainingFile.length - path.extname(remainingFile).length) + '.json'
-                    );
-                }
-                if (remainingFiles.length === 1) {
-                    // If no more files to convert,
-                    // run callback and delete elements
-                    callback(createdFiles);
-                } else {
-                    // Else, keep converting
-                    const others = [...remainingFiles];
-                    others.splice(0, 1);
-                    runChained(others);
-                }
+                const convertedFileName =
+                    currentFileToConvert.substring(
+                        0,
+                        currentFileToConvert.length - path.extname(currentFileToConvert).length
+                    ) + '.json';
+                createdFiles.push(convertedFileName);
+                const toolingFile = (config?.projectType[currentFilename] as FileDefinitionWithTooling)?.toolingFiles;
+                toolingFile[currentFileToConvertKey] = convertedFileName;
+                runChained([[currentFilename, remainingFilesToConvert], ...remainingFilesDef], onFinished);
             })
             .catch((e: unknown) => {
                 logger.error(e as string);
             });
     };
-    runChained(files);
+    runChained(
+        Object.keys(creatableFiles).map((k) => [k as FileName, creatableFiles[k] as Record<string, string>]),
+        () => {
+            callback(createdFiles);
+        }
+    );
 };
 /**
  * Copy all files in a given project type definition that are present
@@ -476,40 +432,48 @@ const copyFilesFrom = (
  *
  * @param command - The command to run.
  * @param args - The arguments for the command to run.
+ * @param stdio - The stdio configuration.
  * @param callback - A function to call once the command has executed.
- * @param options - The options for the shell.
  *
  * @internal
  */
 const runScript = (
     command: string,
     args: string[] = [],
-    callback?: (code: number | null, child: childProcess.ChildProcess, signal: NodeJS.Signals | null) => void,
-    options: childProcess.SpawnOptionsWithStdioTuple<'inherit', 'inherit', 'inherit'> = {
+    stdio: childProcess.StdioNull | childProcess.StdioPipe = 'inherit',
+    callback?: (code: number | null) => void
+): void => {
+    const options: childProcess.SpawnOptionsWithStdioTuple<
+        childProcess.StdioNull | childProcess.StdioPipe,
+        childProcess.StdioNull | childProcess.StdioPipe,
+        childProcess.StdioNull | childProcess.StdioPipe
+    > = {
         shell: true,
-        stdio: ['inherit', 'inherit', 'inherit'],
+        stdio: [stdio, stdio, stdio],
         env: {
             ...process.env
         }
-    }
-): void => {
+    };
     try {
-        logger.debug(`[api] Attempting to execute ${command} with args: ${args.toString()}`);
-        const cmd = childProcess.spawn(command, args, options);
+        logger.debug(`[api] Attempting to execute ${command} with args: ${args.join(' ')}`);
+        const cmd = childProcess.spawnSync(command, args, options);
+        const code = cmd.status;
+        if (code && code > 0) {
+            throw new CommandExecutionError('errors.commandExecutionFailed', command, code);
+        }
         if (typeof callback === 'function') {
             logger.debug('[api] Callback given');
-            cmd.on('close', (code, signal) => {
-                logger.debug('[api] Command finished, calling callback');
-                callback(code, cmd, signal);
-            });
+            // cmd.on('close', (code, signal) => {
+            logger.debug('[api] Command finished, calling callback');
+            callback(code);
+            // });
         } else {
             logger.debug('[api] No callback given');
         }
     } catch (e: unknown) {
         const error = e as { toString(): string };
         logger.debug(`[api] Execution failed`);
-        logger.warn(error.toString());
-        process.stderr.write(error.toString());
-        process.exit(1);
+        logger.debug(error.toString(), 'red');
+        throw e;
     }
 };

@@ -12,12 +12,10 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  *
  * @internal
- * ----------------------------------------------------
  */
 
 /**
@@ -26,4 +24,4 @@
  * @returns `true` if the current OS is MacOS, `false` otherwise.
  */
 
-export const isMacos = (): boolean => process && process.platform === 'darwin';
+export const isMacos = (): boolean => process?.platform === 'darwin';

@@ -12,12 +12,10 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module CLI
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  *
  * @internal
- * ----------------------------------------------------
  */
 
 import path from 'path';
@@ -77,6 +75,8 @@ interface ItemBasedOptions {
 config.init();
 
 program
+    .enablePositionalOptions()
+    .passThroughOptions()
     .description(`${cli.banner()}\n\n${cli.welcome()}`)
     .addHelpText('before', `${cli.banner()}\n\n${cli.welcome()}`)
     .version(config.environment.toolVersion, '-v --version')
@@ -117,7 +117,7 @@ program
         failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
         failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
 
-        config.init(options.type, options.packageManager, options.debug, options.test, undefined);
+        config.init(options.type, options.packageManager, options.debug, options.test);
 
         cli.displayWelcomeForAction(
             t('cli:messages.creatingProject', {
@@ -159,7 +159,7 @@ program
         failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
         failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
 
-        config.init(options.type, options.packageManager, options.debug, options.test, undefined);
+        config.init(options.type, options.packageManager, options.debug, options.test);
 
         cli.displayWelcomeForAction(
             t('cli:messages.initializingProject', {
@@ -200,13 +200,11 @@ program
 
         failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
 
-        logger.log(JSON.stringify(config.projectTypeFilteredFiles));
-
         if (options.items !== 'all') {
             failIfOptionInvalid(options, 'items', config.projectTypeFilteredFiles.copiedOnUpdate);
         }
 
-        config.init(options.type, undefined, options.debug, options.test, undefined);
+        config.init(options.type, undefined, options.debug, options.test);
 
         cli.displayWelcomeForAction(
             t('cli:messages.updatingFiles', {
@@ -258,7 +256,7 @@ program
             failIfOptionInvalid(options, 'items', config.projectTypeFilteredFiles.copiedOnEject);
         }
 
-        config.init(options.type, undefined, options.debug, undefined, undefined);
+        config.init(options.type, undefined, options.debug, undefined);
 
         cli.displayWelcomeForAction(
             t('cli:messages.ejectingFiles', {
@@ -282,6 +280,9 @@ program
 
 program
     .command('run [command] [...args]')
+    .passThroughOptions()
+    .allowExcessArguments()
+    .allowUnknownOption()
     .description(t('descriptions.commands.run'))
     .option(
         '-t, --type <project-type>',
@@ -294,13 +295,14 @@ program
     )
     .option('-s, --silent', t('cli:descriptions.args.silent'), undefined)
     .option('-D, --debug', t('cli:descriptions.args.debug'), undefined)
-    .option('-j, --use-local-tsconfig-json', t('cli:descriptions.args.useLocalTsconfigJson'), undefined)
     .action(
         (
             command: string,
             args: string[],
             options: PackageManagerBasedOption & GeneralOptions & { useLocalTsconfigJson: boolean }
         ) => {
+            args = process.argv.slice(process.argv.indexOf(command) + 1);
+
             if (options.debug) {
                 logger.level = LogLevel.Debug;
             }
@@ -311,7 +313,7 @@ program
             failIfOptionInvalid(options, 'package-manager', Object.keys(config.packageManagers));
             failIfOptionInvalid(options, 'type', Object.keys(config.projectTypes));
 
-            config.init(options.type, options.packageManager, options.debug, undefined, options.useLocalTsconfigJson);
+            config.init(options.type, options.packageManager, options.debug, undefined);
 
             cli.displayWelcomeForAction(
                 !command
@@ -327,7 +329,7 @@ program
             );
 
             cli.runOrEnd(() => {
-                api.run(command, args, undefined, options.packageManager, options.useLocalTsconfigJson);
+                api.run(command, args, undefined, options.packageManager);
             });
         }
     );

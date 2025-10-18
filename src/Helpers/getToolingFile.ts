@@ -12,12 +12,10 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  *
  * @internal
- * ----------------------------------------------------
  */
 
 import fs from 'fs';
@@ -25,7 +23,7 @@ import path from 'path';
 
 import { logger } from './Logger';
 
-import { FileDefinition } from '../Config/config';
+import { FileDefinition } from '../Config/helpers/project-types';
 
 /**
  * Locate the tooling file to use for the given type definition.
@@ -40,41 +38,42 @@ export const getToolingFile = (
     projectRoot: string,
     gobstonesScriptsProjectsRoot: string,
     fileDef: FileDefinition
-): string | undefined => {
+): Record<string, string> => {
     logger.debug(
         `[getToolingFile] Attempting to determine which configuration file to use for: ${fileDef.name}`,
         'blue'
     );
 
-    if (fs.existsSync(path.join(projectRoot, fileDef.projectLocation[0]))) {
-        logger.debug(
-            `[getToolingFile] Found file at the root of the project: ${path.join(
-                projectRoot,
-                fileDef.projectLocation[0]
-            )}`,
-            'blue'
-        );
+    const toolings: Record<string, string> = {};
 
-        return path.join(projectRoot, fileDef.projectLocation[0]);
-    } else if (fs.existsSync(path.join(gobstonesScriptsProjectsRoot, fileDef.gobstonesScriptsLocation[0]))) {
-        logger.debug(
-            `[getToolingFile] Found file at the gobstones-scripts library: ${path.join(
+    for (let index = 0; index < fileDef.projectLocation.length; index++) {
+        if (fs.existsSync(path.join(projectRoot, fileDef.projectLocation[index]))) {
+            logger.debug(
+                `[getToolingFile] Found file at the root of the project: ${path.join(
+                    projectRoot,
+                    fileDef.projectLocation[index]
+                )}`,
+                'blue'
+            );
+            toolings[path.basename(fileDef.projectLocation[index])] = path.join(
+                projectRoot,
+                fileDef.projectLocation[index]
+            );
+        } else if (fs.existsSync(path.join(gobstonesScriptsProjectsRoot, fileDef.gobstonesScriptsLocation[index]))) {
+            logger.debug(
+                `[getToolingFile] Found file at the gobstones-scripts library: ${path.join(
+                    gobstonesScriptsProjectsRoot,
+                    fileDef.gobstonesScriptsLocation[index]
+                )}`,
+                'blue'
+            );
+
+            toolings[path.basename(fileDef.projectLocation[index])] = path.join(
                 gobstonesScriptsProjectsRoot,
                 fileDef.gobstonesScriptsLocation[0]
-            )}`,
-            'blue'
-        );
-
-        return path.join(gobstonesScriptsProjectsRoot, fileDef.gobstonesScriptsLocation[0]);
+            );
+        }
+        logger.debug(`[getToolingFile] No file found.`, 'blue');
     }
-
-    logger.debug(
-        `[getToolingFile] No file found. ${
-            fileDef.name === 'tsConfigJSON'
-                ? 'This is Ok in this case, not to worry.'
-                : 'A file should have been found. Something wrong happened.'
-        }`,
-        'blue'
-    );
-    return undefined;
+    return toolings;
 };

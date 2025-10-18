@@ -21,12 +21,9 @@
  * @author Your Name <yourname@company.com>
  */
 
-import { t } from './@i18n';
 import { MyClass } from './Models';
 
 export * from './Models/MyClass';
 
 // eslint-disable-next-line no-console
-console.log(t('application:program.running'));
-// eslint-disable-next-line no-console
-console.log(new MyClass().awesome('hola'));
+console.log(new MyClass().awesome('test'));

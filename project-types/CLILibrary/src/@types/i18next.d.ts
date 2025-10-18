@@ -21,7 +21,7 @@
  */
 
 // import the original type declarations
-// eslint-disable-next-line import/no-extraneous-dependencies
+
 import 'i18next';
 
 // import all namespaces (for the default language, only)

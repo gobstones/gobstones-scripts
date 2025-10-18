@@ -5,15 +5,15 @@
         }
     },
     "compilerOptions": {
-        "target": "ES2015",
-        "module": "ES2022",
+        "target": "es2022",
+        "module": "esnext",
         "rootDir": "src",
         "esModuleInterop": true,
         "allowJs": true,
         "sourceMap": true,
         "declaration": true,
         "declarationMap": true,
-        "declarationDir": "/dist/typings",
+        "declarationDir": "./dist",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "stripInternal": true,

@@ -35,7 +35,7 @@ export default {
 
 const Template: StoryFn<typeof Counter> = (args) => <Counter {...args} />;
 
-export const Default = Template.bind({});
+export const Default = Template.bind({}) as { args: unknown };
 Default.args = {
     label: 'The counter has been pressed {count} times.'
 };

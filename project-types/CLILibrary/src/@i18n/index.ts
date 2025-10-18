@@ -11,7 +11,6 @@
  * *****************************************************************************
  */
 
-/* eslint-disable import/no-extraneous-dependencies, import/export*/
 /**
  * ----------------------------------------------------
  * @module i18n
@@ -29,7 +28,7 @@ import i18nextCLILanguageDetector from 'i18next-cli-language-detector';
 import i18nextBackend from 'i18next-fs-backend';
 
 const currentPath = (): string => {
-    const currentModuleDir = __dirname;
+    const currentModuleDir = typeof __dirname === 'undefined' ? import.meta.dirname : __dirname;
     const translationsFolder = '@i18n';
     let nextDir = currentModuleDir;
     while (!fs.existsSync(path.join(nextDir, translationsFolder))) {

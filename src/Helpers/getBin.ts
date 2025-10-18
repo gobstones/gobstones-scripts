@@ -12,12 +12,10 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  *
  * @internal
- * ----------------------------------------------------
  */
 
 import fs from 'fs';
@@ -27,7 +25,8 @@ import { isWindows } from './isWindows';
 import { logger } from './Logger';
 import { PackageJsonReader } from './PackageJsonReader';
 
-import { ExecutableScriptDefinition, PackageManagerDefinition } from '../Config/config';
+import { PackageManagerDefinition } from '../Config/helpers/package-managers';
+import { ExecutableScriptDefinition } from '../Config/helpers/scripts';
 
 /**
  * Get the path to one of the bin scripts exported by a package.
@@ -68,7 +67,7 @@ export const getBin = (
 
         result = {
             scriptFile: binFile,
-            command: `node --experimental-vm-modules ${binFile}`,
+            command: `NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-strip-types node --experimental-vm-modules ${binFile}`,
             mode: 'node'
         };
     } catch {
@@ -88,7 +87,7 @@ export const getBin = (
 
                 result = {
                     scriptFile: binFile,
-                    command: `node --experimental-vm-modules ${binFile}`,
+                    command: `NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-strip-types node --experimental-vm-modules ${binFile}`,
                     mode: 'node'
                 };
                 break;
@@ -111,7 +110,7 @@ export const getBin = (
 
                         result = {
                             scriptFile: binFile,
-                            command: `node --experimental-vm-modules ${binFile}`,
+                            command: `NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-strip-types node --experimental-vm-modules ${binFile}`,
                             mode: 'node'
                         };
                         break;

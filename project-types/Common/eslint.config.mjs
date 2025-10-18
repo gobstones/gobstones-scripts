@@ -1,32 +1,23 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
 
 import { includeIgnoreFile } from '@eslint/compat';
-import { FlatCompat } from '@eslint/eslintrc';
 import eslintJs from '@eslint/js';
+import { config as gbsConfig } from '@gobstones/gobstones-scripts';
+import eslintPluginImport from 'eslint-plugin-import';
 import eslintPluginNoNull from 'eslint-plugin-no-null';
 import eslintPluginPreferArrow from 'eslint-plugin-prefer-arrow';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 import eslintTs from 'typescript-eslint';
 
-const baseUrl = path.resolve(path.dirname(fileURLToPath(import.meta.url)));
+gbsConfig.init();
+const tsConfigPath = gbsConfig.projectType.typescript.toolingFiles.test;
+const gitignorePath = path.join(gbsConfig.locations.projectRoot, '.gitignore');
 
-const tsConfigPath = path.join(baseUrl, 'tsconfig.json');
-const gitignorePath = path.join(baseUrl, '.gitignore');
+const withFilesOnly = (conf, files) => gbsConfig.helpers.setToAll(conf, 'files', files);
 
-const compat = new FlatCompat({
-    baseDirectory: baseUrl,
-    recommendedConfig: eslintJs.configs.recommended
-});
-
-const withFilesOnly = (config, files) =>
-    config.map((e) => {
-        e.files = files;
-        return e;
-    });
-const _jsFiles = ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.mjs', 'src/**/*.cjs'];
-const _tsFiles = ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.mts', 'src/**/*.cts'];
+const _jsFiles = gbsConfig.helpers.unglob('{src,test}/**/*/.{js,mjs,cjs,jsx}');
+const _tsFiles = gbsConfig.helpers.unglob('{src,test}/**/*/.{ts,mts,cts,tsx}');
 const _codeFiles = [..._jsFiles, ..._tsFiles];
 
 const config = eslintTs.config(
@@ -38,16 +29,6 @@ const config = eslintTs.config(
     eslintJs.configs.recommended,
     // Prettier plugin usage
     eslintPluginPrettierRecommended,
-    // Import default settings. Import is not yet ESLint 9 compatible
-    ...withFilesOnly(
-        compat.extends(
-            'plugin:import/recommended',
-            'plugin:import/errors',
-            'plugin:import/warnings',
-            'plugin:import/typescript'
-        ),
-        _codeFiles
-    ),
     // Custom settings and rules for all JS and TS files
     {
         files: _codeFiles,
@@ -65,11 +46,8 @@ const config = eslintTs.config(
         },
         plugins: {
             'no-null': eslintPluginNoNull,
-            'prefer-arrow': eslintPluginPreferArrow
-            // import: legacyPlugin('eslint-plugin-import', 'import')
-        },
-        settings: {
-            // 'import/ignore': ['i18next', 'fs', 'path']
+            'prefer-arrow': eslintPluginPreferArrow,
+            import: eslintPluginImport
         },
         rules: {
             // Non plugin rules
@@ -146,42 +124,6 @@ const config = eslintTs.config(
                     disallowPrototype: true,
                     singleReturnOnly: false,
                     classPropertiesAllowed: false
-                }
-            ],
-
-            // Import is still not v9 compatible, some some rules fail.
-            // Instead of using the default provided configurations,
-            // we manually configure the rules, to avoid rules that have problems.
-
-            // Helpful warnings
-            'import/no-empty-named-blocks': ['error'],
-            'import/no-extraneous-dependencies': ['error'],
-            'import/no-mutable-exports': ['off'],
-            'import/no-named-as-default': ['off'],
-            'import/no-named-as-default-member': ['off'],
-            // Module systems
-            'import/no-import-module-exports': ['error'],
-            // Static Analysis
-            'import/default': ['off'],
-            'import/namespace': ['off'],
-            'import/no-absolute-path': ['error'],
-            'import/no-dynamic-require': ['error'],
-            'import/no-self-import': ['error'],
-            'import/no-unresolved': ['off'],
-            'import/no-useless-path-segments': ['error'],
-            'import/no-webpack-loader-syntax': ['error'],
-            // Style guide
-            'import/no-duplicates': ['error'],
-            'import/order': [
-                'error',
-                {
-                    groups: ['builtin', 'external', 'internal', 'sibling', 'parent', 'index', 'unknown'],
-                    'newlines-between': 'always',
-
-                    alphabetize: {
-                        order: 'asc',
-                        caseInsensitive: true
-                    }
                 }
             ]
         }

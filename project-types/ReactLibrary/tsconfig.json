@@ -5,21 +5,21 @@
         }
     },
     "compilerOptions": {
-        "target": "es2015",
+        "target": "es2022",
+        "module": "esnext",
         "rootDir": "./src",
         "esModuleInterop": true,
         "allowJs": true,
         "sourceMap": true,
         "declaration": true,
         "declarationMap": true,
-        "declarationDir": "./dist/typings",
+        "declarationDir": "./dist",
         "moduleResolution": "node",
         "resolveJsonModule": true,
         "stripInternal": true,
         "composite": false,
         "skipLibCheck": true,
-        "jsx": "react",
-        "module": "ESNext"
+        "jsx": "react"
     },
     "include": ["./src/**/*"]
 }

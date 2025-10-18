@@ -20,6 +20,7 @@ import './Counter.css';
 import React, { useState } from 'react';
 
 import reactIcon from './reactIcon.svg';
+import { dataProps } from '../../helpers/props';
 
 /**
  * Properties for the {@link Counter} component.
@@ -68,6 +69,7 @@ export const Counter: React.FunctionComponent<CounterProps> = (props: CounterPro
                 setCount(count + 1);
                 props.onCountChange?.apply(props.onCountChange, [count + 1]);
             }}
+            {...dataProps(props)}
         >
             <img src={reactIcon} alt="button-icon" />
             {props.label.replace('{count}', count.toString())}

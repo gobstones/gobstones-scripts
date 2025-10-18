@@ -1,53 +1,76 @@
 import path from 'path';
-import { fileURLToPath } from 'url';
 
 import { includeIgnoreFile } from '@eslint/compat';
-import { FlatCompat } from '@eslint/eslintrc';
 import eslintJs from '@eslint/js';
+import eslintPluginImport from 'eslint-plugin-import';
 import eslintPluginNoNull from 'eslint-plugin-no-null';
 import eslintPluginPreferArrow from 'eslint-plugin-prefer-arrow';
 import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 import globals from 'globals';
 import eslintTs from 'typescript-eslint';
 
-const baseUrl = path.resolve(path.dirname(fileURLToPath(import.meta.url)));
+const unglob = (pattern) => {
+    const matcher = /{([^}]+)}|[^{}]+/g;
+    const listedParts =
+        pattern.match(matcher).map((e) =>
+            e.startsWith('{')
+                ? e
+                      .substring(1, e.length - 1)
+                      .split(',')
+                      .map((i) => i.trim())
+                : e
+        ) || [];
 
-const tsConfigPath = path.join(baseUrl, 'tsconfig.json');
-const gitignorePath = path.join(baseUrl, '.gitignore');
+    const combine = (parts, prefix) => {
+        if (parts.length === 0) return [prefix];
 
-const compat = new FlatCompat({
-    baseDirectory: baseUrl,
-    recommendedConfig: eslintJs.configs.recommended
-});
+        const [first, ...rest] = parts;
+        const combinations = [];
 
-const withFilesOnly = (config, files) =>
-    config.map((e) => {
-        e.files = files;
-        return e;
-    });
-const _jsFiles = ['src/**/*.js', 'src/**/*.jsx', 'src/**/*.mjs', 'src/**/*.cjs'];
-const _tsFiles = ['src/**/*.ts', 'src/**/*.tsx', 'src/**/*.mts', 'src/**/*.cts'];
+        if (Array.isArray(first)) {
+            for (const item of first) {
+                combinations.push(...combine(rest, prefix + item));
+            }
+        } else {
+            // If the first part is a string, just add it to the prefix
+            combinations.push(...combine(rest, prefix + first));
+        }
+
+        return combinations;
+    };
+
+    return combine(listedParts, '');
+};
+
+const withFilesOnly = (conf, files) =>
+    Array.isArray(conf)
+        ? conf.map((e) => {
+              e.files = files;
+              return e;
+          })
+        : Object.assign({ ...conf }, { files });
+
+const tsConfigPath = path.resolve('./tsconfig.test.json');
+const gitignorePath = path.resolve('./.gitignore');
+
+const _jsFiles = unglob('{src,project-types}/**/*.{js,mjs,cjs,jsx}');
+const _tsFiles = unglob('{src,project-types}/**/*.{ts,mts,cts,tsx}');
 const _codeFiles = [..._jsFiles, ..._tsFiles];
 
-const config = eslintTs.config(
+const eslintConfig = eslintTs.config(
     // Add all .gitignore files to the ignore path
     includeIgnoreFile(gitignorePath),
     // Asure oackage-scripts as CJS, to avoid no-undef issues
-    { files: ['**/package-scripts.js'], languageOptions: { globals: globals.node } },
+    { files: ['**/*.cjs'], languageOptions: { globals: globals.node } },
     // Recommended settings from ESLint for JS
     eslintJs.configs.recommended,
     // Prettier plugin usage
     eslintPluginPrettierRecommended,
     // Import default settings. Import is not yet ESLint 9 compatible
-    ...withFilesOnly(
-        compat.extends(
-            'plugin:import/recommended',
-            'plugin:import/errors',
-            'plugin:import/warnings',
-            'plugin:import/typescript'
-        ),
-        _codeFiles
-    ),
+    withFilesOnly(eslintPluginImport.flatConfigs.recommended, _codeFiles),
+    withFilesOnly(eslintPluginImport.flatConfigs.errors, _codeFiles),
+    withFilesOnly(eslintPluginImport.flatConfigs.warnings, _codeFiles),
+    withFilesOnly(eslintPluginImport.flatConfigs.typescript, _tsFiles),
     // Custom settings and rules for all JS and TS files
     {
         files: _codeFiles,
@@ -66,10 +89,6 @@ const config = eslintTs.config(
         plugins: {
             'no-null': eslintPluginNoNull,
             'prefer-arrow': eslintPluginPreferArrow
-            // import: legacyPlugin('eslint-plugin-import', 'import')
-        },
-        settings: {
-            // 'import/ignore': ['i18next', 'fs', 'path']
         },
         rules: {
             // Non plugin rules
@@ -149,10 +168,9 @@ const config = eslintTs.config(
                 }
             ],
 
-            // Import is still not v9 compatible, some some rules fail.
-            // Instead of using the default provided configurations,
-            // we manually configure the rules, to avoid rules that have problems.
+            'import/no-named-as-default-member': ['off']
 
+            /*
             // Helpful warnings
             'import/no-empty-named-blocks': ['error'],
             'import/no-extraneous-dependencies': ['error'],
@@ -184,6 +202,7 @@ const config = eslintTs.config(
                     }
                 }
             ]
+            */
         }
     },
     // This rules applies only for TS files, recommended typescript-eslint settings.
@@ -245,7 +264,59 @@ const config = eslintTs.config(
                 }
             ]
         }
+    },
+    {
+        files: unglob('{project-types}/**/*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}'),
+        settings: {
+            'import/ignore': [
+                '^@gobstones/gobstones-scripts$',
+                '^@gobstones/gobstones-core$',
+                'react',
+                '.(scss|less|css)$'
+            ]
+        },
+        rules: {
+            'import/no-unresolved': [
+                'error',
+                {
+                    ignore: [
+                        '@gobstones/gobstones-scripts',
+                        '@gobstones/gobstones-core',
+                        'react',
+                        'typescript-eslint',
+                        '.(scss|less|css)$'
+                    ]
+                }
+            ]
+        }
+    },
+    {
+        files: [
+            'project-types/Common/scripts/**/*.ts',
+            'project-types/Common/husky/**/*.ts',
+            'project-types/CLILibrary/src/cli.ts',
+            'project-types/ReactLibrary/test/Components/Counter/Counter.test.tsx'
+        ],
+        rules: {
+            '@typescript-eslint/no-unsafe-call': ['off'],
+            '@typescript-eslint/no-unsafe-argument': ['off'],
+            '@typescript-eslint/no-unsafe-member-access': ['off'],
+            '@typescript-eslint/no-unsafe-assignment': ['off'],
+            'import/no-unresolved': [
+                'error',
+                {
+                    ignore: [
+                        '@gobstones/gobstones-scripts',
+                        '@gobstones/gobstones-core',
+                        '../.scripts/_helpers.ts',
+                        'react',
+                        'typescript-eslint',
+                        '.(scss|less|css)$'
+                    ]
+                }
+            ]
+        }
     }
 );
 
-export default config;
+export default eslintConfig;

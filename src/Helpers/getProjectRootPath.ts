@@ -12,20 +12,19 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  *
  * @internal
- * ----------------------------------------------------
  */
 
 import fs from 'fs';
 import path from 'path';
+import process from 'process';
 
 import { logger } from './Logger';
 
-import { OSType } from '../Config/config';
+import { OSType } from '../Config/helpers/environment';
 
 /**
  * Returns the current project's root path by attempting to identify it.

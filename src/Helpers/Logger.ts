@@ -12,15 +12,13 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  *
  * @internal
- * ----------------------------------------------------
  */
 
-import colors from 'ansi-colors';
+import chalk from 'chalk';
 
 /**
  * The different available log levels.
@@ -142,8 +140,9 @@ export class Logger {
         if (this._on && (!actualLevel || this.isLevelGeqThan(actualLevel, this.level))) {
             if (style) {
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-                msg = colors[style](msg);
+                msg = chalk[style](msg);
             }
+
             // eslint-disable-next-line no-console
             console.log(msg);
         }

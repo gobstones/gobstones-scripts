@@ -1,7 +1,6 @@
 import { config } from '@gobstones/gobstones-scripts';
 
-config.init();
-const tsConfigPath = config.projectType.tsConfigJSON.toolingFile;
+const tsConfigPath = config.init().projectType.typescript.toolingFiles.test;
 
 export default {
     preset: 'ts-jest',
@@ -24,8 +23,9 @@ export default {
         }
     },
     coveragePathIgnorePatterns: ['<rootDir>/node_modules', '<rootDir>/.jest', '<rootDir>/test'],
-    testPathIgnorePatterns: ['<rootDir>/src/test.ts'],
+    testPathIgnorePatterns: ['<rootDir>/.scripts/test.ts', '<rootDir>/src/test.ts'],
     transformIgnorePatterns: [],
+    injectGlobals: false,
     moduleNameMapper: {
         // styles
         '\\.(css|less|scss|less|sass)$': '<rootDir>/.jest/proxies/identity-obj-proxy-esm',

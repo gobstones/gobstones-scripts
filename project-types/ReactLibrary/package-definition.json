@@ -1,53 +1,47 @@
 {
-    "name": "@gobstones/<library-name>",
-    "version": "0.1.0",
-    "description": "A New Gobstones Project Library",
-    "repository": "https://github.com/gobstones/react-library",
-    "homepage": "https://gobstones.github.io/react-library",
-    "demopage": "https://gobstones.github.io/react-library/demo",
-    "author": "John Doe <john.doe@gmail.com>",
-    "license": "AGPL-3.0",
-    "keywords": ["Gobstones", "Library", "React"],
-    "main": "./dist/cjs/index.cjs",
-    "module": "./dist/esm/index.mjs",
-    "types": "./dist/cjs/typings/index.d.ts",
-    "exports": {
-        ".": {
-            "import": {
-                "types": "./dist/esm/typings/index.d.ts",
-                "default": "./dist/esm/index.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/typings/index.d.ts",
-                "default": "./dist/cjs/index.cjs"
-            }
-        }
-    },
-    "typesVersions": {
-        "*": {
-            "*": ["./dist/esm/typings/index.d.ts"]
-        }
-    },
-    "packageManager": "npm@10.1.0",
-    "scripts": {
-        "prepare": "is-ci || husky install",
-        "prepack": "npm start build",
-        "start": "gobstones-scripts run",
-        "gbs": "gobstones-scripts"
-    },
-    "config": {
-        "gobstones-scripts": {
-            "type": "ReactLibrary",
-            "manager": "npm"
-        }
-    },
-    "dependencies": {
-        "@gobstones/gobstones-core": "^0.5.5",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0"
-    },
-    "devDependencies": {
-        "@gobstones/gobstones-scripts": "^0.9.3",
-        "husky": "^8.0.2"
+  "name": "@gobstones/<library-name>",
+  "version": "0.1.0",
+  "description": "A New Gobstones Project Library",
+  "repository": "https://github.com/gobstones/react-library",
+  "homepage": "https://gobstones.github.io/react-library",
+  "demopage": "https://gobstones.github.io/react-library/demo",
+  "author": "John Doe <john.doe@gmail.com>",
+  "license": "AGPL-3.0",
+  "keywords": ["Gobstones", "Library", "React"],
+  "main": "./dist/index.mjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.mjs"
     }
+  },
+  "typesVersions": {
+    "*": {
+      "*": ["./dist/index.d.ts"]
+    }
+  },
+  "packageManager": "npm@10.1.0",
+  "scripts": {
+    "prepare": "is-ci || husky install",
+    "prepack": "npm start build",
+    "start": "gobstones-scripts run",
+    "gbs": "gobstones-scripts"
+  },
+  "config": {
+    "gobstones-scripts": {
+      "type": "ReactLibrary",
+      "manager": "npm"
+    }
+  },
+  "dependencies": {
+    "@gobstones/gobstones-core": "^0.6.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@gobstones/gobstones-scripts": "^0.10.0",
+    "husky": "^9.1.7"
+  }
 }

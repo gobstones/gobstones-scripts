@@ -12,21 +12,19 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  *
  * @internal
- * ----------------------------------------------------
  */
 
 import childProcess from 'child_process';
 
-import commandExists from 'command-exists';
+import { commandExists } from './commandExist';
 
 import { logger } from './Logger';
 
-import { ConfigPackageManagers, PackageManager } from '../Config/config';
+import { ConfigPackageManagers, PackageManager } from '../Config/helpers/package-managers';
 
 /**
  * Return the package manager in use based different features. First, by

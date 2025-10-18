@@ -21,4 +21,3 @@
 
 export * as api from './API';
 export { config } from './Config';
-export * as tasks from './Tasks';

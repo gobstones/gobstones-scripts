@@ -23,9 +23,9 @@
  *
  * Refer to `README` for more information.
  *
- *
  * @module API
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
 export * from './api';
 export * from './FileSystemError';
+export * from './CommandExecutionError';

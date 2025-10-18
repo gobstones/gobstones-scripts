@@ -10,6 +10,12 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+
+/**
+ * @module API
+ * @author Alan Rodas Bonjour <alanrodas@gmail.com>
+ */
+
 /**
  * An error that occurs when there is a problem in the filesystem state.
  *

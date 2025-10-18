@@ -13,8 +13,7 @@
             "packageManager": "the project manager to use, one of {{options}}",
             "silent": "run silently, not displaying the tool's banner",
             "debug": "run in debug mode, printing all the internal tool's processing",
-            "test": "run using verdaccio as a registry",
-            "useLocalTsconfigJson": "Use the tsconfig.json file at project root"
+            "test": "run using verdaccio as a registry"
         }
     },
     "messages": {
@@ -30,9 +29,10 @@
         "files": "The files {{pathType}} to use as configuration are:"
     },
     "errors": {
-        "invalidOption": "The value '{{optionValue}}' is not a valid option for the argument '{{optionName}}'\nPlease, select one of the following: {{options}}",
+        "invalidOption": "The value '{{optionValue}}' is not a valid option for the argument '{{optionName}}'\nPlease, select one of the following: {{- options}}",
         "unexpected": "An unexpected error ocurred. Run the tool in debug mode to see the full error message",
         "emptyFolder": "The target folder should be empty (current folder for init, folder with project name on create). But the folder contains elements.\nEnsure that the target folder is empty an try again.",
+        "commandExecutionFailed": "Failed to run the command \"{{command}}\". Exited with code: {{exitCode}}.",
         "undefinedTsConfig": "The current configuration states a tsconfig.json file to be present at the project root, but the file was not found."
     }
 }

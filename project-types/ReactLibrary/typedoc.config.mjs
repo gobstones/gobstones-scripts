@@ -2,7 +2,7 @@ import { config } from '@gobstones/gobstones-scripts';
 
 config.init();
 const rootDir = config.locations.projectRoot;
-const tsConfigPath = config.projectType.tsConfigJSON.toolingFile;
+const tsConfigPath = config.projectType.typescript.toolingFiles.main;
 
 export default {
     entryPoints: [`${rootDir}/src`],

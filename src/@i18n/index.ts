@@ -21,13 +21,31 @@
 
 import fs from 'fs';
 import path from 'path';
+import url from 'url';
 
 import i18next from 'i18next';
 import i18nextCLILanguageDetector from 'i18next-cli-language-detector';
 import i18nextBackend from 'i18next-fs-backend';
 
+const runningContext = (): string => {
+    let __moduleShape: string = 'unknown';
+
+    try {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const result = __dirname;
+        __moduleShape = 'commonjs';
+    } catch (err) {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
+        if (err.message?.includes('__dirname is not defined')) {
+            __moduleShape = 'module';
+        }
+    }
+    return __moduleShape;
+};
+
 const currentPath = (): string => {
-    const currentModuleDir = __dirname || import.meta.dirname;
+    const currentModuleDir =
+        runningContext() === 'commonjs' ? __dirname : path.dirname(url.fileURLToPath(import.meta.url));
     const translationsFolder = '@i18n';
     let nextDir = currentModuleDir;
     while (!fs.existsSync(path.join(nextDir, translationsFolder))) {
@@ -48,5 +66,4 @@ void i18next
         }
     });
 
-// eslint-disable-next-line import/export
 export * from 'i18next';

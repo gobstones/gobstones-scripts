@@ -12,24 +12,22 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module Helpers
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  *
  * @internal
- * ----------------------------------------------------
  */
 
 import childProcess from 'child_process';
 import fs from 'fs';
 import path from 'path';
 
-import commandExists from 'command-exists';
+import { commandExists } from './commandExist';
 
 import { logger } from './Logger';
 import { PackageJsonReader } from './PackageJsonReader';
 
-import { OSType } from '../Config/config';
+import { OSType } from '../Config/helpers/environment';
 
 /**
  * Returns the `@gobstones/gobstones-scripts` root path. That is, the path to

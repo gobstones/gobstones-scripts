@@ -14,15 +14,18 @@
  * @ignore
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
-import { StorybookConfig } from '@storybook/react-vite';
+import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
+    core: {
+        disableTelemetry: true
+    },
     framework: '@storybook/react-vite',
     staticDirs: ['./static'],
     stories: ['../stories/**/*.stories.@(js|jsx|ts|tsx)'],
-    addons: ['@storybook/addon-links', '@storybook/addon-essentials'],
-    // eslint-disable-next-line require-await
-    managerHead: async (head, { configType }) => {
+    addons: ['@storybook/addon-links'],
+
+    managerHead: (head, { configType }) => {
         if (configType === 'PRODUCTION') {
             return `
                 ${head}

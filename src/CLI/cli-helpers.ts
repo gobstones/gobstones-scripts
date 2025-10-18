@@ -12,25 +12,22 @@
  */
 
 /**
- * ----------------------------------------------------
  * @module CLI
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  *
  * @internal
- * ----------------------------------------------------
  */
-
-import fs from 'fs';
 import path from 'path';
 import process from 'process';
 
-import colors from 'ansi-colors';
+import chalk from 'chalk';
 import figlet from 'figlet';
 
 import { t } from '../@i18n';
 import { config } from '../Config';
-import { FileDefinitionWithTooling } from '../Config/config';
+import { FileDefinitionWithTooling } from '../Config/helpers/project-types';
 import { logger } from '../Helpers/Logger';
+import { CommandExecutionError, FileSystemError } from '../API';
 
 /**
  * Returns the gobstones-scripts banner that will be printed in CLI.
@@ -45,7 +42,7 @@ export const banner = (): string => {
         width: 120,
         whitespaceBreak: true
     });
-    return colors.red(text);
+    return chalk.red(text);
 };
 
 /**
@@ -75,24 +72,22 @@ export const displayWelcomeForAction = (message: string): void => {
  * and outputs the associated message to the user in a style with red background.
  *
  * @param action - A function to be executed and catch on failure.
- * @param errorsAndMessages - An object associating inner
- *      possible error messages as keys and messages to output to the user as values.
  */
 export const runOrEnd = (action: () => void): void => {
     try {
         action();
     } catch (e: unknown) {
         const error = e as { message: string };
-
-        let message: string;
-        if (error.message === 'errors.emptyFolder') {
-            message = t('cli:errors.emptyFolder');
-        } else if (error.message === 'errors.undefinedTsConfig') {
-            message = t('cli:errors.undefinedTsConfig');
-        } else {
-            message = t('cli:errors.unexpected');
-        }
-
+        const knownErrorMessagesToTranslation: Record<string, (err: Error) => string> = {
+            'errors.emptyFolder': (_e: FileSystemError) => t('cli:errors.emptyFolder'),
+            'errors.commandExecutionFailed': (_e: CommandExecutionError) =>
+                t('cli:errors.commandExecutionFailed', { command: _e.command, exitCode: _e.exitCode }),
+            'errors.undefinedTsConfig': (_e: Error) => t('cli:errors.undefinedTsConfig'),
+            DEFAULT: (_e: Error) => t('cli:errors.unexpected')
+        };
+        const message = (knownErrorMessagesToTranslation[error.message] ?? knownErrorMessagesToTranslation.DEFAULT)(
+            error as Error
+        );
         logger.on();
         if (!config.executionEnvironment.debug) {
             logger.error('ERROR: ' + message, 'bgRed');
@@ -108,41 +103,33 @@ export const runOrEnd = (action: () => void): void => {
 export const printConfiguration = (): void => {
     logger.log(
         t('cli:messages.configuration', {
-            projectType: colors.blue(config.executionEnvironment.projectType),
-            projectManager: colors.blue(config.executionEnvironment.packageManager),
-            isTestMode: colors.blue(config.executionEnvironment.test ? 'yes' : 'no'),
-            isDebugMode: colors.blue(config.executionEnvironment.debug ? 'yes' : 'no'),
-            usingLocalTsConfig: colors.blue(config.executionEnvironment.useLocalTsconfigJson ? 'yes' : 'no'),
-            usingFullPaths: colors.blue(config.executionEnvironment.useFullPaths ? 'yes' : 'no')
+            projectType: chalk.blue(config.executionEnvironment.projectType),
+            projectManager: chalk.blue(config.executionEnvironment.packageManager),
+            isTestMode: chalk.blue(config.executionEnvironment.test ? 'yes' : 'no'),
+            isDebugMode: chalk.blue(config.executionEnvironment.debug ? 'yes' : 'no'),
+            usingFullPaths: chalk.blue(config.executionEnvironment.useFullPaths ? 'yes' : 'no')
         })
     );
     logger.log(
         t('cli:messages.folders', {
-            rootFolder: colors.blue(config.locations.projectRoot),
-            gobstonesScriptsFolder: colors.blue(config.locations.gobstonesScriptsRoot)
+            rootFolder: chalk.blue(config.locations.projectRoot),
+            gobstonesScriptsFolder: chalk.blue(config.locations.gobstonesScriptsRoot)
         })
     );
 
     const useAbsolute = config.executionEnvironment.useFullPaths;
 
-    let configFiles = config.projectTypeFilteredFiles.toolingFiles;
-    // Do not expose tsConfigJSON, but show it's file, if not auto-generated
-    // as the typescript one.
-    if (config.projectType.tsConfigJSON.toolingFile && fs.existsSync(config.projectType.tsConfigJSON.toolingFile)) {
-        config.projectType.typescript.toolingFile = config.projectType.tsConfigJSON.toolingFile;
-    }
-    configFiles = configFiles.filter((e) => e !== 'tsConfigJSON').sort();
-
+    const configFiles = config.projectTypeFilteredFiles.toolingFiles;
     logger.log(t('cli:messages.files', { pathType: useAbsolute ? '(full path)' : '(relative path)' }));
 
     for (const fileName of configFiles) {
-        if (!(config.projectType[fileName] as FileDefinitionWithTooling).toolingFile) continue;
+        if (!(config.projectType[fileName] as FileDefinitionWithTooling).toolingFiles) continue;
         const filePath = useAbsolute
-            ? path.resolve((config.projectType[fileName] as FileDefinitionWithTooling).toolingFile)
+            ? path.resolve((config.projectType[fileName] as FileDefinitionWithTooling).toolingFiles.main)
             : path.relative(
                   config.locations.projectRoot,
-                  (config.projectType[fileName] as FileDefinitionWithTooling).toolingFile
+                  (config.projectType[fileName] as FileDefinitionWithTooling).toolingFiles.main
               );
-        logger.log(`\t${fileName}: ${colors.blue(filePath)}`);
+        logger.log(`\t${fileName}: ${chalk.blue(filePath)}`);
     }
 };

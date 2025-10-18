@@ -1,25 +1,33 @@
 # Editor and style files
-.editorconfig
-.prettierignore
-.prettierrc
-.eslintrc.js
-.vscode/*
-.github/*
-.husky/*
+./.vscode/*
+./.github/*
+./.husky/*
 
 # tests
-test/*
-jest.config.js
-coverage
+./test
+./coverage
 
 # docs
-docs
-
-# Building Configuration Files
-webpack.config.js
-rollup.config.js
-tsconfig.json
-package-scripts.js
+./docs
 
 # Additional documentation
-TODO.md
+./TODO.md
+
+# Verdaccio
+./verdaccio
+
+# Add files in root that are not relevant for distribution
+./.czrc
+./.editorconfig
+./.gitignore
+./.prettierrc
+./commitlint.config.mjs
+./eslint.config.mjs
+./jest.config.mjs
+./package-scripts.cjs
+./rollup.config.mjs
+./tsconfig.json
+./tsconfig.test.json
+./typedoc.config.mjs
+./update-version.mjs
+./vite.config.mjs

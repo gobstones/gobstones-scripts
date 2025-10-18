@@ -1,37 +1,48 @@
 import fs from 'fs';
+import path from 'path';
 
 import { config } from '@gobstones/gobstones-scripts';
 import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
+import copy from 'rollup-plugin-copy';
 
 const packageJson = JSON.parse(fs.readFileSync('./package.json').toString());
 
-config.init();
-const tsConfigPath = config.projectType.tsConfigJSON.toolingFile;
+const tsConfigPath = config.init().projectType.typescript.toolingFiles.main;
 
-export default [
-    {
-        input: 'src/index.ts',
+export const configFor = (moduleFormat, inputFile, outputFile, extraPlugins = [], extraExternal = []) => {
+    const fullInputFile = path.resolve(inputFile);
+    const fullOutputFile = path.resolve(outputFile);
+    const fullOutputFolder = path.resolve(path.dirname(outputFile));
+
+    return {
+        input: fullInputFile,
         output: [
             {
                 sourcemap: true,
-                file: packageJson.exports['.'].import.default,
-                format: 'esm'
-            },
-            {
-                sourcemap: true,
-                file: packageJson.exports['.'].require.default,
-                format: 'cjs'
+                file: fullOutputFile,
+                format: moduleFormat
             }
         ],
         preserveSymlinks: true,
         plugins: [
             typescript({
-                tsconfig: `${tsConfigPath}`,
-                declarationDir: './typings'
+                tsconfig: tsConfigPath,
+                compilerOptions: {
+                    declarationDir: fullOutputFolder
+                }
             }),
-            commonjs()
+            commonjs(),
+            copy({
+                targets: [{ src: './src/@i18n', dest: fullOutputFolder }]
+            }),
+            ...extraPlugins
         ],
-        external: [/@gobstones\/.*/, /i18next.*/, 'fs', 'path']
-    }
+        external: [/@gobstones\/.*/, /i18next.*/, ...extraExternal]
+    };
+};
+
+export default [
+    // ESM
+    configFor('esm', 'src/index.ts', packageJson.exports['.'].default)
 ];

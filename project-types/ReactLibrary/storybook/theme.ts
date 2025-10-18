@@ -14,7 +14,8 @@
  * @ignore
  * @author Alan Rodas Bonjour <alanrodas@gmail.com>
  */
-import { create } from '@storybook/theming/create';
+// eslint-disable-next-line import/no-unresolved
+import { create } from 'storybook/theming/create';
 
 export default create({
     base: 'dark',

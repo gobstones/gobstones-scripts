@@ -1,63 +1,56 @@
 import fs from 'fs';
+import path from 'path';
 
 import { config } from '@gobstones/gobstones-scripts';
 import commonjs from '@rollup/plugin-commonjs';
-import nodeResolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
+import copy from 'rollup-plugin-copy';
+import execute from 'rollup-plugin-execute';
 
 const packageJson = JSON.parse(fs.readFileSync('./package.json').toString());
 
-config.init();
-const tsConfigPath = config.projectType.tsConfigJSON.toolingFile;
+const tsConfigPath = config.init().projectType.typescript.toolingFiles.main;
+
+export const configFor = (moduleFormat, inputFile, outputFile, extraPlugins = [], extraExternal = []) => {
+    const fullInputFile = path.resolve(inputFile);
+    const fullOutputFile = path.resolve(outputFile);
+    const fullOutputFolder = path.resolve(path.dirname(outputFile));
+
+    return {
+        input: fullInputFile,
+        output: [
+            {
+                sourcemap: true,
+                file: fullOutputFile,
+                format: moduleFormat
+            }
+        ],
+        preserveSymlinks: true,
+        plugins: [
+            typescript({
+                tsconfig: tsConfigPath,
+                compilerOptions: {
+                    declarationDir: fullOutputFolder
+                }
+            }),
+            commonjs(),
+            copy({
+                targets: [{ src: './src/@i18n', dest: fullOutputFolder }]
+            }),
+            ...extraPlugins
+        ],
+        external: [/@gobstones\/.*/, /i18next.*/, ...extraExternal]
+    };
+};
 
 export default [
-    {
-        input: 'src/index.ts',
-        output: [
-            {
-                sourcemap: true,
-                file: packageJson.exports['.'].import.default,
-                format: 'esm'
-            },
-            {
-                sourcemap: true,
-                file: packageJson.exports['.'].require.default,
-                format: 'cjs'
-            }
-        ],
-        preserveSymlinks: true,
-        plugins: [
-            typescript({
-                tsconfig: `${tsConfigPath}`,
-                declarationDir: './typings'
-            }),
-            commonjs()
-        ],
-        external: [/@gobstones\/.*/, /i18next.*/, 'fs', 'path']
-    },
-    {
-        input: 'src/cli.ts',
-        output: [
-            {
-                sourcemap: true,
-                file: packageJson.exports['./cli'].import.default,
-                format: 'esm'
-            },
-            {
-                sourcemap: true,
-                file: packageJson.exports['./cli'].require.default,
-                format: 'cjs'
-            }
-        ],
-        preserveSymlinks: true,
-        plugins: [
-            nodeResolve({ preferBuiltins: true }),
-            typescript({
-                tsconfig: `${tsConfigPath}`,
-                declarationDir: './typings'
-            }),
-            commonjs()
-        ],
-        external: [/@gobstones\/.*/, /i18next.*/, 'fs', 'path']
-    }
+    // ESM
+    configFor('esm', 'src/index.ts', packageJson.exports['.'].default),
+    configFor(
+        'esm',
+        'src/cli.ts',
+        packageJson.exports['./cli'].default,
+        [execute([`npx chmodx ${packageJson.exports['./cli'].default}`])],
+        ['fs', 'path']
+    )
 ];
