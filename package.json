@@ -1,6 +1,6 @@
 {
   "name": "@gobstones/gobstones-scripts",
-  "version": "0.10.0",
+  "version": "0.10.1",
   "description": "Scripts to abstract away build configuration of Gobstones Project's libraries and modules.",
   "repository": {
     "type": "git",
@@ -59,7 +59,7 @@
     "@eslint/compat": "^1.4.0",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.37.0",
-    "@gobstones/typedoc-theme-gobstones": "^0.5.0",
+    "@gobstones/typedoc-theme-gobstones": "^0.5.1",
     "@jest/globals": "^30.2.0",
     "@johnowennixon/chmodx": "github:johnowennixon/chmodx",
     "@mdx-js/react": "^3.1.1",

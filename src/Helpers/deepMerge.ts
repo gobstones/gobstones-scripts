@@ -21,6 +21,14 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any, no-null/no-null
 const isObject = (item: any): boolean => item !== null && typeof item === 'object' && !Array.isArray(item);
 
+/**
+ * Deeply merge objects.
+ *
+ * @template T The generic type of the target
+ * @param target The target object in which to merge
+ * @param sources The object to merge in the target
+ * @returns The merged object
+ */
 export const deepMerge = <T extends object>(target: T, ...sources: Partial<T>[]): T => {
     if (!sources.length) return target;
     const source = sources.shift();

@@ -37,7 +37,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.10.0",
+    "@gobstones/gobstones-scripts": "^0.10.1",
     "husky": "^8.0.2"
   }
 }
