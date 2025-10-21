@@ -11,13 +11,13 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
-import { $ } from './_helpers.ts';
+import { echo, spinner } from 'zx';
+import { $, script } from './_helpers.ts';
+
 /**
- * Run Prettier on all the files, updating their contents with the fixed prettified version.
- *
- * @hidden
+ * Build the application for deployment.
+ * Outputs the contents into "dist" folder.
  */
-await $`prettier --no-error-on-unmatched-pattern --write ./.husky/*[^_]`;
-await $`prettier --no-error-on-unmatched-pattern --write ./{.github,.vscode,src,test}/{**,.}/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
-await $`prettier --no-error-on-unmatched-pattern --write {.czrc,.editorconfig,.gitignore,.npmignore,.npmrc,.prettierrc}`;
-await $`prettier --no-error-on-unmatched-pattern --write ./*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
+await script('clean', `--dist`);
+await spinner('Compiling...', () => $`echo <some compilation action>`);
+echo(`Compiled`);

@@ -11,13 +11,19 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+import { echo, which } from 'zx';
 import { $ } from './_helpers.ts';
+
 /**
- * Run Prettier on all the files, updating their contents with the fixed prettified version.
+ * Generate changelog based on git commit history.
  *
  * @hidden
  */
-await $`prettier --no-error-on-unmatched-pattern --write ./.husky/*[^_]`;
-await $`prettier --no-error-on-unmatched-pattern --write ./{.github,.vscode,src,test}/{**,.}/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
-await $`prettier --no-error-on-unmatched-pattern --write {.czrc,.editorconfig,.gitignore,.npmignore,.npmrc,.prettierrc}`;
-await $`prettier --no-error-on-unmatched-pattern --write ./*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
+const pathOrNull = await which('git', { nothrow: true });
+if (pathOrNull) {
+    echo('Not in a git repository');
+    process.exit(1);
+}
+const log = await $({ stdio: 'ignore' })`git log`;
+
+await $`conventional-changelog -p angular -i CHANGELOG.md -s ${log.exitCode !== 0 ? ['-r 0'] : []}`;

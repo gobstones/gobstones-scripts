@@ -20,4 +20,4 @@ import { $ } from './_helpers.ts';
 await $`prettier --no-error-on-unmatched-pattern --write ./.husky/*[^_]`;
 await $`prettier --no-error-on-unmatched-pattern --write ./{.github,.vscode,src,test}/{**,.}/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
 await $`prettier --no-error-on-unmatched-pattern --write {.czrc,.editorconfig,.gitignore,.npmignore,.npmrc,.prettierrc}`;
-await $`prettier --no-error-on-unmatched-pattern --write ./*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
+await $`prettier --no-error-on-unmatched-pattern --write ./**/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;

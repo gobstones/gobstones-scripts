@@ -11,13 +11,24 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+import { argv, echo, spinner } from 'zx';
 import { $ } from './_helpers.ts';
+
 /**
- * Run Prettier on all the files, updating their contents with the fixed prettified version.
+ * Delete all automatically generated files and folders.
+ * Use --dist or --docs to delete only a specific subfolder.
  *
  * @hidden
  */
-await $`prettier --no-error-on-unmatched-pattern --write ./.husky/*[^_]`;
-await $`prettier --no-error-on-unmatched-pattern --write ./{.github,.vscode,src,test}/{**,.}/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
-await $`prettier --no-error-on-unmatched-pattern --write {.czrc,.editorconfig,.gitignore,.npmignore,.npmrc,.prettierrc}`;
-await $`prettier --no-error-on-unmatched-pattern --write ./*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
+const shouldDeleteAll = !argv.dist && !argv.docs && !argv.coverage;
+
+if (shouldDeleteAll || argv.dist) {
+    await spinner('Cleaning dist folder...', () => $`rimraf ./dist`);
+}
+if (shouldDeleteAll || argv.docs) {
+    await spinner('Cleaning docs folder...', () => $`rimraf ./docs`);
+}
+if (shouldDeleteAll || argv.coverage) {
+    await spinner('Cleaning coverage folder...', () => $`rimraf ./coverage`);
+}
+echo(`Cleaned`);

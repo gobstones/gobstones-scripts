@@ -11,13 +11,16 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+import { argv } from 'zx';
 import { $ } from './_helpers.ts';
+
 /**
- * Run Prettier on all the files, updating their contents with the fixed prettified version.
- *
- * @hidden
+ * Generate the project documentation which is the
+ * same as running dev (if intended to serve the documentation)
+ * or building the project.
  */
-await $`prettier --no-error-on-unmatched-pattern --write ./.husky/*[^_]`;
-await $`prettier --no-error-on-unmatched-pattern --write ./{.github,.vscode,src,test}/{**,.}/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
-await $`prettier --no-error-on-unmatched-pattern --write {.czrc,.editorconfig,.gitignore,.npmignore,.npmrc,.prettierrc}`;
-await $`prettier --no-error-on-unmatched-pattern --write ./*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
+if (argv.serve) {
+    await $`echo <some action for generating and serving documentation>`;
+} else {
+    await $`echo <some action for generating documentation>`;
+}

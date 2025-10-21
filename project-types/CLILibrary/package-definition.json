@@ -33,7 +33,7 @@
   "scripts": {
     "prepare": "is-ci || husky install",
     "prepack": "npm start build",
-    "start": "gobstones-scripts run",
+    "start": "NODE_NO_WARNINGS=1 NODE_OPTIONS=--experimental-strip-types zx ./.scripts/_cli.ts",
     "gbs": "gobstones-scripts"
   },
   "config": {
@@ -47,7 +47,7 @@
     "commander": "^11.1.0"
   },
   "devDependencies": {
-    "@gobstones/gobstones-scripts": "^0.10.2",
+    "@gobstones/gobstones-scripts": "^0.10.3",
     "husky": "^8.0.2"
   }
 }

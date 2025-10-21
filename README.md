@@ -94,9 +94,9 @@ The CLI is divided into a main command and multiple sub-commands.
 The main command is useful for getting usage help. Run the command without any
 flags to get information about the different options. Useful flags include:
 
--   `-h --help`: display help for command
--   `-v --version`: output the version number
--   `-c, --config`: display the tool's detected configuration
+- `-h --help`: display help for command
+- `-v --version`: output the version number
+- `-c, --config`: display the tool's detected configuration
 
 Utilities happen through sub-commands:
 
@@ -108,25 +108,25 @@ create a new folder with the project name that will hold your project. On the
 other hand, `init` will initialize the project in the current directory, thus,
 expecting the same to be empty.
 
--   `create [options] <project-name>`: create a new project with the given
-    project name.
--   `init [options]`: initialize a project in the current folder.
+- `create [options] <project-name>`: create a new project with the given
+  project name.
+- `init [options]`: initialize a project in the current folder.
 
 A `<project-name>` is any valid project identifier, that is, any string that i
 valid folder name and contains no spaces.
 
 Valid options include:
 
--   `-t, --type <project-type>`: the project type to create, one of `Library`,
-    `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
--   `-p, --package-manager <package-manager>`: the project manager to use, one
-    of `npm`, `yarn`, `pnpm`(default: "npm")
--   `-s --silent`: run silently, not displaying the tool's banner (default:
-    false)
--   `-D, --debug`: run in debug mode, printing all the internal tool's
-    processing (default: false)
--   `-T, --test`: run using verdaccio as a registry (default: false)
--   `-h, --help`: display help for command
+- `-t, --type <project-type>`: the project type to create, one of `Library`,
+  `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
+- `-p, --package-manager <package-manager>`: the project manager to use, one
+  of `npm`, `yarn`, `pnpm`(default: "npm")
+- `-s --silent`: run silently, not displaying the tool's banner (default:
+  false)
+- `-D, --debug`: run in debug mode, printing all the internal tool's
+  processing (default: false)
+- `-T, --test`: run using verdaccio as a registry (default: false)
+- `-h, --help`: display help for command
 
 A special mention is to be held for the `-T` flag, which is not
 self-explanatory. See the **Manually testing newer versions of the library**
@@ -148,21 +148,21 @@ The `update` sub-command is intended to update the project's configuration files
 that live at the root of the project. This command is intended to be executed
 inside an already created project.
 
--   `update [options]`: update the root files of the project.
+- `update [options]`: update the root files of the project.
 
 The command has the following options.
 
--   `-i, --items <item> `: the items to update. One of `all`, `husky`, `github`,
-    `vscode`, `license`, `contributing`, `editorconfig`, `prettier`, `npm`,
-    `eslint`, `git`, `commitlint` (default: `all`)
--   `-t, --type <project-type>`: the project type to create, one of `Library`,
-    `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
--   `-s --silent`: run silently, not displaying the tool's banner (default:
-    false)
--   `-D, --debug`: run in debug mode, printing all the internal tool's
-    processing (default: false)
--   `-T, --test`: run using verdaccio as a registry (default: false)
--   `-h, --help`: display help for command
+- `-i, --items <item> `: the items to update. One of `all`, `husky`, `github`,
+  `vscode`, `license`, `contributing`, `editorconfig`, `prettier`, `npm`,
+  `eslint`, `git`, `commitlint` (default: `all`)
+- `-t, --type <project-type>`: the project type to create, one of `Library`,
+  `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
+- `-s --silent`: run silently, not displaying the tool's banner (default:
+  false)
+- `-D, --debug`: run in debug mode, printing all the internal tool's
+  processing (default: false)
+- `-T, --test`: run using verdaccio as a registry (default: false)
+- `-h, --help`: display help for command
 
 By default, all root files are updated, but through the `-i` flag a specific
 file can be updated. `-i` flag expects only one file at a time, that is, execute
@@ -200,19 +200,19 @@ your project, and these files will be used instead of the ones in the
 gobstones-scripts folder. Note that usually you will not need to eject all
 files, but only the one of a specific tool, use `-i` flag for that.
 
--   `eject [options]`: eject the configuration files of the project.
+- `eject [options]`: eject the configuration files of the project.
 
 This sub-command have the following options:
 
--   `-i, --items <item> `: The items to update. One of `all`, nps`, `rollup`,
-    `typescript`, `typedoc`, `jest` (default: "all")
--   `-t, --type <project-type>`: the project type to create, one of `Library`,
-    `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
--   `-s --silent`: run silently, not displaying the tool's banner (default:
-    false)
--   `-D, --debug`: run in debug mode, printing all the internal tool's
-    processing (default: false)
--   `-h, --help`: display help for command
+- `-i, --items <item> `: The items to update. One of `all`, nps`, `rollup`,
+`typescript`, `typedoc`, `jest` (default: "all")
+- `-t, --type <project-type>`: the project type to create, one of `Library`,
+  `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
+- `-s --silent`: run silently, not displaying the tool's banner (default:
+  false)
+- `-D, --debug`: run in debug mode, printing all the internal tool's
+  processing (default: false)
+- `-h, --help`: display help for command
 
 An example will be:
 
@@ -231,7 +231,7 @@ The `run` sub-command is used to execute a particular `nps` command through the
 abstracted configuration provided by `gobstones-script` (except ejected files,
 in which cae, the ejected configuration will be used).
 
--   `run [options] [command] [...args]`: run a command with nps.
+- `run [options] [command] [...args]`: run a command with nps.
 
 As you can see, you can call `run` with no options. In this case, the default
 `nps` command will be executed. Else, you can provide a particular command (one
@@ -239,35 +239,35 @@ of the nps provided commands) and some arguments.
 
 Available options include:
 
--   `-t, --type <project-type>`: the project type to create, one of `Library`,
-    `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
--   `-p, --package-manager <package-manager>`: the project manager to use, one
-    of `npm`, `yarn`, `pnpm`(default: "npm")
--   `-s --silent`: run silently, not displaying the tool's banner (default:
-    false)
--   `-D, --debug`: run in debug mode, printing all the internal tool's
-    processing (default: false)
--   `-h, --help`: display help for command
+- `-t, --type <project-type>`: the project type to create, one of `Library`,
+  `CLILibrary`, `ReactLibrary`, `NonCode` (default: "Library")
+- `-p, --package-manager <package-manager>`: the project manager to use, one
+  of `npm`, `yarn`, `pnpm`(default: "npm")
+- `-s --silent`: run silently, not displaying the tool's banner (default:
+  false)
+- `-D, --debug`: run in debug mode, printing all the internal tool's
+  processing (default: false)
+- `-h, --help`: display help for command
 
 Available commands depend on project type, and can be found by executing the
 default action, as presenting the help is the default behavior for any project.
 Some common actions include
 
--   `dev`: run the project in development mode.
--   `build`: build the project and output it to `./dist`
--   `test`: run the project's tests, generating coverage reports at
-    `./coverage`.
--   `test -- --serve`: run the project's tests, generating coverage reports at
-    `./coverage`. and serve the generated folder in a local server.
--   `doc`: build the documentation and output it to `./docs`
--   `doc -- --serve`: build the documentation and output it to `./docs`, and
-    serve the folder in a local server.
--   `lint`: lint the files in the project.
--   `lint -- --fix`: lint the files in the project and fix all auto-fixable
-    errors.
--   `prettify`: run prettier with auto-fix in all project files.
--   `clear`: delete all auto-generated files.
--   `changelog`: append the latest tag information to the changelog.
+- `dev`: run the project in development mode.
+- `build`: build the project and output it to `./dist`
+- `test`: run the project's tests, generating coverage reports at
+  `./coverage`.
+- `test -- --serve`: run the project's tests, generating coverage reports at
+  `./coverage`. and serve the generated folder in a local server.
+- `doc`: build the documentation and output it to `./docs`
+- `doc -- --serve`: build the documentation and output it to `./docs`, and
+  serve the folder in a local server.
+- `lint`: lint the files in the project.
+- `lint -- --fix`: lint the files in the project and fix all auto-fixable
+  errors.
+- `prettify`: run prettier with auto-fix in all project files.
+- `clear`: delete all auto-generated files.
+- `changelog`: append the latest tag information to the changelog.
 
 See the **Running commands using gobstones-scripts** for more information.
 
@@ -282,16 +282,16 @@ modifications to the `package.json` file.
 When running a command using _gobstones-scripts_ the tool loads all
 configuration for the different tooling from one of two locations.
 
--   If a configuration file for a tool is present at the root of your project,
-    that configuration is used. As an example, if you have a `rollup.config.js`
-    file in the root of your project, then that file is used to load the Rollup
-    configuration.
--   If a configuration file for a tool is not present at the root of your
-    project, then the default configuration file from gobstones-scripts is used.
-    This configuration files are at
-    `./node_modules/@gobstones/gobstones-scripts/config`, and they should not be
-    modified by the end user. If you need changes over a default configuration,
-    you should eject that configuration file to the root of your project.
+- If a configuration file for a tool is present at the root of your project,
+  that configuration is used. As an example, if you have a `rollup.config.js`
+  file in the root of your project, then that file is used to load the Rollup
+  configuration.
+- If a configuration file for a tool is not present at the root of your
+  project, then the default configuration file from gobstones-scripts is used.
+  This configuration files are at
+  `./node_modules/@gobstones/gobstones-scripts/config`, and they should not be
+  modified by the end user. If you need changes over a default configuration,
+  you should eject that configuration file to the root of your project.
 
 ## Running commands using gobstones-scripts
 
@@ -343,7 +343,6 @@ configuration folder in `node_modules`.
 If you require the tool's detected configuration file you may import it from the
 `_helpers.ts` file at the `.scripts` folder.
 
-
 ## API
 
 You can access the API by importing the module
@@ -394,21 +393,21 @@ the experimental state.
 
 The underlying technologies in use include
 
--   **typescript** (tsc for building)
--   **rollup** (for bundling libraries and cli-libraries)
--   **vite** (for bundling react-libraries)
--   **eslint** (for linting)
--   **prettier** (for styling)
--   **typedoc** (for documentation generation)
--   **storybook** (for testing and documenting react-libraries)
--   **zx** (for orchestrating the tooling and scripts)
--   **husky** (for hooking into git actions)
+- **typescript** (tsc for building)
+- **rollup** (for bundling libraries and cli-libraries)
+- **vite** (for bundling react-libraries)
+- **eslint** (for linting)
+- **prettier** (for styling)
+- **typedoc** (for documentation generation)
+- **storybook** (for testing and documenting react-libraries)
+- **zx** (for orchestrating the tooling and scripts)
+- **husky** (for hooking into git actions)
 
 Other files copied to your project will include
 
--   **.editorconfig** (for editor styling, matching prettier)
--   **.gitignore** (for git management)
--   **.npmignore** (for publishing configuration)
+- **.editorconfig** (for editor styling, matching prettier)
+- **.gitignore** (for git management)
+- **.npmignore** (for publishing configuration)
 
 Also a **.github** folder will configure GitHub actions, and a **.vscode**
 folder will configure your Visual Studio Code environment on first run.
@@ -445,8 +444,8 @@ npm start build
 ```
 
 The `test` performs linting, and then it attempts to create a project of each
- type available at `test/.temp` and run the basic command of `dev`, `build`,
- `test` and `doc` in each created project. You may run it by calling:
+type available at `test/.temp` and run the basic command of `dev`, `build`,
+`test` and `doc` in each created project. You may run it by calling:
 
 ```sh
 npm start test

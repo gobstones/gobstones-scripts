@@ -206,7 +206,7 @@ export const projectTypes = (locations: ConfigLocations): ConfigProjectTypes => 
         _getCommonProjectTypeDefinition(
             locations,
             'NonCode',
-            ['src', 'test', 'packageJson'],
+            ['scripts', 'src', 'test', 'packageJson'],
             [
                 'eslint',
                 'typescript',

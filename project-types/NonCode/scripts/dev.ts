@@ -12,12 +12,8 @@
  * *****************************************************************************
  */
 import { $ } from './_helpers.ts';
+
 /**
- * Run Prettier on all the files, updating their contents with the fixed prettified version.
- *
- * @hidden
+ * Run eleventy and serve the result
  */
-await $`prettier --no-error-on-unmatched-pattern --write ./.husky/*[^_]`;
-await $`prettier --no-error-on-unmatched-pattern --write ./{.github,.vscode,src,test}/{**,.}/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
-await $`prettier --no-error-on-unmatched-pattern --write {.czrc,.editorconfig,.gitignore,.npmignore,.npmrc,.prettierrc}`;
-await $`prettier --no-error-on-unmatched-pattern --write ./*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
+await $`echo <some dev action>`;

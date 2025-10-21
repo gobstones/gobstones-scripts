@@ -11,13 +11,12 @@
  * You may read the full license at https://gobstones.github.io/gobstones-guidelines/LICENSE.
  * *****************************************************************************
  */
+import { echo, spinner } from 'zx';
 import { $ } from './_helpers.ts';
+
 /**
- * Run Prettier on all the files, updating their contents with the fixed prettified version.
- *
- * @hidden
+ * Run ESLint on all the files (src and tests).
+ * Use --fix to fix all automatically fixable errors.
  */
-await $`prettier --no-error-on-unmatched-pattern --write ./.husky/*[^_]`;
-await $`prettier --no-error-on-unmatched-pattern --write ./{.github,.vscode,src,test}/{**,.}/*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
-await $`prettier --no-error-on-unmatched-pattern --write {.czrc,.editorconfig,.gitignore,.npmignore,.npmrc,.prettierrc}`;
-await $`prettier --no-error-on-unmatched-pattern --write ./*.{js,jsx,cjs,mjs,ts,tsx,mts,cts,yml,md,json,js}`;
+await spinner('Linting...', () => $`echo <some lint action>`);
+echo(`Linted`);
